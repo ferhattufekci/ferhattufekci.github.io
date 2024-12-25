@@ -3536,5 +3536,23 @@ blockquote p {
   color: #aeaeae;
 }
 
+figure {
+  text-align: center;
+  margin-top: 16px; /* Resmin üzerinde boşluk bırakır */
+}
+
+figcaption {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-top: 8px;
+}
+
+.ellipsis {
+  text-align: center;
+  font-size: 20px;
+  color: gray;
+  margin: 20px 0; 
+}
 /* /Header Copyrights */
 /* /v2.2 - 26 October 2018 */
