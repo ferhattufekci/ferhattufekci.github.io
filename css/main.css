@@ -1625,7 +1625,7 @@ h3.comment-reply-title:after {
   top: 15px;
   right: 15px;
   font-size: 16px;
-  opacity: 0;
+  opacity: 1;
   width: 30px;
   height: 30px;
   background-color: #fff;
@@ -1648,7 +1648,7 @@ h3.comment-reply-title:after {
   left: 15px;
   max-width: calc(100% - 67px);
   position: absolute;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -1666,7 +1666,7 @@ h3.comment-reply-title:after {
   bottom: 15px;
   left: 15px;
   position: absolute;
-  opacity: 0;
+  opacity: 1;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
