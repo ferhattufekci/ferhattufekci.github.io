@@ -170,8 +170,8 @@ p.lead {
 
 li {
   font-size: 14px;
-  margin: 0 0 8px; /* p'den daha az boşluk */
-  font-weight: 300; /* p'den daha hafif */
+  margin: 0 0 10px;
+  font-weight: 400;
 }
 
 li.lead {
