@@ -52,20 +52,6 @@
       box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
       }
     */
-    /*.ads-left-container {
-      width: 98%;
-      position: relative;  
-      left:0.1rem;
-      margin-top:2rem;
-      padding: 1rem;
-      height: 54vh;
-      z-index: 1000; 
-      background-color: #fcfcfc;
-      text-align: center; 
-      padding: 10px 0; 
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  
-      }
-   */
       /*.ads-about-me-in-post-advertising {
       width: 90%; 
       position: relative;
@@ -93,10 +79,36 @@
       text-align: center; 
       /*box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);*/
       }
+      .adsense-container {
+      width: 100%; /* Mobil cihazlar için tam genişlik */
+      max-width: 300px; /* Reklamın maksimum genişliği */
+      margin: 0 auto; /* Ortalamak için */
+      text-align: center; /* Reklamın düzgün hizalanması için */
+      background-color: #fff;
+    }
+
+    .adsense-placeholder {
+      width: 100%;
+      min-height: 250px; /* Esnek reklamların minimum yüksekliği */
+      background-color: #fff;
+      border: 1px dashed #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #fff;
+      z-index: 1000;
+    }
+    @media (max-width: 768px) {
+      .adsense-placeholder {
+        min-height: 150px; /* Daha küçük cihazlar için yükseklik azaltma */
+      }
+    }
 
     </style>
       <script src="js/modernizr.custom.js"></script>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555" crossorigin="anonymous"></script>
+      <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
    </head>
    <!-- Google tag (gtag.js) -->
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z00CDE35NT"></script>
@@ -108,6 +120,7 @@
    gtag('config', 'G-Z00CDE35NT');
    </script>
    <body>
+      <amp-auto-ads type="adsense" data-ad-client="ca-pub-1316559702402555"></amp-auto-ads>
       <!--Google Adsense-->
       <!--<div class="ads-bottom-container">
          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555" crossorigin="anonymous"></script>
@@ -170,26 +183,17 @@
                   <a href="https://www.github.com/ferhattufekci" target="_blank" title="My Github Account"><i class="fab fa-github"></i></a>
                   <a href="https://medium.com/@ferhattufekci" target="_blank" title="My Medium Account"><i class="fab fa-medium"></i></a>
                   <a href="https://linktr.ee/ferhattufekci" target="_blank"title="All My Links"><i class="fa fa-link" aria-hidden="true"></i></a>
-                  <!--Google Adsense-->
-                  <!--<div class="ads-left-container">
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
-                        crossorigin="anonymous"></script>-->
-                     <!-- görüntülü reklam dikey esnek -->
-                        <!--<ins class="adsbygoogle"
-                           style="display:inline-block"
-                           data-ad-client="ca-pub-1316559702402555"
-                           data-ad-slot="4392214761"
-                           data-ad-format="auto"
-                           data-full-width-responsive="true">
-                        </ins>
-                        <script>
-                           (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                  </div>
-                  -->
-                  <!--/Google Adsense-->
-               </div>
-                  
+                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-1316559702402555"
+     data-ad-slot="1202373829"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+               </div> 
                <!-- / Social Links -->
                <!-- Buy Me a Book Button -->
                <div class="buy-me-a-book">
@@ -294,6 +298,17 @@
                                           streamlining processes and efficiently resolving project issues. 
                                           I have a high level of personal morals and integrity. 
                                           I am goal-oriented, self-motivated, and committed to the successful outcome of the project.
+                                          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-gw-3+1f-3d+2z"
+     data-ad-client="ca-pub-1316559702402555"
+     data-ad-slot="6547040162"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                                        </p>
                                        <!--Google Adsense-->
                                        <!--
@@ -503,6 +518,17 @@
                                              <li>
                                                 I share my experiences <a href="https://medium.com/@ferhattufekci" target="_blank">on my medium page.</a>
                                              </li>
+                                             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-gw-3+1f-3d+2z"
+     data-ad-client="ca-pub-1316559702402555"
+     data-ad-slot="6547040162"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                                           </ul>
                                           </div>
                                        </div>
@@ -535,6 +561,17 @@
                                              <h6 class="item-period">Used Techonologies:</h6>
                                              <ul>
                                                 <li>Scrum | Jira | Confluence | Doors | STANAG | SVN | Git | Bitbucket | Jenkins | SonarQube | Specific software developed by Milsoft for Automation Test Case writing | Gateway </li>
+                                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-gw-3+1f-3d+2z"
+     data-ad-client="ca-pub-1316559702402555"
+     data-ad-slot="6547040162"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                                              </ul>
                                              
                                           </div>
@@ -571,7 +608,19 @@
                                              <h6 class="item-period">Used Techonologies:</h6>
                                              <ul>
                                              <li>Scrum | Jira | Confluence | Doors | MIL-STD-408, HVL-TEMP-SRS standards | SVN | Git | Bitbucket | Jenkins | SonarQube | Docker | Java | Java Spring Framework | Java Server Face (JSF) | PrimeFaces | Hibernate | PostgreSQL | Postman | Cucumber | Selenium | Intellij IDEA </li>
-                                             </ol>
+                                             
+                                             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
+                                             crossorigin="anonymous"></script>
+                                        <ins class="adsbygoogle"
+                                             style="display:block"
+                                             data-ad-format="fluid"
+                                             data-ad-layout-key="-gw-3+1f-3d+2z"
+                                             data-ad-client="ca-pub-1316559702402555"
+                                             data-ad-slot="6547040162"></ins>
+                                        <script>
+                                             (adsbygoogle = window.adsbygoogle || []).push({});
+                                        </script>
+                                             </ul>
                                              </p>
                                           </div>
                                        </div>
@@ -700,6 +749,21 @@
                                           </div>
                                           <div class="skill-container">
                                              <div class="skill-percentage" style="width: 86%;"></div>
+                                          </div>
+                                          <div>
+                                             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
+                                                   crossorigin="anonymous">
+                                             </script>
+                                             <ins class="adsbygoogle"
+                                                   style="display:block"
+                                                   data-ad-format="fluid"
+                                                   data-ad-layout-key="-gw-3+1f-3d+2z"
+                                                   data-ad-client="ca-pub-1316559702402555"
+                                                   data-ad-slot="6547040162">
+                                             </ins>
+                                             <script>
+                                                   (adsbygoogle = window.adsbygoogle || []).push({});
+                                             </script>
                                           </div>
                                           <!-- /Skill 1 -->
                                        </div>
