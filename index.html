@@ -373,35 +373,50 @@
                   <section class="pt-page" data-id="resume">
                      <div class="section-inner custom-page-content">
                         <div class="section-title-block second-style">
-                           <h2 class="section-title">Resume</h2>
-                           <h5 class="section-description">
+                           <h2 class="section-title" id="ResumeHeader">Resume</h2>
+                           <h5 id="TotalExperience" class="section-description">
                               5+ Years of Professional Experience
                            </h5>
+                           <div id="customDropdown" class="dropdown">
+                              <div class="selected">
+                                  <img id="selectedFlag" src="https://flagcdn.com/w40/gb.png" alt="İngiliz Bayrağı">
+                                  <span id="selectedLang">English</span>
+                              </div>
+                              <div class="dropdown-content">
+                                  <div class="dropdown-item" data-lang="tr">
+                                      <img src="https://flagcdn.com/w40/tr.png" alt="Türk Bayrağı"> Türkçe
+                                  </div>
+                                  <div class="dropdown-item" data-lang="en">
+                                      <img src="https://flagcdn.com/w40/gb.png" alt="İngiliz Bayrağı"> English
+                                  </div>
+                              </div>
+                          </div>
                         </div>
                         <div class="section-content">
                            <div class="row">
                               <div class="col-xs-12 col-sm-8">
                                  <div class="col-inner bs-30">
                                     <div class="block-title">
-                                       <h3>Education</h3>
+                                       <h3 id = "EducationHeader">Education</h3>
                                     </div>
                                     <div
                                        class="timeline timeline-second-style bs-30 clearfix"
                                        >
                                        <div class="timeline-item clearfix">
                                           <div class="left-part">
-                                             <h5 class="item-period">2022 - Currently</h5>
-                                             <span class="item-company">
-                                                <h6 class="item-period">M.Sc.</h6>
-                                                Gazi University
+                                             <h5 class="item-period" id="GaziMSCEducationTimePeriod">2022 - Currently</h5>
+                                             <span class="item-company" id="GaziUniversityName">
+                                               <h6 class="item-period" id="GaziMSCEducationDegree">M.Sc.</h6>
+                                               Gazi University
                                              </span>
-                                          </div>
+                                           </div>
+                                           
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">
-                                                Information System (in English)
+                                             <h4 class="item-title" id="GaziMSCEducationDepartmantName">
+                                                Information Systems (in English)
                                              </h4>
-                                             <p><b class="text-dark">Lessons learned:</b></p>
+                                             <p><b class="text-dark" id="LessonsLearnedatMSC">Lessons learned:</b></p>
                                              <ul class="tags">
                                                 <li><a>Blockchain</a></li>
                                              </ul>
@@ -414,13 +429,13 @@
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">
+                                             <h4 class="item-title" id="MiuulDataScienceBootcampName">
                                                 Data Science & Machine Learning Bootcamp Participant
                                              </h4>
-                                             <p>
-                                                It is an online-live and mentor-supported Data Scientist and Artificial Intelligence Engineer Training program. In this program, I developed projects that solved more than 10 real-life problems and shared them on <a href="https://github.com/ferhattufekci/miuul-data-science-and-machine-learning-bootcamp" target="_blank"> my GitHub account.</a>                              
+                                             <p id="bootcampDescription">
+                                                It is an online-live and mentor-supported Data Scientist and Artificial Intelligence Engineer Training program. In this program, I developed projects that solved more than 10 real-life problems and shared them on <a id="githubLink" href="https://github.com/ferhattufekci/miuul-data-science-and-machine-learning-bootcamp" target="_blank"> my GitHub account.</a>                              
                                              </p>
-                                             <p><b class="text-dark">Projects & Lessons learned:</b></p>
+                                             <p><b class="text-dark" id="ProjectsAndLessonsLearnedatMiuul">Projects & Lessons learned:</b></p>
                                              <ul class="tags">
                                                 <li>
                                                    <a>How to develop and test AI projects
@@ -449,21 +464,21 @@
                                        <div class="timeline-item clearfix">
                                           <div class="left-part">
                                              <h5 class="item-period">2014 - 2019</h5>
-                                             <span class="item-company">
-                                                <h6 class="item-period">B.E.N.G</h6>
+                                             <span class="item-company" id="AnkaraUniversityName">
+                                                <h6 class="item-period" id="AnkaraUnivesityBENGDegree">B.E.N.G</h6>
                                                 Ankara Univesity
                                              </span>
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">
+                                             <h4 class="item-title" id="AnkaraUnivesityDepartmantName">
                                                 Computer Engineering (in %100 English) (GPA: 3.01 / 4.00)
                                              </h4>
-                                             <p>Since none of the courses I took in the computer programming department were not counted, my education period; English preparation (1 year) + 4 years (engineering education period).</p>
-                                             <p><b class="text-dark">Lessons learned:</b></p>
+                                             <p id="AnkaraUniversityDescription">Since none of the courses I took in the computer programming department were not counted, my education period; English preparation (1 year) + 4 years (engineering education period).</p>
+                                             <p><b class="text-dark" id="LessonsLearnedatBENG">Lessons learned:</b></p>
                                              <ul class="tags">
                                                 <li>
-                                                <a> 100 % English Education </a><a> Programming Languages Concepts </a><a> Object Oriented Design </a><a> Data Structures </a><a> Design Patterns </a><a> Parallel Programming
+                                                <a> Programming Languages Concepts </a><a> Object Oriented Design </a><a> Data Structures </a><a> Design Patterns </a><a> Parallel Programming
                                                 </a><a> Microprocessors </a><a> Computer Architecture </a><a> Operating Systems </a><a> Data Communication and Networking </a><a> Dijital Logic Design </a><a> Electronics </a><a> Automata Theory </a><a> Embedded System Programming </a><a> Hardware Description Language (VHDL) </a><a> Fuzzy Logic
                                                 </a><a> Agile Software Development (CI / CD | Jira | Confluence | Jenkins | Docker | Maven) </a><a> Database Management
                                                 </a><a> Data Mining </a><a> MSSQL Server </a><a> C++ </a><a> Core Java </a><a> Java Swing </a><a> Hibernate
@@ -475,19 +490,19 @@
                                        <div class="timeline-item clearfix">
                                           <div class="left-part">
                                              <h5 class="item-period">2011 - 2013</h5>
-                                             <span class="item-company">
-                                                <h6 class="item-period">F.D.</h6>
+                                             <span class="item-company" id="FDUnivesityName">
+                                                <h6 class="item-period" id="GaziUniversityFDDegree">F.D.</h6>
                                                 Gazi Univesity
                                              </span>
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">
+                                             <h4 class="item-title" id="FDDepartmantName">
                                                 Computer Programming (GPA: 3.25 / 4.00)
                                              </h4>
-                                             <p><b class="text-dark">Lessons learned:</b></p>
+                                             <p><b class="text-dark" id="LessonsLearnedatFD">Lessons learned:</b></p>
                                              <ul class="tags">
-                                                <li><a> Top Score of the Faculty </a><a> Requirement Analysis </a><a> Requirement Mangement </a><a> System Design </a><a> Doors </a><a> UML
+                                                <li><a> Requirement Analysis </a><a> Requirement Mangement </a><a> System Design </a><a> Doors </a><a> UML
                                                 </a><a> Software Testing </a><a> Software Development </a><a> Adobe Products (Photoshop, Illustrator)</a></li>
                                              </ul>
                                           </div>
@@ -495,19 +510,19 @@
                                        <div class="timeline-item clearfix">
                                           <div class="left-part">
                                              <h5 class="item-period">2007 - 2011</h5>
-                                             <span class="item-company">
+                                             <span class="item-company" id = "YenikentHighSchoolName">
                                              Yenikent Ahmet Cicek Anatolian Techical High School</span
                                                 >
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">
-                                                Web Technologies (GPA: 79 / 100)
+                                             <h4 class="item-title" id="YenikentHighSchoolDepartmantName">
+                                                Web Technologies and Software (GPA: 79 / 100) (Top Score of the Department)
                                              </h4>
-                                             <p><b class="text-dark">Lessons learned:</b></p>                                             <!--Google Adsense-->
+                                             <p><b class="text-dark" id="LessonsLearnedatYenikentHighSchool">Lessons learned:</b></p>                                             <!--Google Adsense-->
                                              <ul class="tags">
                                                 <li>
-                                                   <a> Top Score of the Department </a><a> Html </a><a> Css </a><a> Bootstrap </a><a> Web Development
+                                                   <a> Html </a><a> Css </a><a> Bootstrap </a><a> Web Development
                                                    </a><a> Object Oriented Programming (OOP) </a><a> SOLID Principle </a><a> C# </a><a> SQL </a><a> Git Version Control System </a><a> Github Repo System </a><a> Asp.Net MVC </a><a> CATIA </a><a> Autocad 2D </a>
                                                 </li>
                                              </ul>
@@ -529,32 +544,32 @@
                                        </div>
                                     </div>
                                     <div class="block-title">
-                                       <h3>Experience<span></span></h3>
+                                       <h3 id=ExperienceHeader>Experience<span></span></h3>
                                     </div>
                                     <div class="timeline timeline-second-style clearfix">
                                        <div class="timeline-item clearfix">
                                           <div class="left-part">
-                                             <h5 class="item-period">06.2010 - 04.2021 & 05.2023 - Currently</h5>
-                                             <span class="item-company">Freelance</span>
+                                             <h5 class="item-period" id="FreelanceExperiencePeriod">06.2010 - 04.2021 & 05.2023 - Currently</h5>
+                                             <span class="item-company" id="FreelanceExperienceCompanyName">Freelance</span>
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                          <h4 class="item-title">Full Stack Developer & Requirement Engineer & Agile Tester & Blogger</h4>
+                                          <h4 class="item-title" id="FreelanceExperienceTitle">Full Stack Developer & Requirement Engineer & Agile Tester & Blogger</h4>
                                           <ul>
                                              <li>
-                                                <p>With my requirements analysis and requirements management skills, I ensure the production of the right software that would solve people's problems. </p>
+                                                <p id="FreelanceExperienceDescription1">With my requirements analysis and requirements management skills, I ensure the production of the right software that would solve people's problems. </p>
                                              </li>
                                              <li>
-                                                <p>With my Test Engineering skills, I ensure the production of quality, useful software.</p>
+                                                <p id="FreelanceExperienceDescription2">With my Test Engineering skills, I ensure the production of quality, useful software.</p>
                                              </li>
                                              <li>
-                                                <p>With my coding skills, I develop the software according to the requirements. I also automate regression tests in manual tests, reducing testing effort and human errors.</p>
+                                                <p id ="FreelanceExperienceDescription3">With my coding skills, I develop the software according to the requirements. I also automate regression tests in manual tests, reducing testing effort and human errors.</p>
                                              </li>
                                              <li>
-                                                <p>I share my experiences <a href="https://medium.com/@ferhattufekci" target="_blank">on my medium page.</a></p>
+                                                <p id = "FreelanceExperienceDescription4">I share my experiences <a href="https://medium.com/@ferhattufekci" target="_blank">on my medium page.</a></p>
                                              </li>
                                           </ul>
-                                          <p><b class="text-dark">Used Technologies:</b></p>
+                                          <p><b id ="FreelanceExperienceUsedTechnologiesTitle" class="text-dark">Used Technologies:</b></p>
                                              <ul class="tags">
                                              <li><a>Scrum</a><a>ISTQB Foundation Level</a><a>Microservice</a><a>Monolith</a><a>Jira</a><a>Trello</a><a>Confluence</a><a>UML</a><a>moqups.com</a><a>excalidraw.com</a><a>Figma</a><a>Maven</a><a>Jenkins</a><a>SonarQube</a><a>Git</a><a>Gradle</a><a>Bitbucket</a><a>Docker</a><a>Bash</a><a>Java</a><a>Java Spring Framework</a><a>JUnit</a><a>Html</a><a>CSS</a><a>JavaScript</a><a>Bootstrap</a><a>React.js</a><a>PHP</a><a>Laravel</a><a>Hibernate</a><a>SQL</a><a>PostgreSQL</a><a>Postman</a><a>Cucumber</a><a>Selenium</a><a>Intellij IDEA</a><a>Microsoft Office Programs</a></li>                                             
                                           </ul>
@@ -567,26 +582,26 @@
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">Senior System / Test Engineer</h4>
-                                             <p>
+                                             <h4 id="MilsoftTitle" class="item-title">Senior System / Test Engineer</h4>
+                                             <p id="MilsoftMilDLPDescription">
                                                 MilSOFT is the only company in the Turkish Defense Industry to reach the CMMI-5 level with 100% coverage in all of its projects. <br>
                                                 Mil-DLP (MilSOFT Multi Data Link Processor) is a system that provides multi-link processing capability to share tactical information among surface, subsurface, air, and land platforms/units.                                             </p>
-                                             <p>
+                                             <p id="MilsoftMilDLPResponsibilitiesEntySentence">
                                                 I took tasks on the Mil-DLP Product Line (DLP of Aselsan company’s Siper & Hakim projects are products of this product line) which was developed by applying Agile Methodology Scrum.
                                              </p>
                                              <div class="divider"></div>
-                                             <p><b class="text-dark">Responsibilities:</b></p>
+                                             <p><b class="text-dark" id="MilsoftMilDLPResponsibilitiesTitle">Responsibilities:</b></p>
                                              <ul>
-                                                <li><p>Created Organizational Memory with the information acquired during the orientation, and the contribution time of those who joined the project later was shortened.</p></li>
-                                                <li><p>Planned and monitored test activities in the Sprint.</p></li>
-                                                <li><p>Designed and created test cases for NATO Tactical Data Link Systems such as Link 11, Link 16, and Link 22 with 100% coverage among 6,000 pages of STANAG requirements.</p></li>
-                                                <li><p>Performed manual and automation tests.</p></li>
-                                                <li><p>Verified the intermediate product at the end of the sprint.</p></li>
-                                                <li><p>Performed impact analysis for errors, deficiencies, and improvements found during manual and automation tests.</p></li>
-                                                <li><p>Created the Problem Report record on Jira by checking whether a bug report was opened before and if a bug report was opened before, whether it was opened correctly (severity, priority, impact analysis, component, etc. fields).</p></li>
-                                                <li><p>Performed verification and regression tests of the Problem Report/Features whose status is Testing Request.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie1">Created Organizational Memory with the information acquired during the orientation, and the contribution time of those who joined the project later was shortened.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie2">Planned and monitored test activities in the Sprint.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie3">Designed and created test cases for NATO Tactical Data Link Systems such as Link 11, Link 16, and Link 22 with 100% coverage among 6,000 pages of STANAG requirements.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie4">Performed manual and automation tests.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie5">Verified the intermediate product at the end of the sprint.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie6">Performed impact analysis for errors, deficiencies, and improvements found during manual and automation tests.</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie7">Created the Problem Report record on Jira by checking whether a bug report was opened before and if a bug report was opened before, whether it was opened correctly (severity, priority, impact analysis, component, etc. fields).</p></li>
+                                                <li><p id="MilsoftMilDLPResponsibilitie8">Performed verification and regression tests of the Problem Report/Features whose status is Testing Request.</p></li>
                                              </ul>
-                                             <p><b class="text-dark">Used Technologies:</b></p>
+                                             <p><b class="text-dark" id="MilsoftMilDLPUsedTechnologiesTitle">Used Technologies:</b></p>
                                              <ul class="tags">
                                                 <li><a>Scrum</a><a>CMMI-5</a><a>ISTQB<a>Foundation<a>Level</a><a>STANAG</a><a>Jira</a><a>Confluence</a><a>Doors</a><a>STANAG</a><a>UML</a><a>SVN</a><a>Git</a><a>Bitbucket</a><a>Jenkins</a><a>SonarQube</a><a>Specific software developed by Milsoft for Automation Test Case Writing</a><a>Gateway</a><a>Microsoft Office Programs</a></li>
                                              </ul>
@@ -599,28 +614,28 @@
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">Senior Software - System / Test Engineer</h4>
-                                             <p>
+                                             <h4 class="item-title" id="HavelsanTitle">Senior Software - System / Test Engineer</h4>
+                                             <p id="HavelsanDescription">
                                                 HAVELSAN is a Defense Industry Company (#99 on the 2020 top list of DefenseNews) mainly focused on large-scale software projects.
                                              </p>
-                                             <p> 
+                                             <p id="HavelsanMBSMDescription"> 
                                                 Ministry of National Defense (MSB) Information System Modernization (MBSM) Web Application Project is an information system developed using the product infrastructure named KOVAN (<b class="text-dark">National Enterprise Resource Planning (ERP) Product</b>) by HAVELSAN.
                                              </p>
-                                             <p>  
+                                             <p id="HavelsanMBSMRespobilitiesEntySentence">  
                                                 I took tasks <b class="text-dark">in all stages of SDLC and STLC</b> in the MBSM project developed by applying <b class="text-dark">Microservice architecture</b> and Agile Methodology Scrum.                                             </p>
                                              <div class="divider"></div>
                                              <ul>
                                              <li>
-                                                <p><b class="text-dark">During the analysis and requirements determination phase</b>, according to the MIL-STD-408 software development standard and HVL-TEMP-SRS Havelsan document standard, I took tasks of creating, managing, reporting on, verifying, and validating the requirement set consisting of approximately 2,500 software requirements for 5 Departments (Price Cost Analysis, Quality, Procurement, Inspection, and Information Communication departments) of the Ministry of National Defense.   </p>
+                                                <p id="HavelsanResponsibilie1"><b class="text-dark">During the analysis and requirements determination phase</b>, according to the MIL-STD-408 software development standard and HVL-TEMP-SRS Havelsan document standard, I took tasks of creating, managing, reporting on, verifying, and validating the requirement set consisting of approximately 2,500 software requirements for 5 Departments (Price Cost Analysis, Quality, Procurement, Inspection, and Information Communication departments) of the Ministry of National Defense.   </p>
                                              </li>
                                              <li>
-                                                <p><b class="text-dark">During the design and development phases</b>, I took the tasks of designing and developing the application to meet the defined requirements, writing unit tests, fixing bug records, and reviewing Pull Requests.   </p>
+                                                <p id="HavelsanResponsibilie2"><b class="text-dark">During the design and development phases</b>, I took the tasks of designing and developing the application to meet the defined requirements, writing unit tests, fixing bug records, and reviewing Pull Requests.   </p>
                                              </li>
                                              <li>
-                                                <p><b class="text-dark">During the testing phase</b>, I took part in the early detection of errors with the shift-left approach and reducing the cost of error correction/faulty development, planning the tests to be performed in the sprint, designing the test scenario with 100% coverage among 2500 requirement sets, creating the test procedure document, publishing the approved test procedures on Jira, running static/dynamic, functional/nonfunctional tests, creating and tracking the records of the errors/deficiencies/improvements found by performing impact analysis on Jira, presenting the status of the tests in status meetings, standardizing the error records on Confluence to avoid creating duplicate/faulty records, and automating manual tests to reduce the cost of regression testing.   </p>
+                                                <p id="HavelsanResponsibilie3"><b class="text-dark">During the testing phase</b>, I took part in the early detection of errors with the shift-left approach and reducing the cost of error correction/faulty development, planning the tests to be performed in the sprint, designing the test scenario with 100% coverage among 2500 requirement sets, creating the test procedure document, publishing the approved test procedures on Jira, running static/dynamic, functional/nonfunctional tests, creating and tracking the records of the errors/deficiencies/improvements found by performing impact analysis on Jira, presenting the status of the tests in status meetings, standardizing the error records on Confluence to avoid creating duplicate/faulty records, and automating manual tests to reduce the cost of regression testing.   </p>
                                              </li>
                                              </ul>
-                                             <p><b class="text-dark">Used Technologies:</b></p>
+                                             <p><b id="HavelsanUsedTechnologiesTitle" class="text-dark">Used Technologies:</b></p>
                                              <ul class="tags">
                                                 <li><a>Scrum</a><a>CMMI-3</a><a>ISTQB Foundation Level</a><a>MIL-STD-408</a><a>Microservice</a><a>Jira</a><a>Confluence</a><a>Doors</a><a>UML</a><a>Git</a><a>Gradle</a><a>Bitbucket</a><a>Maven</a><a>Jenkins</a><a>SonarQube</a><a>Docker</a><a>Bash</a><a>Java</a><a>Java Spring Framework</a><a>JUnit</a><a>JSF</a><a>PrimeFaces</a><a>Hibernate</a><a>SQL</a><a>PostgreSQL</a><a>Postman</a><a>Cucumber</a><a>Selenium</a><a>Intellij IDEA</a><a>Microsoft Office Programs</a></li>                                             
                                              </ul>
@@ -630,19 +645,26 @@
                                        <div class="timeline-item clearfix">
                                           <div class="left-part">
                                              <h5 class="item-period">09.2019 - 01.2021</h5>
-                                             <span class="item-company">Republic of Turkey Ministiry of National Education</span>
+                                             <span id="MilliEgitimBakanligiAdi" class="item-company">Republic of Turkey Ministiry of National Education</span>
                                           </div>
                                           <div class="divider"></div>
                                           <div class="right-part">
-                                             <h4 class="item-title">Information Communication Technology Teacher & TUBITAK 4006 Project Manager</h4>
-                                             <p>
+                                             <h4 id="MilliEgitimBakanligiTitle" class="item-title">Information Communication Technology Teacher & TUBITAK 4006 Project Manager</h4>
+                                             <p id="MilliEgitimBakanligiDescription">
                                                 Children starting coding education at an early age; show more development in mental development, problem-solving skills, planning of work, establishing relationships between situations, and generating new ideas.
                                              </p>
-                                             <p>
+                                             <p id="MilliEgitimBakanligiDescription2">
                                                 With 4006-TUBITAK Science Fair Projects, the mental development of Vehbi Dincerler Secondary School students makes them more successful in coding in the years ahead. Considering that secondary school students will be more beneficial individuals in the state of the Republic of Turkey with these known benefits, I worked as an IT and Technology teacher and TUBITAK 4006 project manager until my job applications for defense industry companies were concluded.
                                              </p>
-                                             <p>I ensured that 26 different projects that got secondary school students interested in software in the field of information technologies were completed on time simultaneously. I ensured the establishment of the school library.</p>
-                                             <p><b class="text-dark">Used Technologies:</b></p>
+                                             <ul>
+                                                <li>
+                                                   <p id="MilliEgitimBakanligiYapilanlar">I ensured that 26 different projects that got secondary school students interested in software in the field of information technologies were completed on time simultaneously.</p>
+                                                </li>
+                                                <li>
+                                                   <p id="MilliEgitimBakanligiYapilanlar2">I ensured the establishment of the school library.</p>
+                                                </li>
+                                             </ul>
+                                             <p><b id="MilliEgitimBakanligiUsedTechnologiesTitle" class="text-dark">Used Technologies:</b></p>
                                              <ul class="tags">
                                                 <li><a>Scrum</a><a>Trello</a><a>WordPress</a><a>Html</a><a>CSS</a><a>JavaScript</a><a>Ardunio</a><a>Sensors</a><a>Microsoft Office Programs</a></li>
                                              <!--Google Adsense-->
@@ -665,7 +687,7 @@
                                     </div>
                                  </div>
                                  <div class="block-title">
-                                 <h3>Certificates<span></span></h3>
+                                 <h3 id="CertificatesHeader">Certificates<span></span></h3>
                                  </div>
                                  <div class="timeline timeline-second-style clearfix">
                                     <div class="timeline-item clearfix">
@@ -761,7 +783,7 @@
                               <div class="col-xs-12 col-sm-4">
                                  <div class="col-inner">
                                     <div class="block-title">
-                                       <h3>Exam Results</h3>
+                                       <h3 id="ExamsHeader">Exam Results</h3>
                                     </div>
                                     <div class="skills-info skills-second-style">
                                        <!-- Skill 1 -->
@@ -796,7 +818,7 @@
                               </div>
                            </div>
                            
-                           <div class="text-center mt-5"><a href="FerhatTufekciCVinEnglish.pdf"  target="_blank" class="btn btn-primary">Download CV <span class="ms-1"><i class="fas fa-download"></i></span></a></div>
+                           <div class="text-center mt-5"><a href="FerhatTufekciCVinEnglish.pdf"  target="_blank" class="btn btn-primary" id="downloadCvBtn">Download CV <span class="ms-1"><i class="fas fa-download"></i></span></a></div>
                         </div>
                      </div>
                   </section>
@@ -1041,6 +1063,7 @@ Do not hesitate to contact me if you have any questions.">
          </div>
          <!-- /Main Content -->
       </div>
+      <script src="js/language-support-for-resume-page.js"></script>
       <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
       <script src="js/jquery-2.1.3.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
