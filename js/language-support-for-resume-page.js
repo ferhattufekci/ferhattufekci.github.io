@@ -16,7 +16,7 @@ const translations = {
     MiuulDataScienceBootcampName:
       "Veri Bilimi ve Makine Öğrenimi Eğitim Kampı Katılımcısı",
     bootcampDescription:
-      "Çevrimiçi-canlı ve mentör destekli Veri Bilimci ve Yapay Zeka Mühendisi Eğitim programında 10'dan fazla gerçek hayat problemini çözen projeler geliştirdim ve ",
+      "Çevrimiçi, canlı ve mentör destekli Veri Bilimci ve Yapay Zeka Mühendisi Eğitim programında 10'dan fazla gerçek hayat problemini çözen projeler geliştirdim ve ",
     githubText: "GitHub hesabımda paylaştım.",
     ProjectsAndLessonsLearnedatMiuul: "Yapılan Projeler & Alınan Dersler:",
     AnkaraUnivesityBENGDegree: "Lisans",
@@ -38,9 +38,9 @@ const translations = {
     FreelanceExperiencePeriod: "06.2010 - 04.2021 & 05.2023 - Halen",
     FreelanceExperienceCompanyName: "Serbest Çalışan",
     FreelanceExperienceTitle:
-      "Full Stack Agile Yazılım Geliştirici & IT İş Analisti (Sistem Mühendisi) & Agile Test Mühendisi",
+      "Full Stack Agile Yazılım Geliştirici & IT İş Analisti (Sistem Mühendisi) & Agile Test Mühendisi & Blog Yazarı",
     FreelanceExperienceDescription1:
-      "Gereksinim analizi ve gereksinim yönetimi becerilerimle insanların sorunlarını çözecek doğru yazılımların üretilmesini sağlıyorum.",
+      "Gereksinim analizi ve gereksinim yönetimi becerilerimle, insanların sorunlarını çözecek doğru yazılımların üretilmesini sağlıyorum.",
     FreelanceExperienceDescription2:
       "Test Mühendisliği becerilerimle kaliteli, kullanışlı yazılımların üretilmesini sağlıyorum.",
     FreelanceExperienceDescription3:
@@ -59,7 +59,7 @@ const translations = {
     MilsoftMilDLPResponsibilitie2:
       "Sprint'teki test faaliyetlerini planladı ve takip edildi.",
     MilsoftMilDLPResponsibilitie3:
-      "6.000 sayfalık NATO STANAG gereksinimleri içerisinden %100 kapsama sahip Link 11, Link 16 ve Link 22 gibi NATO Taktik Veri Bağlantı Sistemleri için test senaryoları tasarlandı ve oluşturuldu.",
+      "Link 11, Link 16 ve Link 22 gibi NATO Taktik Veri Bağlantı Sistemleri için, 6.000 sayfalık NATO STANAG gereksinimleri içerisinden Test Amacını %100 kapsayan test senaryoları tasarlandı, oluşturuldu.",
     MilsoftMilDLPResponsibilitie4:
       "Manuel ve otomasyon testler gerçekleştirildi.",
     MilsoftMilDLPResponsibilitie5:
@@ -83,7 +83,7 @@ const translations = {
     HavelsanResponsibilie2:
       "<b>Tasarım ve geliştirme aşamalarında,</b> tanımlanan gereksinimleri karşılayacak şekilde uygulamanın tasarlanması ve geliştirilmesi, birim testlerinin yazılması, hata kayıtlarının düzeltilmesi ve Pull Requests'in gözden geçirilmesi görevlerini aldım.",
     HavelsanResponsibilie3:
-      "<b>Test aşamasında,</b>  shift-left (sola kaydırma) yaklaşımıyla hataların erken tespiti ve hata düzeltme/hatalı geliştirme maliyetinin düşürülmesi, sprintte gerçekleştirilecek testlerin planlanması, 2500 gereksinim kümesi arasında %100 kapsama sahip test senaryosunun tasarlanması, test prosedür dokümanının oluşturulması, onaylı test prosedürlerinin Jira'da yayınlanması, statik/dinamik, fonksiyonel/fonksiyonel olmayan testlerin çalıştırılması, Jira'da etki analizi yapılarak bulunan hataların/eksikliklerin/iyileştirmelerin kayıtlarının oluşturulması ve takibi, durum toplantılarında testlerin durumunun sunulması, yinelenen/hatalı kayıtların oluşmasını önlemek için Confluence'da hata kayıtlarının standart hale getirilmesi ve regresyon testinin maliyetini düşürmek için manuel testlerin otomatize edilmesi görevlerini aldım.",
+      "<b>Test aşamasında,</b>  shift-left (sola kaydırma) yaklaşımıyla hataların erken tespiti ve hata düzeltme/hatalı geliştirme maliyetinin düşürülmesi, sprintte gerçekleştirilecek testlerin planlanması, 2.500 gereksinim kümesi arasında %100 kapsama sahip test senaryosunun tasarlanması, test prosedür dokümanının oluşturulması, onaylı test prosedürlerinin Jira'da yayınlanması, statik/dinamik, fonksiyonel/fonksiyonel olmayan testlerin çalıştırılması, Jira'da etki analizi yapılarak bulunan hataların/eksikliklerin/iyileştirmelerin kayıtlarının oluşturulması ve takibi, durum toplantılarında testlerin durumunun sunulması, yinelenen/hatalı kayıtların oluşmasını önlemek için Confluence'da hata kayıtlarının standart hale getirilmesi ve regresyon testinin maliyetini düşürmek için manuel testlerin otomatize edilmesi görevlerini aldım.",
     HavelsanUsedTechnologiesTitle: "Kullanılan Teknolojiler:",
     MilliEgitimBakanligiAdi: "Milli Eğitim Bakanlığı",
     MilliEgitimBakanligiTitle:
@@ -91,7 +91,7 @@ const translations = {
     MilliEgitimBakanligiDescription:
       "Küçük yaşta kodlama eğitimine başlayan çocuklar; zihinsel gelişim, problem çözme becerileri, iş planlama, durumlar arasında ilişki kurma ve yeni fikirler üretme gibi alanlarda daha fazla gelişim göstermektedirler.",
     MilliEgitimBakanligiDescription2:
-      "4006-TÜBİTAK Bilim Fuarı Projeleri ile Vehbi Dinçerler Ortaokulu öğrencilerinin zihinsel gelişimleri ilerleyen yıllarda kodlama konusunda daha başarılı olmalarını sağlamaktadır. Ortaokul öğrencilerinin bilinen bu faydaları ile Türkiye Cumhuriyeti devletine daha faydalı bireyler olacağını düşünerek savunma sanayi firmalarına yaptığım iş başvuruları sonuçlanana kadar Bilişim ve Teknoloji öğretmeni ve TÜBİTAK 4006 proje yürütücüsü olarak çalıştım.",
+      "Bilinen bu faydalar ile Ortaokul öğrencilerinin Türkiye Cumhuriyeti devletine daha faydalı bireyler olacağını düşünerek savunma sanayi firmalarına yaptığım iş başvuruları sonuçlanana kadar Bilgi İletişim Teknolojileri Öğretmeni ve TÜBİTAK 4006 Proje Yöneticisi olarak görev aldım.",
     MilliEgitimBakanligiYapilanlar:
       "Ortaokul öğrencilerinin bilişim teknolojileri alanında yazılıma ilgi duymalarını sağlayan 26 farklı projenin eş zamanlı olarak zamanında tamamlanmasını sağladım.",
     MilliEgitimBakanligiYapilanlar2:
@@ -139,7 +139,7 @@ const translations = {
     FreelanceExperiencePeriod: "06.2010 - 04.2021 & 05.2023 - Currently",
     FreelanceExperienceCompanyName: "Freelance",
     FreelanceExperienceTitle:
-      "Full Stack Agile Software Developer & IT Business Analyst (System Engineer) & Agile Tester",
+      "Full Stack Agile Software Developer & IT Business Analyst (System Engineer) & Agile Tester & Blogger",
     FreelanceExperienceDescription1:
       "With my requirements analysis and requirements management skills, I ensure the production of the right software that would solve people's problems.",
     FreelanceExperienceDescription2:
@@ -183,7 +183,7 @@ const translations = {
     HavelsanResponsibilie2:
       "<b>During the design and development phases,</b> I took the tasks of designing and developing the application to meet the defined requirements, writing unit tests, fixing bug records, and reviewing Pull Requests.",
     HavelsanResponsibilie3:
-      "<b>During the testing phase,</b> I took part in the early detection of errors with the shift-left approach and reducing the cost of error correction/faulty development, planning the tests to be performed in the sprint, designing the test scenario with 100% coverage among 2500 requirement sets, creating the test procedure document, publishing the approved test procedures on Jira, running static/dynamic, functional/nonfunctional tests, creating and tracking the records of the errors/deficiencies/improvements found by performing impact analysis on Jira, presenting the status of the tests in status meetings, standardizing the error records on Confluence to avoid creating duplicate/faulty records, and automating manual tests to reduce the cost of regression testing.",
+      "<b>During the testing phase,</b> I took part in the early detection of errors with the shift-left approach and reducing the cost of error correction/faulty development, planning the tests to be performed in the sprint, designing the test scenario with 100% coverage among 2.500 requirement sets, creating the test procedure document, publishing the approved test procedures on Jira, running static/dynamic, functional/nonfunctional tests, creating and tracking the records of the errors/deficiencies/improvements found by performing impact analysis on Jira, presenting the status of the tests in status meetings, standardizing the error records on Confluence to avoid creating duplicate/faulty records, and automating manual tests to reduce the cost of regression testing.",
     HavelsanUsedTechnologiesTitle: "Used Technologies:",
     MilliEgitimBakanligiAdi:
       "Republic of Turkey Ministiry of National Education",
