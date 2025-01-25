@@ -3560,7 +3560,7 @@ figcaption {
   top: 30px;
   right: 0;
   cursor: pointer;
-  font-family: Poppins, Helvetica, sans-serif; /* section-title ile uyumlu yazı tipi */
+  font-family: Poppins, Helvetica, sans-serif;
 }
 
 .selected {
@@ -3577,6 +3577,7 @@ figcaption {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 40px;
+  position: relative;
 }
 
 .selected img {
@@ -3585,6 +3586,14 @@ figcaption {
   object-fit: cover;
 }
 
+/* Aşağı ok simgesi */
+.dropdown-arrow {
+  font-size: 14px;
+  color: #333;
+  margin-left: auto; /* Sağa yaslamak için */
+}
+
+/* Dropdown içeriği */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -3625,5 +3634,6 @@ figcaption {
   display: block;
   margin-top: 0;
 }
+
 /* /Header Copyrights */
 /* /v2.2 - 26 October 2018 */
