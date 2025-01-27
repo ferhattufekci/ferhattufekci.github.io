@@ -3558,7 +3558,7 @@ figcaption {
 .dropdown {
   position: absolute;
   top: 30px;
-  right: 0;
+  right: 15px;
   cursor: pointer;
   font-family: Poppins, Helvetica, sans-serif;
 }
