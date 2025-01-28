@@ -73,7 +73,7 @@ const translations = {
     MilsoftMilDLPUsedTechnologiesTitle: "Kullanılan Teknolojiler:",
     HavelsanTitle: "Kıdemli Yazılım - Sistem / Test Mühendisi",
     HavelsanDescription:
-      "HAVELSAN, ağırlıklı olarak büyük ölçekli yazılım projelerine odaklanmış bir Savunma Sanayi Şirketidir (DefenseNews'in 2020 üst listesinde 99. sırada).",
+      "HAVELSAN, ağırlıklı olarak büyük ölçekli yazılım projelerine odaklanmış Savunma Sanayii Şirketidir (DefenseNews'in 2020 üst listesinde 99. sırada).",
     HavelsanMBSMDescription:
       "Milli Savunma Bakanlığı (MSB) Bilgi Sistemi Modernizasyonu (MBSM) Web Uygulama Projesi, HAVELSAN'ın KOVAN (<b>Milli Kurumsal Kaynak Planlama (ERP) Ürünü</b>) adlı ürün altyapısı kullanılarak geliştirilen bir bilgi sistemidir.",
     HavelsanMBSMRespobilitiesEntySentence:
@@ -91,7 +91,7 @@ const translations = {
     MilliEgitimBakanligiDescription:
       "Küçük yaşta kodlama eğitimine başlayan çocuklar; zihinsel gelişim, problem çözme becerileri, iş planlama, durumlar arasında ilişki kurma ve yeni fikirler üretme gibi alanlarda daha fazla gelişim göstermektedirler.",
     MilliEgitimBakanligiDescription2:
-      "Bilinen bu faydalar ile Ortaokul öğrencilerinin Türkiye Cumhuriyeti devletine daha faydalı bireyler olacağını düşünerek savunma sanayi firmalarına yaptığım iş başvuruları sonuçlanana kadar Bilgi İletişim Teknolojileri Öğretmeni ve TÜBİTAK 4006 Proje Yöneticisi olarak görev aldım.",
+      "Bilinen bu faydalar ile Ortaokul öğrencilerinin Türkiye Cumhuriyeti devletine daha faydalı bireyler olacağını düşünerek savunma sanayii firmalarına yaptığım iş başvuruları sonuçlanana kadar Bilgi İletişim Teknolojileri Öğretmeni ve TÜBİTAK 4006 Proje Yöneticisi olarak görev aldım.",
     MilliEgitimBakanligiYapilanlar:
       "Ortaokul öğrencilerinin bilişim teknolojileri alanında yazılıma ilgi duymalarını sağlayan 26 farklı projenin eş zamanlı olarak zamanında tamamlanmasını sağladım.",
     MilliEgitimBakanligiYapilanlar2:
@@ -100,7 +100,7 @@ const translations = {
     flag: "https://flagcdn.com/w40/tr.png",
     langText: "Türkçe",
     downloadText: "Özgeçmişi İndir",
-    downloadLink: "../FerhatTufekciOzgecmisTurkceYapimAsamasinda.pdf",
+    downloadLink: "../FerhatTufekciCVinTurkish.pdf",
   },
   en: {
     ResumeHeader: "Resume",
