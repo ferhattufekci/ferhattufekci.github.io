@@ -1,7 +1,7 @@
 const translations = {
   tr: {
     ResumeHeader: "Özgeçmiş",
-    TotalExperience: "5+ Yıllık Profesyonel Deneyim",
+    TotalExperience: "7+ Yıllık Profesyonel Deneyim",
     EducationHeader: "Eğitim",
     ExperienceHeader: "Deneyim",
     CertificatesHeader: "Sertifikalar",
@@ -57,7 +57,7 @@ const translations = {
     MilsoftMilDLPResponsibilitie1:
       "Oryantasyon sırasında edinilen bilgilerle Kurumsal Hafıza oluşturuldu ve projeye sonradan katılanların katkı süresi kısaltıldı.",
     MilsoftMilDLPResponsibilitie2:
-      "Sprint'teki test faaliyetlerini planladı ve takip edildi.",
+      "Sprint'teki test faaliyetlerini planlandı ve takip edildi.",
     MilsoftMilDLPResponsibilitie3:
       "Link 11, Link 16 ve Link 22 gibi NATO Taktik Veri Bağlantı Sistemleri için, 6.000 sayfalık NATO STANAG gereksinimleri içerisinden Test Amacını %100 kapsayan test senaryoları tasarlandı, oluşturuldu.",
     MilsoftMilDLPResponsibilitie4:
@@ -65,7 +65,7 @@ const translations = {
     MilsoftMilDLPResponsibilitie5:
       "Sprint sonunda oluşan ara ürün üzerinden Verification (Doğrulama) işlemi gerçekleştirildi.",
     MilsoftMilDLPResponsibilitie6:
-      "Manuel ve otomasyon testleri sırasında bulunan hatalar, eksiklikler ve iyileştirmeler için etki analizi gerçekleştirdi.",
+      "Manuel ve otomasyon testler sırasında bulunan hatalar, eksiklikler ve iyileştirmeler için etki analizi gerçekleştirildi.",
     MilsoftMilDLPResponsibilitie7:
       "Jira üzerinde daha önce bir hata raporu açılıp açılmadığı, açılmışsa doğru açılıp açılmadığı (önem derecesi, öncelik, etki analizi, bileşen vb. alanlar) kontrol edilerek Problem Raporu kaydı oluşturuldu.",
     MilsoftMilDLPResponsibilitie8:
@@ -79,11 +79,11 @@ const translations = {
     HavelsanMBSMRespobilitiesEntySentence:
       "<b>Mikroservis mimarisi</b> ve Agile Metodolojisi Scrum uygulanarak geliştirilen MBSM projesinde <b>Yazılım Yaşam Döngüsü (SDLC)</b> ve <b>Yazılım Test Yaşam Döngüsü (STLC) 'nün tüm adımlarında</b> görev aldım.",
     HavelsanResponsibilie1:
-      "<b>Analiz ve gereksinim belirleme aşamasında,</b>MIL-STD-408 yazılım geliştirme standardı ve HVL-TEMP-SRS Havelsan doküman standardına göre Milli Savunma Bakanlığı'nın 5 Daire Başkanlığı (Fiyat Maliyet Analiz, Kalite, Tedarik, Muayene ve Bilgi İletişim daireleri) için yaklaşık 2.500 yazılım gereksiniminden oluşan gereksinim setinin oluşturulması, yönetilmesi, raporlanması, doğrulanması ve geçerli kılınması görevlerini aldım.",
+      "<b>Analiz aşamasında, </b>MIL-STD-408 yazılım geliştirme standardı ve HVL-TEMP-SRS Havelsan doküman standardına göre Milli Savunma Bakanlığı'nın 5 Daire Başkanlığı (Fiyat Maliyet Analiz, Kalite, Tedarik, Lojistik ve Bilgi İletişim) için yaklaşık 2.500 yazılım gereksiniminden oluşan gereksinim setinin oluşturulması, yönetilmesi, raporlanması, doğrulanması ve geçerli kılınması görevlerini aldım.",
     HavelsanResponsibilie2:
-      "<b>Tasarım ve geliştirme aşamalarında,</b> tanımlanan gereksinimleri karşılayacak şekilde uygulamanın tasarlanması ve geliştirilmesi, birim testlerinin yazılması, hata kayıtlarının düzeltilmesi ve Pull Requests'in gözden geçirilmesi görevlerini aldım.",
+      "<b>Tasarım ve geliştirme aşamalarında,</b> tanımlanan gereksinimleri karşılayacak şekilde uygulamanın tasarlanması ve geliştirilmesi, birim testlerinin yazılması, hata kayıtlarının düzeltilmesi ve Pull Requests'lerin gözden geçirilmesi görevlerini aldım.",
     HavelsanResponsibilie3:
-      "<b>Test aşamasında,</b>  shift-left (sola kaydırma) yaklaşımıyla hataların erken tespiti ve hata düzeltme/hatalı geliştirme maliyetinin düşürülmesi, sprintte gerçekleştirilecek testlerin planlanması, 2.500 gereksinim kümesi arasında %100 kapsama sahip test senaryosunun tasarlanması, test prosedür dokümanının oluşturulması, onaylı test prosedürlerinin Jira'da yayınlanması, statik/dinamik, fonksiyonel/fonksiyonel olmayan testlerin çalıştırılması, Jira'da etki analizi yapılarak bulunan hataların/eksikliklerin/iyileştirmelerin kayıtlarının oluşturulması ve takibi, durum toplantılarında testlerin durumunun sunulması, yinelenen/hatalı kayıtların oluşmasını önlemek için Confluence'da hata kayıtlarının standart hale getirilmesi ve regresyon testinin maliyetini düşürmek için manuel testlerin otomatize edilmesi görevlerini aldım.",
+      "<b>Test aşamasında,</b>  Shift-Left (sola kaydırma) yaklaşımıyla hataların erken tespiti ve hata düzeltme/hatalı geliştirme maliyetinin düşürülmesi, Sprint'te gerçekleştirilecek testlerin planlanması, 2.500 gereksinim kümesi arasından %100 kapsama sahip test senaryosunun tasarlanması, test prosedür dokümanının oluşturulması, onaylı test prosedürlerinin Jira'da yayınlanması, statik/dinamik, fonksiyonel/fonksiyonel olmayan testlerin çalıştırılması, etki analizi yapılarak bulunan hataların/eksikliklerin/iyileştirmelerin Jira üzerinden kayıtlarının oluşturulması ve takibi, durum toplantılarında testlerin durumunun sunulması, yinelenen/hatalı kayıtların oluşmasını önlemek için Confluence'da kurumsal hafızanın oluşturulması ve Regresyon testinin maliyetini düşürmek için manuel testlerin otomatize edilmesi görevlerini aldım.",
     HavelsanUsedTechnologiesTitle: "Kullanılan Teknolojiler:",
     MilliEgitimBakanligiAdi: "Milli Eğitim Bakanlığı",
     MilliEgitimBakanligiTitle:
@@ -104,7 +104,7 @@ const translations = {
   },
   en: {
     ResumeHeader: "Resume",
-    TotalExperience: "5+ Years of Professional Experience",
+    TotalExperience: "7+ Years of Professional Experience",
     EducationHeader: "Education",
     ExperienceHeader: "Experience",
     CertificatesHeader: "Certificates",
