@@ -38,15 +38,17 @@ const translations = {
     FreelanceExperiencePeriod: "06.2010 - 04.2021 & 05.2023 - Halen",
     FreelanceExperienceCompanyName: "Serbest Çalışan",
     FreelanceExperienceTitle:
-      "Full Stack Agile Yazılım Geliştirici & IT İş Analisti (Sistem Mühendisi) & Agile Test Mühendisi & Blog Yazarı",
+      "IT İş Analisti (Sistem Mühendisi) & Full Stack Agile Yazılım Geliştirici & Agile Test Mühendisi & Blog Yazarı",
+    FreelanceExperienceDescription0:
+      "Full Stack Agile Developer, IT Business Analyst (Sistem Mühendisi), Agile Tester ve Blogger olarak birden fazla şapka takıyorum.",
     FreelanceExperienceDescription1:
-      "Gereksinim analizi ve gereksinim yönetimi becerilerimle, insanların sorunlarını çözecek doğru yazılımların üretilmesini sağlıyorum.",
+      "INCOSE yönergelerine ve endüstri standartlarına dayanan sistem mühendisliği pratiklerini uygulayarak, yazılım çözümlerinin hem amaca uygun hem de paydaş beklentileriyle uyumlu olmasını sağlıyorum - ihtiyaçları kapsamlı bir şekilde yakalıyor, bunları net, maliyet etkin eyleme geçirilebilir gereksinimlere dönüştürüyor ve geliştirme yaşam döngüsü boyunca izlenebilirliği sürdürüyorum.",
     FreelanceExperienceDescription2:
-      "Test Mühendisliği becerilerimle kaliteli, kullanışlı yazılımların üretilmesini sağlıyorum.",
+      "ISTQB uyumlu test uzmanlığımdan yararlanarak, yazılımın hem doğrulanmasını hem de onaylanmasını sağlayan kapsamlı test stratejileri tasarlıyor ve uyguluyorum - yazılımın doğru şekilde oluşturulduğunu ve kullanıcı ihtiyaçlarını karşıladığını onaylıyorum. Hatalar için yapılandırılmış kök neden analizi yapıyorum, açık ve izlenebilir hata raporları açıyorum, zamanında çözüm ve sürekli kalite iyileştirme sağlamak için tüm hata yaşam döngüsünü etkili bir şekilde yönetiyorum.",
     FreelanceExperienceDescription3:
-      "Kodlama becerilerimle, gereksinim bazlı yazılım geliştiriyorum. Ayrıca manuel testlerde ki regresyon testlerini otomatikleştirerek test eforunu ve insan hatalarını azaltıyorum.",
+      "Güçlü programlama becerilerimle, gereksinimleri sağlam, bakımı yapılabilir uygulamalar olarak hayata geçirirken, verimliliği artırmak ve riski en aza indirmek için regresyon testlerini otomatikleştiriyorum.",
     FreelanceExperienceDescription4:
-      "Deneyimlerimi medium sayfamda paylaşıyorum.",
+      "Görüşlerimi ve deneyimlerimi düzenli olarak Medium'da paylaşıyorum.",
     FreelanceExperienceUsedTechnologiesTitle: "Kullanılan Teknolojiler:",
     MilsoftTitle: "Kıdemli Sistem / Test Mühendisi",
     MilsoftMilDLPDescription:
@@ -91,7 +93,7 @@ const translations = {
     MilliEgitimBakanligiDescription:
       "Küçük yaşta kodlama eğitimine başlayan çocuklar; zihinsel gelişim, problem çözme becerileri, iş planlama, durumlar arasında ilişki kurma ve yeni fikirler üretme gibi alanlarda daha fazla gelişim göstermektedirler.",
     MilliEgitimBakanligiDescription2:
-      "Bilinen bu faydalar ile Ortaokul öğrencilerinin Türkiye Cumhuriyeti devletine daha faydalı bireyler olacağını düşünerek savunma sanayii firmalarına yaptığım iş başvuruları sonuçlanana kadar Bilgi İletişim Teknolojileri Öğretmeni ve TÜBİTAK 4006 Proje Yöneticisi olarak görev aldım.",
+      "Bilinen bu faydalar ile Ortaokul öğrencilerinin Türkiye Cumhuriyeti devletine daha faydalı bireyler olacağını düşünerek, Bilgi İletişim Teknolojileri Öğretmeni ve TÜBİTAK 4006 Proje Yöneticisi olarak görev aldım.",
     MilliEgitimBakanligiYapilanlar:
       "Ortaokul öğrencilerinin bilişim teknolojileri alanında yazılıma ilgi duymalarını sağlayan 26 farklı projenin eş zamanlı olarak zamanında tamamlanmasını sağladım.",
     MilliEgitimBakanligiYapilanlar2:
@@ -139,17 +141,19 @@ const translations = {
     FreelanceExperiencePeriod: "06.2010 - 04.2021 & 05.2023 - Currently",
     FreelanceExperienceCompanyName: "Freelance",
     FreelanceExperienceTitle:
-      "Full Stack Agile Software Developer & IT Business Analyst (System Engineer) & Agile Tester & Blogger",
+      "Business Analyst (Systems Engineer) & Full Stack Agile Developer & Agile Tester & Blogger",
+    FreelanceExperienceDescription0:
+      "I wear multiple hats as a Full Stack Agile Developer, IT Business Analyst (Systems Engineer), Agile Tester, and Blogger.",
     FreelanceExperienceDescription1:
-      "With my requirements analysis and requirements management skills, I ensure the production of the right software that would solve people's problems.",
+      "As a systems engineer proficient in INCOSE-aligned practices, I analyze and manage stakeholder needs to ensure that software is not only built right, but also built for the right reasons. I drive clarity across all stages of the project by eliciting, documenting, and validating requirements — maintaining traceability and alignment with business goals.",
     FreelanceExperienceDescription2:
-      "With my Test Engineering skills, I ensure the production of quality, useful software.",
+      "As an ISTQB-oriented Agile Tester, I design and implement structured, risk-based test strategies that ensure comprehensive verification and validation across all stages of the software lifecycle — confirming that the product is not only built correctly but also fulfills real user needs. I validate both functional and non-functional requirements, assess usability, and ensure robust performance under real-world conditions. I conduct root cause analysis to identify underlying issues, create clear and traceable defect reports, and manage the defect lifecycle efficiently to support timely resolution, reduce rework, and drive continuous quality improvement.",
     FreelanceExperienceDescription3:
-      "With my coding skills, I develop the software according to the requirements. I also automate regression tests in manual tests, reducing testing effort and human errors.",
+      " As a full stack agile developer, I translate requirements into scalable, maintainable code — delivering robust applications using modern technologies. I also design and maintain automated regression suites, reducing manual effort, accelerating feedback loops, and increasing release confidence.",
     FreelanceExperienceDescription4:
-      "I share my experiences on my medium page.",
+      "I regularly share technical insights and personal reflections through my Medium blog, contributing to the community.",
     FreelanceExperienceUsedTechnologiesTitle: "Used Technologies:",
-    MilsoftTitle: "Senior System / Test Engineer",
+    MilsoftTitle: "Senior Systems / Test Engineer",
     MilsoftMilDLPDescription:
       "MilSOFT is the only company in the Turkish Defense Industry to reach the <b>CMMI-5</b> level with 100% coverage in all of its projects. </br> Mil-DLP (MilSOFT Multi Data Link Processor) is a system that provides multi-link processing capability to share tactical information among surface, subsurface, air, and land platforms/units.",
     MilsoftMilDLPResponsibilitiesEntySentence:
@@ -171,7 +175,7 @@ const translations = {
     MilsoftMilDLPResponsibilitie8:
       "Performed verification and regression tests of the Problem Report/Features whose status is Testing Request.",
     MilsoftMilDLPUsedTechnologiesTitle: "Used Technologies:",
-    HavelsanTitle: "Senior Software - System / Test Engineer",
+    HavelsanTitle: "Senior Software - Systems / Test Engineer",
     HavelsanDescription:
       "HAVELSAN is a Defense Industry Company (#99 on the 2020 top list of DefenseNews) mainly focused on large-scale software projects.",
     HavelsanMBSMDescription:
@@ -192,11 +196,11 @@ const translations = {
     MilliEgitimBakanligiDescription:
       "Children starting coding education at an early age; show more development in mental development, problem-solving skills, planning of work, establishing relationships between situations, and generating new ideas.",
     MilliEgitimBakanligiDescription2:
-      "With 4006-TUBITAK Science Fair Projects, the mental development of Vehbi Dincerler Secondary School students makes them more successful in coding in the years ahead. Considering that secondary school students will be more beneficial individuals in the state of the Republic of Turkey with these known benefits, I worked as an IT and Technology teacher and TUBITAK 4006 project manager until my job applications for defense industry companies were concluded.",
+      "With 4006-TUBITAK Science Fair Projects, the mental development of Vehbi Dincerler Secondary School students makes them more successful in coding in the years ahead. Considering that secondary school students will be more beneficial individuals in the state of the Republic of Turkey with these known benefits, I worked as an IT and Technology teacher and TUBITAK 4006 project manager.",
     MilliEgitimBakanligiYapilanlar:
       "I ensured that 26 different projects that got secondary school students interested in software in the field of information technologies were completed on time simultaneously.",
     MilliEgitimBakanligiYapilanlar2:
-      "I established the Gazi University Library.",
+      "I ensured the establishment of the school library.",
     MilliEgitimBakanligiUsedTechnologiesTitle: "Used Technologies:",
     flag: "https://flagcdn.com/w40/gb.png",
     langText: "English",
@@ -285,6 +289,8 @@ document.querySelectorAll(".dropdown-item").forEach((item) => {
       translations[selectedLang].FreelanceExperienceCompanyName;
     document.getElementById("FreelanceExperienceTitle").innerText =
       translations[selectedLang].FreelanceExperienceTitle;
+    document.getElementById("FreelanceExperienceDescription0").innerText =
+      translations[selectedLang].FreelanceExperienceDescription0;
     document.getElementById("FreelanceExperienceDescription1").innerText =
       translations[selectedLang].FreelanceExperienceDescription1;
     document.getElementById("FreelanceExperienceDescription2").innerText =
@@ -464,6 +470,8 @@ window.addEventListener("load", function () {
     translations[savedLang].FreelanceExperienceCompanyName;
   document.getElementById("FreelanceExperienceTitle").innerText =
     translations[savedLang].FreelanceExperienceTitle;
+  document.getElementById("FreelanceExperienceDescription0").innerText =
+    translations[savedLang].FreelanceExperienceDescription0;
   document.getElementById("FreelanceExperienceDescription1").innerText =
     translations[savedLang].FreelanceExperienceDescription1;
   document.getElementById("FreelanceExperienceDescription2").innerText =
