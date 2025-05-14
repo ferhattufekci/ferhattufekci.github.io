@@ -73,7 +73,8 @@ const translations = {
     MilsoftMilDLPResponsibilitie8:
       "Durumu Test Talebi olan Sorun Raporu/İş kayıtlarının doğrulama ve regresyon testleri gerçekleştirildi.",
     MilsoftMilDLPUsedTechnologiesTitle: "Kullanılan Teknolojiler:",
-    HavelsanTitle: "Kıdemli Yazılım - Sistem / Test Mühendisi",
+    HavelsanTitle:
+      "Kıdemli Full-Stack Agile Geliştirici & İş Analisti (Sistem Mühendisi) & Agile Tester",
     HavelsanDescription:
       "HAVELSAN, ağırlıklı olarak büyük ölçekli yazılım projelerine odaklanmış Savunma Sanayii Şirketidir (DefenseNews'in 2020 üst listesinde 99. sırada).",
     HavelsanMBSMDescription:
@@ -175,7 +176,8 @@ const translations = {
     MilsoftMilDLPResponsibilitie8:
       "Performed verification and regression tests of the Problem Report/Features whose status is Testing Request.",
     MilsoftMilDLPUsedTechnologiesTitle: "Used Technologies:",
-    HavelsanTitle: "Senior Software - Systems / Test Engineer",
+    HavelsanTitle:
+      "Senior Full-Stack Agile Developer & Business Analyst (Systems Engineer) & Agile Tester",
     HavelsanDescription:
       "HAVELSAN is a Defense Industry Company (#99 on the 2020 top list of DefenseNews) mainly focused on large-scale software projects.",
     HavelsanMBSMDescription:
