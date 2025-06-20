@@ -1,7 +1,7 @@
 const translations = {
   tr: {
     ResumeHeader: "Özgeçmiş",
-    TotalExperience: "7+ Yıllık Profesyonel Deneyim",
+    TotalExperience: "10+ Yıllık Profesyonel Deneyim",
     EducationHeader: "Eğitim",
     ExperienceHeader: "Deneyim",
     CertificatesHeader: "Sertifikalar",
@@ -107,7 +107,7 @@ const translations = {
   },
   en: {
     ResumeHeader: "Resume",
-    TotalExperience: "7+ Years of Professional Experience",
+    TotalExperience: "10+ Years of Professional Experience",
     EducationHeader: "Education",
     ExperienceHeader: "Experience",
     CertificatesHeader: "Certificates",
