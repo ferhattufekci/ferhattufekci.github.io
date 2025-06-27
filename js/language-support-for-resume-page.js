@@ -44,7 +44,7 @@ const translations = {
     FreelanceExperienceDescription1:
       "INCOSE yönergelerine ve endüstri standartlarına dayanan sistem mühendisliği pratiklerini uygulayarak, yazılım çözümlerinin hem amaca uygun hem de paydaş beklentileriyle uyumlu olmasını sağlıyorum - ihtiyaçları kapsamlı bir şekilde yakalıyor, bunları net, maliyet etkin eyleme geçirilebilir gereksinimlere dönüştürüyor ve geliştirme yaşam döngüsü boyunca izlenebilirliği sürdürüyorum.",
     FreelanceExperienceDescription2:
-      "ISTQB uyumlu test uzmanlığımdan yararlanarak, yazılımın hem doğrulanmasını hem de onaylanmasını sağlayan kapsamlı test stratejileri tasarlıyor ve uyguluyorum - yazılımın doğru şekilde oluşturulduğunu ve kullanıcı ihtiyaçlarını karşıladığını onaylıyorum. Hatalar için yapılandırılmış kök neden analizi yapıyorum, açık ve izlenebilir hata raporları açıyorum, zamanında çözüm ve sürekli kalite iyileştirme sağlamak için tüm hata yaşam döngüsünü etkili bir şekilde yönetiyorum.",
+      "ISTQB pratiklerini uygulayarak, yazılımın hem doğrulanmasını hem de onaylanmasını sağlayan kapsamlı test stratejileri tasarlıyor ve uyguluyorum - yazılımın doğru şekilde oluşturulduğunu ve kullanıcı ihtiyaçlarını karşıladığını onaylıyorum. Hatalar için yapılandırılmış kök neden analizi yapıyorum, açık ve izlenebilir hata raporları açıyorum, zamanında çözüm ve sürekli kalite iyileştirme sağlamak için tüm hata yaşam döngüsünü etkili bir şekilde yönetiyorum.",
     FreelanceExperienceDescription3:
       "Güçlü programlama becerilerimle, gereksinimleri sağlam, bakımı yapılabilir uygulamalar olarak hayata geçirirken, verimliliği artırmak ve riski en aza indirmek için regresyon testlerini otomatikleştiriyorum.",
     FreelanceExperienceDescription4:
