@@ -7,7 +7,7 @@
          Ferhat Tüfekçi - Computer Engineer | Full Stack Agile Developer | Agile Tester |
          IT Business Analyst (Systems Engineer)
       </title>
-      <meta name="viewport" content="width=device-width, initial-scale=0.75"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta name="keywords" content="Ferhat Tüfekçi, Computer Engineer, Full Stack Developer, IT Business Analyst, Systems Engineer, Agile Tester, Software Engineer, Software Development, Software Testing, DevOps, DevTestOps" />
       <meta name="author" content="Ferhat Tüfekçi" />
       <meta name="description" content="π-shaped computer engineer with strong skills in Agile development, systems analysis, and testing.">
@@ -210,44 +210,107 @@
            data-y_margin="100"></script>  <!-- 12px artırıldı -->              
 </div>
 
-<!-- Calendly badge widget begin -->
+<<!-- Calendly badge widget with permanent close -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
 <style>
+  /* Original positioning preserved exactly */
   .calendly-badge-widget {
-    bottom: 180px !important;  /* 32px artırıldı (148->180) */
+    bottom: 180px !important;
     right: 27px !important;
     z-index: 98;
     transition: all 0.3s ease;
   }
   
-  /* Diğer stiller aynı kalıyor */
+  /* Close button styling */
   .calendly-badge-content {
+    position: relative !important;
     border-radius: 6px !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
   }
   
+  .calendly-close-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: #666;
+    z-index: 99;
+    transition: all 0.2s ease;
+  }
+  
+  .calendly-close-btn:hover {
+    background: #f5f5f5;
+    color: #333;
+  }
+  
+  /* Completely hidden state */
+  .calendly-permanently-hidden {
+    display: none !important;
+  }
+  
   @media (max-width: 768px) {
     .calendly-badge-widget {
-      bottom: 210px !important;  /* Mobilde daha fazla boşluk */
+      bottom: 210px !important;
     }
   }
 </style>
+
+<!-- Original Calendly container -->
+<div id="calendlyContainer">
+  <!-- Calendly badge will be inserted here -->
+</div>
+
 <script type="text/javascript">
-   window.onload = function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if widget was previously closed
+    if (localStorage.getItem('calendlyPermanentlyClosed') !== 'true') {
+      // Initialize Calendly with original positioning
       Calendly.initBadgeWidget({
-         url: 'https://calendly.com/ferhattufekci/30min',
-         text: 'Set Up A Job Interview',
-         color: '#0069ff',
-         textColor: '#ffffff',
-         branding: false,
-         right: '27px',
-         bottom: '180px',  /* 32px artırıldı */
-         hideEventTypeDetails: false
+        url: 'https://calendly.com/ferhattufekci/30min',
+        text: 'Set Up A Job Interview',
+        color: '#0069ff',
+        textColor: '#ffffff',
+        branding: false,
+        right: '27px',
+        bottom: '180px',
+        hideEventTypeDetails: false,
+        parentElement: document.getElementById('calendlyContainer')
       });
-   }
+      
+      // Add close button after slight delay
+      setTimeout(function() {
+        const badgeContent = document.querySelector('.calendly-badge-content');
+        if (badgeContent) {
+          const closeBtn = document.createElement('div');
+          closeBtn.className = 'calendly-close-btn';
+          closeBtn.innerHTML = '×';
+          
+          closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Permanently hide the widget
+            document.querySelector('.calendly-badge-widget').classList.add('calendly-permanently-hidden');
+            // Remember the closed state
+            localStorage.setItem('calendlyPermanentlyClosed', 'true');
+          });
+          
+          badgeContent.appendChild(closeBtn);
+        }
+      }, 1000);
+    }
+  });
 </script>
-<!-- Calendly badge widget end -->
                <!-- Copyrights -->
                <div class="copyrights">©All Rights Reserved.</div>
                <!-- / Copyrights -->
