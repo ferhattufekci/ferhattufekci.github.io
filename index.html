@@ -198,17 +198,30 @@
                <!-- / Social Links -->
 
 <!-- Buy Me a Coffee Button -->
-<div class="buy-me-a-book">
-   <script data-name="BMC-Widget" data-cfasync="false" 
-           src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" 
-           data-id="ferhattufekci" 
-           data-description="Support me on Buy me a coffee!" 
-           data-message="" 
-           data-color="#5F7FFF" 
-           data-position="right" 
-           data-x_margin="27" 
-           data-y_margin="100"></script>  <!-- 12px artırıldı -->              
+<div style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
+  <script
+    data-name="BMC-Widget"
+    data-cfasync="false"
+    src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    data-id="ferhattufekci"
+    data-description="Support me on Buy me a coffee!"
+    data-message=""
+    data-color="#5F7FFF"
+    data-position=""
+    data-x_margin="20"
+    data-y_margin="55"
+  ></script>
 </div>
+<!-- / Buy Me a Coffee Button -->
+
+<style>
+  .buy-me-a-book-container {
+    position: relative;
+    z-index: 9999;
+    transform: scale(0.85);  <!-- Buton boyutunu %85 ölçeklendir -->
+    transform-origin: right bottom;  <!-- Dönüşüm merkezini sağ alt köşe yap -->
+  }
+</style>
 
 <<!-- Calendly badge widget with permanent close -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
