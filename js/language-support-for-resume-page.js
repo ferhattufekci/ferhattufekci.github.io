@@ -40,7 +40,7 @@ const translations = {
     FreelanceExperienceTitle:
       "IT İş Analisti (Sistem Mühendisi) & Full Stack Agile Yazılım Geliştirici & Agile Test Mühendisi & Blog Yazarı",
     FreelanceExperienceDescription0:
-      "Full Stack Agile Developer, IT Business Analyst (Sistem Mühendisi), Agile Tester ve Blogger olarak birden fazla şapka takıyorum.",
+      "Full Stack Agile Developer, IT Business Analyst (Sistem Mühendisi), Agile Tester ve Blogger rollerinde aktif olarak görev almaktayım.",
     FreelanceExperienceDescription1:
       "INCOSE yönergelerine ve endüstri standartlarına dayanan sistem mühendisliği pratiklerini uygulayarak, yazılım çözümlerinin hem amaca uygun hem de paydaş beklentileriyle uyumlu olmasını sağlıyorum - ihtiyaçları kapsamlı bir şekilde yakalıyor, bunları net, maliyet etkin eyleme geçirilebilir gereksinimlere dönüştürüyor ve geliştirme yaşam döngüsü boyunca izlenebilirliği sürdürüyorum.",
     FreelanceExperienceDescription2:
