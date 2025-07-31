@@ -6,11 +6,6 @@ const translations = {
     ExperienceHeader: "Deneyim",
     CertificatesHeader: "Sertifikalar",
     ExamsHeader: "Sınav Sonuçları",
-    GaziMSCEducationTimePeriod: "2022 - Halen",
-    GaziUniversityName: "Gazi Üniversitesi",
-    GaziMSCEducationDegree: "Yüksek Lisans",
-    GaziMSCEducationDepartmantName: "Bilişim Sistemleri",
-    LessonsLearnedatMSC: "Alınan Dersler:",
     MiuulDataScienceBootcampName:
       "Veri Bilimi ve Makine Öğrenimi Eğitim Kampı Katılımcısı",
     MiuulDataScienceBootcampName:
@@ -112,11 +107,6 @@ const translations = {
     ExperienceHeader: "Experience",
     CertificatesHeader: "Certificates",
     ExamsHeader: "Exam Results",
-    GaziMSCEducationTimePeriod: "2022 - Currently",
-    GaziUniversityName: "Gazi University",
-    GaziMSCEducationDegree: "M.Sc.",
-    GaziMSCEducationDepartmantName: "Information Systems",
-    LessonsLearnedatMSC: "Lessons Learned:",
     MiuulDataScienceBootcampName:
       "Data Science & Machine Learning Bootcamp Participant",
     bootcampDescription:
@@ -253,14 +243,6 @@ document.querySelectorAll(".dropdown-item").forEach((item) => {
       translations[selectedLang].ExamsHeader;
     document.getElementById("CertificatesHeader").innerText =
       translations[selectedLang].CertificatesHeader;
-    document.getElementById("GaziMSCEducationTimePeriod").innerText =
-      translations[selectedLang].GaziMSCEducationTimePeriod;
-    document.getElementById("GaziMSCEducationDegree").innerText =
-      translations[selectedLang].GaziMSCEducationDegree;
-    document.getElementById("GaziMSCEducationDepartmantName").innerText =
-      translations[selectedLang].GaziMSCEducationDepartmantName;
-    document.getElementById("LessonsLearnedatMSC").innerText =
-      translations[selectedLang].LessonsLearnedatMSC;
     document.getElementById("MiuulDataScienceBootcampName").innerText =
       translations[selectedLang].MiuulDataScienceBootcampName;
     document.getElementById("ProjectsAndLessonsLearnedatMiuul").innerText =
@@ -371,17 +353,6 @@ document.querySelectorAll(".dropdown-item").forEach((item) => {
     document.getElementById("TotalExperience").innerText =
       translations[selectedLang].TotalExperience;
 
-    // Gazi University Adı Değiştirirken İç Yapısını Korumak
-    let gaziUniversityElement = document.getElementById("GaziUniversityName");
-    let h6Element = gaziUniversityElement.querySelector("h6"); // h6'yı al
-    let universityText = translations[selectedLang].GaziUniversityName;
-
-    gaziUniversityElement.innerHTML = ""; // Mevcut içeriği temizle
-    gaziUniversityElement.appendChild(h6Element); // Önce h6 ekle
-    gaziUniversityElement.appendChild(
-      document.createTextNode(" " + universityText)
-    ); // Üniversite adını ekle
-
     // FD Gazi University Adı Değiştirirken İç Yapısını Korumak
     let fdGaziUniversityElement = document.getElementById("FDUnivesityName");
     let fdGazih6Element = fdGaziUniversityElement.querySelector("h6"); // h6'yı al
@@ -432,14 +403,6 @@ window.addEventListener("load", function () {
     translations[savedLang].CertificatesHeader;
   document.getElementById("ExamsHeader").innerText =
     translations[savedLang].ExamsHeader;
-  document.getElementById("GaziMSCEducationTimePeriod").innerText =
-    translations[savedLang].GaziMSCEducationTimePeriod;
-  document.getElementById("GaziMSCEducationDegree").innerText =
-    translations[savedLang].GaziMSCEducationDegree;
-  document.getElementById("GaziMSCEducationDepartmantName").innerText =
-    translations[savedLang].GaziMSCEducationDepartmantName;
-  document.getElementById("LessonsLearnedatMSC").innerText =
-    translations[savedLang].LessonsLearnedatMSC;
   document.getElementById("MiuulDataScienceBootcampName").innerText =
     translations[savedLang].MiuulDataScienceBootcampName;
   document.getElementById("ProjectsAndLessonsLearnedatMiuul").innerText =
@@ -547,17 +510,6 @@ window.addEventListener("load", function () {
     "FreelanceExperienceUsedTechnologiesTitle"
   ).innerText =
     translations[savedLang].FreelanceExperienceUsedTechnologiesTitle;
-
-  // Gazi University Adı Değiştirirken İç Yapısını Korumak
-  let gaziUniversityElement = document.getElementById("GaziUniversityName");
-  let h6Element = gaziUniversityElement.querySelector("h6"); // h6'yı al
-  let universityText = translations[savedLang].GaziUniversityName;
-
-  gaziUniversityElement.innerHTML = ""; // Mevcut içeriği temizle
-  gaziUniversityElement.appendChild(h6Element); // Önce h6 ekle
-  gaziUniversityElement.appendChild(
-    document.createTextNode(" " + universityText)
-  ); // Üniversite adını ekle
 
   // FD Gazi University Adı Değiştirirken İç Yapısını Korumak
   let fdGaziUniversityElement = document.getElementById("FDUnivesityName");
