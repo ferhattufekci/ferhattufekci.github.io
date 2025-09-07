@@ -40,24 +40,24 @@
 
 /* Adsense reklam düzenlemeleri */
 .ads-resume-post-advertising {
-  text-align: center; /* reklamı ortala */
-  margin: 20px auto; /* üst-alt boşluk bırak */
-  max-width: 10%; /* container taşmasını engelle */
-  overflow: hidden; /* sağa-sola kaymayı engeller */
-  box-sizing: border-box; /* padding ve border hesaba katılsın */
+  text-align: center;      
+  margin: 20px auto;       
+  max-width: 100%;         
+  overflow: hidden;        
+  box-sizing: border-box;  
 }
 
 .ads-resume-post-advertising ins {
   display: block !important;
   max-width: 100% !important;
   height: auto !important;
-  width: 100% !important; /* iframe %100 genişlikte olsun */
+  /* width:100% !important;  <<--- bunu kaldırdık */
 }
 
 @media (max-width: 768px) {
   .ads-resume-post-advertising {
     margin: 10px auto;
-    padding: 0 5px; /* mobilde kenarlara biraz boşluk bırak */
+    padding: 0 5px;
   }
 }
 
