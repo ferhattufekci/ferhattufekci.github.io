@@ -1,0 +1,31 @@
+{
+  "_note": "Positive control for scripts/ci/dependency-audit.mjs. Never installed: it is written to a temporary directory and audited from the lockfile only. minimist 0.0.8 has the critical advisory GHSA-xvch-5gv4-984h.",
+  "package": {
+    "name": "audit-canary",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+      "minimist": "^0.0.8"
+    }
+  },
+  "lockfile": {
+    "name": "audit-canary",
+    "version": "1.0.0",
+    "lockfileVersion": 3,
+    "requires": true,
+    "packages": {
+      "": {
+        "name": "audit-canary",
+        "version": "1.0.0",
+        "dependencies": {
+          "minimist": "^0.0.8"
+        }
+      },
+      "node_modules/minimist": {
+        "version": "0.0.8",
+        "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz",
+        "integrity": "sha512-miQKw5Hv4NS1Psg2517mV4e4dYNaO3++hjAvLOAzKqZ61rH8NS1SK+vbfBWZ5PY/Me/bEWhUwqMghEW5Fb9T7Q=="
+      }
+    }
+  }
+}

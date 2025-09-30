@@ -1,0 +1,23 @@
+{
+  "articles": {
+    "A": {"title":"İş Analizi: O'Brien & “Güven”","url":"https://medium.com/@fixture/%C4%B0%C5%9F-analizi-a1?member=abc%2Bdef&source=rss#b%C3%B6l%C3%BCm","lang":"tr","date":"2026-01-03T12:00:00Z","excerpt":"Bağımsız Türkçe kabul verisi.","thumbnail":null},
+    "B": {"title":"A different article","url":"https://medium.com/@fixture/article-b2?source=other&x=1#details","lang":"en","date":"2026-01-01T12:00:00Z","excerpt":"Independent English acceptance data.","thumbnail":null},
+    "U": {"title":"Unicode URL örneği","url":"https://medium.com/@fixture/İş-analizi?başlık=O'Brien&x=%26#özet","lang":"tr","date":"2026-01-02T12:00:00Z","excerpt":"Unicode ve yüzde kodlaması korunur.","thumbnail":null}
+  },
+  "messages": {
+    "tr": {"READ":"Oku","SHARE":"Paylaş","COPY":"Bağlantıyı Kopyala","ARTICLE_URL":"Yazı bağlantısı","COPY_PENDING":"Bağlantı kopyalanıyor.","COPY_BUSY":"Bir kopyalama işlemi sürüyor. Bitince yeniden deneyin.","COPY_SUCCESS":"Bağlantı Kopyalandı","COPY_MANUAL":"Otomatik kopyalanamadı. Bağlantıyı seçip kopyalayın.","NATIVE_PENDING":"Paylaşım sürüyor…","NATIVE_BUSY":"Paylaşım sürüyor. Lütfen bekleyin.","NATIVE_ABORT":"Paylaşım yapılmadı.","NATIVE_ERROR":"Paylaşım açılamadı. Bağlantıyı kopyalayabilirsiniz."},
+    "en": {"READ":"Read","SHARE":"Share","COPY":"Copy Link","ARTICLE_URL":"Article link","COPY_PENDING":"Copying the link.","COPY_BUSY":"A copy operation is in progress. Try again when it finishes.","COPY_SUCCESS":"Link Copied","COPY_MANUAL":"Automatic copying was unavailable. Select and copy the link.","NATIVE_PENDING":"Sharing…","NATIVE_BUSY":"Sharing… Please wait.","NATIVE_ABORT":"Sharing was not completed.","NATIVE_ERROR":"Sharing unavailable. You can copy the link."}
+  },
+  "retiredNativeLabels": {"tr":"Diğer Yollar","en":"Other Ways"},
+  "retiredNativeResultMessages": {"tr":"Paylaşım işlemi tamamlandı","en":"Share action completed"},
+  "invalidUrls": [null,17,{},"","   "," https://medium.com/a","https://medium.com/a ","https://medium.com/a\nb","https://","not a url","/relative","//medium.com/a","http://medium.com/a","https://user:pass@medium.com/a","javascript:alert(1)","data:text/html,<script>alert(1)</script>"],
+  "hostileTitle":"<img src=x onerror=alert(1)> & paylaş",
+  "existingExternalResources": [
+    "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555",
+    "https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js",
+    "https://www.googletagmanager.com/gtag/js?id=G-Z00CDE35NT",
+    "https://assets.calendly.com/assets/external/widget.js",
+    "https://assets.calendly.com/assets/external/widget.css",
+    "https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i"
+  ]
+}

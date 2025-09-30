@@ -1,0 +1,46 @@
+/* Build identity is static artifact chrome, shared by the menu and document footer. */
+.build-info-row {
+  margin-top: 8px;
+  min-width: 0;
+}
+
+.build-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  min-height: 24px;
+  /* Keep the entire focus box away from a rounded viewport/scrollport edge. */
+  scroll-margin-block: 8px;
+  color: var(--color-accessible-link, #0076b1);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.build-info__label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.build-info svg {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  fill: currentColor;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .build-info:hover .build-info__label { text-decoration: underline; }
+}
+
+.build-info:focus-visible {
+  outline: 2px solid var(--color-accent, #0099e5);
+  outline-offset: 3px;
+}
+
+.trust-document footer .build-info-row {
+  flex-basis: 100%;
+}

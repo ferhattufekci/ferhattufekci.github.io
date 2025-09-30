@@ -1,0 +1,67 @@
+name: Recover Production Release
+
+# Follows a finished production run and, only for infrastructure causes (job
+# deadline, superseded by a newer main commit), starts the follow-up run that
+# the failure prevented. Genuine test failures are never retried.
+#
+# Rollout: the workflow only OBSERVES (reports its decision in the run summary)
+# until the repository variable PORTFOLIO_RECOVERY_ACT is set to 'true'. A manual
+# dispatch always observes, so past runs can be classified without side effects.
+# See docs/CI-CD.md "Release recovery rollout".
+on:
+  workflow_run:
+    workflows:
+      - Portfolio CI/CD
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      run-id:
+        description: Portfolio CI/CD run id to classify (observe only)
+        required: true
+        type: string
+      attempt:
+        description: Run attempt to classify
+        required: true
+        default: '1'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  # One group per observed run: a shared group would keep only one pending run
+  # and silently drop the recovery of another failed run.
+  group: portfolio-recovery-${{ github.event.workflow_run.id || inputs.run-id }}
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    name: Recover Release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: github.repository == 'ferhattufekci/ferhattufekci.github.io' && ((github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && (github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'cancelled')))
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      # workflow_run executes the default branch's workflow with a write token,
+      # so only trusted main code is checked out; no pull request code runs here.
+      - name: Check out default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: Recover release when the cause is infrastructure
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id || inputs.run-id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt || inputs.attempt }}
+          RECOVERY_ACT: ${{ github.event_name == 'workflow_run' && vars.PORTFOLIO_RECOVERY_ACT == 'true' && 'true' || 'false' }}
+        run: node scripts/ci/commands.mjs recover "$RUN_ID" "$RUN_ATTEMPT"
