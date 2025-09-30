@@ -1,0 +1,150 @@
+/* One natural-height control row and one vertical scroll owner per content page. */
+.js body:has(.panel-page.pt-page-current) {
+  overflow: hidden;
+}
+.js .pt-page.panel-page {
+  --panel-inline-space: 70px;
+  --panel-top-space: 28px;
+  --panel-controls-end-space: 16px;
+  overflow: hidden;
+}
+.js .panel-page > .section-inner {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  /* Fluid ads can set an inline height:auto!important on this application grid.
+     Keep its containing-page bound without changing provider creative sizes. */
+  max-height: 100%;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.js .page-controls-panel {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding: var(--panel-top-space) var(--panel-inline-space) var(--panel-controls-end-space);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.js .page-controls-panel > .section-title-block {
+  margin: 0 0 12px;
+}
+.js .page-controls-panel .section-description {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 32px;
+}
+.js .page-controls-panel .category-filter-scroll {
+  margin-bottom: 0;
+}
+.page-controls-panel .sync-badge:empty { display: none; }
+.js .page-content-panel {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  padding: 16px var(--panel-inline-space) 60px;
+  scroll-padding-block: 16px;
+}
+/* The panel is this page's vertical scroll owner, so the desktop scrollbar design
+   must be applied to it directly: the shared rules in main.css and dark-theme.css
+   name .pt-page, which is overflow:hidden here, and left this scroller with the
+   browser default (15px, light track). The page arrows (.lmpixels-arrows-nav) sit
+   15px from the viewport edge, which clears this 5px bar by 10px, as on About Me,
+   but touched a 15px one. Applied by input device rather than width, so touch
+   devices keep their overlay scrollbars and narrow desktop windows are covered. */
+@media (any-hover: hover) and (any-pointer: fine) {
+  .js .page-content-panel::-webkit-scrollbar { width: 5px; }
+  .js .page-content-panel::-webkit-scrollbar-track { background-color: var(--color-surface); }
+  .js .page-content-panel::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar-thumb);
+    outline: 1px solid slategrey;
+  }
+  /* Browsers without ::-webkit-scrollbar (Firefox) take the standard properties;
+     setting them in Chromium would switch off the rules above. */
+  @supports not selector(::-webkit-scrollbar) {
+    .js .page-content-panel {
+      scrollbar-width: thin;
+      scrollbar-color: slategrey var(--color-surface);
+    }
+  }
+}
+/* Touch / narrow viewports: the panel scrolls here too, but the rule above is gated
+   to fine pointers. Use the same desktop design as .pt-page (dark-theme.css) so every
+   page scrolls with one consistent indicator. */
+@media (max-width: 991px), (hover: none) and (pointer: coarse) {
+  .js .page-content-panel::-webkit-scrollbar { width: 5px; }
+  .js .page-content-panel::-webkit-scrollbar-track { background-color: var(--color-surface); }
+  .js .page-content-panel::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar-thumb);
+    outline: 1px solid slategrey;
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    .js .page-content-panel {
+      scrollbar-width: thin;
+      scrollbar-color: slategrey var(--color-surface);
+    }
+  }
+}
+/* Let the last heading reach the top even when its disclosure is closed.
+   Keep the PDF in natural flow; unused space follows the final content. */
+.resume-ending { margin-top: 46px; }
+.resume-ending > .resume-section { margin-top: 0; }
+.js #resume-content > .resume-ending {
+  display: flow-root;
+  flex: none;
+  min-height: 100%;
+}
+.page-content-panel:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: -3px;
+}
+@media (max-width: 991px) {
+  .js .pt-page.panel-page {
+    --panel-inline-space: 30px;
+    --panel-top-space: 16px;
+    --panel-controls-end-space: 12px;
+  }
+}
+@media (max-height: 500px) {
+  .js .pt-page.panel-page {
+    --panel-top-space: 8px;
+    --panel-controls-end-space: 8px;
+  }
+  .js .page-controls-panel > .section-title-block { margin-bottom: 6px; }
+  .js .page-controls-panel .section-title { margin-bottom: 2px; }
+  .js .page-controls-panel .section-title::after { margin-top: 0; }
+}
+@media print {
+  /* Release the screen's height chain only when one of these pages is printed. */
+  .js body:has(.panel-page.pt-page-current),
+  body:has(.panel-page.pt-page-current) :is(.page, .site-main, .pt-wrapper, .subpages) {
+    position: static;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    perspective: none;
+  }
+  body:has(.panel-page.pt-page-current) :is(.header, .mobile-header, .lmpixels-arrows-nav) { display: none; }
+  .js .panel-page.pt-page-current,
+  .js .panel-page.pt-page-current > .section-inner,
+  .js .panel-page.pt-page-current .page-content-panel {
+    display: block;
+    position: static;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    transform: none;
+  }
+  .js .panel-page:not(.pt-page-current) { display: none; }
+  .js .page-controls-panel { position: static; }
+  .js #resume-content > .resume-ending { min-height: 0; }
+}

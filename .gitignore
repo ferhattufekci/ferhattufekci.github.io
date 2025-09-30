@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+!.env.example
+coverage/
+verification*.json
+work/
+.pages-site/
+playwright-report/
+test-results/

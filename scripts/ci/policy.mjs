@@ -1,0 +1,220 @@
+import assert from 'node:assert/strict';
+
+export const repository = 'ferhattufekci/ferhattufekci.github.io';
+export const requiredChecks = [
+  'static-checks',
+  'unit-tests',
+  'build-site',
+  'browser-tests',
+  'verify-artifact',
+  'merge-test-reports',
+  'keyboard-tests'
+];
+export function resolveSource(eventName, event, ref, sha, mainSha) {
+  assert.equal(
+    event.repository?.full_name,
+    repository,
+    'Unexpected repository'
+  );
+  if (eventName === 'workflow_run') {
+    const run = event.workflow_run;
+    const writers = {
+      'Fetch Medium Articles': '.github/workflows/fetch-medium.yml',
+      'Fetch GitHub Repos': '.github/workflows/fetch-github.yml'
+    };
+    assert.ok(Object.hasOwn(writers, run?.name), 'Unexpected source workflow');
+    assert.equal(
+      run.path,
+      writers[run.name],
+      'Unexpected source workflow path'
+    );
+    assert.equal(
+      run.head_repository?.full_name,
+      repository,
+      'Untrusted source repository'
+    );
+    assert.equal(run.head_branch, 'main', 'Unexpected source branch');
+    assert.equal(run.conclusion, 'success', 'Unsuccessful source workflow');
+    assert.ok(
+      ['schedule', 'workflow_dispatch'].includes(run.event),
+      'Unexpected writer trigger'
+    );
+    // GITHUB_TOKEN's data commit is newer than workflow_run.head_sha. Resolve main
+    // once here; every subsequent job receives this immutable SHA.
+    sha = mainSha;
+  } else
+    assert.ok(
+      ['push', 'pull_request', 'workflow_dispatch'].includes(eventName),
+      'Unexpected trigger'
+    );
+  assert.match(sha, /^[a-f0-9]{40}$/, 'Invalid source SHA');
+  const selected = eventName === 'workflow_dispatch' ? event.inputs?.release_sha : undefined;
+  if (selected === undefined || selected === '') return { sha, publish: false };
+  if (typeof selected !== 'string' || !/^[a-f0-9]{40}$/.test(selected))
+    throw new Error('Release SHA must be a full commit ID');
+  assert.equal(ref, 'refs/heads/main', 'Release dispatch must target main');
+  // For a main dispatch, GitHub sets this SHA to the main tip when the run starts.
+  if (sha !== selected) throw new Error('Selected release SHA must match the dispatch commit on main');
+  return { sha: selected, publish: true };
+}
+export function requireQuality(needs) {
+  // The gate's needs must be exactly the required checks: a job added to needs but not
+  // listed here would otherwise be waited for without its result being checked.
+  assert.deepEqual(
+    Object.keys(needs).sort(),
+    [...requiredChecks].sort(),
+    'Quality Gate needs differ from the required checks'
+  );
+  for (const job of requiredChecks)
+    assert.equal(
+      needs[job]?.result,
+      'success',
+      `Required check ${job} did not succeed`
+    );
+}
+export function requireCurrentSource(expected, actual) {
+  if (typeof expected !== 'string' || !/^[a-f0-9]{40}$/.test(expected))
+    throw new Error('Invalid expected release SHA');
+  if (actual !== expected) throw new Error('Superseded source: refusing to deploy an older run');
+}
+const productionWorkflow = {
+  name: 'Portfolio CI/CD',
+  path: '.github/workflows/pages.yml'
+};
+const productionEvents = ['push', 'workflow_run', 'workflow_dispatch'];
+const timeoutAnnotation = /exceeded the maximum execution time/i;
+// A step with `timeout-minutes` fails its job with this message (job stays 'failure').
+const stepTimeoutAnnotation = /has timed out after \d+ minutes?/i;
+// The artifact client's message once its own retries of a transport or 5xx error are spent
+// (release run 43092358748: an HTML error page). Permanent errors (quota, name conflict) are
+// reported without "after N attempts" and stay genuine.
+const artifactServiceAnnotation = /^Failed to CreateArtifact: Failed to make request after \d+ attempts:/;
+const hasNote = (annotations, job, pattern) =>
+  (annotations?.[job.id] || []).some((note) => pattern.test(note.message || ''));
+const onlyNotes = (annotations, job, pattern) => {
+  const notes = annotations?.[job.id] || [];
+  return notes.length > 0 && notes.every((note) => pattern.test(note?.message || ''));
+};
+const supersededStep = 'Reject superseded release';
+// Downstream aggregators fail because an upstream job did; they carry no cause.
+const aggregateJobs = ['Merge Test Reports', 'Quality Gate'];
+const jobLabel = (job) => String(job.name).split(' / ').pop();
+const isAggregate = (job) => aggregateJobs.includes(jobLabel(job));
+const isSupersededDeploy = (job) =>
+  job.conclusion === 'failure' &&
+  (job.steps || []).some(
+    (step) => step.name === supersededStep && step.conclusion === 'failure'
+  );
+function isProductionRun(run) {
+  return (
+    run?.name === productionWorkflow.name &&
+    // The API may append the ref ('path@refs/heads/main') for some events.
+    String(run.path).split('@')[0] === productionWorkflow.path &&
+    run.head_branch === 'main' &&
+    run.head_repository?.full_name === repository &&
+    productionEvents.includes(run.event)
+  );
+}
+/**
+ * Decide whether a finished production run needs an automatic follow-up.
+ * Pure: callers supply facts read from the Actions API and act on the answer.
+ *
+ * - rerun: the run lost jobs to the job deadline (infrastructure), is still the
+ *   newest main commit and was not retried yet.
+ * - dispatch: a newer main commit exists (or the run was rejected as
+ *   superseded) and no run exists for that commit, so nothing will publish it.
+ * - none: genuine test failures, manual cancellation, retried runs, and any case
+ *   where another run already covers the newest commit. A real failure must
+ *   stay visible, never be retried away.
+ */
+export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
+  assert.match(mainSha, /^[a-f0-9]{40}$/, 'Invalid main SHA');
+  const none = (reason) => ({ action: 'none', reason });
+  if (!isProductionRun(run)) return none('Not a production run');
+  if (!['failure', 'cancelled'].includes(run.conclusion))
+    return none(`Run concluded ${run.conclusion}`);
+  // Strict by construction: only outcomes with a known benign meaning are
+  // tolerated; any other conclusion (failure, timed_out, neutral, unfinished)
+  // is treated as genuine and blocks recovery.
+  const stepTimedOut = (job) =>
+    job.conclusion === 'failure' && hasNote(annotations, job, stepTimeoutAnnotation);
+  // Every annotation of the job is the spent-retries artifact error, so nothing else failed in it.
+  const artifactFailed = (job) =>
+    job.conclusion === 'failure' && !isAggregate(job) && onlyNotes(annotations, job, artifactServiceAnnotation);
+  const benign = (job) =>
+    ['success', 'skipped', 'cancelled'].includes(job.conclusion) ||
+    (job.conclusion === 'failure' &&
+      (isAggregate(job) || isSupersededDeploy(job) || stepTimedOut(job) || artifactFailed(job)));
+  const real = jobs.filter((job) => !benign(job));
+  if (real.length)
+    return none(`Genuine failure: ${real.map((job) => job.name).join(', ')}`);
+  const cancelled = jobs.filter((job) => job.conclusion === 'cancelled');
+  const deadlineEvidence = cancelled.every((job) =>
+    hasNote(annotations, job, timeoutAnnotation)
+  );
+  const timedOut =
+    deadlineEvidence && (cancelled.length > 0 || jobs.some(stepTimedOut));
+  const artifactService = deadlineEvidence && jobs.some(artifactFailed);
+  const superseded = jobs.some(isSupersededDeploy);
+  // One unexplained cancellation (a person, a concurrency rule) vetoes recovery.
+  if (!deadlineEvidence)
+    return none('Cancellation without deadline evidence (manual stop)');
+  if (!timedOut && !artifactService && !superseded)
+    return none('No infrastructure cause (manual cancellation or unknown)');
+  if ((timedOut || artifactService) && run.head_sha === mainSha) {
+    const cause = timedOut
+      ? 'Job or step deadline exceeded on the newest commit'
+      : 'Artifact service failed after its retries on the newest commit';
+    return run.run_attempt === 1 ? { action: 'rerun', reason: cause } : none('Already retried once');
+  }
+  if (run.head_sha === mainSha)
+    return none('Superseded rejection on the newest commit needs investigation');
+  // A skipped run (writer failed, so resolve-source never ran) built nothing.
+  const covered = (tipRuns || []).some(
+    (other) =>
+      other.head_sha === mainSha &&
+      isProductionRun(other) &&
+      other.conclusion !== 'skipped'
+  );
+  return covered
+    ? none('A newer run already covers main')
+    : { action: 'dispatch', reason: 'Main advanced and no run covers it' };
+}
+export function validateCoverage(expected, shards, count = 2) {
+  assert.equal(shards.length, count, 'Missing shard report');
+  const all = new Set(expected);
+  assert.equal(all.size, expected.length, 'Duplicate expected test ID');
+  assert.ok(all.size > 0, 'Empty expected coverage');
+  const seen = new Set(),
+    indexes = new Set();
+  for (const shard of shards) {
+    assert.equal(shard.total, count);
+    assert.ok(
+      shard.index >= 1 && shard.index <= count && !indexes.has(shard.index),
+      'Duplicate/invalid shard index'
+    );
+    indexes.add(shard.index);
+    assert.equal(shard.status, 'passed', 'Shard execution failed');
+    assert.equal(
+      shard.assigned.length,
+      shard.results.length,
+      'Incomplete shard results'
+    );
+    assert.deepEqual(
+      [...shard.assigned].sort(),
+      shard.results.map((r) => r.id).sort(),
+      'Assigned/result mismatch'
+    );
+    for (const result of shard.results) {
+      assert.ok(
+        all.has(result.id) && !seen.has(result.id),
+        'Unknown or repeated test'
+      );
+      assert.equal(result.status, 'passed', 'Failed/skipped test');
+      assert.equal(result.retry, 0, 'Unexpected retried/flaky test');
+      seen.add(result.id);
+    }
+  }
+  assert.equal(seen.size, all.size, 'Coverage was lost across shards');
+  return { tests: seen.size, shards: shards.length, flaky: 0, skipped: 0 };
+}

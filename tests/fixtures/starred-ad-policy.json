@@ -1,0 +1,9 @@
+{
+  "policy": { "everyNewCards": 40, "maxPlacements": 2, "minCardsEachSide": 6, "minimumWidth": 250 },
+  "boundaries": [
+    [0,0],[19,0],[20,0],[21,0],[39,0],[40,0],[59,0],[60,1],
+    [61,1],[79,1],[80,1],[99,1],[100,2],[101,2],[140,2]
+  ],
+  "fixtureUnit": { "client": "ca-pub-0000000000000000", "slot": "1111111111", "format": "fluid", "layoutKey": "test-only-in-feed-layout" },
+  "productionUnit": { "client": "ca-pub-1316559702402555", "slot": "4564169804", "format": "fluid", "layoutKey": "-ef+6k-30-ac+ty" }
+}
