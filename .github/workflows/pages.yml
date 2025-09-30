@@ -1,0 +1,152 @@
+name: Portfolio CI/CD
+on:
+  push:
+    branches:
+      - main
+  pull_request: {}
+  workflow_dispatch:
+    inputs:
+      release_sha:
+        description: Exact main commit SHA to publish (leave blank to validate only)
+        type: string
+        required: false
+  workflow_run:
+    workflows:
+      - Fetch Medium Articles
+      - Fetch GitHub Repos
+    types:
+      - completed
+permissions:
+  contents: read
+concurrency:
+  # Only a main workflow_dispatch can deploy (deploy-pages `if`), so only dispatches share the
+  # production lock. Push and data-sync CI on main serialize in their own group: a release no
+  # longer waits behind main CI (dispatch 42866923910 waited 26 minutes behind push run
+  # 42865722785; runs 42915685632 and 42984475705 were cancelled by hand to let one start).
+  group: ${{ github.event_name == 'pull_request' && format('portfolio-pr-{0}', github.event.pull_request.number) || (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && 'portfolio-production' || 'portfolio-main-ci') || format('portfolio-ci-{0}', github.ref)) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.ref != 'refs/heads/main' }}
+jobs:
+  resolve-source:
+    name: Resolve Source
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository)
+    outputs:
+      sha: ${{ steps.source.outputs.sha }}
+      publish: ${{ steps.source.outputs.publish }}
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Resolve immutable source
+        id: source
+        env:
+          GH_TOKEN: ${{ github.event_name == 'workflow_run' && github.token || '' }}
+        run: node scripts/ci/commands.mjs resolve
+  quality-checks:
+    name: Run Quality Checks
+    needs: resolve-source
+    uses: ./.github/workflows/test-agent-readiness.yml
+    with:
+      source-sha: ${{ needs.resolve-source.outputs.sha }}
+      evidence-retention-days: ${{ needs.resolve-source.outputs.publish == 'true' && 90 || 7 }}
+  deploy-pages:
+    name: Deploy GitHub Pages
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs:
+      - resolve-source
+      - quality-checks
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.resolve-source.outputs.publish == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve-source.outputs.sha }}
+          persist-credentials: false
+      - name: Reject superseded release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.resolve-source.outputs.sha }}
+        run: node scripts/ci/commands.mjs current "$SOURCE_SHA"
+      - name: Deploy tested Pages artifact
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
+        id: deployment
+        with:
+          artifact_name: ${{ needs.quality-checks.outputs.artifact-name }}
+  verify-production:
+    name: Verify Production
+    runs-on: ubuntu-24.04
+    # Same pinned Playwright image as the browser jobs in test-agent-readiness.yml
+    # (R-CI-PWC-01): Chromium and its system packages come with the image, so the
+    # check of a just-published site does not depend on a live apt download.
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
+      options: --user 1001 --init --ipc=host
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    needs:
+      - resolve-source
+      - quality-checks
+      - deploy-pages
+    env:
+      SOURCE_SHA: ${{ needs.resolve-source.outputs.sha }}
+      DEPLOYMENT_URL: ${{ needs.deploy-pages.outputs.url }}
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.resolve-source.outputs.sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Download tested artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.quality-checks.outputs.artifact-id }}
+          path: work/site
+      - name: Extract tested artifact
+        run: mkdir -p .pages-site && tar -xf work/site/artifact.tar -C .pages-site
+      - name: Verify artifact bytes
+        run: node scripts/ci/commands.mjs artifact
+      - name: Wait for expected release
+        run: node scripts/ci/verify-release.mjs "$DEPLOYMENT_URL" .pages-site/build-metadata.json
+      - name: Verify public endpoints
+        run: npm run verify -- "$DEPLOYMENT_URL" --all --output=work/qa/verification-production.json
+      - name: Check container browsers
+        run: node scripts/ci/check-container-browsers.mjs chromium
+      - name: Test published browser flows
+        run: npm run test:production -- "$DEPLOYMENT_URL"
+      - name: Publish production-verification
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: production-verification
+          path: work/qa/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Summarize production result
+        if: always()
+        env:
+          RESULT: ${{ job.status }}
+          ARTIFACT_ID: ${{ needs.quality-checks.outputs.artifact-id }}
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/ci/summary.mjs production
