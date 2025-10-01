@@ -1,0 +1,12 @@
+{
+  "name": "medium-fetcher",
+  "version": "3.0.0",
+  "description": "Medium RSS feed'ini çeker ve kategorize eder",
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-medium.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
