@@ -1,0 +1,81 @@
+/* Standalone documents share the portfolio's typography and theme tokens. */
+body.trust-page {
+  overflow: auto;
+  height: auto;
+  background: var(--color-bg, #f5f5f5);
+}
+
+.trust-document {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.trust-document h1 {
+  margin: 30px 0 20px;
+}
+
+.trust-document h2 {
+  font-size: 21px;
+  margin-top: 30px;
+}
+
+.trust-document p {
+  line-height: 1.8;
+}
+
+.trust-document nav,
+.trust-document footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.trust-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trust-back-link:is(:hover, :active) {
+    text-decoration: underline;
+  }
+}
+
+.trust-document footer {
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 40px;
+  border-top: 1px solid var(--color-border, #eee);
+  padding-top: 20px;
+}
+
+.trust-footer-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.trust-document footer [aria-current="page"] {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.trust-document a:not(.resume-cta) {
+  color: var(--color-accessible-link, #0076b1);
+}
+
+.trust-document a:not(.resume-cta):focus-visible {
+  outline: 2px solid var(--color-accent, #0099e5);
+  outline-offset: 4px;
+}
+
+.trust-document .theme-toggle-btn {
+  margin-left: auto;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+}

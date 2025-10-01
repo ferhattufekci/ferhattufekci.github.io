@@ -1,0 +1,203 @@
+{
+  "sourceCommit": "c2e55b79bcbad70c4074ee5a404974d7ca8ee20b",
+  "axeVersion": "4.11.0",
+  "reviewedAt": "2026-10-24",
+  "status": "Measured legacy debt; product acceptance pending. Do not regenerate during tests.",
+  "profiles": {
+    "desktop-light": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "target": [
+          ".site-subtitle"
+        ],
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#9e9e9e",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.67,
+              "fontSize": "9.8pt (13px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            }
+          }
+        ],
+        "all": [],
+        "none": []
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "target": [
+          ".copyrights"
+        ],
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#9e9e9e",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.67,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            }
+          }
+        ],
+        "all": [],
+        "none": []
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "target": [
+          ".privacy-link"
+        ],
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#0099e5",
+              "bgColor": "#ffffff",
+              "contrastRatio": 3.13,
+              "fontSize": "9.0pt (12px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            }
+          }
+        ],
+        "all": [],
+        "none": []
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "target": [
+          "#cta-a11y-baseline > span"
+        ],
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#0099e5",
+              "bgColor": "#f0f9fd",
+              "contrastRatio": 2.94,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            }
+          }
+        ],
+        "all": [],
+        "none": []
+      },
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "target": [
+          ".privacy-link"
+        ],
+        "any": [
+          {
+            "id": "link-in-text-block",
+            "data": {
+              "messageKey": "fgContrast",
+              "contrastRatio": 1.17,
+              "requiredContrastRatio": 3,
+              "nodeColor": "#0099e5",
+              "parentColor": "#9e9e9e"
+            }
+          },
+          {
+            "id": "link-in-text-block-style",
+            "data": null
+          }
+        ],
+        "all": [],
+        "none": []
+      }
+    ],
+    "desktop-dark": [
+      {
+        "id": "link-in-text-block",
+        "impact": "serious",
+        "target": [
+          ".privacy-link"
+        ],
+        "any": [
+          {
+            "id": "link-in-text-block",
+            "data": {
+              "messageKey": "fgContrast",
+              "contrastRatio": 1.21,
+              "requiredContrastRatio": 3,
+              "nodeColor": "#58a6ff",
+              "parentColor": "#8b949e"
+            }
+          },
+          {
+            "id": "link-in-text-block-style",
+            "data": null
+          }
+        ],
+        "all": [],
+        "none": []
+      }
+    ],
+    "mobile-light": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "target": [
+          ".mobile-site-subtitle"
+        ],
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#9e9e9e",
+              "bgColor": "#ffffff",
+              "contrastRatio": 2.67,
+              "fontSize": "9.8pt (13px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            }
+          }
+        ],
+        "all": [],
+        "none": []
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "target": [
+          "#cta-a11y-baseline > span"
+        ],
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#0099e5",
+              "bgColor": "#f0f9fd",
+              "contrastRatio": 2.94,
+              "fontSize": "10.5pt (14px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            }
+          }
+        ],
+        "all": [],
+        "none": []
+      }
+    ],
+    "mobile-dark": []
+  }
+}

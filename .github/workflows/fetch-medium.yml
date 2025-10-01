@@ -1,0 +1,72 @@
+name: Fetch Medium Articles
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: data-sync
+  cancel-in-progress: false
+
+jobs:
+  fetch-and-commit:
+    name: Update Published Data
+    if: github.repository == 'ferhattufekci/ferhattufekci.github.io' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    # Pin the runner version to reduce allocation delays in the rolling latest pool.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: Check out main source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked project dependencies
+        run: npm ci
+
+      - name: Fetch Medium articles
+        run: node scripts/fetch-medium.js
+
+      - name: Regenerate static SEO fallback content
+        run: npm run generate
+
+      - name: Validate generated content
+        run: npm run test:unit
+
+      - name: Commit data files
+        run: |
+          git config --local user.email "ferhattufekci@outlook.com.tr"
+          git config --local user.name  "Ferhat Tüfekçi"
+          git add data/ index.html index.md llms.txt sitemap.xml about/ contact/ privacy/ 404.html 404.md
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update Medium articles [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push; then
+              exit 0
+            fi
+            echo "Retry $i failed, waiting..."
+            sleep $((i * 3))
+          done
+          exit 1
