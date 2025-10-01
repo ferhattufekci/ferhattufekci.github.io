@@ -1,0 +1,29 @@
+/* Loaded after component and theme rules: focus is independent of selection/hover. */
+:root {
+  --color-focus-ring: var(--color-text-primary);
+}
+:root :is(a[href], button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+/* Keep the ring inside scroll regions and compact filter strips. */
+:root :is(.pt-page, .page-content-panel, .category-filter, .blt-btn):focus-visible {
+  outline-offset: -3px;
+}
+:root [tabindex="-1"]:focus-visible {
+  outline-offset: -2px;
+}
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  top: 8px;
+  left: 8px;
+  padding: 10px 16px;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  transform: translateY(calc(-100% - 16px));
+  transition: none;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
