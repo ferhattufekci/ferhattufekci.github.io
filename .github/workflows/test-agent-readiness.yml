@@ -1,0 +1,305 @@
+name: Portfolio Quality Checks
+on:
+  workflow_call:
+    inputs:
+      source-sha:
+        type: string
+        required: true
+    outputs:
+      artifact-name:
+        value: ${{ jobs.build-site.outputs.artifact-name }}
+      artifact-id:
+        value: ${{ jobs.build-site.outputs.artifact-id }}
+      content-sha256:
+        value: ${{ jobs.build-site.outputs.content-sha256 }}
+permissions:
+  contents: read
+env:
+  SOURCE_SHA: ${{ inputs.source-sha }}
+defaults:
+  run:
+    shell: bash
+jobs:
+  static-checks:
+    name: Static Checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Check source syntax
+        run: npm run lint
+      - name: Install verified actionlint
+        run: |-
+          curl -fsSL https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz -o "$RUNNER_TEMP/actionlint.tar.gz"
+          echo "8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  $RUNNER_TEMP/actionlint.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
+      - name: Check workflows and shell commands
+        run: |-
+          shellcheck --version
+          "$RUNNER_TEMP/actionlint" -color
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Test units and HTTP contracts
+        run: |-
+          mkdir -p work/qa
+          npm run test:unit | tee work/qa/unit.tap
+      - name: Publish unit-report
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: unit-report
+          path: work/qa/unit.tap
+          retention-days: 7
+          if-no-files-found: error
+      - name: Summarize unit results
+        if: always()
+        run: node scripts/ci/summary.mjs unit
+  build-site:
+    name: Build Site
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      artifact-name: pages-${{ inputs.source-sha }}
+      artifact-id: ${{ steps.pages.outputs.artifact_id }}
+      content-sha256: ${{ steps.manifest.outputs.content-sha256 }}
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Generate site content
+        run: npm run generate
+      - name: Package site and metadata
+        run: npm run package:pages
+      - name: Verify package manifest
+        id: manifest
+        run: node scripts/ci/commands.mjs artifact
+      - name: Record expected test inventory
+        env:
+          TEST_INVENTORY: work/qa/expected-tests.json
+        run: npx playwright test --list --reporter=./scripts/ci/coverage-reporter.mjs
+      - name: Publish test-inventory
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: test-inventory
+          path: work/qa/expected-tests.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Publish immutable Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        id: pages
+        with:
+          name: pages-${{ inputs.source-sha }}
+          path: .pages-site
+          retention-days: 7
+          include-hidden-files: true
+  browser-tests:
+    name: Browser Tests (${{ matrix.shard }}/2)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    needs:
+      - build-site
+      - static-checks
+      - unit-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        shard:
+          - 1
+          - 2
+    env:
+      CI_SHARD: ${{ matrix.shard }}
+      PORTFOLIO_TEST_ROOT: .pages-site
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Download tested artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.build-site.outputs.artifact-id }}
+          path: work/site
+      - &a1
+        name: Extract tested artifact
+        run: mkdir -p .pages-site && tar -xf work/site/artifact.tar -C .pages-site
+      - &a2
+        name: Verify artifact bytes
+        run: node scripts/ci/commands.mjs artifact
+      - name: Restore browser cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ runner.arch }}-ubuntu24-node22-${{ hashFiles('package-lock.json') }}
+      - name: Install Chromium dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Test assigned browser shard
+        run: npm run test:browser -- --shard="$CI_SHARD/2"
+      - name: Publish browser-report-${{ matrix.shard }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: browser-report-${{ matrix.shard }}
+          path: work/qa/shard-${{ matrix.shard }}/
+          retention-days: 7
+          if-no-files-found: error
+  verify-artifact:
+    name: Verify Artifact
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    needs: build-site
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Download tested artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          artifact-ids: ${{ needs.build-site.outputs.artifact-id }}
+          path: work/site
+      - *a1
+      - *a2
+      - name: Verify artifact endpoints
+        run: |-
+          mkdir -p work/qa
+          npm run verify -- --local --artifact --all --output=work/qa/verification-artifact.json
+      - name: Publish artifact-verification
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: artifact-verification
+          path: work/qa/verification-artifact.json
+          retention-days: 7
+          if-no-files-found: error
+  merge-test-reports:
+    name: Merge Test Reports
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: always()
+    needs:
+      - build-site
+      - browser-tests
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Set up project Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Download tested artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: test-inventory
+          path: work/qa
+      - name: Download shard reports
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: browser-report-*
+          path: work/qa/shards
+      - name: Require complete disjoint test coverage
+        run: node scripts/ci/commands.mjs coverage
+      - name: Merge browser reports
+        if: always()
+        run: npx playwright merge-reports --config=playwright.merge.config.mjs work/qa/all-blob-reports
+      - name: Publish merged-browser-report
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: merged-browser-report
+          path: |-
+            work/qa/merged-report/
+            work/qa/merged-junit.xml
+            work/qa/merged-results.json
+            work/qa/coverage-summary.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Summarize browser coverage
+        if: always()
+        run: node scripts/ci/summary.mjs coverage
+  quality-gate:
+    name: Quality Gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    if: always()
+    needs:
+      - static-checks
+      - unit-tests
+      - build-site
+      - browser-tests
+      - verify-artifact
+      - merge-test-reports
+    steps:
+      - name: Check out resolved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source-sha }}
+          persist-credentials: false
+      - name: Require every quality check
+        env:
+          CHECK_RESULTS: ${{ toJSON(needs) }}
+        run: node scripts/ci/commands.mjs gate
+      - name: Summarize quality result
+        if: always()
+        env:
+          CHECK_RESULTS: ${{ toJSON(needs) }}
+          ARTIFACT_ID: ${{ needs.build-site.outputs.artifact-id }}
+          ARTIFACT_NAME: ${{ needs.build-site.outputs.artifact-name }}
+          CONTENT_SHA256: ${{ needs.build-site.outputs.content-sha256 }}
+        run: node scripts/ci/summary.mjs quality
