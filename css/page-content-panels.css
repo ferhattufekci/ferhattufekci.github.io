@@ -1,0 +1,107 @@
+/* One natural-height control row and one vertical scroll owner per content page. */
+.js body:has(.panel-page.pt-page-current) {
+  overflow: hidden;
+}
+.js .pt-page.panel-page {
+  --panel-inline-space: 70px;
+  --panel-top-space: 28px;
+  --panel-controls-end-space: 16px;
+  overflow: hidden;
+}
+.js .panel-page > .section-inner {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.js .page-controls-panel {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding: var(--panel-top-space) var(--panel-inline-space) var(--panel-controls-end-space);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+.js .page-controls-panel > .section-title-block {
+  margin: 0 0 12px;
+}
+.js .page-controls-panel .section-description {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 32px;
+}
+.js .page-controls-panel .category-filter-scroll {
+  margin-bottom: 0;
+}
+.page-controls-panel .sync-badge:empty { display: none; }
+.js .page-content-panel {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  padding: 16px var(--panel-inline-space) 60px;
+  scroll-padding-block: 16px;
+}
+/* Let the last heading reach the top even when its disclosure is closed.
+   Keep the PDF in natural flow; unused space follows the final content. */
+.resume-ending { margin-top: 46px; }
+.resume-ending > .resume-section { margin-top: 0; }
+.js #resume-content > .resume-ending {
+  display: flow-root;
+  flex: none;
+  min-height: 100%;
+}
+.page-content-panel:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: -3px;
+}
+@media (max-width: 991px) {
+  .js .pt-page.panel-page {
+    --panel-inline-space: 30px;
+    --panel-top-space: 16px;
+    --panel-controls-end-space: 12px;
+  }
+}
+@media (max-height: 500px) {
+  .js .pt-page.panel-page {
+    --panel-top-space: 8px;
+    --panel-controls-end-space: 8px;
+  }
+  .js .page-controls-panel > .section-title-block { margin-bottom: 6px; }
+  .js .page-controls-panel .section-title { margin-bottom: 2px; }
+  .js .page-controls-panel .section-title::after { margin-top: 0; }
+}
+@media print {
+  /* Release the screen's height chain only when one of these pages is printed. */
+  .js body:has(.panel-page.pt-page-current),
+  body:has(.panel-page.pt-page-current) :is(.page, .site-main, .pt-wrapper, .subpages) {
+    position: static;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    perspective: none;
+  }
+  body:has(.panel-page.pt-page-current) :is(.header, .mobile-header, .lmpixels-arrows-nav) { display: none; }
+  .js .panel-page.pt-page-current,
+  .js .panel-page.pt-page-current > .section-inner,
+  .js .panel-page.pt-page-current .page-content-panel {
+    display: block;
+    position: static;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    transform: none;
+  }
+  .js .panel-page:not(.pt-page-current) { display: none; }
+  .js .page-controls-panel { position: static; }
+  .js #resume-content > .resume-ending { min-height: 0; }
+}
