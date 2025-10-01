@@ -1,0 +1,29 @@
+/* Balance the desktop crop so the hair and part of the shirt remain visible. */
+.section-inner.start-page-full-width .inner-content .fill-block {
+  background-position: center 30%;
+}
+
+/* Scale the stacked portrait with viewport width while retaining the head and chest in the crop. */
+@media only screen and (max-width: 991px) {
+  .section-inner.start-page-full-width .inner-content {
+    display: block;
+    width: 100%;
+  }
+
+  .section-inner.start-page-full-width .inner-content .fill-block {
+    height: 60vw;
+    min-height: 380px;
+    max-height: 560px;
+    background-position: center 20%;
+    background-size: cover;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .section-inner.start-page-full-width .inner-content .fill-block {
+    height: 75vw;
+    min-height: 300px;
+    max-height: 420px;
+    background-position: center 18%;
+  }
+}
