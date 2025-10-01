@@ -1,0 +1,32 @@
+User-agent: *
+Allow: /
+
+# All crawlers are welcome (Allow: / above already covers this for
+# every user-agent, including these). Listed explicitly so it's clear
+# this site intentionally opts in to AI search/answer-engine crawling,
+# rather than leaving it ambiguous.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://ferhattufekci.github.io/sitemap.xml
