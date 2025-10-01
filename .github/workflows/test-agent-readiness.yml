@@ -1,0 +1,60 @@
+name: Verify portfolio
+on:
+  workflow_call:
+    outputs:
+      tested_sha:
+        description: Exact source commit used to build the tested Pages artifact
+        value: ${{ jobs.verify.outputs.tested_sha }}
+    inputs:
+      publish:
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      tested_sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
+      - name: Record the checked-out source commit
+        id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Generate deterministic content
+        run: npm run generate
+      - name: Prepare test reports
+        run: mkdir -p work/qa
+      - name: Fail fast on unit, component, and HTTP regressions
+        shell: bash
+        run: npm run test:unit | tee work/qa/unit.tap
+      - name: Install browser and OS dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Run BDD and accessibility checks
+        run: npm run test:bdd
+      - name: Package only the verified public assets
+        run: npm run package:pages
+      - name: Verify the exact deployment artifact
+        run: npm run verify -- --local --artifact --all --output=work/qa/endpoints.json
+      - name: Save test reports and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-reports
+          path: work/qa/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Upload tested Pages artifact
+        if: inputs.publish
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .pages-site

@@ -1,0 +1,28 @@
+{
+  "name": "ferhattufekci-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "generate": "node scripts/build-static-seo.js && node scripts/build-agent-content.mjs",
+    "build": "npm run generate && npm run test:unit && npm run test:bdd && npm run package:pages",
+    "preview": "node scripts/preview-pages.mjs",
+    "test:browser": "npm run test:bdd",
+    "test:bdd": "playwright test",
+    "test:motion:webkit": "playwright test --config=playwright.webkit.config.mjs",
+    "test:unit": "node --test",
+    "test:coverage": "node --experimental-test-coverage --test scripts/tests/route-policy.test.js scripts/tests/theme.test.js scripts/tests/category-filters.test.js",
+    "package:pages": "node scripts/package-pages.mjs",
+    "test": "node --test",
+    "verify": "node scripts/verify-agent-endpoints.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "@playwright/test": "1.64.1",
+    "linkedom": "0.18.12",
+    "saxes": "6.0.0",
+    "turndown": "7.2.0"
+  }
+}
