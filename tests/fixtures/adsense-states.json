@@ -1,0 +1,18 @@
+{
+  "publisher": "ca-pub-1316559702402555",
+  "slot": "2029775306",
+  "units": {
+    "projects": { "format": "autorelaxed", "layout": null, "layoutKey": null, "fullWidth": null },
+    "blog": { "format": "fluid", "layout": null, "layoutKey": "-6t+ed+2i-1n-4w", "fullWidth": "true" }
+  },
+  "label": "Advertisements",
+  "states": [
+    { "input": "", "expected": "waiting" },
+    { "input": "done", "expected": "waiting" },
+    { "input": "unknown", "expected": "waiting" },
+    { "input": "FILLED", "expected": "waiting" },
+    { "input": "filled", "expected": "filled" },
+    { "input": "unfilled", "expected": "unfilled" },
+    { "input": "unfill-optimized", "expected": "optimized" }
+  ]
+}
