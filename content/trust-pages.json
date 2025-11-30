@@ -1,0 +1,47 @@
+{
+  "about": {
+    "title": "About Ferhat Tüfekçi",
+    "description": "Professional background, engineering approach, and published work of Ferhat Tüfekçi.",
+    "sections": [
+      { "heading": "Engineering across the lifecycle", "paragraphs": ["Ferhat Tüfekçi is a computer engineer based in Ankara, Turkey. His published professional background spans systems engineering, business analysis, software architecture, full-stack development, and software testing. He describes this combination as an M-shaped engineering profile: breadth across the delivery lifecycle together with the ability to focus deeply on the role a team needs.", "The portfolio documents work in mission-critical banking and defense environments, including experience with HAVELSAN and MilSOFT, freelance software projects, and STEM project management for the Ministry of National Education. It covers requirements analysis, traceability, architecture, Java-based backend services, enterprise interfaces, and quality engineering practices."] },
+      { "heading": "How to assess the work", "paragraphs": ["The resume explains the context and responsibilities associated with each position. Public GitHub repositories and Medium articles provide additional material to explore. Repository lists may include forks or community projects; consult each repository's history before attributing a contribution. Employment and skills information on this site is the owner's published account, and readers can use the contact page to discuss a specific role or project."] }
+    ],
+    "links": [
+      { "label": "Read the full resume", "href": "/#resume" },
+      { "label": "Download the resume PDF", "href": "/FerhatTufekci_CV.pdf" },
+      { "label": "Explore public repositories", "href": "https://github.com/ferhattufekci" },
+      { "label": "Contact Ferhat", "href": "/contact/" }
+    ]
+  },
+  "contact": {
+    "title": "Contact Ferhat Tüfekçi",
+    "description": "Published contact channels for engineering opportunities, technical collaboration, and interviews.",
+    "sections": [
+      { "heading": "Engineering opportunities and collaboration", "paragraphs": ["Use the channels below to discuss a senior software engineering opportunity, a technical collaboration, or a question about the work published in this portfolio. Relevant topics include requirements engineering, systems and software architecture, Java/Spring services, full-stack development, and software test engineering. Ferhat is based in Ankara, Turkey, and the portfolio lists Turkish and English language skills.", "For an opportunity or project inquiry, explain the organization or project, the problem you need to solve, the role you have in mind, and the expected timeline. These details help make an initial conversation useful. Availability, engagement terms, and response times need to be confirmed directly; a contact link or calendar page does not guarantee acceptance of an engagement."] },
+      { "heading": "Published contact channels", "paragraphs": ["Email: ferhattufekci@outlook.com.tr. Telephone: +90 507 600 81 79. The interview scheduling link opens Calendly, an external service. GitHub and LinkedIn can help you review public professional activity before making contact. Avoid sending confidential project material or sensitive personal information in an initial inquiry. Email and scheduling providers process submitted information under their own policies; see the privacy page for the site's current integrations."] }
+    ],
+    "links": [
+      { "label": "Email Ferhat", "href": "mailto:ferhattufekci@outlook.com.tr" },
+      { "label": "Call +90 507 600 81 79", "href": "tel:+905076008179" },
+      { "label": "Schedule a job interview", "href": "https://calendly.com/ferhattufekci/60min" },
+      { "label": "LinkedIn profile", "href": "https://www.linkedin.com/in/ferhattufekci/" },
+      { "label": "Privacy information", "href": "/privacy/" }
+    ]
+  },
+  "privacy": {
+    "title": "Privacy",
+    "description": "Privacy information for Ferhat Tüfekçi's personal portfolio and its current external integrations.",
+    "sections": [
+      { "heading": "Scope and hosting", "paragraphs": ["This personal portfolio presents Ferhat Tüfekçi's professional background, articles, projects, and contact channels. The current public site is hosted on GitHub Pages. GitHub's documentation states that visitor IP addresses are logged and stored for security purposes. Hosting and network providers may receive technical request information when serving pages and assets. The portfolio source does not implement a visitor account system, a contact submission form, or an application database for visitor profiles."] },
+      { "heading": "Analytics, advertising, and external resources", "paragraphs": ["The homepage includes Google Analytics (measurement ID G-Z00CDE35NT) and Google AdSense (publisher ID ca-pub-1316559702402555). These integrations can send usage and device information to Google and can use cookies or similar technologies according to browser settings and Google's policies. The homepage also loads Calendly widget resources and external font resources. Requests to external services disclose technical information such as your IP address to those providers. This page describes the integrations present in the source; it does not claim that a consent-management system is implemented."] },
+      { "heading": "Browser storage and contact", "paragraphs": ["The site uses browser local storage for the selected theme (ft-theme) and whether the Calendly badge was dismissed (calendlyPermanentlyClosed). You can clear these values through your browser's site-data controls. Choosing an email, phone, social profile, or scheduling link opens the relevant external application or service. Information you submit through email or Calendly is processed by those services and the recipient. Do not send sensitive personal information or confidential project data in an initial inquiry."] },
+      { "heading": "Questions and updates", "paragraphs": ["For a privacy question about this portfolio, contact ferhattufekci@outlook.com.tr and describe the page or interaction involved. Provider-specific storage periods, account settings, and processing practices are described in the linked provider policies. This notice does not promise a deletion deadline or retention period that the portfolio cannot verify. The published JSON files contain public project and article summaries. This static site does not provide messaging, booking, or MCP server operations. This notice should be reviewed whenever hosting or integrations change."] }
+    ],
+    "links": [
+      { "label": "Privacy contact", "href": "mailto:ferhattufekci@outlook.com.tr" },
+      { "label": "GitHub Pages data collection", "href": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection" },
+      { "label": "Google Privacy Policy", "href": "https://policies.google.com/privacy" },
+      { "label": "Calendly Privacy Notice", "href": "https://calendly.com/legal/privacy-notice" }
+    ]
+  }
+}
