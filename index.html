@@ -438,12 +438,24 @@
                             <a
                               href="FerhatTufekciCVinEnglish.pdf"
                               target="_blank"
-                              class="btn btn-primary"
-                              id="downloadCvBtn"
+                              rel="noopener noreferrer"
+                              id="resumeLink"
+                              class="resume-cta"
+                              aria-label="View resume (opens in a new tab)"
                             >
-                              <span class="ms-1"
-                                >Download CV <i class="fas fa-download"></i>
-                              </span>
+                              <span>View Resume</span>
+
+                              <!-- External-link icon (SVG) - always visible -->
+                              <svg
+                                class="resume-cta__icon"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                                ></path>
+                                <path d="M5 5h6v2H7v10h10v-4h2v6H5V5z"></path>
+                              </svg>
                             </a>
                           </div>
                         </div>
