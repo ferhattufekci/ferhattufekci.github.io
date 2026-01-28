@@ -26,7 +26,6 @@ https://ferhattufekci.github.io
 ├─ fonts/                  # Local fonts & icons
 ├─ *.html                  # Standalone blog article pages
 ├─ FerhatTufekciCVinEnglish.pdf
-├─ FerhatTufekciCVinTurkish.pdf
 ├─ ads.txt                 # AdSense configuration
 ├─ robots.txt              # Crawler rules
 ├─ sitemap.xml             # SEO sitemap
