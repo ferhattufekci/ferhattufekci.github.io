@@ -38,27 +38,60 @@
 /* Google fonts */
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i");
 
-/* Adsense reklam düzenlemeleri */
+/* =========================================================
+   ADSENSE – CLEAN, DRY, PRODUCTION-GRADE STYLING
+   ========================================================= */
+/* Adsense container: center the rendered iframe reliably */
 .ads-resume-post-advertising {
-  text-align: center;
-  margin: 20px auto;
-  max-width: 100%;
-  overflow: hidden;
   box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* Prevent float side-effects from theme content */
+  clear: both;
+
+  /* Center children */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.ads-resume-post-advertising ins {
+.ads-resume-post-advertising ins.adsbygoogle {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+
+  /* Google sometimes injects inline stuff; keep it centered */
+  text-align: center;
+}
+
+/* Center the actual iframe Google injects */
+.ads-resume-post-advertising ins.adsbygoogle iframe {
   display: block !important;
-  max-width: 100% !important;
-  height: auto !important;
-  /* width:100% !important;  <<--- bunu kaldırdık */
+  margin: 0 auto !important;
+}
+
+/* Only add spacing when ad is actually filled */
+.ads-resume-post-advertising.is-filled {
+  margin: 20px auto;
 }
 
 @media (max-width: 768px) {
-  .ads-resume-post-advertising {
+  .ads-resume-post-advertising.is-filled {
     margin: 10px auto;
-    padding: 0 5px;
+    padding: 0 8px;
   }
+}
+
+/* If you still use collapsing in some places */
+.ads-resume-post-advertising.is-collapsed {
+  display: none !important;
+}
+.ads-resume-post-advertising ins.adsbygoogle iframe {
+  margin: 0 auto !important;
+  display: block !important;
 }
 
 /* ============================================================================= 
