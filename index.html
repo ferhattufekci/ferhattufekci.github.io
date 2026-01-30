@@ -31,6 +31,23 @@
 
     <link rel="canonical" href="https://ferhattufekci.github.io/" />
 
+    <!-- hreflang (single page / name query consistency) -->
+    <link
+      rel="alternate"
+      hreflang="tr-TR"
+      href="https://ferhattufekci.github.io/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://ferhattufekci.github.io/"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://ferhattufekci.github.io/"
+    />
+
     <meta
       name="google-site-verification"
       content="TMRsI3xHVwzgtjZ568EKqNEgjVnsD1NiTm3bOIrwGNw"
@@ -74,7 +91,7 @@
     <link rel="me" href="https://medium.com/@ferhattufekci" />
     <link rel="me" href="https://linktr.ee/ferhattufekci" />
 
-    <!-- Structured Data (JSON-LD): Person + WebSite -->
+    <!-- Structured Data (JSON-LD): Person + WebSite + ProfilePage (no visible changes) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -90,7 +107,7 @@
               "Full-Stack Developer",
               "Test Engineer"
             ],
-            "image": "https://ferhattufekci.github.io/images/ferhat-profile.jpg",
+            "image": "https://ferhattufekci.github.io/images/cardPhoto.jpeg",
             "url": "https://ferhattufekci.github.io/",
             "email": "mailto:ferhattufekci@outlook.com.tr",
             "telephone": "+905076008179",
@@ -109,12 +126,20 @@
           },
           {
             "@type": "WebSite",
-            "@id": "https://ferhattufekci.github.io/#",
+            "@id": "https://ferhattufekci.github.io/#website",
             "url": "https://ferhattufekci.github.io/",
             "name": "Ferhat Tüfekçi",
             "publisher": {
               "@id": "https://ferhattufekci.github.io/#about-me"
             }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://ferhattufekci.github.io/#profile",
+            "url": "https://ferhattufekci.github.io/",
+            "name": "Ferhat Tüfekçi",
+            "isPartOf": { "@id": "https://ferhattufekci.github.io/#website" },
+            "mainEntity": { "@id": "https://ferhattufekci.github.io/#about-me" }
           }
         ]
       }
