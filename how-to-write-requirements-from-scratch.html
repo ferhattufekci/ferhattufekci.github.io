@@ -1,0 +1,558 @@
+<div class="zoom-container">
+  <div id="ajax-page" class="ajax-page-content">
+    <div class="ajax-page-wrapper">
+      <div class="ajax-page-nav">
+        <div class="nav-item ajax-page-close-button">
+          <a id="ajax-page-close-button" href="#"
+            ><i class="lnr lnr-cross"></i
+          ></a>
+        </div>
+      </div>
+      <div class="ajax-page-title">
+        <h1>How to Write Requirements from Scratch?</h1>
+        <p>
+          This is a translation of
+          <a
+            href="https://medium.com/t%C3%BCrkiye/sifirdan-gereksi%CC%87ni%CC%87mler-nasil-yaziliyor-e4e8366eb66c"
+            target="_blank"
+            ><u>one of my Turkish articles.</u>
+          </a>
+        </p>
+      </div>
+      <div class="item">
+        <figure>
+          <img
+            src="images/blog/analysis/how_to_write_requirements_from_scratch/topImage.png"
+            alt="Photo by Ashley West Edwards on Unsplash"
+          />
+          <figcaption>
+            Photo by
+            <a
+              href="https://unsplash.com/@ashleywedwards?utm_source=medium&utm_medium=referral"
+            >
+              Ashley West Edwards</a
+            >
+            on
+            <a
+              href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+              >Unsplash</a
+            >
+          </figcaption>
+        </figure>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 portfolio-block">
+          <p class="text-justify">
+            The essence of requirements engineering is to clarify requirements,
+            the set of information shared by all stakeholders (analysis, UI/UX,
+            development, test and POC teams, and the end-user).
+          </p>
+          <p>
+            So how do we write requirements from scratch, how do we clarify the
+            requirements?
+          </p>
+          <p>They have formalized it, and they have collected it in 4 steps.</p>
+          <ol>
+            <li class="text-bold">Capturing</li>
+            <li class="text-bold">Analysis</li>
+            <li class="text-bold">Spesification</li>
+            <li class="text-bold">Validation</li>
+          </ol>
+          <p>To explain these 4 steps</p>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">Step 1 Capturing</h4>
+          <p>
+            The step where we get the requirements from the user, and there are
+            2 basic ways to do that.
+          </p>
+          <h5 class="text-bold">1.1. Strip</h5>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/strip.png"
+                alt="Photo by vuk burgic on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@vukburga?utm_source=medium&utm_medium=referral"
+                  >vuk burgic</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            We have a technical specification, statement of work, or OCD
+            (Operational Concept Document) that describes what the user will do.
+            When there are documents, the method by which we extract
+            requirements from these documents is the Strip Method.
+          </p>
+          <p>So how do we apply this method?</p>
+          <p>
+            We read each statement in the document and decide if this is a
+            requirement. These documents usually have a story dimension and a
+            comment dimension; it should be like this, this is what it does
+            here. By removing unnecessary details, we remove only the statements
+            that are considered to be requirements. We add these statements to
+            the draft requirement library we call requirement database; “this
+            statement may be a requirement, write it to the requirement
+            database. This statement cannot be a requirement, don't write it.”
+            we do the strip operation. In the requirement database, we apply
+            this method by adding the user's comments to our requirement
+            database by marking that it is supporting text and not a
+            requirement.
+          </p>
+          <h5 class="text-bold">1.2.Elicitation</h5>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/elicitation.png"
+                alt="Photo by Amy Hirschi on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@amyhirschi?utm_source=medium&utm_medium=referral"
+                  >Amy Hirschi</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            A method of understanding the user's needs from the user
+            himself/herself, which we use when we have the opportunity to speak
+            verbally with the user.
+          </p>
+          <p>So how do we apply this method?</p>
+          <p>They have formalized this too.</p>
+          <h5 class="text-bold">1.2. 1. Define Resource Requirement</h5>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/defineResourceReq.png"
+                alt="Photo by aceofnet on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@aceofnet?utm_source=medium&utm_medium=referral"
+                  >aceofnet</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            Who can I learn this requirement from? Person A, Administrator,
+            System Administrator, whoever it is, is our first job to identify
+            them.
+          </p>
+          <h5 class="text-bold">1.2.2. Question Step</h5>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/questionStep.png"
+                alt="Photo by Hannes Richter on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@harimedia?utm_source=medium&utm_medium=referral"
+                  >Hannes Richter</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            To understand the user's expectations from the system, we ask
+            questions to the user by looking at the systems they use, if they
+            have any, seeing the manual work they do with the user in their own
+            work environment, listening to their requests for improvement, and
+            looking at the problems there if they have units such as a help
+            desk. Usually, the user responds indirectly, we ask them to
+            elaborate more. User A says something, user B says something, and
+            there are blurred lines. We try to solve these. We make mockup
+            designs to increase clarity. After confirming, we add the details we
+            receive from the user into sentences and add them to our requirement
+            database.
+          </p>
+          <div class="ellipsis">. . .</div>
+          <p>After the Capture phase, we have a draft requirement database.</p>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">Step 2 Analyzing</h4>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/analyzing.png"
+                alt="Photo by Florian Klauer on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@florianklauer?utm_source=medium&utm_medium=referral"
+                  >Florian Klauer</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            They called the stage of analyzing our draft requirement database as
+            Analyzing. They have formalized this too.
+          </p>
+          <h5 class="text-bold">2.1.Decomposition</h5>
+          <p>
+            It is a program where we translate complex long statements in our
+            requirement database into smaller stand-alone meaningful statements
+            and create a The section where we create child requirements from the
+            statement.
+          </p>
+          <h5 class="text-bold">2.2.Deduplication of Repetitions</h5>
+          <p>
+            After the decomposition process, there is duplication in some
+            statements. At this stage, we deduplicate the repeated requirements.
+          </p>
+          <h5 class="text-bold">2.3.Clarification</h5>
+          <p>
+            After deduplicating repeated requirements, you may notice that some
+            statements are not clear. During the clarification phase, we work on
+            making these statements clear. If the requirement is obtained from
+            the user, we clarify it with the user; if it is extracted from
+            documents, we delve into the documents for further details to make
+            it clear. If the source cannot be accessed, we clarify it by making
+            assumptions with the Project Manager and Technical Manager. We also
+            document the requirements that we clarify together.
+          </p>
+          <h5 class="text-bold">2.4.Elimination</h5>
+          <p>
+            This is the stage where we derive a new requirement from an existing
+            one. It is crucial to ensure that the derived requirement is not
+            created arbitrarily. It must always be based on a document or
+            another requirement. It should not be forgotten that a requirement
+            without a clear relationship to another could lead to additional
+            development costs for features the user did not request and cause
+            delays in the project timeline.
+          </p>
+          <h5 class="text-bold">2.5.Categorization</h5>
+          <p>
+            As the name suggests, this is the stage where we write the created
+            requirements in a categorical form. Categorizing requirements is
+            important to ensure easier consistency checks, opening tasks with
+            100% coverage, facilitating development and test case preparation,
+            tracking project metrics more easily through categorical attributes,
+            and making project management more efficient.
+          </p>
+          <div class="ellipsis">. . .</div>
+          <p>
+            After the analyzing phase, we have a refined draft requirement
+            database.
+          </p>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/categorizationFinal.png"
+                alt="Photo by  Ambreen Hasan on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@ambreenhasan?utm_source=medium&utm_medium=referral"
+                >
+                  Ambreen Hasan</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">Step 3 Spesification</h4>
+          <p>
+            They call the stage of documenting the draft requirement database as
+            Specification.
+          </p>
+          <p>
+            Requirements define the need of the user, the system. It does not
+            define how to do it. If you are talking about a software object or a
+            database in a requirement, you are doing wrong, these are how to do
+            the job. The reason we don't put them in the requirement database is
+            that they affect the solution. In Requirement, if I write “.... will
+            allow you to save it by clicking the save button in the lower right
+            corner.”, it will affect whether I put the button on the left side
+            or somewhere else. When we write requirements, we focus only on the
+            need. The customer may have design requirements, of course, we keep
+            them separate. However, if there is no design requirement from the
+            customer, we are only trying to define what we will do in the
+            requirement, we do not include how we will do it in the definition.
+          </p>
+          <p>
+            How we make this definition effectively, I mentioned in my medium
+            article I wrote before<a
+              href="https://ferhattufekci.github.io/#blog/effective-requirement-writing-techniques-tips-and-stategies"
+              target="_blank"
+            >
+              (Link)</a
+            >. You can review it by clicking on the link.
+          </p>
+          <div class="ellipsis">. . .</div>
+          <p>
+            With the specification phase, we have completed documenting the
+            requirements.
+          </p>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/spefication.png"
+                alt="Photo by Beatriz Pérez Moya on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@beatriz_perez?utm_source=medium&utm_medium=referral"
+                >
+                  Beatriz Pérez Moya</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">Step 4 Validation</h4>
+          <p>
+            This is the stage where I validate the documented requirements with
+            stakeholders. First, I validate with the software developer within
+            the company to see if it can be done. Then, I validate with upper
+            management.
+          </p>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/validation1.png"
+                alt="Photo by  ThisisEngineering RAEng on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@thisisengineering?utm_source=medium&utm_medium=referral"
+                >
+                  ThisisEngineering RAEng</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            Afterward, we validate with the customer and establish the baseline,
+            confirming that the system to be developed will meet these
+            requirements. This way, we close uncontrolled changes. From this
+            point on, any changes are made in a controlled manner, and we
+            proceed with the process by writing Engineering Change Proposals
+            (ECPs) and Contract Change Proposals (CCPs). (I plan to explain how
+            to write ECPs and CCPs in a separate post.)
+          </p>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/validation2.png"
+                alt="Photo by   Gabrielle Henderson on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@gabriellefaithhenderson?utm_source=medium&utm_medium=referral"
+                >
+                  Gabrielle Henderson</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>
+            Finally, it should not be forgotten that in order to prevent the
+            development of the wrong product and unnecessary development costs,
+            as the requirements are developed, verification is carried out on
+            the intermediate products, i.e., checking whether the resulting
+            product is built according to design documents, standards, and
+            specifications and works without errors. Then, validation is
+            performed by showing the product to the end user to ensure it works
+            under real-world conditions and meets user expectations, and any
+            additional requests from the end user are recorded. This process
+            should proceed with mutual agreements.
+          </p>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/how_to_write_requirements_from_scratch/final.png"
+                alt="Photo by ThisisEngineering RAEng on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@thisisengineering?utm_source=medium&utm_medium=referral"
+                >
+                  ThisisEngineering RAEng</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <p>Thanks for reading so far, I hope it was engaging for you.</p>
+          <div class="ellipsis">. . .</div>
+          <!-- Social Share -->
+          <div class="social-share">
+            <p>Share:</p>
+            <a
+              href="https://api.whatsapp.com/send?text=How to Write Requirements from Scratch? https://shorturl.at/az2tm"
+              target="_blank"
+              class="btn btn-whatsapp"
+              title="Share on WhatsApp"
+            >
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a
+              href="https://twitter.com/intent/tweet?url=https://shorturl.at/az2tm&text=How to Write Requirements from Scratch?&via=ferhattufekci_"
+              target="_blank"
+              class="btn btn-twitter"
+              title="Share on Twitter"
+            >
+              <i class="fab fa-twitter"></i> Twitter
+            </a>
+            <a
+              href="https://www.linkedin.com/sharing/share-offsite/?url=https://shorturl.at/az2tm"
+              target="_blank"
+              class="btn btn-linkedin"
+              title="Share on LinkedIn"
+            >
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+          <div>
+            <!-- / Social Share -->
+            <!-- Buy Me A Coffee -->
+            <div class="item">
+              <figure>
+                <a
+                  href="https://www.buymeacoffee.com/ferhattufekci"
+                  target="_blank"
+                  ><img
+                    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                    alt="Buy Me A Coffee"
+                    style="height: 60px !important; width: 217px !important"
+                /></a>
+              </figure>
+            </div>
+            <!--/ Buy Me A Coffee -->
+            <!-- Google Adsense -->
+            <div class="ads-resume-post-advertising js-adsense">
+              <ins
+                class="adsbygoogle"
+                style="display: block"
+                data-ad-layout="in-article"
+                data-ad-format="auto"
+                data-ad-client="ca-pub-1316559702402555"
+                data-ad-slot="2029775306"
+                data-full-width-responsive="true"
+              ></ins>
+            </div>
+
+            <!-- /Google Adsense -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

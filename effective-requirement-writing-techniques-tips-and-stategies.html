@@ -1,0 +1,465 @@
+<div class="zoom-container">
+  <div id="ajax-page" class="ajax-page-content">
+    <div class="ajax-page-wrapper">
+      <div class="ajax-page-nav">
+        <div class="nav-item ajax-page-close-button">
+          <a id="ajax-page-close-button" href="#"
+            ><i class="lnr lnr-cross"></i
+          ></a>
+        </div>
+      </div>
+      <div class="ajax-page-title">
+        <h1>Effective Requirement Writing Techniques: Tips and Strategies</h1>
+        <p>
+          This is a translation of
+          <a
+            href="https://medium.com/türkiye/etkili-gereksinim-yazma-teknikleri-i̇puçları-ve-stratejiler-a71de33bcd0f"
+            target="_blank"
+            ><u>one of my Turkish articles.</u>
+          </a>
+        </p>
+      </div>
+      <div class="item">
+        <figure>
+          <img
+            src="images/blog/analysis/effective_requirement_writing_techniques_tips_and_strategies/topImage.png"
+            alt="Photo by ThisisEngineering RAEng on Unsplash"
+          />
+          <figcaption>
+            Photo by
+            <a
+              href="https://unsplash.com/@thisisengineering?utm_source=medium&utm_medium=referral"
+              >ThisisEngineering</a
+            >
+            on
+            <a
+              href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+              >Unsplash</a
+            >
+          </figcaption>
+        </figure>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 portfolio-block">
+          <p class="text-justify">
+            The essence of requirements engineering is to clarify requirements,
+            the set of information shared by all stakeholders (analysis, UI/UX,
+            development, test and POC teams, and the end-user).
+          </p>
+          <p>
+            If the requirements are unclear, they can be open to
+            misinterpretation. A misunderstood requirement may lead to costly
+            errors.
+          </p>
+          <p>So, how can we write requirements effectively?</p>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">1.Avoid Ambiguous Expressions</h4>
+          <p>
+            Avoid phrases that could be interpreted differently by different
+            people. Ensure that everyone understands the same thing when they
+            read the requirements.
+          </p>
+          <p>For instance, in the statement:</p>
+          <ul class="tags">
+            <li>
+              <a>The user will be able to easily record purchasing methods.</a>
+            </li>
+          </ul>
+          <p>
+            words like "easily," "normally," or "efficiently," which are
+            subjective and lack precision, should be avoided.
+          </p>
+          <p>
+            To ensure consistency, use uniform terminology while writing
+            requirements. Minimize the use of jargon or specialized terms. If
+            such terms must be used, define them in the glossary section of your
+            document to prevent any confusion.
+          </p>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">2.Structure and Atomization</h4>
+          <p>
+            Ensure that requirements are written in a structured format,
+            preferably as bullet points, and are atomic.
+          </p>
+          <p>For Example:</p>
+          <ul class="tags">
+            <li>
+              <a
+                >CompanyAbbreviation-ProjectAbbreviation-RequirementType(SRS or
+                SSS)-UniqueRequirementNumber: Relevant SCC (Software
+                Configuration Component), Relevant SCU (Software Configuration
+                Unit), requirement.</a
+              >
+            </li>
+          </ul>
+          <p>
+            FRHT-FOO-SRS-740070: The Bar SCE, Baz SCU will allow the user to
+            query purchasing methods.
+          </p>
+
+          <p>
+            To maintain atomization, avoid using conjunctions like "or" or "and"
+            in a requirement statement. These often indicate multiple tasks
+            within a single requirement. Focus each requirement on a single task
+            by eliminating such connecting words.
+          </p>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">
+            3.The Requirement Expresses The Entire Work To Be Done
+          </h4>
+          <p>
+            A requirement should comprehensively address the scope of the task.
+            To achieve this, it is essential to answer the following questions:
+          </p>
+          <ul>
+            <li>In what conditions will it be used?</li>
+            <li>When will it be executed?</li>
+            <li>Who or what (person/system) will perform the task?</li>
+            <li>What action or operation will be performed?</li>
+            <li>
+              What are the constraints on the affected person/object in specific
+              situations?
+            </li>
+            <li>
+              Under what conditions will the requirement not be applicable?
+            </li>
+          </ul>
+          <p>In addition to these points, ensure that the requirements:</p>
+          <ul>
+            <li>
+              Align with the expectations of the end user while considering the
+              interests of the company.
+            </li>
+            <li>
+              Avoid conflicts with the expectations of legal departments or
+              other organizational units.
+            </li>
+            <li>
+              Are designed to meet the user’s needs without contradicting
+              corporate goals or guidelines.
+            </li>
+          </ul>
+          <p>Example Requirement:</p>
+          <ol class="tags">
+            <li>
+              <a
+                >FRHT-FOO-SGS-740090: The Bar SCE, Baz SCU will enable the user
+                to delete purchasing methods if they are not used in another
+                record.</a
+              >
+            </li>
+          </ol>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">
+            4.Maintain Consistency and Group Similar Requirements
+          </h4>
+          <p>
+            We pay attention to grouping the requirements that describe the same
+            work so that development and testing activities can be carried out
+            easily in a way to covers 100% of the requirements, and if the
+            end-user requests changes when the developed and tested product is
+            presented to the end user if the end-user requests changes, we pay
+            attention to grouping the requirements that describe the same work
+            so that the engineering/contract change proposals that are deemed
+            appropriate as a result of the analysis and analysis of the change
+            request can be made easily and accurately.
+          </p>
+
+          <p>Example:</p>
+          <ol class="tags">
+            <li>
+              <a
+                >FRHT-FOO-SGS-740060: The Bar SCE, Baz SCU will enable the user
+                to record purchasing methods hierarchically.</a
+              >
+            </li>
+            <li>
+              <a
+                >FRHT-FOO-SGS-740070: The Bar SCE, Baz SCU will enable the user
+                to query purchasing methods.</a
+              >
+            </li>
+            <li>
+              <a
+                >FRHT-FOO-SGS-740080: The Bar SCE, Baz SCU will enable the user
+                to update purchasing records as active/inactive.</a
+              >
+            </li>
+            <li>
+              <a
+                >FRHT-FOO-SGS-740090: The Bar SCE, Baz SCU will enable the user
+                to delete purchasing methods if they are not used in another
+                record.</a
+              >
+            </li>
+          </ol>
+
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">5.Ensure Traceability</h4>
+          <p>
+            In the event of contradictions, it is critical to resolve the
+            contradictions in order to prevent the development of faulty
+            products and avoid unnecessary costs. In order to resolve
+            contradictions, we record the meetings and e-mail correspondence
+            with the end user and associate them with the relevant
+            addition/update/deletion requirement in the engineering/contract
+            change proposal document to be written, so that we can see in which
+            meeting or e-mail correspondence the end user stated his/her need or
+            change request, By specifying which specification item I am basing
+            the addition/update/deletion engineering/contract change proposals
+            that will occur as a result of this request, we pay attention not to
+            write a requirement that will take away from the functionality that
+            the software will provide, not to write a requirement that will
+            bring additional cost, and to ensure that when a requirement is
+            looked at later, it is traceable why this requirement exists.
+          </p>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">6.Prioritization of Requirements</h4>
+          <p>
+            It is essential to prioritize requirements and specify which ones
+            should be developed first. This ensures the team focuses initially
+            on mandatory requirements and subsequently on “nice-to-have”
+            features.
+          </p>
+          <p>Some of the techniques we use to prioritize requirements:</p>
+          <ul>
+            <li>
+              <u>Grouping or Sorting:</u> This approach, you can assign a
+              ranking or priority indicator to various requirements. For
+              example, you can assign priority values as high/medium/low or even
+              numeric values.
+            </li>
+            <li>
+              <u>Time Boxing/Budgeting:</u> This approach can be used when there
+              are fixed timelines and budgets to achieve project milestones.
+              This approach is based on the principle of launching an MVP or
+              core product with the required features on time, rather than
+              launching a product with all features at a later date.
+            </li>
+            <li>
+              <u>Deliberation or Voting:</u> This approach involves building
+              consensus among stakeholders and prioritizing requirements based
+              on various votes or inputs.
+            </li>
+          </ul>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <h4 class="text-bold">7.Verifiable and Testable Requirements</h4>
+          <p>
+            We make sure that the quality assurance or testing team can verify
+            whether a requirement has been developed correctly.
+          </p>
+          <ol class="tags">
+            <li><a>System screens should be user-friendly.</a></li>
+          </ol>
+          <p>
+            We do not write statements in the requirements text that are not
+            verifiable-testable, such as “user-friendly”. In addition, when
+            writing requirements, we also specify how they will be verified and
+            what the acceptance criteria will be.
+          </p>
+          <div class="ellipsis">. . .</div>
+          <p>
+            Finally, even if the requirement is written by paying attention to
+            the above items, the end user may not have expressed the need
+            correctly, or the team member who performed the analysis may not
+            have understood the end user's need correctly. In order to prevent
+            wrong product development and unnecessary development costs, it
+            should be kept in mind that as the development of the requirements
+            is completed, the verification process should be carried out on the
+            intermediate product, i.e. checking whether the product is built in
+            accordance with the design documents, standards, and specifications
+            and whether it works without errors, and then validation by showing
+            it to the end user, i.e. whether the product works in real-world
+            conditions and in accordance with user expectations, and recording
+            the additional requests of the end user, if any, should be
+            progressed by shaking hands.
+          </p>
+          <div class="item">
+            <figure>
+              <img
+                src="images/blog/analysis/effective_requirement_writing_techniques_tips_and_strategies/final.png"
+                alt="Photo by ThisisEngineering RAEng on Unsplash"
+              />
+              <figcaption>
+                Photo by
+                <a
+                  href="https://unsplash.com/@thisisengineering?utm_source=medium&utm_medium=referral"
+                  >ThisisEngineering</a
+                >
+                on
+                <a
+                  href="https://unsplash.com/?utm_source=medium&utm_medium=referral"
+                  >Unsplash</a
+                >
+              </figcaption>
+            </figure>
+          </div>
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+          <p>Thanks for reading so far, I hope it was engaging for you.</p>
+          <div class="ellipsis">. . .</div>
+          <!-- Social Share -->
+          <div class="social-share">
+            <p>Share:</p>
+            <a
+              href="https://api.whatsapp.com/send?text=Effective Requirement Writing Techniques: Tips and Strategies https://shorturl.at/PePwl"
+              target="_blank"
+              class="btn btn-whatsapp"
+              title="Share on WhatsApp"
+            >
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a
+              href="https://twitter.com/intent/tweet?url=https://shorturl.at/PePwl&text=Effective Requirement Writing Techniques: Tips and Strategies&via=ferhattufekci_"
+              target="_blank"
+              class="btn btn-twitter"
+              title="Share on Twitter"
+            >
+              <i class="fab fa-twitter"></i> Twitter
+            </a>
+            <a
+              href="https://www.linkedin.com/sharing/share-offsite/?url=https://shorturl.at/PePwl"
+              target="_blank"
+              class="btn btn-linkedin"
+              title="Share on LinkedIn"
+            >
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+          <!-- / Social Share -->
+          <!-- Buy Me A Coffee -->
+          <div class="item">
+            <figure>
+              <a
+                href="https://www.buymeacoffee.com/ferhattufekci"
+                target="_blank"
+                ><img
+                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                  alt="Buy Me A Coffee"
+                  style="height: 60px !important; width: 217px !important"
+              /></a>
+            </figure>
+          </div>
+          <!--/ Buy Me A Coffee -->
+          <!-- Google Adsense -->
+          <div class="ads-resume-post-advertising js-adsense">
+            <ins
+              class="adsbygoogle"
+              style="display: block"
+              data-ad-layout="in-article"
+              data-ad-format="auto"
+              data-ad-client="ca-pub-1316559702402555"
+              data-ad-slot="2029775306"
+              data-full-width-responsive="true"
+            ></ins>
+          </div>
+
+          <!-- /Google Adsense -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
