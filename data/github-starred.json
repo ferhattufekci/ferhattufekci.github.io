@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 481676,
+    "stars": 481689,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 447275,
+    "stars": 447285,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 438554,
+    "stars": 438556,
     "topics": [
       "careers",
       "certification",
@@ -69,7 +69,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 384285,
+    "stars": 384287,
     "topics": [
       "books",
       "education",
@@ -86,7 +86,7 @@
     "homepage": "https://roadmap.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 351262,
+    "stars": 351261,
     "topics": [
       "angular-roadmap",
       "backend-roadmap",
@@ -116,7 +116,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 337986,
+    "stars": 337987,
     "topics": [
       "algorithm",
       "algorithms",
@@ -140,7 +140,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 261319,
+    "stars": 261320,
     "topics": [
       "beginner-project",
       "cpp",
@@ -178,7 +178,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 210871,
+    "stars": 210874,
     "topics": [
       "awesome",
       "awesome-list",
@@ -247,7 +247,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 120178,
+    "stars": 120179,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -323,7 +323,7 @@
     "homepage": "https://ragflow.io",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 75611,
+    "stars": 75612,
     "topics": [
       "agent",
       "agentic",
@@ -377,7 +377,7 @@
     "homepage": "https://frontendchecklist.io",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 72364,
+    "stars": 72363,
     "topics": [
       "checklist",
       "css",
@@ -455,7 +455,7 @@
     "homepage": "https://aka.ms/ai-agents-beginners",
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 54543,
+    "stars": 54542,
     "topics": [
       "agentic-ai",
       "agentic-framework",
@@ -602,7 +602,7 @@
     "homepage": "https://bit.ly/awesome-gh",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 29417,
+    "stars": 29418,
     "topics": [
       "awesome",
       "awesome-list",
@@ -641,7 +641,7 @@
     "homepage": "https://atuin.sh",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 28747,
+    "stars": 28749,
     "topics": [
       "bash",
       "fish",
@@ -685,7 +685,7 @@
     "homepage": null,
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 26782,
+    "stars": 26783,
     "topics": [
       "agentic-ai",
       "agents",
