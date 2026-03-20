@@ -1,0 +1,714 @@
+[
+  {
+    "name": "miuul-data-science-and-machine-learning-bootcamp",
+    "description": "This repo includes the case studies I made in the Data Science & Machine Learning Bootcamp given by Miuul.",
+    "url": "https://github.com/ferhattufekci/miuul-data-science-and-machine-learning-bootcamp",
+    "homepage": null,
+    "language": "Python",
+    "langColor": "#3572A5",
+    "languages": [
+      {
+        "name": "Python",
+        "color": "#3572A5",
+        "percent": 100
+      }
+    ],
+    "stars": 3,
+    "forks": 0,
+    "topics": [
+      "data-science",
+      "machine-learning",
+      "matplotlib",
+      "numpy",
+      "pandas",
+      "python",
+      "seaborn"
+    ],
+    "pinned": true,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2024-07-23T11:19:59Z"
+  },
+  {
+    "name": "ferhattufekci.github.io",
+    "description": "Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.",
+    "url": "https://github.com/ferhattufekci/ferhattufekci.github.io",
+    "homepage": "https://ferhattufekci.github.io/",
+    "language": "CSS",
+    "langColor": "#563d7c",
+    "languages": [
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 53
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 24
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 23
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [
+      "css3",
+      "github-actions",
+      "html5",
+      "javascript",
+      "jquery",
+      "medium",
+      "portfolio",
+      "release-automation"
+    ],
+    "pinned": true,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-03-20T19:18:08Z"
+  },
+  {
+    "name": "free-programming-books",
+    "description": ":books: Freely available programming books",
+    "url": "https://github.com/ferhattufekci/free-programming-books",
+    "homepage": "https://ebookfoundation.github.io/free-programming-books/",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "languages": [
+      {
+        "name": "Python",
+        "color": "#3572A5",
+        "percent": 99
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 1
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": true,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-03-17T19:23:10Z"
+  },
+  {
+    "name": "SurveyApp",
+    "description": "Full-stack survey management system built with .NET 8 (Clean Architecture), RESTful API, Entity Framework Core, and React + TypeScript.",
+    "url": "https://github.com/ferhattufekci/SurveyApp",
+    "homepage": "https://sor-bakalim.vercel.app/",
+    "language": "TypeScript",
+    "langColor": "#3178c6",
+    "languages": [
+      {
+        "name": "TypeScript",
+        "color": "#3178c6",
+        "percent": 61
+      },
+      {
+        "name": "C#",
+        "color": "#178600",
+        "percent": 31
+      },
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 7
+      },
+      {
+        "name": "Dockerfile",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [
+      "aspnet-core",
+      "clean-architecture",
+      "dotnet",
+      "dotnet8",
+      "entity-framework-core",
+      "full-stack-web-development",
+      "reactjs",
+      "rest-api",
+      "survey",
+      "typescipt"
+    ],
+    "pinned": true,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-03-18T16:36:30Z"
+  },
+  {
+    "name": "turkcekaynaklar-com",
+    "description": "Özenle seçilmiş Türkçe kaynaklar listesi En: Curated list of Turkish resources ",
+    "url": "https://github.com/ferhattufekci/turkcekaynaklar-com",
+    "homepage": "https://turkcekaynaklar.com/",
+    "language": "Shell",
+    "langColor": "#89e051",
+    "languages": [
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 100
+      }
+    ],
+    "stars": 1,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "tr",
+    "updatedAt": "2023-08-07T16:00:34Z"
+  },
+  {
+    "name": "axios",
+    "description": "Promise based HTTP client for the browser and node.js",
+    "url": "https://github.com/ferhattufekci/axios",
+    "homepage": "https://axios-http.com",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 87
+      },
+      {
+        "name": "TypeScript",
+        "color": "#3178c6",
+        "percent": 11
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 2
+      },
+      {
+        "name": "Handlebars",
+        "color": "#8b949e",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2025-08-21T15:41:06Z"
+  },
+  {
+    "name": "Best-README-Template",
+    "description": "An awesome README template to jumpstart your projects! ",
+    "url": "https://github.com/ferhattufekci/Best-README-Template",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2024-08-12T09:07:04Z"
+  },
+  {
+    "name": "create-react-app",
+    "description": "Set up a modern web app by running one command.",
+    "url": "https://github.com/ferhattufekci/create-react-app",
+    "homepage": "https://create-react-app.dev",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 98
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 1
+      },
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 0
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 0
+      },
+      {
+        "name": "AppleScript",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "TypeScript",
+        "color": "#3178c6",
+        "percent": 0
+      },
+      {
+        "name": "SCSS",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Sass",
+        "color": "#8b949e",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2025-02-15T01:32:11Z"
+  },
+  {
+    "name": "dockerlabs",
+    "description": "Materials of Docker  Github Course which includes  Beginners | Intermediate | Advanced Levels",
+    "url": "https://github.com/ferhattufekci/dockerlabs",
+    "homepage": "https://dockerlabs.collabnix.com",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "PHP",
+        "color": "#4F5D95",
+        "percent": 59
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 15
+      },
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 12
+      },
+      {
+        "name": "Ruby",
+        "color": "#701516",
+        "percent": 7
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 4
+      },
+      {
+        "name": "Slim",
+        "color": "#8b949e",
+        "percent": 1
+      },
+      {
+        "name": "SCSS",
+        "color": "#8b949e",
+        "percent": 1
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 0
+      },
+      {
+        "name": "Roff",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Dockerfile",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Python",
+        "color": "#3572A5",
+        "percent": 0
+      },
+      {
+        "name": "C#",
+        "color": "#178600",
+        "percent": 0
+      },
+      {
+        "name": "PowerShell",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 0
+      },
+      {
+        "name": "Objective-J",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Go",
+        "color": "#00ADD8",
+        "percent": 0
+      },
+      {
+        "name": "HCL",
+        "color": "#8b949e",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2023-05-13T13:48:05Z"
+  },
+  {
+    "name": "formik",
+    "description": "Build forms in React, without the tears 😭 ",
+    "url": "https://github.com/ferhattufekci/formik",
+    "homepage": "https://formik.org",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "TypeScript",
+        "color": "#3178c6",
+        "percent": 94
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 4
+      },
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 2
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2024-10-18T03:18:36Z"
+  },
+  {
+    "name": "java-champions",
+    "description": "A list of Java Champions",
+    "url": "https://github.com/ferhattufekci/java-champions",
+    "homepage": "https://javachampions.org",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 58
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 31
+      },
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 5
+      },
+      {
+        "name": "FreeMarker",
+        "color": "#8b949e",
+        "percent": 2
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 2
+      },
+      {
+        "name": "Batchfile",
+        "color": "#8b949e",
+        "percent": 1
+      },
+      {
+        "name": "Smarty",
+        "color": "#8b949e",
+        "percent": 1
+      },
+      {
+        "name": "Makefile",
+        "color": "#8b949e",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2025-07-14T18:13:37Z"
+  },
+  {
+    "name": "java-on-aws",
+    "description": "Java on AWS Workshop and Immersion Day content. Run Java efficiently in the AWS cloud.",
+    "url": "https://github.com/ferhattufekci/java-on-aws",
+    "homepage": "https://catalog.workshops.aws/java-on-aws",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 45
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 35
+      },
+      {
+        "name": "Python",
+        "color": "#3572A5",
+        "percent": 12
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 7
+      },
+      {
+        "name": "Dockerfile",
+        "color": "#8b949e",
+        "percent": 1
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2025-09-02T18:37:36Z"
+  },
+  {
+    "name": "oofp",
+    "description": "Materials of \"Object-Oriented and Functional Programming with Java\" udemy course by Akın Kaldiroglu",
+    "url": "https://github.com/ferhattufekci/oofp",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 100
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "tr",
+    "updatedAt": "2021-03-28T09:28:57Z"
+  },
+  {
+    "name": "OOPJ",
+    "description": "Materials of \"Introduction to Object-Oriented Programming with Java\" udemy course by Akın Kaldiroglu",
+    "url": "https://github.com/ferhattufekci/OOPJ",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 99
+      },
+      {
+        "name": "C++",
+        "color": "#f34b7d",
+        "percent": 0
+      },
+      {
+        "name": "Python",
+        "color": "#3572A5",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "tr",
+    "updatedAt": "2021-02-28T19:19:55Z"
+  },
+  {
+    "name": "Postman-Complete-Guide-API-Testing",
+    "description": "Forked from Valentin Despa's course: Postman API testing with automation using Newman and CI tools.",
+    "url": "https://github.com/ferhattufekci/Postman-Complete-Guide-API-Testing",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [],
+    "stars": 0,
+    "forks": 0,
+    "topics": [
+      "automated-testing",
+      "manuel-testing",
+      "postman",
+      "testing-tool"
+    ],
+    "pinned": false,
+    "category": "test",
+    "lang": "en",
+    "updatedAt": "2025-09-11T10:12:26Z"
+  },
+  {
+    "name": "sonarqube",
+    "description": "Continuous Inspection",
+    "url": "https://github.com/ferhattufekci/sonarqube",
+    "homepage": "http://www.sonarqube.org",
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 100
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 0
+      },
+      {
+        "name": "Ruby",
+        "color": "#701516",
+        "percent": 0
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 0
+      },
+      {
+        "name": "Batchfile",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Dockerfile",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 0
+      },
+      {
+        "name": "Groovy",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Starlark",
+        "color": "#8b949e",
+        "percent": 0
+      },
+      {
+        "name": "Scheme",
+        "color": "#8b949e",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2025-08-21T20:04:19Z"
+  },
+  {
+    "name": "spring-6-webapp",
+    "description": "Materials of \"Spring Framework 6: Beginner to Guru\" udemy course by John Thompson",
+    "url": "https://github.com/ferhattufekci/spring-6-webapp",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 100
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2023-06-09T23:38:08Z"
+  },
+  {
+    "name": "yup",
+    "description": "Dead simple Object schema validation",
+    "url": "https://github.com/ferhattufekci/yup",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "TypeScript",
+        "color": "#3178c6",
+        "percent": 97
+      },
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 3
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2025-08-22T22:48:31Z"
+  }
+]
