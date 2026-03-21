@@ -3,6 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<script>
+	  (function () {
+		try {
+		  var t = localStorage.getItem("ft-theme");
+		  if (!t) {
+			t = window.matchMedia("(prefers-color-scheme: dark)").matches
+			  ? "dark"
+			  : "light";
+		  }
+		  document.documentElement.setAttribute("data-theme", t);
+		} catch (e) {}
+	  })();
+	</script>
 
     <title>
       Ferhat Tüfekçi M-Shaped Computer Engineer | Developer, Analyst & Tester
@@ -147,6 +161,7 @@
     <link rel="stylesheet" href="css/owl.carousel.css" type="text/css" />
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
+	<link rel="stylesheet" href="css/dark-theme.css" type="text/css" />
     <link
       href="https://assets.calendly.com/assets/external/widget.css"
       rel="stylesheet"
@@ -265,6 +280,15 @@
             ></a>
           </div>
           <!-- / Social Links -->
+		  
+		  <button
+			class="theme-toggle-btn"
+			  aria-label="Switch to dark mode"
+			  title="Dark mode"
+		  >
+			<span class="theme-toggle-icon">🌙</span>
+		  </button>
+		  
 
           <!-- Calendly badge widget with permanent close -->
           <link
@@ -392,6 +416,14 @@
           </div>
           <div class="mobile-site-title"><a href="#">Ferhat Tüfekçi</a></div>
         </div>
+		
+		<button
+		  class="theme-toggle-btn mobile-theme-toggle mobile-visible"
+		  aria-label="Switch to dark mode"
+		  title="Dark mode"
+		>
+		  <span class="theme-toggle-icon">🌙</span>
+		</button>
 
         <a class="menu-toggle mobile-visible">
           <i class="fa fa-bars"></i>
@@ -1483,6 +1515,7 @@
       });
     </script>
     <script src="js/tab-title.js"></script>
+	<script src="js/theme.js"></script>
 
 <script>
 /* ── Filter scroll hint — show/hide right fade on mobile ── */
