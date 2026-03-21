@@ -23,6 +23,8 @@ const MEDIUM_RSS = 'https://medium.com/feed/@ferhattufekci';
 const EXCLUDE = new Set([
   '1ee2f58f131d',  // About Me — Ferhat Tufekci
   '258c7eff1349',  // BEDELLİ ASKERLİK
+  '2f9bed8fbb80',  // Nike Trail
+  
 ]);
 
 // ─── Tag → Kategori Eşlemesi ──────────────────────────────────────────────────
