@@ -1,0 +1,55 @@
+# .github/workflows/fetch-github.yml
+
+name: Fetch GitHub Repos
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'   # Her Pazartesi 03:00 UTC
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install node-fetch
+        run: cd scripts && npm install node-fetch@3
+
+      - name: Fetch GitHub repos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/fetch-github.js
+
+      - name: Commit data files
+        run: |
+          git config --local user.email "ferhattufekci@outlook.com.tr"
+          git config --local user.name  "Ferhat Tüfekçi"
+          git add data/github-repos.json data/github-meta.json data/github-starred.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: update GitHub repos [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && break
+            echo "Retry $i failed, waiting..."
+            sleep $((i * 3))
+          done
