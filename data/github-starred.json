@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 502096,
+    "stars": 504440,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 467528,
+    "stars": 469829,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 445043,
+    "stars": 445392,
     "topics": [
       "careers",
       "certification",
@@ -69,7 +69,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 388481,
+    "stars": 388949,
     "topics": [
       "books",
       "education",
@@ -86,7 +86,7 @@
     "homepage": "https://roadmap.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 354981,
+    "stars": 355405,
     "topics": [
       "angular-roadmap",
       "backend-roadmap",
@@ -116,7 +116,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 349081,
+    "stars": 350179,
     "topics": [
       "design",
       "design-patterns",
@@ -141,7 +141,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 346957,
+    "stars": 347366,
     "topics": [
       "algorithm",
       "algorithms",
@@ -165,7 +165,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 265959,
+    "stars": 266549,
     "topics": [
       "beginner-project",
       "cpp",
@@ -185,7 +185,7 @@
     "homepage": "https://react.dev",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 245093,
+    "stars": 245258,
     "topics": [
       "declarative",
       "frontend",
@@ -203,7 +203,7 @@
     "homepage": null,
     "language": "C",
     "langColor": "#8b949e",
-    "stars": 233553,
+    "stars": 234353,
     "topics": []
   },
   {
@@ -214,7 +214,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 220770,
+    "stars": 224416,
     "topics": [
       "awesome",
       "awesome-list",
@@ -238,22 +238,6 @@
     ]
   },
   {
-    "name": "computer-science",
-    "owner": "ossu",
-    "description": "🎓 Path to a free self-taught education in Computer Science!",
-    "url": "https://github.com/ossu/computer-science",
-    "homepage": "https://cs.ossu.dev",
-    "language": "HTML",
-    "langColor": "#e34c26",
-    "stars": 203901,
-    "topics": [
-      "awesome-list",
-      "computer-science",
-      "courses",
-      "curriculum"
-    ]
-  },
-  {
     "name": "superpowers",
     "owner": "obra",
     "description": "An agentic skills framework & software development methodology that works.",
@@ -261,8 +245,24 @@
     "homepage": null,
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 195619,
+    "stars": 205432,
     "topics": []
+  },
+  {
+    "name": "computer-science",
+    "owner": "ossu",
+    "description": "🎓 Path to a free self-taught education in Computer Science!",
+    "url": "https://github.com/ossu/computer-science",
+    "homepage": "https://cs.ossu.dev",
+    "language": "HTML",
+    "langColor": "#e34c26",
+    "stars": 204162,
+    "topics": [
+      "awesome-list",
+      "computer-science",
+      "courses",
+      "curriculum"
+    ]
   },
   {
     "name": "tech-interview-handbook",
@@ -272,7 +272,7 @@
     "homepage": "https://www.techinterviewhandbook.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 139600,
+    "stars": 139710,
     "topics": [
       "algorithm",
       "algorithm-interview",
@@ -294,7 +294,7 @@
     "homepage": "https://code.claude.com/docs/en/overview",
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 124490,
+    "stars": 126347,
     "topics": []
   },
   {
@@ -305,7 +305,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 123605,
+    "stars": 125021,
     "topics": [
       "autogen",
       "autogen-extension",
@@ -324,7 +324,7 @@
     "homepage": "https://excalidraw.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 123461,
+    "stars": 123957,
     "topics": [
       "canvas",
       "collaboration",
@@ -343,7 +343,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 122430,
+    "stars": 122616,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -357,7 +357,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 110981,
+    "stars": 111353,
     "topics": [
       "ai",
       "azure",
@@ -383,7 +383,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 98945,
+    "stars": 99298,
     "topics": [
       "cc-by",
       "collection",
@@ -400,7 +400,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 96993,
+    "stars": 97076,
     "topics": [
       "python",
       "shell"
@@ -414,7 +414,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 85846,
+    "stars": 85962,
     "topics": [
       "data-science",
       "education",
@@ -438,7 +438,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 82397,
+    "stars": 82473,
     "topics": [
       "ansible",
       "aws",
@@ -469,7 +469,7 @@
     "homepage": "https://ragflow.io",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 80699,
+    "stars": 81171,
     "topics": [
       "agentic-ai",
       "agentic-retrieval",
@@ -491,7 +491,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 73304,
+    "stars": 73394,
     "topics": [
       "awesome",
       "awesome-list",
@@ -513,7 +513,7 @@
     "homepage": "https://frontendchecklist.io",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 72628,
+    "stars": 72708,
     "topics": [
       "checklist",
       "css",
@@ -537,7 +537,7 @@
     "homepage": null,
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 65667,
+    "stars": 65703,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -552,6 +552,26 @@
     ]
   },
   {
+    "name": "ai-agents-for-beginners",
+    "owner": "microsoft",
+    "description": "12 Lessons to Get Started Building AI Agents",
+    "url": "https://github.com/microsoft/ai-agents-for-beginners",
+    "homepage": "https://aka.ms/ai-agents-beginners",
+    "language": "Jupyter Notebook",
+    "langColor": "#8b949e",
+    "stars": 65402,
+    "topics": [
+      "agentic-ai",
+      "agentic-framework",
+      "agentic-rag",
+      "ai-agents",
+      "ai-agents-framework",
+      "autogen",
+      "generative-ai",
+      "semantic-kernel"
+    ]
+  },
+  {
     "name": "interviews",
     "owner": "kdn251",
     "description": "Everything you need to know to get the job.",
@@ -559,7 +579,7 @@
     "homepage": "https://www.youtube.com/channel/UCKvwPt6BifPP54yzH99ff1g?view_as=subscriber",
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 64936,
+    "stars": 64970,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -584,26 +604,6 @@
     ]
   },
   {
-    "name": "ai-agents-for-beginners",
-    "owner": "microsoft",
-    "description": "12 Lessons to Get Started Building AI Agents",
-    "url": "https://github.com/microsoft/ai-agents-for-beginners",
-    "homepage": "https://aka.ms/ai-agents-beginners",
-    "language": "Jupyter Notebook",
-    "langColor": "#8b949e",
-    "stars": 62867,
-    "topics": [
-      "agentic-ai",
-      "agentic-framework",
-      "agentic-rag",
-      "ai-agents",
-      "ai-agents-framework",
-      "autogen",
-      "generative-ai",
-      "semantic-kernel"
-    ]
-  },
-  {
     "name": "drawio-desktop",
     "owner": "jgraph",
     "description": "Official electron build of draw.io",
@@ -611,7 +611,7 @@
     "homepage": "https://www.diagrams.net",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 61150,
+    "stars": 61274,
     "topics": [
       "diagram-editor",
       "electron-app",
@@ -627,7 +627,7 @@
     "homepage": "https://linkedin.com/in/shanraisshan",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 53483,
+    "stars": 54733,
     "topics": [
       "agentic-ai",
       "agentic-coding",
@@ -659,7 +659,7 @@
     "homepage": "https://www.rtk-ai.app",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 49508,
+    "stars": 53766,
     "topics": [
       "agentic-coding",
       "ai-coding",
@@ -677,6 +677,38 @@
     ]
   },
   {
+    "name": "open-design",
+    "owner": "nexu-io",
+    "description": "🎨 Local-first, open-source  Claude Design alternative. ⚡ 19 Skills · ✨ 71 brand-grade Design Systems 🖼 Generate web · desktop · mobile prototypes · slides · images · videos · HyperFrames 📦 Sandboxed preview · HTML/PDF/PPTX/MP4 export 🤖 Runs on Claude Code / Codex / Cursor / Gemini / OpenCode / Qwen / Copilot / Hermes / Kimi CLI.",
+    "url": "https://github.com/nexu-io/open-design",
+    "homepage": "https://open-design.ai",
+    "language": "TypeScript",
+    "langColor": "#3178c6",
+    "stars": 51542,
+    "topics": [
+      "agent-skills",
+      "ai-agents",
+      "ai-design",
+      "byok",
+      "claude",
+      "claude-code-for-design",
+      "claude-design",
+      "coding-agents",
+      "design-systems",
+      "design-tools",
+      "desktop-app",
+      "figma-alternative",
+      "generative-ai",
+      "hermes-agent",
+      "local-first",
+      "nextjs",
+      "no-code",
+      "prototyping",
+      "ui-generator",
+      "vibe-coding"
+    ]
+  },
+  {
     "name": "awesome-java",
     "owner": "akullpp",
     "description": "A curated list of awesome frameworks, libraries and software for the Java programming language.",
@@ -684,7 +716,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 47957,
+    "stars": 48031,
     "topics": [
       "awesome",
       "awesome-list"
@@ -698,7 +730,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 47617,
+    "stars": 47771,
     "topics": [
       "ai",
       "artificial-intelligence",
@@ -720,7 +752,7 @@
     "homepage": "https://microsoft.github.io/VibeVoice/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 47235,
+    "stars": 47414,
     "topics": []
   },
   {
@@ -731,7 +763,7 @@
     "homepage": "https://react-typescript-cheatsheet.netlify.app",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 47048,
+    "stars": 47060,
     "topics": [
       "cheatsheet",
       "guide",
@@ -747,7 +779,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46357,
+    "stars": 46362,
     "topics": [
       "30daysofjavascript",
       "angular",
@@ -779,7 +811,7 @@
     "homepage": "https://lecoupa.github.io/awesome-cheatsheets/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 45872,
+    "stars": 45911,
     "topics": [
       "backend",
       "bash",
@@ -811,7 +843,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 44574,
+    "stars": 44585,
     "topics": [
       "interview-preparation",
       "interview-questions",
@@ -829,38 +861,6 @@
     ]
   },
   {
-    "name": "open-design",
-    "owner": "nexu-io",
-    "description": "🎨 Local-first, open-source alternative to Anthropic's Claude Design. ⚡ 19 Skills · ✨ 71 brand-grade Design Systems 🖼 Generate web · desktop · mobile prototypes · slides · images · videos · HyperFrames 📦 Sandboxed preview · HTML/PDF/PPTX/MP4 export 🤖 Runs on Claude Code / Codex / Cursor / Gemini / OpenCode / Qwen / Copilot / Hermes / Kimi CLI.",
-    "url": "https://github.com/nexu-io/open-design",
-    "homepage": "https://open-design.ai",
-    "language": "TypeScript",
-    "langColor": "#3178c6",
-    "stars": 44057,
-    "topics": [
-      "agent-skills",
-      "ai-agents",
-      "ai-design",
-      "byok",
-      "claude",
-      "claude-code-for-design",
-      "claude-design",
-      "coding-agents",
-      "design-systems",
-      "design-tools",
-      "desktop-app",
-      "figma-alternative",
-      "generative-ai",
-      "hermes-agent",
-      "local-first",
-      "nextjs",
-      "no-code",
-      "prototyping",
-      "ui-generator",
-      "vibe-coding"
-    ]
-  },
-  {
     "name": "Data-Science-For-Beginners",
     "owner": "microsoft",
     "description": "10 Weeks, 20 Lessons, Data Science for All!",
@@ -868,7 +868,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 35355,
+    "stars": 35422,
     "topics": [
       "data-analysis",
       "data-science",
@@ -886,7 +886,7 @@
     "homepage": "http://luongnv.com/claude-howto/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 33333,
+    "stars": 34108,
     "topics": [
       "claude-code",
       "guide",
@@ -901,7 +901,7 @@
     "homepage": "https://bit.ly/awesome-gh",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 29977,
+    "stars": 30043,
     "topics": [
       "awesome",
       "awesome-list",
@@ -920,7 +920,7 @@
     "homepage": "https://atuin.sh",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 29764,
+    "stars": 29855,
     "topics": [
       "bash",
       "fish",
@@ -958,7 +958,7 @@
     "homepage": null,
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 28699,
+    "stars": 28855,
     "topics": [
       "agentic-ai",
       "agents",
@@ -977,7 +977,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 27402,
+    "stars": 27401,
     "topics": [
       "30dayofjavascript",
       "challenge",
@@ -1003,7 +1003,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 25122,
+    "stars": 25148,
     "topics": []
   },
   {
@@ -1014,7 +1014,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 24736,
+    "stars": 24762,
     "topics": [
       "deep-learning",
       "platform",
@@ -1029,7 +1029,7 @@
     "homepage": "https://vanna.ai/docs/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 23455,
+    "stars": 23501,
     "topics": [
       "agent",
       "ai",
@@ -1042,6 +1042,26 @@
     ]
   },
   {
+    "name": "academic-research-skills",
+    "owner": "Imbad0202",
+    "description": "Academic Research Skills for Claude Code: research → write → review → revise → finalize",
+    "url": "https://github.com/Imbad0202/academic-research-skills",
+    "homepage": "https://buymeacoffee.com/crucify020v",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 20941,
+    "topics": [
+      "academic-pipeline",
+      "academic-writing",
+      "ai-research",
+      "claude",
+      "claude-code",
+      "literature-review",
+      "peer-review",
+      "prompt-engineering"
+    ]
+  },
+  {
     "name": "react-developer-roadmap",
     "owner": "adam-golab",
     "description": "Roadmap to becoming a React developer",
@@ -1049,7 +1069,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 18941,
+    "stars": 18942,
     "topics": []
   },
   {
@@ -1079,18 +1099,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 15703,
-    "topics": []
-  },
-  {
-    "name": "dotnet",
-    "owner": "microsoft",
-    "description": "This repo is the official home of .NET on GitHub. It's a great starting point to find many .NET OSS projects from Microsoft and the community, including many that are part of the .NET Foundation.",
-    "url": "https://github.com/microsoft/dotnet",
-    "homepage": "https://devblogs.microsoft.com/dotnet/",
-    "language": "HTML",
-    "langColor": "#e34c26",
-    "stars": 15050,
+    "stars": 15758,
     "topics": []
   },
   {
@@ -1101,7 +1110,7 @@
     "homepage": "https://context-mode.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 15012,
+    "stars": 15614,
     "topics": [
       "antigravity",
       "claude",
@@ -1133,7 +1142,7 @@
     "homepage": "https://dsc.gg/jcodesmore",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 14978,
+    "stars": 15423,
     "topics": [
       "ai",
       "ai-agents",
@@ -1157,6 +1166,17 @@
     ]
   },
   {
+    "name": "dotnet",
+    "owner": "microsoft",
+    "description": "This repo is the official home of .NET on GitHub. It's a great starting point to find many .NET OSS projects from Microsoft and the community, including many that are part of the .NET Foundation.",
+    "url": "https://github.com/microsoft/dotnet",
+    "homepage": "https://devblogs.microsoft.com/dotnet/",
+    "language": "HTML",
+    "langColor": "#e34c26",
+    "stars": 15050,
+    "topics": []
+  },
+  {
     "name": "hindsight",
     "owner": "vectorize-io",
     "description": "Hindsight: Agent Memory That  Learns",
@@ -1164,7 +1184,7 @@
     "homepage": "https://hindsight.vectorize.io/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 13644,
+    "stars": 14481,
     "topics": [
       "agentic-ai",
       "agents",
@@ -1180,7 +1200,7 @@
     "homepage": "https://www.gitbook.com/book/krasimir/react-in-patterns/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 13583,
+    "stars": 13582,
     "topics": [
       "data-flow",
       "dependency",
@@ -1197,7 +1217,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 10703,
+    "stars": 10706,
     "topics": []
   },
   {
@@ -1208,28 +1228,8 @@
     "homepage": "https://infinite.red/technologies/react-native",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 10359,
+    "stars": 10362,
     "topics": []
-  },
-  {
-    "name": "academic-research-skills",
-    "owner": "Imbad0202",
-    "description": "Academic Research Skills for Claude Code: research → write → review → revise → finalize",
-    "url": "https://github.com/Imbad0202/academic-research-skills",
-    "homepage": "https://buymeacoffee.com/crucify020v",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 9800,
-    "topics": [
-      "academic-pipeline",
-      "academic-writing",
-      "ai-research",
-      "claude",
-      "claude-code",
-      "literature-review",
-      "peer-review",
-      "prompt-engineering"
-    ]
   },
   {
     "name": "web-development-resources",
@@ -1239,7 +1239,7 @@
     "homepage": "https://web-dev-resources.com/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 8070,
+    "stars": 8069,
     "topics": [
       "chrome-extensions",
       "color-palettes",
@@ -1260,7 +1260,7 @@
     "homepage": "https://dockerlabs.collabnix.com",
     "language": "PHP",
     "langColor": "#4F5D95",
-    "stars": 7990,
+    "stars": 7994,
     "topics": [
       "advance",
       "beginners",
@@ -1282,7 +1282,7 @@
     "homepage": "https://www.npmjs.com/package/opencommit",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 7303,
+    "stars": 7309,
     "topics": [
       "ai",
       "ai-commit",
@@ -1302,7 +1302,7 @@
     "homepage": "https://aka.ms/GeneralAI",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 4384,
+    "stars": 4388,
     "topics": [
       "agi",
       "gpt",
@@ -1318,17 +1318,6 @@
     ]
   },
   {
-    "name": "drawio-mcp",
-    "owner": "jgraph",
-    "description": "",
-    "url": "https://github.com/jgraph/drawio-mcp",
-    "homepage": null,
-    "language": "JavaScript",
-    "langColor": "#f1e05a",
-    "stars": 3816,
-    "topics": []
-  },
-  {
     "name": "claude-scholar",
     "owner": "Galaxy-Dawn",
     "description": "Semi-automated research assistant for academic research and software development. Supports Claude Code, OpenCode, and Codex CLI across ideation, coding, experiments, writing, and publication.",
@@ -1336,7 +1325,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 3744,
+    "stars": 4004,
     "topics": [
       "academic-research",
       "ai-agents",
@@ -1352,6 +1341,17 @@
     ]
   },
   {
+    "name": "drawio-mcp",
+    "owner": "jgraph",
+    "description": "",
+    "url": "https://github.com/jgraph/drawio-mcp",
+    "homepage": null,
+    "language": "JavaScript",
+    "langColor": "#f1e05a",
+    "stars": 3962,
+    "topics": []
+  },
+  {
     "name": "kubernetes-kitap",
     "owner": "mstrYoda",
     "description": "",
@@ -1359,7 +1359,7 @@
     "homepage": "https://mstryoda.github.io/kubernetes-kitap/#/",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 1878,
+    "stars": 1879,
     "topics": [
       "book",
       "containers",
@@ -1375,7 +1375,7 @@
     "homepage": "https://suadev.gitbook.io/turkish-microservices-book/",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 734,
+    "stars": 733,
     "topics": [
       "microservice",
       "microservices",
@@ -1383,23 +1383,6 @@
       "mikroservis",
       "mikroservis-mimari",
       "monolith"
-    ]
-  },
-  {
-    "name": "react-turkce-kaynak",
-    "owner": "orcuntuna",
-    "description": "React.js öğrenmek için kullanabileceğiniz ücretsiz Türkçe kaynak.",
-    "url": "https://github.com/orcuntuna/react-turkce-kaynak",
-    "homepage": null,
-    "language": "HTML",
-    "langColor": "#e34c26",
-    "stars": 691,
-    "topics": [
-      "react",
-      "reactjs",
-      "turkce",
-      "turkce-dokuman",
-      "turkce-kaynak"
     ]
   },
   {
@@ -1434,6 +1417,23 @@
     ]
   },
   {
+    "name": "react-turkce-kaynak",
+    "owner": "orcuntuna",
+    "description": "React.js öğrenmek için kullanabileceğiniz ücretsiz Türkçe kaynak.",
+    "url": "https://github.com/orcuntuna/react-turkce-kaynak",
+    "homepage": null,
+    "language": "HTML",
+    "langColor": "#e34c26",
+    "stars": 689,
+    "topics": [
+      "react",
+      "reactjs",
+      "turkce",
+      "turkce-dokuman",
+      "turkce-kaynak"
+    ]
+  },
+  {
     "name": "Financial-aid-on-coursera-",
     "owner": "abdelrahmaan",
     "description": "Applying for financial aid on coursera ",
@@ -1452,7 +1452,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 110,
+    "stars": 120,
     "topics": []
   },
   {
