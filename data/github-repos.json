@@ -41,17 +41,17 @@
       {
         "name": "CSS",
         "color": "#563d7c",
-        "percent": 54
+        "percent": 50
       },
       {
         "name": "HTML",
         "color": "#e34c26",
-        "percent": 23
+        "percent": 29
       },
       {
         "name": "JavaScript",
         "color": "#f1e05a",
-        "percent": 22
+        "percent": 21
       }
     ],
     "stars": 0,
@@ -69,7 +69,7 @@
     "pinned": true,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-06-01T02:13:38Z"
+    "updatedAt": "2026-06-04T07:46:59Z"
   },
   {
     "name": "free-programming-books",
@@ -174,6 +174,28 @@
     "updatedAt": "2023-08-07T16:00:34Z"
   },
   {
+    "name": "aiup-petclinic",
+    "description": "Materials of Spec-driven Development: How AI Changed Everything (And Nothing) by Simon Martinelli @ Spring I/O 26",
+    "url": "https://github.com/ferhattufekci/aiup-petclinic",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 100
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-05-31T09:43:03Z"
+  },
+  {
     "name": "axios",
     "description": "Promise based HTTP client for the browser and node.js",
     "url": "https://github.com/ferhattufekci/axios",
@@ -225,6 +247,22 @@
     "category": "software",
     "lang": "en",
     "updatedAt": "2024-08-12T09:07:04Z"
+  },
+  {
+    "name": "claude-plugin",
+    "description": "",
+    "url": "https://github.com/ferhattufekci/claude-plugin",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-06-02T07:32:52Z"
   },
   {
     "name": "create-react-app",
@@ -520,6 +558,28 @@
     "category": "software",
     "lang": "en",
     "updatedAt": "2025-09-02T18:37:36Z"
+  },
+  {
+    "name": "marketplace",
+    "description": "",
+    "url": "https://github.com/ferhattufekci/marketplace",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 100
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-05-13T14:54:22Z"
   },
   {
     "name": "oofp",
