@@ -3779,7 +3779,7 @@ figcaption {
 .pt-page[data-id="blog"] .portfolio-filters,
 .pt-page[data-id="projects"] .proj-cat-filters {
   width: fit-content !important;
-  max-width: 100% !important;     /* FIX 1: never overflow parent at any viewport */
+  max-width: 100% !important; /* FIX 1: never overflow parent at any viewport */
   margin-left: auto !important;
   margin-right: 0 !important;
   display: flex !important;
@@ -3797,7 +3797,9 @@ figcaption {
 }
 
 .pt-page[data-id="blog"] .portfolio-filters::-webkit-scrollbar,
-.pt-page[data-id="projects"] .proj-cat-filters::-webkit-scrollbar { display: none; }
+.pt-page[data-id="projects"] .proj-cat-filters::-webkit-scrollbar {
+  display: none;
+}
 
 .pt-page[data-id="blog"] .portfolio-filters li,
 .pt-page[data-id="projects"] .proj-cat-filters li {
@@ -3831,7 +3833,7 @@ figcaption {
 .pt-page[data-id="blog"] .portfolio-filters li a:hover,
 .pt-page[data-id="projects"] .proj-cat-filters li a:hover {
   color: #333;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .pt-page[data-id="blog"] .portfolio-filters li.active a,
@@ -3840,7 +3842,9 @@ figcaption {
 .pt-page[data-id="projects"] .proj-cat-filters li.active a:hover {
   background: #fff;
   color: #111;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.06);
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.12),
+    0 0 0 0.5px rgba(0, 0, 0, 0.06);
   border: none !important;
 }
 
@@ -3871,11 +3875,13 @@ figcaption {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .proj-card:hover {
   border-color: #d0d0d0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .proj-card-header {
@@ -3894,7 +3900,9 @@ figcaption {
   text-overflow: ellipsis;
   flex: 1;
 }
-.proj-name:hover { color: #ff9800; }
+.proj-name:hover {
+  color: #ff9800;
+}
 
 .proj-homepage {
   font-size: 12px;
@@ -3902,7 +3910,9 @@ figcaption {
   text-decoration: none;
   flex-shrink: 0;
 }
-.proj-homepage:hover { color: #0099e5; }
+.proj-homepage:hover {
+  color: #0099e5;
+}
 
 .proj-desc {
   font-size: 12px;
@@ -3961,7 +3971,9 @@ figcaption {
 }
 
 /* ── section-description flex ── */
-.pt-page[data-id="projects"] .section-title-block.second-style .section-description {
+.pt-page[data-id="projects"]
+  .section-title-block.second-style
+  .section-description {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -4015,7 +4027,9 @@ figcaption {
   color: #555;
   cursor: pointer;
   font-family: inherit;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 .proj-show-more-btn:hover {
   border-color: #0099e5;
@@ -4044,9 +4058,16 @@ figcaption {
 }
 
 /* ── Projects page — prevent horizontal overflow ── */
-.pt-page[data-id="projects"] .section-inner { overflow-x: hidden; }
-.pt-page[data-id="projects"] .proj-grid { min-width: 0; }
-.pt-page[data-id="projects"] .proj-card { min-width: 0; word-break: break-word; }
+.pt-page[data-id="projects"] .section-inner {
+  overflow-x: hidden;
+}
+.pt-page[data-id="projects"] .proj-grid {
+  min-width: 0;
+}
+.pt-page[data-id="projects"] .proj-card {
+  min-width: 0;
+  word-break: break-word;
+}
 
 /* ── blt-btn — override global button { border:2px solid } ── */
 .blt-btn,
@@ -4070,13 +4091,20 @@ figcaption {
   line-height: 1.4;
   margin-bottom: 0;
 }
-.blt-btn:hover  { color: #555; }
-.blt-btn.active { color: #333; }
-.blt-sep { color: #ddd; font-size: 11px; user-select: none; }
+.blt-btn:hover {
+  color: #555;
+}
+.blt-btn.active {
+  color: #333;
+}
+.blt-sep {
+  color: #ddd;
+  font-size: 11px;
+  user-select: none;
+}
 
 /* ── Mobile responsive fixes ── */
 @media only screen and (max-width: 768px) {
-
   /* FIX 2+3: Both filter bars — full width, left-aligned, horizontal scroll enabled */
   /* `width: fit-content` is overridden so the ul IS constrained by its parent,   */
   /* allowing overflow-x: auto to actually scroll rather than expand infinitely.   */
@@ -4094,13 +4122,12 @@ figcaption {
   .proj-grid {
     grid-template-columns: 1fr !important;
   }
-
 }
 
 /* ── Filter scroll-hint fade gradient (all viewports) ── */
 /* The ::after gradient is always in the DOM; JS controls visibility via classes. */
 .filter-scroll-hint::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -4126,4 +4153,12 @@ figcaption {
 .pt-page[data-id="blog"] .portfolio-page-content,
 .pt-page[data-id="projects"] .portfolio-page-content {
   position: relative;
+}
+
+.last-updated {
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #9aa0a6;
+  margin: 2px 0 20px;
 }
