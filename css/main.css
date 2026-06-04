@@ -4154,11 +4154,3 @@ figcaption {
 .pt-page[data-id="projects"] .portfolio-page-content {
   position: relative;
 }
-
-.last-updated {
-  text-align: center;
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  color: #9aa0a6;
-  margin: 2px 0 20px;
-}

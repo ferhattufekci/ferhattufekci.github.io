@@ -231,16 +231,15 @@
 
     <script>
       window.fmtDT = function (iso) {
-        if (!iso) return "—";
+        if (!iso || iso === "undefined") return "";
         var d = new Date(iso);
-        if (isNaN(d.getTime())) return "—";
+        if (isNaN(d.getTime())) return "";
         var p = new Intl.DateTimeFormat("en-GB", {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
           hour12: false,
           timeZone: "Europe/Istanbul",
         })
@@ -250,17 +249,7 @@
             return a;
           }, {});
         return (
-          p.day +
-          "." +
-          p.month +
-          "." +
-          p.year +
-          " " +
-          p.hour +
-          ":" +
-          p.minute +
-          ":" +
-          p.second
+          p.day + "." + p.month + "." + p.year + " " + p.hour + ":" + p.minute
         );
       };
     </script>
@@ -730,14 +719,12 @@
                   <h2 class="section-title">Projects</h2>
                   <h5 class="section-description">
                     <span>My Work</span>
+                    <span
+                      id="proj-updated"
+                      style="font-size: 11px; font-weight: 400; color: #666"
+                    ></span>
                   </h5>
                 </div>
-                <div
-                  class="last-updated"
-                  id="proj-updated"
-                  aria-live="polite"
-                ></div>
-
                 <!-- Category filter bar -->
                 <div class="filter-scroll-hint" id="proj-filter-hint">
                   <ul
@@ -1239,9 +1226,12 @@
                     })
                     .then(function (m) {
                       var el = document.getElementById("proj-updated");
-                      if (el && m && m.lastUpdated)
-                        el.textContent =
-                          "🕐 Last updated: " + window.fmtDT(m.lastUpdated);
+                      var formatted =
+                        m && m.lastUpdated ? window.fmtDT(m.lastUpdated) : "";
+                      if (el && formatted)
+                        el.innerHTML =
+                          '<i class="lnr lnr-sync" style="font-size:11px; margin-right:3px;"></i> Synced from GitHub: ' +
+                          formatted;
                     })
                     .catch(function () {});
                   fetch("data/github-repos.json")
@@ -1326,13 +1316,12 @@
                         🇬🇧 EN
                       </button>
                     </span>
+                    <span
+                      id="blog-updated"
+                      style="font-size: 11px; font-weight: 400; color: #666"
+                    ></span>
                   </h5>
                 </div>
-                <div
-                  class="last-updated"
-                  id="blog-updated"
-                  aria-live="polite"
-                ></div>
                 <div class="section-content">
                   <div class="row">
                     <div class="col-xs-12 col-sm-12">
@@ -2125,9 +2114,12 @@
                   /*
 son güncelleme tarihi */ gj("data/meta.json").then(function (m) {
                     var el = document.getElementById("blog-updated");
-                    if (el && m && m.lastUpdated)
-                      el.textContent = el.textContent =
-                        "🕐 Last updated: " + window.fmtDT(m.lastUpdated);
+                    var formatted =
+                      m && m.lastUpdated ? window.fmtDT(m.lastUpdated) : "";
+                    if (el && formatted)
+                      el.innerHTML =
+                        '<i class="lnr lnr-sync" style="font-size:11px; margin-right:3px;"></i> Synced from Medium: ' +
+                        formatted;
                   });
                   fromCatFiles()
                     .then(function (it) {
