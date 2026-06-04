@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 511674,
+    "stars": 511713,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 472774,
+    "stars": 472775,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 446013,
+    "stars": 446026,
     "topics": [
       "careers",
       "certification",
@@ -69,7 +69,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 389640,
+    "stars": 389645,
     "topics": [
       "books",
       "education",
@@ -86,7 +86,7 @@
     "homepage": "https://roadmap.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 356206,
+    "stars": 356218,
     "topics": [
       "angular-roadmap",
       "backend-roadmap",
@@ -116,7 +116,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 351673,
+    "stars": 351689,
     "topics": [
       "design",
       "design-patterns",
@@ -141,7 +141,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 349275,
+    "stars": 349347,
     "topics": [
       "algorithm",
       "algorithms",
@@ -165,7 +165,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 267530,
+    "stars": 267534,
     "topics": [
       "beginner-project",
       "cpp",
@@ -185,7 +185,7 @@
     "homepage": "https://react.dev",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 245445,
+    "stars": 245448,
     "topics": [
       "declarative",
       "frontend",
@@ -203,7 +203,7 @@
     "homepage": null,
     "language": "C",
     "langColor": "#8b949e",
-    "stars": 235283,
+    "stars": 235286,
     "topics": []
   },
   {
@@ -214,7 +214,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 226510,
+    "stars": 226499,
     "topics": [
       "awesome",
       "awesome-list",
@@ -245,7 +245,7 @@
     "homepage": null,
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 217316,
+    "stars": 217450,
     "topics": []
   },
   {
@@ -256,7 +256,7 @@
     "homepage": "https://cs.ossu.dev",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 204425,
+    "stars": 204430,
     "topics": [
       "awesome-list",
       "computer-science",
@@ -272,7 +272,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 143349,
+    "stars": 143503,
     "topics": [
       "autogen",
       "autogen-extension",
@@ -291,7 +291,7 @@
     "homepage": "https://www.techinterviewhandbook.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 140071,
+    "stars": 140078,
     "topics": [
       "algorithm",
       "algorithm-interview",
@@ -313,7 +313,7 @@
     "homepage": "https://code.claude.com/docs/en/overview",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 129983,
+    "stars": 130024,
     "topics": []
   },
   {
@@ -324,7 +324,7 @@
     "homepage": "https://excalidraw.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 124593,
+    "stars": 124597,
     "topics": [
       "canvas",
       "collaboration",
@@ -343,7 +343,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 122892,
+    "stars": 122893,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -357,7 +357,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 111647,
+    "stars": 111652,
     "topics": [
       "ai",
       "azure",
@@ -383,7 +383,7 @@
     "homepage": "https://github.github.com/spec-kit/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 108182,
+    "stars": 108220,
     "topics": [
       "ai",
       "copilot",
@@ -402,7 +402,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 99460,
+    "stars": 99461,
     "topics": [
       "cc-by",
       "collection",
@@ -419,7 +419,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 97195,
+    "stars": 97197,
     "topics": [
       "python",
       "shell"
@@ -433,7 +433,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 86307,
+    "stars": 86314,
     "topics": [
       "data-science",
       "education",
@@ -457,7 +457,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 82569,
+    "stars": 82568,
     "topics": [
       "ansible",
       "aws",
@@ -488,7 +488,7 @@
     "homepage": "https://ragflow.io",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 81881,
+    "stars": 81896,
     "topics": [
       "agentic-ai",
       "agentic-retrieval",
@@ -510,7 +510,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 73527,
+    "stars": 73528,
     "topics": [
       "awesome",
       "awesome-list",
@@ -532,7 +532,7 @@
     "homepage": "https://frontendchecklist.io",
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 72805,
+    "stars": 72807,
     "topics": [
       "ai-agent",
       "ai-agents",
@@ -559,7 +559,7 @@
     "homepage": "https://aka.ms/ai-agents-beginners",
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 66413,
+    "stars": 66428,
     "topics": [
       "agentic-ai",
       "agentic-framework",
@@ -579,7 +579,7 @@
     "homepage": null,
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 65778,
+    "stars": 65782,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -649,7 +649,7 @@
     "homepage": "https://www.rtk-ai.app",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 58602,
+    "stars": 58662,
     "topics": [
       "agentic-coding",
       "ai-coding",
@@ -674,7 +674,7 @@
     "homepage": "https://open-design.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 58361,
+    "stars": 58445,
     "topics": [
       "agent-skills",
       "ai-agents",
@@ -706,7 +706,7 @@
     "homepage": "https://linkedin.com/in/shanraisshan",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 56326,
+    "stars": 56344,
     "topics": [
       "agentic-ai",
       "agentic-coding",
@@ -752,7 +752,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 47935,
+    "stars": 47936,
     "topics": [
       "ai",
       "artificial-intelligence",
@@ -774,7 +774,7 @@
     "homepage": "https://microsoft.github.io/VibeVoice/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 47737,
+    "stars": 47744,
     "topics": []
   },
   {
@@ -785,7 +785,7 @@
     "homepage": "https://react-typescript-cheatsheet.netlify.app",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 47069,
+    "stars": 47070,
     "topics": [
       "cheatsheet",
       "guide",
@@ -801,7 +801,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46408,
+    "stars": 46410,
     "topics": [
       "30daysofjavascript",
       "angular",
@@ -908,7 +908,7 @@
     "homepage": "http://luongnv.com/claude-howto/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 34911,
+    "stars": 34921,
     "topics": [
       "claude-code",
       "guide",
@@ -942,7 +942,7 @@
     "homepage": "https://atuin.sh",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 30008,
+    "stars": 30012,
     "topics": [
       "bash",
       "fish",
@@ -960,7 +960,7 @@
     "homepage": "https://www.90daysofdevops.com/",
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 29483,
+    "stars": 29482,
     "topics": [
       "ansible",
       "backup",
@@ -980,7 +980,7 @@
     "homepage": null,
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 29109,
+    "stars": 29111,
     "topics": [
       "agentic-ai",
       "agents",
@@ -999,7 +999,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 27401,
+    "stars": 27399,
     "topics": [
       "30dayofjavascript",
       "challenge",
@@ -1025,7 +1025,7 @@
     "homepage": "https://buymeacoffee.com/crucify020v",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 26927,
+    "stars": 27009,
     "topics": [
       "academic-pipeline",
       "academic-writing",
@@ -1056,7 +1056,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 24807,
+    "stars": 24808,
     "topics": [
       "deep-learning",
       "platform",
@@ -1071,7 +1071,7 @@
     "homepage": "https://vanna.ai/docs/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 23558,
+    "stars": 23559,
     "topics": [
       "agent",
       "ai",
@@ -1121,7 +1121,7 @@
     "homepage": "https://context-mode.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 16378,
+    "stars": 16389,
     "topics": [
       "antigravity",
       "claude",
@@ -1153,7 +1153,7 @@
     "homepage": "https://dsc.gg/jcodesmore",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 16198,
+    "stars": 16204,
     "topics": [
       "ai",
       "ai-agents",
@@ -1184,7 +1184,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 15894,
+    "stars": 15895,
     "topics": []
   },
   {
@@ -1195,7 +1195,7 @@
     "homepage": "https://hindsight.vectorize.io/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 15611,
+    "stars": 15626,
     "topics": [
       "agentic-ai",
       "agents",
@@ -1347,7 +1347,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 4201,
+    "stars": 4202,
     "topics": []
   },
   {
@@ -1358,7 +1358,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 4189,
+    "stars": 4190,
     "topics": [
       "academic-research",
       "ai-agents",
