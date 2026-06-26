@@ -1,0 +1,35 @@
+/* ── Desktop: yüz + göğüs/gömlek dengeli kompozisyon ─────────
+   center 30% → arka planı hafif aşağı kaydırır; başın üstünde
+   nefes alanı kalır, gömleğin bir kısmı da çerçeveye girer.   */
+.section-inner.start-page-full-width .inner-content .fill-block {
+  background-position: center 30%;
+}
+
+/* ── Tablet / Mobile (≤ 991 px): sütunlar alt alta dizilince ──
+   vw-tabanlı yükseklik → ekranla orantılı büyür/küçülür.
+   background-position: center 20% → göğüs çerçevede görünür,
+   baş üstte ama tam kesilmez.                                  */
+@media only screen and (max-width: 991px) {
+  .section-inner.start-page-full-width .inner-content {
+    display: block;
+    width: 100%;
+  }
+
+  .section-inner.start-page-full-width .inner-content .fill-block {
+    height: 60vw;
+    min-height: 380px;
+    max-height: 560px;
+    background-position: center 20%;
+    background-size: cover;
+  }
+}
+
+/* ── Küçük telefon (≤ 480 px) ─────────────────────────────── */
+@media only screen and (max-width: 480px) {
+  .section-inner.start-page-full-width .inner-content .fill-block {
+    height: 75vw;
+    min-height: 300px;
+    max-height: 420px;
+    background-position: center 18%;
+  }
+}
