@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 518261,
+    "stars": 520676,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 477812,
+    "stars": 479735,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 450142,
+    "stars": 450709,
     "topics": [
       "careers",
       "certification",
@@ -69,7 +69,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 390629,
+    "stars": 390939,
     "topics": [
       "books",
       "education",
@@ -86,7 +86,7 @@
     "homepage": "https://roadmap.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 357969,
+    "stars": 358572,
     "topics": [
       "angular-roadmap",
       "backend-roadmap",
@@ -116,7 +116,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 354281,
+    "stars": 355341,
     "topics": [
       "design",
       "design-patterns",
@@ -141,7 +141,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 353495,
+    "stars": 354474,
     "topics": [
       "algorithm",
       "algorithms",
@@ -165,7 +165,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 270416,
+    "stars": 271264,
     "topics": [
       "beginner-project",
       "cpp",
@@ -185,7 +185,7 @@
     "homepage": "https://react.dev",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 245997,
+    "stars": 246291,
     "topics": [
       "declarative",
       "frontend",
@@ -196,17 +196,6 @@
     ]
   },
   {
-    "name": "linux",
-    "owner": "torvalds",
-    "description": "Linux kernel source tree",
-    "url": "https://github.com/torvalds/linux",
-    "homepage": null,
-    "language": "C",
-    "langColor": "#8b949e",
-    "stars": 237209,
-    "topics": []
-  },
-  {
     "name": "superpowers",
     "owner": "obra",
     "description": "An agentic skills framework & software development methodology that works.",
@@ -214,7 +203,7 @@
     "homepage": null,
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 235495,
+    "stars": 241005,
     "topics": [
       "ai",
       "brainstorming",
@@ -227,6 +216,17 @@
     ]
   },
   {
+    "name": "linux",
+    "owner": "torvalds",
+    "description": "Linux kernel source tree",
+    "url": "https://github.com/torvalds/linux",
+    "homepage": null,
+    "language": "C",
+    "langColor": "#8b949e",
+    "stars": 237942,
+    "topics": []
+  },
+  {
     "name": "the-book-of-secret-knowledge",
     "owner": "trimstray",
     "description": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.",
@@ -234,7 +234,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 229667,
+    "stars": 230761,
     "topics": [
       "awesome",
       "awesome-list",
@@ -265,7 +265,7 @@
     "homepage": "https://cs.ossu.dev",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 205155,
+    "stars": 205426,
     "topics": [
       "awesome-list",
       "computer-science",
@@ -281,7 +281,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 157428,
+    "stars": 160881,
     "topics": [
       "autogen",
       "autogen-extension",
@@ -300,7 +300,7 @@
     "homepage": "https://www.techinterviewhandbook.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 140431,
+    "stars": 140503,
     "topics": [
       "algorithm",
       "algorithm-interview",
@@ -322,7 +322,7 @@
     "homepage": "https://code.claude.com/docs/en/overview",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 133698,
+    "stars": 134890,
     "topics": []
   },
   {
@@ -333,7 +333,7 @@
     "homepage": "https://excalidraw.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 125941,
+    "stars": 126399,
     "topics": [
       "canvas",
       "collaboration",
@@ -352,7 +352,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 123294,
+    "stars": 126014,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -366,7 +366,7 @@
     "homepage": "https://github.github.com/spec-kit/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 114700,
+    "stars": 116263,
     "topics": [
       "ai",
       "copilot",
@@ -385,7 +385,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 112198,
+    "stars": 112387,
     "topics": [
       "ai",
       "azure",
@@ -411,7 +411,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 99887,
+    "stars": 99973,
     "topics": [
       "cc-by",
       "collection",
@@ -428,7 +428,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 97405,
+    "stars": 97451,
     "topics": [
       "python",
       "shell"
@@ -442,7 +442,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 87152,
+    "stars": 87489,
     "topics": [
       "data-science",
       "education",
@@ -464,9 +464,9 @@
     "description": "RAGFlow is a leading open-source Retrieval-Augmented Generation (RAG) engine that fuses cutting-edge RAG with Agent capabilities to create a superior context layer for LLMs",
     "url": "https://github.com/infiniflow/ragflow",
     "homepage": "https://ragflow.io",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 83337,
+    "language": "Go",
+    "langColor": "#00ADD8",
+    "stars": 83828,
     "topics": [
       "agentic-ai",
       "agentic-retrieval",
@@ -488,7 +488,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 82860,
+    "stars": 82967,
     "topics": [
       "ansible",
       "aws",
@@ -519,7 +519,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 73712,
+    "stars": 73783,
     "topics": [
       "awesome",
       "awesome-list",
@@ -541,7 +541,7 @@
     "homepage": "https://frontendchecklist.io",
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 72997,
+    "stars": 73066,
     "topics": [
       "ai-agent",
       "ai-agents",
@@ -568,7 +568,7 @@
     "homepage": "https://open-design.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 68857,
+    "stars": 72618,
     "topics": [
       "agent-skills",
       "ai-agents",
@@ -600,7 +600,7 @@
     "homepage": "https://aka.ms/ai-agents-beginners",
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 67695,
+    "stars": 68145,
     "topics": [
       "agentic-ai",
       "agentic-framework",
@@ -613,6 +613,31 @@
     ]
   },
   {
+    "name": "rtk",
+    "owner": "rtk-ai",
+    "description": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies",
+    "url": "https://github.com/rtk-ai/rtk",
+    "homepage": "https://www.rtk-ai.app",
+    "language": "Rust",
+    "langColor": "#dea584",
+    "stars": 66854,
+    "topics": [
+      "agentic-coding",
+      "ai-coding",
+      "anthropic",
+      "claude-code",
+      "cli",
+      "command-line-tool",
+      "cost-reduction",
+      "developer-tools",
+      "llm",
+      "open-source",
+      "productivity",
+      "rust",
+      "token-optimization"
+    ]
+  },
+  {
     "name": "Java",
     "owner": "TheAlgorithms",
     "description": "All Algorithms implemented in Java",
@@ -620,7 +645,7 @@
     "homepage": null,
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 65893,
+    "stars": 65936,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -642,7 +667,7 @@
     "homepage": "https://www.youtube.com/channel/UCKvwPt6BifPP54yzH99ff1g?view_as=subscriber",
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 65001,
+    "stars": 65033,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -667,31 +692,6 @@
     ]
   },
   {
-    "name": "rtk",
-    "owner": "rtk-ai",
-    "description": "CLI proxy that reduces LLM token consumption by 60-90% on common dev commands. Single Rust binary, zero dependencies",
-    "url": "https://github.com/rtk-ai/rtk",
-    "homepage": "https://www.rtk-ai.app",
-    "language": "Rust",
-    "langColor": "#dea584",
-    "stars": 64776,
-    "topics": [
-      "agentic-coding",
-      "ai-coding",
-      "anthropic",
-      "claude-code",
-      "cli",
-      "command-line-tool",
-      "cost-reduction",
-      "developer-tools",
-      "llm",
-      "open-source",
-      "productivity",
-      "rust",
-      "token-optimization"
-    ]
-  },
-  {
     "name": "drawio-desktop",
     "owner": "jgraph",
     "description": "Official electron build of draw.io",
@@ -699,7 +699,7 @@
     "homepage": "https://www.diagrams.net",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 61736,
+    "stars": 61862,
     "topics": [
       "diagram-editor",
       "electron-app",
@@ -715,7 +715,7 @@
     "homepage": "https://linkedin.com/in/shanraisshan",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 58641,
+    "stars": 61501,
     "topics": [
       "agentic-ai",
       "agentic-coding",
@@ -747,7 +747,7 @@
     "homepage": "https://microsoft.github.io/VibeVoice/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 49535,
+    "stars": 49716,
     "topics": []
   },
   {
@@ -758,7 +758,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 48350,
+    "stars": 48603,
     "topics": [
       "ai",
       "artificial-intelligence",
@@ -780,7 +780,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 48282,
+    "stars": 48331,
     "topics": [
       "awesome",
       "awesome-list"
@@ -794,7 +794,7 @@
     "homepage": "https://react-typescript-cheatsheet.netlify.app",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 47072,
+    "stars": 47081,
     "topics": [
       "cheatsheet",
       "guide",
@@ -810,7 +810,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46474,
+    "stars": 46509,
     "topics": [
       "30daysofjavascript",
       "angular",
@@ -842,7 +842,7 @@
     "homepage": "https://lecoupa.github.io/awesome-cheatsheets/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46071,
+    "stars": 46110,
     "topics": [
       "backend",
       "bash",
@@ -874,7 +874,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 44652,
+    "stars": 44662,
     "topics": [
       "interview-preparation",
       "interview-questions",
@@ -899,7 +899,7 @@
     "homepage": "http://luongnv.com/claude-howto/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 37790,
+    "stars": 38864,
     "topics": [
       "claude-code",
       "guide",
@@ -914,7 +914,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 35773,
+    "stars": 35850,
     "topics": [
       "data-analysis",
       "data-science",
@@ -932,7 +932,7 @@
     "homepage": "https://buymeacoffee.com/crucify020v",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 33521,
+    "stars": 35191,
     "topics": [
       "academic-pipeline",
       "academic-writing",
@@ -952,7 +952,7 @@
     "homepage": "https://atuin.sh",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 30320,
+    "stars": 30394,
     "topics": [
       "bash",
       "fish",
@@ -970,7 +970,7 @@
     "homepage": "https://bit.ly/awesome-gh",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 30302,
+    "stars": 30370,
     "topics": [
       "awesome",
       "awesome-list",
@@ -982,6 +982,25 @@
     ]
   },
   {
+    "name": "agents-course",
+    "owner": "huggingface",
+    "description": "This repository contains the Hugging Face Agents Course. ",
+    "url": "https://github.com/huggingface/agents-course",
+    "homepage": null,
+    "language": "MDX",
+    "langColor": "#8b949e",
+    "stars": 29659,
+    "topics": [
+      "agentic-ai",
+      "agents",
+      "course",
+      "huggingface",
+      "langchain",
+      "llamaindex",
+      "smolagents"
+    ]
+  },
+  {
     "name": "90DaysOfDevOps",
     "owner": "MichaelCade",
     "description": "This repository started out as a learning in public project for myself and has now become a structured learning map for many in the community. We have 3 years under our belt covering all things DevOps, including Principles, Processes, Tooling and Use Cases surrounding this vast topic. ",
@@ -989,7 +1008,7 @@
     "homepage": "https://www.90daysofdevops.com/",
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 29510,
+    "stars": 29566,
     "topics": [
       "ansible",
       "backup",
@@ -1002,25 +1021,6 @@
     ]
   },
   {
-    "name": "agents-course",
-    "owner": "huggingface",
-    "description": "This repository contains the Hugging Face Agents Course. ",
-    "url": "https://github.com/huggingface/agents-course",
-    "homepage": null,
-    "language": "MDX",
-    "langColor": "#8b949e",
-    "stars": 29500,
-    "topics": [
-      "agentic-ai",
-      "agents",
-      "course",
-      "huggingface",
-      "langchain",
-      "llamaindex",
-      "smolagents"
-    ]
-  },
-  {
     "name": "30-Days-Of-React",
     "owner": "Asabeneh",
     "description": "30 Days of  React challenge is a step by step guide to learn React in 30 days.  These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw",
@@ -1028,7 +1028,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 27418,
+    "stars": 27428,
     "topics": [
       "30dayofjavascript",
       "challenge",
@@ -1054,7 +1054,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 25269,
+    "stars": 25305,
     "topics": []
   },
   {
@@ -1065,7 +1065,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 24872,
+    "stars": 24987,
     "topics": [
       "deep-learning",
       "platform",
@@ -1080,7 +1080,7 @@
     "homepage": "https://vanna.ai/docs/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 23657,
+    "stars": 23702,
     "topics": [
       "agent",
       "ai",
@@ -1093,6 +1093,37 @@
     ]
   },
   {
+    "name": "ai-website-cloner-template",
+    "owner": "JCodesMore",
+    "description": "Clone any website with one command using AI coding agents",
+    "url": "https://github.com/JCodesMore/ai-website-cloner-template",
+    "homepage": "https://dsc.gg/jcodesmore",
+    "language": "TypeScript",
+    "langColor": "#3178c6",
+    "stars": 23183,
+    "topics": [
+      "ai",
+      "ai-agents",
+      "ai-tools",
+      "automation",
+      "boilerplate",
+      "claude",
+      "claude-code",
+      "clone",
+      "developer-tools",
+      "nextjs",
+      "react",
+      "reverse-engineering",
+      "shadcn-ui",
+      "skills",
+      "tailwindcss",
+      "template",
+      "typescript",
+      "web-scraping",
+      "website-clone"
+    ]
+  },
+  {
     "name": "react-developer-roadmap",
     "owner": "adam-golab",
     "description": "Roadmap to becoming a React developer",
@@ -1100,7 +1131,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 18932,
+    "stars": 18931,
     "topics": []
   },
   {
@@ -1111,7 +1142,7 @@
     "homepage": "https://context-mode.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 17923,
+    "stars": 18312,
     "topics": [
       "antigravity",
       "claude",
@@ -1136,6 +1167,22 @@
     ]
   },
   {
+    "name": "hindsight",
+    "owner": "vectorize-io",
+    "description": "Hindsight: Agent Memory That  Learns",
+    "url": "https://github.com/vectorize-io/hindsight",
+    "homepage": "https://hindsight.vectorize.io/",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 17749,
+    "topics": [
+      "agentic-ai",
+      "agents",
+      "ai-memory",
+      "memory"
+    ]
+  },
+  {
     "name": "react-bits",
     "owner": "vasanthk",
     "description": "✨ React patterns, techniques, tips and tricks ✨",
@@ -1155,53 +1202,6 @@
     ]
   },
   {
-    "name": "ai-website-cloner-template",
-    "owner": "JCodesMore",
-    "description": "Clone any website with one command using AI coding agents",
-    "url": "https://github.com/JCodesMore/ai-website-cloner-template",
-    "homepage": "https://dsc.gg/jcodesmore",
-    "language": "TypeScript",
-    "langColor": "#3178c6",
-    "stars": 17364,
-    "topics": [
-      "ai",
-      "ai-agents",
-      "ai-tools",
-      "automation",
-      "boilerplate",
-      "claude",
-      "claude-code",
-      "clone",
-      "developer-tools",
-      "nextjs",
-      "react",
-      "reverse-engineering",
-      "shadcn-ui",
-      "skills",
-      "tailwindcss",
-      "template",
-      "typescript",
-      "web-scraping",
-      "website-clone"
-    ]
-  },
-  {
-    "name": "hindsight",
-    "owner": "vectorize-io",
-    "description": "Hindsight: Agent Memory That  Learns",
-    "url": "https://github.com/vectorize-io/hindsight",
-    "homepage": "https://hindsight.vectorize.io/",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 16883,
-    "topics": [
-      "agentic-ai",
-      "agents",
-      "ai-memory",
-      "memory"
-    ]
-  },
-  {
     "name": "aie-book",
     "owner": "chiphuyen",
     "description": "[WIP] Resources for AI engineers. Also contains supporting materials for the book AI Engineering (Chip Huyen, 2025)",
@@ -1209,7 +1209,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 16187,
+    "stars": 16286,
     "topics": []
   },
   {
@@ -1220,7 +1220,7 @@
     "homepage": "https://devblogs.microsoft.com/dotnet/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 15067,
+    "stars": 15071,
     "topics": []
   },
   {
@@ -1231,7 +1231,7 @@
     "homepage": "https://www.gitbook.com/book/krasimir/react-in-patterns/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 13578,
+    "stars": 13577,
     "topics": [
       "data-flow",
       "dependency",
@@ -1248,7 +1248,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 10712,
+    "stars": 10715,
     "topics": []
   },
   {
@@ -1259,7 +1259,7 @@
     "homepage": "https://infinite.red/technologies/react-native",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 10382,
+    "stars": 10383,
     "topics": []
   },
   {
@@ -1270,7 +1270,7 @@
     "homepage": "https://wwweb-dev-resources.netlify.app/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 8058,
+    "stars": 8061,
     "topics": [
       "chrome-extensions",
       "color-palettes",
@@ -1291,7 +1291,7 @@
     "homepage": "https://dockerlabs.collabnix.com",
     "language": "PHP",
     "langColor": "#4F5D95",
-    "stars": 8008,
+    "stars": 8009,
     "topics": [
       "advance",
       "beginners",
@@ -1333,31 +1333,8 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 4545,
+    "stars": 4639,
     "topics": []
-  },
-  {
-    "name": "LMOps",
-    "owner": "microsoft",
-    "description": "General technology for enabling AI capabilities w/ LLMs and MLLMs",
-    "url": "https://github.com/microsoft/LMOps",
-    "homepage": "https://aka.ms/GeneralAI",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 4415,
-    "topics": [
-      "agi",
-      "gpt",
-      "language-model",
-      "llm",
-      "lm",
-      "lmops",
-      "nlp",
-      "pretraining",
-      "prompt",
-      "promptist",
-      "x-prompt"
-    ]
   },
   {
     "name": "claude-scholar",
@@ -1367,7 +1344,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 4389,
+    "stars": 4434,
     "topics": [
       "academic-research",
       "ai-agents",
@@ -1384,6 +1361,29 @@
     ]
   },
   {
+    "name": "LMOps",
+    "owner": "microsoft",
+    "description": "General technology for enabling AI capabilities w/ LLMs and MLLMs",
+    "url": "https://github.com/microsoft/LMOps",
+    "homepage": "https://aka.ms/GeneralAI",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 4421,
+    "topics": [
+      "agi",
+      "gpt",
+      "language-model",
+      "llm",
+      "lm",
+      "lmops",
+      "nlp",
+      "pretraining",
+      "prompt",
+      "promptist",
+      "x-prompt"
+    ]
+  },
+  {
     "name": "kubernetes-kitap",
     "owner": "mstrYoda",
     "description": "",
@@ -1391,7 +1391,7 @@
     "homepage": "https://mstryoda.github.io/kubernetes-kitap/#/",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 1877,
+    "stars": 1878,
     "topics": [
       "book",
       "containers",
@@ -1425,7 +1425,7 @@
     "homepage": "https://creativedesignsguru.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 691,
+    "stars": 690,
     "topics": [
       "boilerplate",
       "boilerplate-front-end",
@@ -1456,7 +1456,7 @@
     "homepage": null,
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 689,
+    "stars": 687,
     "topics": [
       "react",
       "reactjs",
@@ -1484,7 +1484,7 @@
     "homepage": "https://muratdincc.github.io/interview-topics-turkish",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 274,
+    "stars": 275,
     "topics": [
       "dotnet-developer",
       "dotnet-interview-questions",
@@ -1516,7 +1516,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 161,
+    "stars": 177,
     "topics": []
   },
   {
@@ -1527,7 +1527,7 @@
     "homepage": null,
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 85,
+    "stars": 88,
     "topics": []
   },
   {
@@ -1557,7 +1557,7 @@
     "homepage": "https://repospend.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 13,
+    "stars": 14,
     "topics": [
       "ai",
       "ai-coding",
