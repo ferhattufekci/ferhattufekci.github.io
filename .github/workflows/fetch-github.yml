@@ -1,5 +1,4 @@
 # .github/workflows/fetch-github.yml
-
 name: Fetch GitHub Repos
 
 on:
@@ -14,19 +13,22 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: data-sync
+  cancel-in-progress: false
+
 jobs:
   fetch-and-commit:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '20'
 
@@ -43,11 +45,14 @@ jobs:
           git config --local user.email "ferhattufekci@outlook.com.tr"
           git config --local user.name  "Ferhat Tüfekçi"
           git add data/github-repos.json data/github-meta.json data/github-starred.json
+
           if git diff --staged --quiet; then
             echo "No changes to commit"
             exit 0
           fi
+
           git commit -m "chore: update GitHub repos [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+
           for i in 1 2 3 4 5; do
             git pull --rebase origin main && git push && break
             echo "Retry $i failed, waiting..."
