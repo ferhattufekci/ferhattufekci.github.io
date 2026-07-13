@@ -31,6 +31,22 @@
     "updatedAt": "2024-07-23T11:19:59Z"
   },
   {
+    "name": "claude-plugin",
+    "description": "",
+    "url": "https://github.com/ferhattufekci/claude-plugin",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": true,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-06-02T07:32:52Z"
+  },
+  {
     "name": "ferhattufekci.github.io",
     "description": "Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.",
     "url": "https://github.com/ferhattufekci/ferhattufekci.github.io",
@@ -69,7 +85,7 @@
     "pinned": true,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-07-06T19:15:57Z"
+    "updatedAt": "2026-07-13T01:23:59Z"
   },
   {
     "name": "free-programming-books",
@@ -247,22 +263,6 @@
     "category": "software",
     "lang": "en",
     "updatedAt": "2024-08-12T09:07:04Z"
-  },
-  {
-    "name": "claude-plugin",
-    "description": "",
-    "url": "https://github.com/ferhattufekci/claude-plugin",
-    "homepage": null,
-    "language": null,
-    "langColor": "#8b949e",
-    "languages": [],
-    "stars": 0,
-    "forks": 0,
-    "topics": [],
-    "pinned": false,
-    "category": "software",
-    "lang": "en",
-    "updatedAt": "2026-06-02T07:32:52Z"
   },
   {
     "name": "create-react-app",
