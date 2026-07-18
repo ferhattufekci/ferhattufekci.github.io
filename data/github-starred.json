@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 527892,
+    "stars": 527900,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 486277,
+    "stars": 486281,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 452004,
+    "stars": 452003,
     "topics": [
       "careers",
       "certification",
@@ -69,7 +69,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 392388,
+    "stars": 392389,
     "topics": [
       "books",
       "education",
@@ -185,7 +185,7 @@
     "homepage": null,
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 256879,
+    "stars": 256881,
     "topics": [
       "ai",
       "brainstorming",
@@ -223,7 +223,7 @@
     "homepage": null,
     "language": "C",
     "langColor": "#8b949e",
-    "stars": 239688,
+    "stars": 239690,
     "topics": []
   },
   {
@@ -234,7 +234,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 233852,
+    "stars": 233855,
     "topics": [
       "awesome",
       "awesome-list",
@@ -281,7 +281,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 166979,
+    "stars": 166982,
     "topics": [
       "autogen",
       "autogen-extension",
@@ -322,7 +322,7 @@
     "homepage": "https://code.claude.com/docs/en/overview",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 138159,
+    "stars": 138160,
     "topics": []
   },
   {
@@ -333,7 +333,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 129686,
+    "stars": 129687,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -366,7 +366,7 @@
     "homepage": "https://github.github.com/spec-kit/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 122057,
+    "stars": 122059,
     "topics": [
       "ai",
       "copilot",
@@ -385,7 +385,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 113190,
+    "stars": 113189,
     "topics": [
       "ai",
       "azure",
@@ -545,7 +545,7 @@
     "homepage": "https://open-design.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 79419,
+    "stars": 79420,
     "topics": [
       "agent-skills",
       "ai-agents",
@@ -626,7 +626,7 @@
     "homepage": "https://www.rtk-ai.app",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 71644,
+    "stars": 71646,
     "topics": [
       "agentic-coding",
       "ai-coding",
@@ -728,7 +728,7 @@
     "homepage": "https://linkedin.com/in/shanraisshan",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 63018,
+    "stars": 63019,
     "topics": [
       "agentic-ai",
       "agentic-coding",
@@ -823,7 +823,7 @@
     "homepage": "https://react-typescript-cheatsheet.netlify.app",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 47091,
+    "stars": 47092,
     "topics": [
       "cheatsheet",
       "guide",
@@ -928,7 +928,7 @@
     "homepage": "http://luongnv.com/claude-howto/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 39947,
+    "stars": 39948,
     "topics": [
       "claude-code",
       "guide",
@@ -943,7 +943,7 @@
     "homepage": "https://buymeacoffee.com/crucify020v",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 38320,
+    "stars": 38321,
     "topics": [
       "academic-pipeline",
       "academic-writing",
@@ -963,7 +963,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 36274,
+    "stars": 36273,
     "topics": [
       "data-analysis",
       "data-science",
