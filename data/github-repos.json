@@ -31,6 +31,28 @@
     "updatedAt": "2024-07-23T11:19:59Z"
   },
   {
+    "name": "aiup-petclinic",
+    "description": "Materials of Spec-driven Development: How AI Changed Everything (And Nothing) by Simon Martinelli @ Spring I/O 26",
+    "url": "https://github.com/ferhattufekci/aiup-petclinic",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "languages": [
+      {
+        "name": "Java",
+        "color": "#b07219",
+        "percent": 100
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [],
+    "pinned": true,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-05-31T09:43:03Z"
+  },
+  {
     "name": "claude-plugin",
     "description": "",
     "url": "https://github.com/ferhattufekci/claude-plugin",
@@ -85,7 +107,7 @@
     "pinned": true,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-08-03T01:25:33Z"
+    "updatedAt": "2026-08-07T14:39:33Z"
   },
   {
     "name": "free-programming-books",
@@ -188,28 +210,6 @@
     "category": "software",
     "lang": "tr",
     "updatedAt": "2023-08-07T16:00:34Z"
-  },
-  {
-    "name": "aiup-petclinic",
-    "description": "Materials of Spec-driven Development: How AI Changed Everything (And Nothing) by Simon Martinelli @ Spring I/O 26",
-    "url": "https://github.com/ferhattufekci/aiup-petclinic",
-    "homepage": null,
-    "language": null,
-    "langColor": "#8b949e",
-    "languages": [
-      {
-        "name": "Java",
-        "color": "#b07219",
-        "percent": 100
-      }
-    ],
-    "stars": 0,
-    "forks": 0,
-    "topics": [],
-    "pinned": false,
-    "category": "software",
-    "lang": "en",
-    "updatedAt": "2026-05-31T09:43:03Z"
   },
   {
     "name": "axios",
