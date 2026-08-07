@@ -22,7 +22,10 @@ concurrency:
 
 jobs:
   fetch-and-commit:
-    runs-on: ubuntu-latest
+    # ubuntu-latest yerine sabit sürüm: GitHub'ın "latest" havuzunda zaman zaman
+    # yaşanan runner tahsis (acquisition) gecikmelerini azaltmak için.
+    # Bkz: https://github.com/orgs/community/discussions/165287
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Checkout
