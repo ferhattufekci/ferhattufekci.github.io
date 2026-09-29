@@ -8,6 +8,8 @@ on:
     paths-ignore:
       - 'data/**'
       - 'index.html'
+      - 'llms.txt'
+      - 'sitemap.xml'
   workflow_dispatch:
 
 permissions:

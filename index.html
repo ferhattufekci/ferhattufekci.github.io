@@ -2618,8 +2618,8 @@
                       <li><a href="https://medium.com/t%C3%BCrkiye/savunma-sanayisinde-dijital-i%CC%87kiz-sistem-ya%C5%9Fam-d%C3%B6ng%C3%BCs%C3%BCnde-%C3%A7evikli%C4%9Fin-anahtar%C4%B1-c244ee31a1dd?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">Savunma Sanayisinde Dijital İkiz: Sistem Yaşam Döngüsünde Çevikliğin Anahtarı</a> — Dijital ikizin stratejik etkilerini, çevik sistem yaşam döngüsü süreçlerindeki katkılarını ve savunma sektöründeki potansiyelini ele aldım.</li>
                       <li><a href="https://medium.com/analysts-corner/digital-twin-in-defense-industry-the-key-to-agility-in-the-system-life-cycle-815efbccf7fe?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">Digital Twin in Defense Industry: The Key to Agility in the System Life Cycle</a> — This is a translation of one of my Turkish articles.</li>
                       <li><a href="https://medium.com/t%C3%BCrkiye/sifirdan-gereksi%CC%87ni%CC%87mler-nasil-yaziliyor-e4e8366eb66c?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">SIFIRDAN GEREKSİNİMLER NASIL YAZILIYOR ?</a> — Bu yazı, Gereksinim mühendisliğinde gereksinimlerin etkili bir şekilde yakalanması, analiz edilmesi ve belgelendirilmesini içermekte.</li>
-                      <li><a href="https://medium.com/t%C3%BCrkiye/etkili-gereksinim-yazma-teknikleri-i%CC%87pu%C3%A7lar%C4%B1-ve-stratejiler-a71de33bcd0f?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">Etkili Gereksinim Yazma Teknikleri: İpuçları Ve Stratejiler</a> — Gereksinim mühendisliğinin özü ; tüm paydaşların (analiz, kullanıcı arayüzü/kullanıcı deneyimi (Ul/UX), geliştirme (development), test ve…</li>
-                      <li><a href="https://medium.com/t%C3%BCrkiye/gereksi%CC%87ni%CC%87m-m%C3%BChendi%CC%87sli%CC%87%C4%9Fi%CC%87-modelleme-tekni%CC%87kleri%CC%87-83784683791b?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">Gereksinim Mühendisliği Modelleme Teknikleri</a> — Medium üyesi değilseniz yazımı ücretsiz olarak okumaya devam etmek için buraya tıklayın.</li>
+                      <li><a href="https://medium.com/t%C3%BCrkiye/etkili-gereksinim-yazma-teknikleri-i%CC%87pu%C3%A7lar%C4%B1-ve-stratejiler-a71de33bcd0f?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">Etkili Gereksinim Yazma Teknikleri: İpuçları Ve Stratejiler</a> — Gereksinim mühendisliğinin özü; tüm paydaşların paylaştığı bilgi kümesini netleştirmek. Gereksinimler net değilse, yanlış yorumlanmaya açık olabilirler. Yanlış anlaşılan bir gereksinim, maliyetli olabilecek hatalı çalışmalara yol açabilir. Peki, bu gereksinimleri etkili şekilde nasıl yazıyoruz ?</li>
+                      <li><a href="https://medium.com/t%C3%BCrkiye/gereksi%CC%87ni%CC%87m-m%C3%BChendi%CC%87sli%CC%87%C4%9Fi%CC%87-modelleme-tekni%CC%87kleri%CC%87-83784683791b?source=rss-71ee19850804------2" target="_blank" rel="noopener noreferrer">Gereksinim Mühendisliği Modelleme Teknikleri</a> — Bu yazımda gereksinim mühendisliğinde ki farklı modelleme tekniklerinden bahsedeceğim.</li>
                     </ul>
                   <!-- STATIC-SEO:BLOG:END -->
                 </noscript>
@@ -2787,6 +2787,7 @@
             </section>
 
             <script src="js/medium-language.js"></script>
+            <script src="js/medium-excerpt.js"></script>
             <script>
               (function () {
                 var CATS = {
@@ -3210,16 +3211,10 @@
                     var div = document.createElement("div");
                     div.innerHTML = cnt;
                     var description = it.querySelector("description");
-                    var preview = document.createElement("div");
-                    preview.innerHTML = description ? description.textContent : "";
-                    var ex = (preview.textContent || "").replace(/\s+/g, " ").replace(/Continue reading on .*$/i, "").trim();
-                    if (!ex) {
-                      var paragraphs = div.querySelectorAll("p");
-                      for (var paragraphIndex = 0; paragraphIndex < paragraphs.length; paragraphIndex++) {
-                        ex = (paragraphs[paragraphIndex].textContent || "").replace(/\s+/g, " ").replace(/Continue reading on .*$/i, "").trim();
-                        if (ex) break;
-                      }
-                    }
+                    var ex = MediumArticleExcerpt.selectExcerpt({
+                      description: description ? description.textContent : "",
+                      content: enc && enc !== description ? cnt : "",
+                    });
                     if (!title || !link) continue;
                     var h = hexFrom(slugFrom(link));
                     if (h && EXCLUDE.indexOf(h) !== -1) continue;

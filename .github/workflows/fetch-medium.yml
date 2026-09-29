@@ -8,6 +8,8 @@ on:
     paths-ignore:
       - 'data/**'    # data/ ve index.html değişikliklerinde döngüyü önle
       - 'index.html'
+      - 'llms.txt'
+      - 'sitemap.xml'
   workflow_dispatch:
 
 permissions:
@@ -36,6 +38,9 @@ jobs:
       - name: Install node-fetch
         run: cd scripts && npm install node-fetch@3
 
+      - name: Test excerpt selection
+        run: cd scripts && npm test
+
       - name: Fetch Medium articles
         run: node scripts/fetch-medium.js
 
@@ -46,7 +51,7 @@ jobs:
         run: |
           git config --local user.email "ferhattufekci@outlook.com.tr"
           git config --local user.name  "Ferhat Tüfekçi"
-          git add data/ index.html
+          git add data/ index.html llms.txt sitemap.xml
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
