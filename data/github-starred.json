@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 550505,
+    "stars": 550549,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 512124,
+    "stars": 512221,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://APILayer.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 484168,
+    "stars": 484216,
     "topics": [
       "api",
       "apis",
@@ -67,7 +67,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 456484,
+    "stars": 456501,
     "topics": [
       "careers",
       "certification",
@@ -94,7 +94,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 398101,
+    "stars": 398125,
     "topics": [
       "books",
       "education",
@@ -111,7 +111,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 372417,
+    "stars": 372459,
     "topics": [
       "design",
       "design-patterns",
@@ -136,7 +136,7 @@
     "homepage": "https://roadmap.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 368466,
+    "stars": 368484,
     "topics": [
       "angular-roadmap",
       "backend-roadmap",
@@ -166,7 +166,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 362099,
+    "stars": 362108,
     "topics": [
       "algorithm",
       "algorithms",
@@ -190,7 +190,7 @@
     "homepage": null,
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 292597,
+    "stars": 292683,
     "topics": [
       "ai",
       "brainstorming",
@@ -210,7 +210,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 285165,
+    "stars": 285200,
     "topics": [
       "beginner-project",
       "cpp",
@@ -230,7 +230,7 @@
     "homepage": "https://ecc.tools",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 269180,
+    "stars": 269302,
     "topics": [
       "ai-agents",
       "anthropic",
@@ -268,7 +268,7 @@
     "homepage": null,
     "language": "C",
     "langColor": "#8b949e",
-    "stars": 250522,
+    "stars": 250555,
     "topics": []
   },
   {
@@ -279,7 +279,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 246682,
+    "stars": 246729,
     "topics": [
       "awesome",
       "awesome-list",
@@ -310,7 +310,7 @@
     "homepage": "https://cs.ossu.dev",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 209584,
+    "stars": 209593,
     "topics": [
       "awesome-list",
       "computer-science",
@@ -326,7 +326,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 187517,
+    "stars": 187547,
     "topics": [
       "autogen",
       "autogen-extension",
@@ -345,7 +345,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 178882,
+    "stars": 178932,
     "topics": [
       "agent-skills"
     ]
@@ -358,7 +358,7 @@
     "homepage": "https://code.claude.com/docs/en/overview",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 148517,
+    "stars": 148547,
     "topics": []
   },
   {
@@ -369,7 +369,7 @@
     "homepage": "https://www.techinterviewhandbook.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 143015,
+    "stars": 143023,
     "topics": [
       "algorithm",
       "algorithm-interview",
@@ -391,7 +391,7 @@
     "homepage": "https://github.github.com/spec-kit/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 139314,
+    "stars": 139351,
     "topics": [
       "ai",
       "copilot",
@@ -410,7 +410,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 138819,
+    "stars": 138837,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -424,7 +424,7 @@
     "homepage": "https://excalidraw.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 133197,
+    "stars": 133213,
     "topics": [
       "canvas",
       "collaboration",
@@ -443,7 +443,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 126740,
+    "stars": 126825,
     "topics": [
       "ai-video-generator",
       "content-creation",
@@ -469,7 +469,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 120752,
+    "stars": 120767,
     "topics": [
       "ai",
       "azure",
@@ -495,7 +495,7 @@
     "homepage": "https://getdesign.md/",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 118662,
+    "stars": 118723,
     "topics": [
       "awesome-list",
       "design-md",
@@ -517,7 +517,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 100493,
+    "stars": 100494,
     "topics": [
       "cc-by",
       "collection",
@@ -534,7 +534,7 @@
     "homepage": "https://open-design.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 98546,
+    "stars": 98607,
     "topics": [
       "agent-skills",
       "ai-design",
@@ -566,7 +566,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 97884,
+    "stars": 97886,
     "topics": [
       "python",
       "shell"
@@ -580,7 +580,7 @@
     "homepage": "https://playwright.dev",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 96846,
+    "stars": 96859,
     "topics": [
       "automation",
       "chrome",
@@ -607,7 +607,7 @@
     "homepage": "https://glama.ai/mcp/servers",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 95650,
+    "stars": 95659,
     "topics": [
       "ai",
       "mcp"
@@ -621,7 +621,7 @@
     "homepage": "https://paperclip.ing",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 93396,
+    "stars": 93901,
     "topics": []
   },
   {
@@ -632,7 +632,7 @@
     "homepage": "https://ragflow.io",
     "language": "Go",
     "langColor": "#00ADD8",
-    "stars": 91461,
+    "stars": 91479,
     "topics": [
       "agent-harness",
       "agentic-ai",
@@ -659,7 +659,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 91108,
+    "stars": 91119,
     "topics": [
       "data-science",
       "education",
@@ -683,7 +683,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 84709,
+    "stars": 84715,
     "topics": [
       "ansible",
       "aws",
@@ -714,7 +714,7 @@
     "homepage": "https://www.rtk-ai.app",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 81951,
+    "stars": 81978,
     "topics": [
       "agentic-coding",
       "ai-coding",
@@ -739,7 +739,7 @@
     "homepage": "https://aka.ms/ai-agents-beginners",
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 76038,
+    "stars": 76054,
     "topics": [
       "agentic-ai",
       "agentic-framework",
@@ -762,7 +762,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 74744,
+    "stars": 74743,
     "topics": [
       "awesome",
       "awesome-list",
@@ -784,7 +784,7 @@
     "homepage": "https://frontendchecklist.io",
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 74304,
+    "stars": 74307,
     "topics": [
       "ai-agent",
       "ai-agents",
@@ -811,7 +811,7 @@
     "homepage": "https://omniroute.online",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 71153,
+    "stars": 71235,
     "topics": [
       "a2a",
       "ai-agents",
@@ -843,7 +843,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 69233,
+    "stars": 69244,
     "topics": [
       "ai",
       "artificial-intelligence",
@@ -865,7 +865,7 @@
     "homepage": "https://linkedin.com/in/shanraisshan",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 66550,
+    "stars": 66595,
     "topics": [
       "agentic-ai",
       "agentic-coding",
@@ -919,7 +919,7 @@
     "homepage": "https://www.youtube.com/channel/UCKvwPt6BifPP54yzH99ff1g?view_as=subscriber",
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 65262,
+    "stars": 65261,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -944,22 +944,6 @@
     ]
   },
   {
-    "name": "drawio-desktop",
-    "owner": "jgraph",
-    "description": "Official electron build of draw.io",
-    "url": "https://github.com/jgraph/drawio-desktop",
-    "homepage": "https://www.diagrams.net",
-    "language": "JavaScript",
-    "langColor": "#f1e05a",
-    "stars": 63328,
-    "topics": [
-      "diagram-editor",
-      "electron-app",
-      "graphics",
-      "javascript-applications"
-    ]
-  },
-  {
     "name": "winutil",
     "owner": "ChrisTitusTech",
     "description": "Chris Titus Tech's Windows Utility - Install Programs, Tweaks, Fixes, and Updates",
@@ -967,8 +951,24 @@
     "homepage": "https://winutil.christitus.com/",
     "language": "PowerShell",
     "langColor": "#8b949e",
-    "stars": 63325,
+    "stars": 63334,
     "topics": []
+  },
+  {
+    "name": "drawio-desktop",
+    "owner": "jgraph",
+    "description": "Official electron build of draw.io",
+    "url": "https://github.com/jgraph/drawio-desktop",
+    "homepage": "https://www.diagrams.net",
+    "language": "JavaScript",
+    "langColor": "#f1e05a",
+    "stars": 63333,
+    "topics": [
+      "diagram-editor",
+      "electron-app",
+      "graphics",
+      "javascript-applications"
+    ]
   },
   {
     "name": "Win11Debloat",
@@ -978,7 +978,7 @@
     "homepage": null,
     "language": "PowerShell",
     "langColor": "#8b949e",
-    "stars": 57694,
+    "stars": 57700,
     "topics": [
       "automated",
       "bloatware",
@@ -1010,7 +1010,7 @@
     "homepage": "https://microsoft.github.io/VibeVoice/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 54530,
+    "stars": 54535,
     "topics": []
   },
   {
@@ -1021,7 +1021,7 @@
     "homepage": "https://developer.chrome.com/docs/devtools/agents",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 52715,
+    "stars": 52718,
     "topics": [
       "browser",
       "chrome",
@@ -1041,7 +1041,7 @@
     "homepage": "https://buymeacoffee.com/crucify020v",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 49828,
+    "stars": 49859,
     "topics": [
       "academic-pipeline",
       "academic-writing",
@@ -1061,7 +1061,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 49117,
+    "stars": 49119,
     "topics": [
       "awesome",
       "awesome-list"
@@ -1091,7 +1091,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46855,
+    "stars": 46857,
     "topics": [
       "30daysofjavascript",
       "angular",
@@ -1123,7 +1123,7 @@
     "homepage": "https://lecoupa.github.io/awesome-cheatsheets/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46522,
+    "stars": 46523,
     "topics": [
       "backend",
       "bash",
@@ -1155,7 +1155,7 @@
     "homepage": "https://voicestudio.sh",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 45217,
+    "stars": 46270,
     "topics": [
       "ai",
       "audiobook",
@@ -1212,23 +1212,8 @@
     "homepage": "https://agent-browser.dev",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 43330,
+    "stars": 43344,
     "topics": []
-  },
-  {
-    "name": "claude-howto",
-    "owner": "luongnv89",
-    "description": "A visual, example-driven guide to Claude Code — from basic concepts to advanced agents, with copy-paste templates that bring immediate value.",
-    "url": "https://github.com/luongnv89/claude-howto",
-    "homepage": "http://luongnv.com/claude-howto/",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 41709,
-    "topics": [
-      "claude-code",
-      "guide",
-      "tutorial"
-    ]
   },
   {
     "name": "hindsight",
@@ -1238,12 +1223,27 @@
     "homepage": "https://hindsight.vectorize.io/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 41547,
+    "stars": 41954,
     "topics": [
       "agentic-ai",
       "agents",
       "ai-memory",
       "memory"
+    ]
+  },
+  {
+    "name": "claude-howto",
+    "owner": "luongnv89",
+    "description": "A visual, example-driven guide to Claude Code — from basic concepts to advanced agents, with copy-paste templates that bring immediate value.",
+    "url": "https://github.com/luongnv89/claude-howto",
+    "homepage": "http://luongnv.com/claude-howto/",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 41707,
+    "topics": [
+      "claude-code",
+      "guide",
+      "tutorial"
     ]
   },
   {
@@ -1254,7 +1254,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 38349,
+    "stars": 38353,
     "topics": []
   },
   {
@@ -1265,7 +1265,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 38127,
+    "stars": 38159,
     "topics": []
   },
   {
@@ -1276,7 +1276,7 @@
     "homepage": "https://ccrdesk.top/",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 37472,
+    "stars": 37478,
     "topics": []
   },
   {
@@ -1287,7 +1287,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 37394,
+    "stars": 37397,
     "topics": [
       "data-analysis",
       "data-science",
@@ -1305,7 +1305,7 @@
     "homepage": "https://code.claude.com/docs/en/plugins",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 37171,
+    "stars": 37184,
     "topics": [
       "claude-code",
       "mcp",
@@ -1320,7 +1320,7 @@
     "homepage": "https://dsc.gg/jcodesmore",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 35415,
+    "stars": 35426,
     "topics": [
       "ai",
       "ai-agents",
@@ -1351,7 +1351,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 35179,
+    "stars": 35192,
     "topics": [
       "chinese-llm",
       "chinese-nlp",
@@ -1376,7 +1376,7 @@
     "homepage": null,
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 32993,
+    "stars": 33000,
     "topics": [
       "agentic-ai",
       "agents",
@@ -1395,7 +1395,7 @@
     "homepage": "https://skills.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 32726,
+    "stars": 32746,
     "topics": []
   },
   {
@@ -1406,7 +1406,7 @@
     "homepage": null,
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 32229,
+    "stars": 32230,
     "topics": [
       "browser-extension",
       "chrome-extension",
@@ -1425,7 +1425,7 @@
     "homepage": "https://atuin.sh",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 31846,
+    "stars": 31848,
     "topics": [
       "bash",
       "fish",
@@ -1443,7 +1443,7 @@
     "homepage": "https://skills.sh/vercel-labs/agent-skills",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 31693,
+    "stars": 31705,
     "topics": []
   },
   {
@@ -1454,7 +1454,7 @@
     "homepage": "https://bit.ly/awesome-gh",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 31205,
+    "stars": 31207,
     "topics": [
       "awesome",
       "awesome-list",
@@ -1473,7 +1473,7 @@
     "homepage": null,
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 30098,
+    "stars": 30100,
     "topics": []
   },
   {
@@ -1484,7 +1484,7 @@
     "homepage": "https://www.90daysofdevops.com/",
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 29785,
+    "stars": 29786,
     "topics": [
       "ansible",
       "backup",
@@ -1530,7 +1530,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 25811,
+    "stars": 25826,
     "topics": []
   },
   {
@@ -1541,7 +1541,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 25598,
+    "stars": 25599,
     "topics": []
   },
   {
@@ -1567,7 +1567,7 @@
     "homepage": "https://pentagi.com",
     "language": "Go",
     "langColor": "#00ADD8",
-    "stars": 25088,
+    "stars": 25099,
     "topics": [
       "ai-agents",
       "ai-security-tool",
@@ -1597,7 +1597,7 @@
     "homepage": "https://context-mode.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 24193,
+    "stars": 24203,
     "topics": [
       "antigravity",
       "claude",
@@ -1629,7 +1629,7 @@
     "homepage": "https://vanna.ai/docs/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 23810,
+    "stars": 23809,
     "topics": [
       "agent",
       "ai",
@@ -1649,7 +1649,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 22871,
+    "stars": 22979,
     "topics": []
   },
   {
@@ -1660,7 +1660,7 @@
     "homepage": "https://docs.univer.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 21450,
+    "stars": 21593,
     "topics": [
       "board",
       "collaboration",
@@ -1702,7 +1702,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 17639,
+    "stars": 17652,
     "topics": []
   },
   {
@@ -1713,7 +1713,7 @@
     "homepage": "https://vasanthk.gitbooks.io/react-bits",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 17418,
+    "stars": 17419,
     "topics": [
       "best-practices",
       "design-patterns",
@@ -1812,7 +1812,7 @@
     "homepage": "https://wwweb-dev-resources.netlify.app/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 8097,
+    "stars": 8098,
     "topics": [
       "chrome-extensions",
       "color-palettes",
@@ -1886,7 +1886,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 5650,
+    "stars": 5656,
     "topics": [
       "academic-research",
       "ai-agents",
@@ -1910,7 +1910,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 5538,
+    "stars": 5540,
     "topics": []
   },
   {
@@ -1921,7 +1921,7 @@
     "homepage": null,
     "language": "Batchfile",
     "langColor": "#8b949e",
-    "stars": 5496,
+    "stars": 5494,
     "topics": [
       "batch",
       "edge",
