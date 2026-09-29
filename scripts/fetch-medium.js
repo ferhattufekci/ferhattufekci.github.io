@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import ArticleLanguage from '../js/medium-language.js';
 
 const __dirname  = dirname(fileURLToPath(import.meta.url));
 const ROOT       = join(__dirname, '..');
@@ -53,10 +54,6 @@ function detectCategory(title, tags) {
   return best[1] > 0 ? best[0] : 'systems';  
 }
 
-function detectLang(title) {
-  return /[ğüşıöçĞÜŞİÖÇ]/.test(title) ? 'tr' : 'en';
-}
-
 function hexIdFromUrl(url) {
   const slug  = (url || '').replace(/\?.*$/, '').split('/').filter(Boolean).pop() || '';
   const parts = slug.split('-');
@@ -99,14 +96,10 @@ function decodeEntities(text) {
     .replace(/&([a-z]+);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] || m);
 }
 
-// Remove Medium continuation boilerplate before truncating so excerpts do not end with a partial footer.
-function cleanExcerpt(html, maxLen = 220) {
+// Decode the complete selected preview; remove only Medium's continuation footer.
+function cleanExcerpt(html) {
   const decoded = decodeEntities(stripHtml(html));
-  const withoutFooter = decoded.replace(/Continue reading on .*$/i, '').trim();
-  if (withoutFooter.length <= maxLen) return withoutFooter;
-  const cut = withoutFooter.slice(0, maxLen);
-  const lastSpace = cut.lastIndexOf(' ');
-  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trim() + '…';
+  return decoded.replace(/Continue reading on .*$/i, '').trim();
 }
 
 function parseRSS(xml) {
@@ -134,11 +127,19 @@ function parseRSS(xml) {
       extractAttr(item, 'media:thumbnail', 'url') ||
       extractAttr(item, 'media:content',   'url');
     const thumbnail = mediaThumbnail || firstImage(content) || null;
-    const excerpt   = cleanExcerpt(content);
+    // A feed description is a preview. Without one, keep a complete introductory
+    // paragraph rather than putting the entire content:encoded article into a card.
+    const description = cdata(extractOne(item, 'description'));
+    const excerpt = cleanExcerpt(description) ||
+      cleanExcerpt(extractAll(content, 'p').find(p => cleanExcerpt(p)) || '');
     const date      = pubDate ? new Date(pubDate).toISOString() : null;
 
     const category = detectCategory(title, tags);
-    const lang     = detectLang(title);
+    const lang     = ArticleLanguage.resolve({
+      title,
+      language: cdata(extractOne(item, 'language') || extractOne(item, 'dc:language')),
+      content: decodeEntities(stripHtml(content)),
+    });
 
     console.log(`  ✅ [${category}][${lang}] ${title.slice(0, 55)}`);
     if (tags.length) console.log(`     tags: ${tags.slice(0, 5).join(', ')}`);
