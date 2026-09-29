@@ -3298,23 +3298,30 @@
                     var pub =
                       (it.querySelector("pubDate") || {}).textContent || "";
                     var enc =
-                      it.querySelector("encoded") ||
+                      it.getElementsByTagNameNS("*", "encoded")[0] ||
                       it.querySelector("description");
                     var cnt = enc ? enc.textContent : "";
                     var cats = [];
                     it.querySelectorAll("category").forEach(function (c) {
                       cats.push(c.textContent.toLowerCase());
                     });
-                    var mth = it.querySelector("thumbnail"),
+                    var mth = it.getElementsByTagNameNS("*", "thumbnail")[0],
                       im = cnt.match(/<img[^>]+src="([^"]+)"/i);
                     var thumb =
                       (mth && mth.getAttribute("url")) || (im ? im[1] : null);
                     var div = document.createElement("div");
                     div.innerHTML = cnt;
-                    var ex = (div.textContent || "")
-                      .replace(/\s+/g, " ")
-                      .trim()
-                      .slice(0, 200);
+                    var description = it.querySelector("description");
+                    var preview = document.createElement("div");
+                    preview.innerHTML = description ? description.textContent : "";
+                    var ex = (preview.textContent || "").replace(/\s+/g, " ").replace(/Continue reading on .*$/i, "").trim();
+                    if (!ex) {
+                      var paragraphs = div.querySelectorAll("p");
+                      for (var paragraphIndex = 0; paragraphIndex < paragraphs.length; paragraphIndex++) {
+                        ex = (paragraphs[paragraphIndex].textContent || "").replace(/\s+/g, " ").replace(/Continue reading on .*$/i, "").trim();
+                        if (ex) break;
+                      }
+                    }
                     if (!title || !link) continue;
                     var h = hexFrom(slugFrom(link));
                     if (h && EXCLUDE.indexOf(h) !== -1) continue;

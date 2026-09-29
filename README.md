@@ -74,6 +74,8 @@ Articles are automatically fetched from Medium every 6 hours via GitHub Actions.
 4. Articles are saved to `data/medium-*.json`
 5. Browser reads these JSON files — no CORS issues
 
+Card excerpts use the RSS `description` when present, otherwise the first non-empty introductory paragraph in `content:encoded`. HTML entities are decoded and Medium's continuation footer is removed; the selected preview is shown in full without character or line limits. This does not read a separate Medium SEO description/subtitle field or put the full article body in the card. Existing ellipses in cached/source text remain until the next successful RSS sync supplies a fuller preview.
+
 **To exclude an article from the site:**  
 Add its hex ID (last segment of the Medium URL) to the `EXCLUDE` array in `scripts/fetch-medium.js`.
 
@@ -228,6 +230,8 @@ Makaleler, GitHub Actions aracılığıyla her 6 saatte bir Medium'dan otomatik 
 3. Dil, başlıktaki Türkçe karakterlerden otomatik tespit edilir (Türkçe karakter → `tr`, aksi halde `en`)
 4. Makaleler `data/medium-*.json` dosyalarına kaydedilir
 5. Tarayıcı bu JSON dosyalarını okur — CORS sorunu yok
+
+Kart açıklaması varsa RSS `description` alanından, yoksa `content:encoded` içindeki ilk boş olmayan giriş paragrafından alınır. HTML entity'leri çözülür ve Medium'un devam bağlantısı temizlenir; seçilen açıklama karakter veya satır sınırı olmadan tamamen gösterilir. Ayrı bir Medium SEO description/subtitle alanı okunmaz ve tam makale gövdesi karta basılmaz. Önbellekte/kaynak metinde bulunan üç noktalar, sonraki başarılı RSS senkronizasyonu daha tam bir açıklama sağlayana kadar korunur.
 
 **Bir makaleyi siteden gizlemek için:**  
 `scripts/fetch-medium.js` dosyasındaki `EXCLUDE` dizisine Medium URL'sinin sonundaki hex ID'yi ekle.
