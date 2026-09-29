@@ -872,6 +872,12 @@ blockquote {
   outline-offset: 3px;
 }
 
+@media (min-width: 992px) {
+  #site_header .sidebar-avatar > a {
+    box-shadow: 0 0 0 1px var(--sidebar-avatar-ring), var(--sidebar-avatar-shadow);
+  }
+}
+
 .site-title-block {
   position: relative;
   z-index: 1;

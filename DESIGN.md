@@ -54,6 +54,8 @@ Only the active card gains a two-pixel lift, controlled shadow and subtle surfac
 
 Cards keep six-pixel corners. The stretched repository-link area follows the same card frame.
 
+Only the desktop sidebar avatar receives a static one-pixel outer ring and two soft shadow layers, sourced from --sidebar-avatar-ring and --sidebar-avatar-shadow in dark-theme.css. The scoped #site_header .sidebar-avatar > a rule starts at 992px. Its size, crop, position, circular shape and focus indicator remain unchanged; mobile/header portraits and drawer portraits receive no added depth or motion.
+
 ## Components
 
 Blog has one native link covering its card. Projects expands the native repository link through a CSS pseudo-element; its owner link remains above that area as an independent target. There are no nested links or JavaScript click proxies.

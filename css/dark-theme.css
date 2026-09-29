@@ -20,6 +20,8 @@
   --color-input-border:   #dfdfdf;
   --color-card-shadow:    rgba(0,0,0,0.06);
   --card-hover-shadow:    0 8px 24px rgba(17,24,39,0.10), 0 2px 6px rgba(17,24,39,0.05);
+  --sidebar-avatar-ring:  rgba(17,24,39,0.08);
+  --sidebar-avatar-shadow: 0 2px 5px rgba(17,24,39,0.12), 0 6px 16px rgba(17,24,39,0.06);
   --color-skeleton:       #e8e8e8;
   --color-preloader:      #ffffff;
   --color-proj-topic-bg:  #f5f5f5;
@@ -59,6 +61,8 @@
   --color-input-border:   #30363d;
   --color-card-shadow:    rgba(0,0,0,0.3);
   --card-hover-shadow:    0 10px 26px rgba(0,0,0,0.26), 0 2px 8px rgba(0,0,0,0.16);
+  --sidebar-avatar-ring:  rgba(230,237,243,0.10);
+  --sidebar-avatar-shadow: 0 2px 5px rgba(0,0,0,0.24), 0 6px 16px rgba(0,0,0,0.16);
   --color-skeleton:       #2a2a2a;
   --color-preloader:      #0d1117;
   --color-proj-topic-bg:  #21262d;
