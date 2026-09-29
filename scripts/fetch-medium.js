@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import ArticleLanguage from '../js/medium-language.js';
 
 const __dirname  = dirname(fileURLToPath(import.meta.url));
 const ROOT       = join(__dirname, '..');
@@ -51,10 +52,6 @@ function detectCategory(title, tags) {
 
   const best = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];
   return best[1] > 0 ? best[0] : 'systems';  
-}
-
-function detectLang(title) {
-  return /[ğüşıöçĞÜŞİÖÇ]/.test(title) ? 'tr' : 'en';
 }
 
 function hexIdFromUrl(url) {
@@ -138,7 +135,11 @@ function parseRSS(xml) {
     const date      = pubDate ? new Date(pubDate).toISOString() : null;
 
     const category = detectCategory(title, tags);
-    const lang     = detectLang(title);
+    const lang     = ArticleLanguage.resolve({
+      title,
+      language: cdata(extractOne(item, 'language') || extractOne(item, 'dc:language')),
+      content: decodeEntities(stripHtml(content)),
+    });
 
     console.log(`  ✅ [${category}][${lang}] ${title.slice(0, 55)}`);
     if (tags.length) console.log(`     tags: ${tags.slice(0, 5).join(', ')}`);

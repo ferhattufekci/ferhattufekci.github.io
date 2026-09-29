@@ -2785,6 +2785,7 @@
               </div>
             </section>
 
+            <script src="js/medium-language.js"></script>
             <script>
               (function () {
                 var CATS = {
@@ -2837,10 +2838,6 @@
                   var p = (s || "").split("-"),
                     l = p[p.length - 1] || "";
                   return /^[a-f0-9]{8,16}$/i.test(l) ? l : null;
-                }
-
-                function isTR(t) {
-                  return /[ğüşıöçĞÜŞİÖÇ]/.test(t || "");
                 }
 
                 var TAG_RULES = [
@@ -3167,7 +3164,7 @@
                             return {
                               article: a,
                               catKey: k,
-                              lang: a.lang || (isTR(a.title) ? "tr" : "en"),
+                              lang: MediumArticleLanguage.resolve(a),
                             };
                           });
                         })
@@ -3221,7 +3218,12 @@
                     var h = hexFrom(slugFrom(link));
                     if (h && EXCLUDE.indexOf(h) !== -1) continue;
                     var ck = detectCat(title, cats);
-                    var lg = isTR(title) ? "tr" : "en";
+                    var lg = MediumArticleLanguage.resolve({
+                      lang: it.getAttribute("xml:lang") || it.getAttribute("lang"),
+                      language: (it.querySelector("language") || {}).textContent,
+                      title: title,
+                      content: div.textContent || "",
+                    });
                     out.push({
                       article: {
                         title: title,

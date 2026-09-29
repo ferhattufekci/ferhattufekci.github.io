@@ -70,7 +70,7 @@ Articles are automatically fetched from Medium every 6 hours via GitHub Actions.
 **How it works:**
 1. `fetch-medium.js` reads `https://medium.com/feed/@ferhattufekci`
 2. Category is detected automatically from RSS tags (`systems` / `test` / `software`)
-3. Language is detected automatically from title (Turkish characters → `tr`, otherwise `en`)
+3. Existing article language metadata is preferred; otherwise `js/medium-language.js` scores Turkish/English vocabulary in the title and content. The sync script, browser fallback, badges and language filter share this resolver.
 4. Articles are saved to `data/medium-*.json`
 5. Browser reads these JSON files — no CORS issues
 
@@ -227,7 +227,7 @@ Makaleler, GitHub Actions aracılığıyla her 6 saatte bir Medium'dan otomatik 
 **Nasıl çalışır:**
 1. `fetch-medium.js`, `https://medium.com/feed/@ferhattufekci` adresini okur
 2. Kategori, RSS tag'lerinden otomatik tespit edilir (`systems` / `test` / `software`)
-3. Dil, başlıktaki Türkçe karakterlerden otomatik tespit edilir (Türkçe karakter → `tr`, aksi halde `en`)
+3. Önce yazının mevcut dil bilgisi kullanılır; yoksa `js/medium-language.js`, başlık ve içerikteki Türkçe/İngilizce sözcükleri değerlendirir. Senkronizasyon, tarayıcı yedeği, rozet ve dil filtresi aynı çözümleyiciyi kullanır.
 4. Makaleler `data/medium-*.json` dosyalarına kaydedilir
 5. Tarayıcı bu JSON dosyalarını okur — CORS sorunu yok
 
