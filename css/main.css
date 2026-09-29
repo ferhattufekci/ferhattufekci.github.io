@@ -872,6 +872,12 @@ blockquote {
   outline-offset: 3px;
 }
 
+@media (min-width: 992px) {
+  #site_header .sidebar-avatar > a {
+    box-shadow: 0 0 0 1px var(--sidebar-avatar-ring), var(--sidebar-avatar-shadow);
+  }
+}
+
 .site-title-block {
   position: relative;
   z-index: 1;
@@ -2059,26 +2065,6 @@ h3.comment-reply-title:after {
   -o-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-}
-
-#blog-grid .blog-external-arrow {
-  display: block;
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 30px;
-  height: 30px;
-  background-color: var(--color-surface, #fff);
-  text-align: center;
-  line-height: 30px;
-}
-#blog-grid .portfolio-item-img a:hover .blog-external-arrow,
-#blog-grid .portfolio-item-img a:focus-visible .blog-external-arrow {
-  color: var(--color-accent, #0099e5);
-}
-#blog-grid .portfolio-item-img a:focus-visible .blog-external-arrow {
-  outline: 2px solid var(--color-accent, #0099e5);
-  outline-offset: 2px;
 }
 
 .portfolio-grid figure .name {
@@ -4452,18 +4438,11 @@ i.resume-cta__icon {
 .proj-card {
   background: #fff;
   border: 1px solid #eee;
-  border-radius: 6px;
+  border-radius: var(--card-radius, 6px);
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
-}
-.proj-card:hover {
-  border-color: #d0d0d0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .proj-card-header {
@@ -4483,7 +4462,6 @@ i.resume-cta__icon {
   min-width: 0;
   font-size: clamp(12px, 1.6vw, 14px);
   font-weight: 600;
-  color: #0099e5;
   text-decoration: none;
 }
 .proj-name-text {
@@ -4491,16 +4469,10 @@ i.resume-cta__icon {
   overflow-wrap: anywhere;
   text-wrap: pretty;
 }
-.proj-name:hover {
-  color: #ff9800;
-}
 .proj-repo-arrow {
   font-size: 12px;
-  color: #aaa;
+  color: var(--color-text-muted);
   flex: none;
-}
-.proj-name:hover .proj-repo-arrow {
-  color: #0099e5;
 }
 .proj-desc {
   font-size: 12px;
@@ -4623,16 +4595,6 @@ i.resume-cta__icon {
 .proj-owner-arrow {
   font-size: 8px;
   opacity: 0.75;
-}
-.proj-owner-badge:hover,
-.proj-owner-badge:focus-visible {
-  color: var(--color-accent, #0099e5);
-  border-color: var(--color-accent, #0099e5);
-  text-decoration: underline;
-}
-.proj-owner-badge:focus-visible {
-  outline: 2px solid var(--color-accent, #0099e5);
-  outline-offset: 2px;
 }
 .proj-show-more-btn {
   display: inline-flex;

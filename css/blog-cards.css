@@ -1,8 +1,4 @@
 /* Blog-only layout; theme tokens remain owned by dark-theme.css. */
-.pt-page[data-id="blog"] {
-  --blog-link-color: color-mix(in srgb, var(--color-accent) 60%, var(--color-text-primary));
-}
-
 .blog-card-region {
   container: blog-cards / inline-size;
 }
@@ -33,12 +29,11 @@
   overflow: hidden;
   background: var(--color-surface-alt);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--card-radius, 6px);
 }
 
 .blog-article-card {
   display: flex;
-  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
 .blog-article-link {
@@ -50,17 +45,6 @@
   color: var(--color-text-primary);
   text-decoration: none;
   cursor: pointer;
-}
-
-.blog-article-link:hover,
-.blog-article-link:focus {
-  color: var(--color-text-primary);
-  text-decoration: none;
-}
-
-.blog-article-link:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: -3px;
 }
 
 .blog-article-media,
@@ -181,23 +165,10 @@
   min-height: 24px;
   margin-top: auto;
   padding-top: 8px;
-  color: var(--blog-link-color);
+  color: var(--card-link-color);
   font-size: 13px;
   font-weight: 600;
   line-height: 1.5;
-}
-
-.blog-article-link:hover .blog-article-read,
-.blog-article-link:focus-visible .blog-article-read {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-@media (hover: hover) {
-  .blog-article-card:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: 0 3px 12px var(--color-card-shadow);
-  }
 }
 
 #blog-filters .blog-category-filter {
@@ -224,7 +195,7 @@
 }
 
 #blog-filters .blog-category-filter[aria-pressed="true"] {
-  color: var(--blog-link-color);
+  color: var(--card-link-color);
   background: var(--color-filter-active);
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -241,7 +212,7 @@
 }
 
 #blog-lang-toggle .blt-btn.active {
-  color: var(--blog-link-color);
+  color: var(--card-link-color);
 }
 
 /* The existing skeleton pattern now reserves the same media/body geometry. */
@@ -272,9 +243,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .blog-article-card {
-    transition: none;
-  }
   .blog-loading-cover,
   .blog-loading-line {
     animation: none;
