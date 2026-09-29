@@ -1,7 +1,8 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
+import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import ArticleLanguage from '../js/medium-language.js';
+import ArticleExcerpt from '../js/medium-excerpt.js';
 
 const __dirname  = dirname(fileURLToPath(import.meta.url));
 const ROOT       = join(__dirname, '..');
@@ -61,11 +62,16 @@ function hexIdFromUrl(url) {
   return /^[a-f0-9]{8,16}$/i.test(last) ? last : null;
 }
 
-async function fetchText(url) {
+async function fetchText(url, accept = 'application/rss+xml, text/xml, */*') {
   const { default: fetch } = await import('node-fetch');
   const res = await fetch(url, {
-    headers: { 'User-Agent': 'Mozilla/5.0 (compatible; RSSBot/1.0)', 'Accept': 'application/rss+xml, text/xml, */*' },
-    redirect: 'follow', timeout: 20000
+    headers: {
+      'User-Agent': accept === 'text/html'
+        ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+        : 'Mozilla/5.0 (compatible; RSSBot/1.0)',
+      'Accept': accept,
+    },
+    redirect: 'follow', signal: AbortSignal.timeout(20000)
   });
   if (!res.ok) throw new Error('HTTP ' + res.status);
   return res.text();
@@ -83,26 +89,9 @@ const cdata       = s => s.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim();
 const stripHtml   = h => h.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
 const firstImage  = html => { const m = html.match(/<img[^>]+src="([^"]+)"/i); return m ? m[1] : null; };
 
-// RSS CDATA can contain escaped entities; removing HTML tags alone does not decode Turkish characters.
-const NAMED_ENTITIES = {
-  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
-  hellip: '…', mdash: '—', ndash: '–', rsquo: '\u2019', lsquo: '\u2018',
-  rdquo: '\u201D', ldquo: '\u201C',
-};
-function decodeEntities(text) {
-  return text
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-    .replace(/&([a-z]+);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] || m);
-}
+const { decodeEntities, selectExcerpt } = ArticleExcerpt;
 
-// Decode the complete selected preview; remove only Medium's continuation footer.
-function cleanExcerpt(html) {
-  const decoded = decodeEntities(stripHtml(html));
-  return decoded.replace(/Continue reading on .*$/i, '').trim();
-}
-
-function parseRSS(xml) {
+export function parseRSS(xml) {
   const articles = [];
   let   excluded = 0;
 
@@ -111,7 +100,9 @@ function parseRSS(xml) {
     const title   = decodeEntities(cdata(extractOne(item, 'title'))).replace(/\s+/g, ' ').trim();
     const url     = cdata(extractOne(item, 'link') || extractAttr(item, 'link', 'href'));
     const pubDate = cdata(extractOne(item, 'pubDate'));
-    const content = cdata(extractOne(item, 'content:encoded') || extractOne(item, 'description'));
+    const description = cdata(extractOne(item, 'description'));
+    const encoded = cdata(extractOne(item, 'content:encoded'));
+    const content = encoded || description;
     const tags    = extractAll(item, 'category').map(cdata).map(t => t.toLowerCase());
 
     if (!title || !url) continue;
@@ -127,11 +118,7 @@ function parseRSS(xml) {
       extractAttr(item, 'media:thumbnail', 'url') ||
       extractAttr(item, 'media:content',   'url');
     const thumbnail = mediaThumbnail || firstImage(content) || null;
-    // A feed description is a preview. Without one, keep a complete introductory
-    // paragraph rather than putting the entire content:encoded article into a card.
-    const description = cdata(extractOne(item, 'description'));
-    const excerpt = cleanExcerpt(description) ||
-      cleanExcerpt(extractAll(content, 'p').find(p => cleanExcerpt(p)) || '');
+    const excerpt = selectExcerpt({ description, content: encoded });
     const date      = pubDate ? new Date(pubDate).toISOString() : null;
 
     const category = detectCategory(title, tags);
@@ -151,16 +138,47 @@ function parseRSS(xml) {
   return articles;
 }
 
+export function selectPageExcerpt(html) {
+  const metaTags = html.match(/<meta\b[^>]*>/gi) || [];
+  const attributes = tag => Object.fromEntries(
+    [...tag.matchAll(/([\w:-]+)\s*=\s*(["'])([\s\S]*?)\2/g)].map(m => [m[1].toLowerCase(), m[3]])
+  );
+  const description = metaTags.map(attributes).find(meta => meta.name?.toLowerCase() === 'description')?.content || '';
+  const article = html.match(/<article\b[^>]*>([\s\S]*?)<\/article>/i)?.[1] || '';
+  const content = (article.match(/<p\b[^>]*class=["'][^"']*\bpw-post-body-paragraph\b[^"']*["'][^>]*>[\s\S]*?<\/p>/gi) || []).join('');
+  return selectExcerpt({ description, content });
+}
+
+export async function completeExcerpts(articles, previous = [], loadText = fetchText) {
+  for (const article of articles) {
+    if (article.excerpt) continue;
+    try {
+      const pageUrl = new URL(article.url);
+      if (pageUrl.protocol !== 'https:' || !['medium.com', 'www.medium.com'].includes(pageUrl.hostname)) continue;
+      pageUrl.search = '';
+      article.excerpt = selectPageExcerpt(await loadText(pageUrl.href, 'text/html'));
+    } catch (err) {
+      console.warn(`⚠️ Public preview unavailable for ${article.title}: ${err.message}`);
+    }
+    if (!article.excerpt) {
+      const cached = previous.find(item => item.url === article.url);
+      article.excerpt = selectExcerpt({ description: cached?.excerpt || '' });
+    }
+  }
+  return articles;
+}
+
 async function run() {
   mkdirSync(DATA_DIR, { recursive: true });
 
   console.log('\n📡 RSS çekiliyor: ' + MEDIUM_RSS);
-  let all = [];
+  const all = parseRSS(await fetchText(MEDIUM_RSS));
+  if (!all.length) throw new Error('RSS contains no usable articles; existing data left unchanged.');
+  let previous = [];
   try {
-    all = parseRSS(await fetchText(MEDIUM_RSS));
-  } catch (err) {
-    console.log('❌ RSS hatası:', err.message);
-  }
+    previous = JSON.parse(readFileSync(join(DATA_DIR, 'medium-all.json'), 'utf8'));
+  } catch { /* The first sync has no previously generated previews. */ }
+  await completeExcerpts(all, previous);
 
   const buckets = { systems: [], test: [], software: [] };
   for (const { category, lang, ...rest } of all) {
@@ -185,4 +203,9 @@ async function run() {
   console.log('\n✅ Tamamlandı:', meta.counts);
 }
 
-run().catch(err => console.error('Fatal:', err));
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  run().catch(err => {
+    console.error('Fatal:', err);
+    process.exitCode = 1;
+  });
+}

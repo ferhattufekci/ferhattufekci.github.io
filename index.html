@@ -2787,6 +2787,7 @@
             </section>
 
             <script src="js/medium-language.js"></script>
+            <script src="js/medium-excerpt.js"></script>
             <script>
               (function () {
                 var CATS = {
@@ -3210,16 +3211,10 @@
                     var div = document.createElement("div");
                     div.innerHTML = cnt;
                     var description = it.querySelector("description");
-                    var preview = document.createElement("div");
-                    preview.innerHTML = description ? description.textContent : "";
-                    var ex = (preview.textContent || "").replace(/\s+/g, " ").replace(/Continue reading on .*$/i, "").trim();
-                    if (!ex) {
-                      var paragraphs = div.querySelectorAll("p");
-                      for (var paragraphIndex = 0; paragraphIndex < paragraphs.length; paragraphIndex++) {
-                        ex = (paragraphs[paragraphIndex].textContent || "").replace(/\s+/g, " ").replace(/Continue reading on .*$/i, "").trim();
-                        if (ex) break;
-                      }
-                    }
+                    var ex = MediumArticleExcerpt.selectExcerpt({
+                      description: description ? description.textContent : "",
+                      content: enc && enc !== description ? cnt : "",
+                    });
                     if (!title || !link) continue;
                     var h = hexFrom(slugFrom(link));
                     if (h && EXCLUDE.indexOf(h) !== -1) continue;

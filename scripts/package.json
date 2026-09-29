@@ -4,7 +4,8 @@
   "description": "Medium RSS feed'ini çeker ve kategorize eder",
   "type": "module",
   "scripts": {
-    "fetch": "node fetch-medium.js"
+    "fetch": "node fetch-medium.js",
+    "test": "node --test"
   },
   "dependencies": {
     "node-fetch": "^3.3.2"
