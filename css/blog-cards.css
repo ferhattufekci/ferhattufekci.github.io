@@ -171,38 +171,7 @@
   line-height: 1.5;
 }
 
-#blog-filters .blog-category-filter {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 6px 14px;
-  border: 0;
-  border-radius: 4px;
-  color: var(--color-text-secondary);
-  background: transparent;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-  white-space: nowrap;
-  cursor: pointer;
-  box-shadow: none;
-}
-
-#blog-filters .blog-category-filter:hover {
-  color: var(--color-text-primary);
-  background: var(--color-filter-active);
-}
-
-#blog-filters .blog-category-filter[aria-pressed="true"] {
-  color: var(--card-link-color);
-  background: var(--color-filter-active);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-#blog-lang-toggle .blt-btn:focus-visible,
-#blog-filters .blog-category-filter:focus-visible {
+#blog-lang-toggle .blt-btn:focus-visible {
   outline: 2px solid var(--color-accent) !important;
   outline-offset: -2px;
 }

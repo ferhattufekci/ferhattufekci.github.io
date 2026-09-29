@@ -70,3 +70,9 @@ Keyboard focus has a visible accent outline and the same depth feedback. Hover m
 - Match the visual interaction area to its native link target.
 - Preserve language/category filtering and source article data.
 - Avoid transition: all, duplicated theme hover recipes, JavaScript hover listeners and excessive movement.
+
+## Category filters and navigation
+
+Blog and Projects share category-filter-scroll, category-filter-bar and category-filter button presentation in css/category-filters.css. Each page retains its own category state and scoped renderer/handlers. Both use native buttons and aria-pressed. Shared typography, colors, active shadow, underline and inset focus ring derive from semantic filter tokens; dark-theme.css overrides only palette/shadow values. Horizontal scrolling preserves label size. The hint is measured on activation, completion, fonts and ResizeObserver changes; only activation with the default All category resets scroll position.
+
+Mobile and coarse touch navigation reuse deterministic left/right translate animations at 220ms without perspective or scale. Reduced motion switches pages directly. Desktop retains its existing animation selection. Completion waits for both page animations and ignores descendant animation events.

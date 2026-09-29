@@ -2,8 +2,6 @@ var PageTransitions = (function ($, options) {
 "use strict";
     var sectionsContainer = $(".subpages"),
         isAnimating = false,
-        endCurrentPage = true,
-        endNextPage = false,
         windowArea = $(window),
         animEndEventNames = {
             'WebkitAnimation'   : 'webkitAnimationEnd',
@@ -158,13 +156,22 @@ var PageTransitions = (function ($, options) {
     }
 
     function Animate($pageTrigger, gotoPage) {
+        var targetId = $pageTrigger.attr('href').split('#')[1],
+            currentId = sectionsContainer.data('current'),
+            navLinks = $('.site-main-menu .pt-trigger'),
+            safeAnimation = PortfolioPageTransitionPolicy.select({
+                mobile: window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches,
+                reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+                fromIndex: navLinks.index(navLinks.filter('[href="#' + currentId + '"]')),
+                toIndex: navLinks.index(navLinks.filter('[href="#' + targetId + '"]')),
+            });
 
-        if (!($pageTrigger.attr('data-animation'))) {
+        if (safeAnimation === null && !($pageTrigger.attr('data-animation'))) {
             var animNumber = parseInt(Math.floor(Math.random() * 67) + 1);
             $pageTrigger.data('animation',animNumber);
         }
 
-        var animation = $pageTrigger.data('animation').toString(),
+        var animation = safeAnimation !== null ? String(safeAnimation) : $pageTrigger.data('animation').toString(),
             gotoPage, inClass, outClass, selectedAnimNumber;
 
         if(animation.indexOf('-') != -1) {
@@ -181,6 +188,10 @@ var PageTransitions = (function ($, options) {
         }
 
         switch(selectedAnimNumber) {
+            case 0:
+                inClass = '';
+                outClass = '';
+                break;
             case 1:
                 inClass = 'pt-page-moveFromRight';
                 outClass = 'pt-page-moveToLeft';
@@ -471,24 +482,36 @@ var PageTransitions = (function ($, options) {
                 var $nextPage = $('section[data-id='+currentPageId+']').addClass('pt-page-current');
 
                 $nextPage.scrollTop(0);
+                document.dispatchEvent(new CustomEvent('portfolio:page-activate', { detail: { page: $nextPage[0] } }));
 
-                $currentPage.addClass(outClass).on(animEndEventName, function() {
-                    $currentPage.off(animEndEventName);
-                    endCurrentPage = true;
-                    if(endNextPage) {
-                        onEndAnimation($pageWrapper, $nextPage, $currentPage);
-                        endCurrentPage = false;
-                    }
+                if (selectedAnimNumber === 0 || !support) {
+                    onEndAnimation($pageWrapper, $nextPage, $currentPage);
+                    isAnimating = false;
+                    return;
+                }
+
+                var currentFinished = !$currentPage.length,
+                    nextFinished = false,
+                    transitionEvent = animEndEventName + '.pageTransition';
+
+                function finishTransition() {
+                    if (!currentFinished || !nextFinished) return;
+                    $currentPage.off(transitionEvent);
+                    $nextPage.off(transitionEvent);
+                    onEndAnimation($pageWrapper, $nextPage, $currentPage);
+                    isAnimating = false;
+                }
+
+                $currentPage.addClass(outClass).on(transitionEvent, function(event) {
+                    if (event.target !== this) return;
+                    currentFinished = true;
+                    finishTransition();
                 });
 
-                $nextPage.addClass(inClass).on(animEndEventName, function() {
-                    $nextPage.off(animEndEventName);
-                    endNextPage = true;
-                    if(endCurrentPage) {
-                        onEndAnimation($pageWrapper, $nextPage, $currentPage);
-                        endNextPage = false;
-                        isAnimating = false;
-                    }
+                $nextPage.addClass(inClass).on(transitionEvent, function(event) {
+                    if (event.target !== this) return;
+                    nextFinished = true;
+                    finishTransition();
                 });
 
             }
@@ -497,14 +520,11 @@ var PageTransitions = (function ($, options) {
             }
 
 
-        if(!support) {
-            onEndAnimation($currentPage, $nextPage);
-        }
-
     }
 
     function onEndAnimation($pageWrapper, $nextPage, $currentPage) {
         resetPage($nextPage, $currentPage);
+        document.dispatchEvent(new CustomEvent('portfolio:page-settled', { detail: { page: $nextPage[0] } }));
     }
 
     function resetPage($nextPage, $currentPage) {

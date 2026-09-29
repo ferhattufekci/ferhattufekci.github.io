@@ -1253,3 +1253,21 @@
 	-webkit-animation-delay: 1s;
 	animation-delay: 1s;
 }
+/* Mobile page navigation keeps scroll containers on a stable two-dimensional plane. */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  :root {
+    --page-perspective: none;
+    --page-rest-transform: none;
+    --page-backface-visibility: visible;
+    --page-mobile-transition-duration: 220ms;
+    --page-mobile-transition-easing: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .pt-page-moveFromRight,
+  .pt-page-moveToLeft,
+  .pt-page-moveFromLeft,
+  .pt-page-moveToRight {
+    animation-duration: var(--page-mobile-transition-duration);
+    animation-timing-function: var(--page-mobile-transition-easing);
+  }
+}
