@@ -2979,19 +2979,27 @@
 
                   var content = document.createElement("div");
                   content.className = "blog-article-content";
-                  var meta = document.createElement("div");
-                  meta.className = "blog-article-meta";
-                  var badge = document.createElement("span");
-                  badge.className = "blog-language-badge";
-                  badge.textContent = lang.toUpperCase();
-                  badge.setAttribute("aria-label", lang === "tr" ? "Türkçe yazı" : "English article");
-                  var category = document.createElement("span");
-                  category.className = "blog-article-category";
-                  category.lang = "en";
-                  category.textContent = c.label;
-                  meta.appendChild(badge);
-                  meta.appendChild(category);
-                  content.appendChild(meta);
+                  var showLanguage = curLang === "all";
+                  var showCategory = curCat === "category_all";
+                  if (showLanguage || showCategory) {
+                    var meta = document.createElement("div");
+                    meta.className = "blog-article-meta";
+                    if (showLanguage) {
+                      var badge = document.createElement("span");
+                      badge.className = "blog-language-badge";
+                      badge.textContent = lang.toUpperCase();
+                      badge.setAttribute("aria-label", lang === "tr" ? "Türkçe yazı" : "English article");
+                      meta.appendChild(badge);
+                    }
+                    if (showCategory) {
+                      var category = document.createElement("span");
+                      category.className = "blog-article-category";
+                      category.lang = "en";
+                      category.textContent = c.label;
+                      meta.appendChild(category);
+                    }
+                    content.appendChild(meta);
+                  }
 
                   var title = document.createElement("h3");
                   title.id = titleId;
