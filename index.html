@@ -211,6 +211,7 @@
     <link rel="stylesheet" href="css/main.css" type="text/css" />
     <link rel="stylesheet" href="css/hero-fix.css" type="text/css" />
     <link rel="stylesheet" href="css/dark-theme.css" type="text/css" />
+    <link rel="stylesheet" href="css/blog-cards.css" type="text/css" />
     <!-- Calendly renders after page load; load its stylesheet without blocking the first paint. -->
     <link
       rel="stylesheet"
@@ -2564,6 +2565,8 @@
                       <button
                         class="blt-btn active"
                         data-lang-filter="all"
+                        type="button"
+                        aria-pressed="true"
                         onclick="setBlogLang('all')"
                       >
                         All
@@ -2571,6 +2574,8 @@
                       <button
                         class="blt-btn"
                         data-lang-filter="tr"
+                        type="button"
+                        aria-pressed="false"
                         onclick="setBlogLang('tr')"
                       >
                         <img
@@ -2585,6 +2590,8 @@
                       <button
                         class="blt-btn"
                         data-lang-filter="en"
+                        type="button"
+                        aria-pressed="false"
                         onclick="setBlogLang('en')"
                       >
                         <img
@@ -2618,144 +2625,71 @@
                 <div class="section-content">
                   <div class="row">
                     <div class="col-xs-12 col-sm-12">
-                      <div class="portfolio-page-content">
+                      <div class="portfolio-page-content blog-card-region">
                         <div class="filter-scroll-hint" id="blog-filter-hint">
                           <ul class="portfolio-filters" id="blog-filters">
                             <li class="active">
-                              <a
-                                class="filter btn btn-sm btn-link"
+                              <button
+                                type="button"
+                                class="blog-category-filter btn btn-sm btn-link"
                                 data-group="category_all"
+                                aria-pressed="true"
                               >
                                 <span>All</span>
-                              </a>
+                              </button>
                             </li>
                             <li>
-                              <a
-                                class="filter btn btn-sm btn-link"
+                              <button
+                                type="button"
+                                class="blog-category-filter btn btn-sm btn-link"
                                 data-group="category_system_engineering"
-                                >Systems Engineering &amp; Business Analysis</a
-                              >
+                                aria-pressed="false"
+                              >Systems Engineering &amp; Business Analysis</button>
                             </li>
                             <li>
-                              <a
-                                class="filter btn btn-sm btn-link"
+                              <button
+                                type="button"
+                                class="blog-category-filter btn btn-sm btn-link"
                                 data-group="category_testing"
-                                >Test Engineering</a
-                              >
+                                aria-pressed="false"
+                              >Test Engineering</button>
                             </li>
                             <li>
-                              <a
-                                class="filter btn btn-sm btn-link"
+                              <button
+                                type="button"
+                                class="blog-category-filter btn btn-sm btn-link"
                                 data-group="category_software-development"
-                                >Software Engineering</a
-                              >
+                                aria-pressed="false"
+                              >Software Engineering</button>
                             </li>
                           </ul>
                         </div>
 
-                        <div
-                          id="blog-loading"
-                          class="portfolio-grid three-columns"
-                          style="display: flex; gap: 16px; flex-wrap: wrap"
-                        >
-                          <div
-                            class="blog-skeleton"
-                            style="flex: 1 1 30%; min-width: 200px"
-                          >
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 160px;
-                                border-radius: 4px;
-                                margin-bottom: 10px;
-                                animation: blogShimmer 1.4s infinite;
-                              "
-                            ></div>
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 14px;
-                                border-radius: 3px;
-                                margin-bottom: 7px;
-                                width: 90%;
-                                animation: blogShimmer 1.4s infinite 0.1s;
-                              "
-                            ></div>
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 14px;
-                                border-radius: 3px;
-                                width: 65%;
-                                animation: blogShimmer 1.4s infinite 0.2s;
-                              "
-                            ></div>
+                        <div id="blog-loading" class="blog-article-grid" role="status">
+                          <span class="sr-only">Loading articles…</span>
+                          <div class="blog-loading-card" aria-hidden="true">
+                            <div class="blog-loading-cover"></div>
+                            <div class="blog-loading-content">
+                              <div class="blog-loading-line blog-loading-meta"></div>
+                              <div class="blog-loading-line blog-loading-title"></div>
+                              <div class="blog-loading-line"></div>
+                            </div>
                           </div>
-                          <div
-                            class="blog-skeleton"
-                            style="flex: 1 1 30%; min-width: 200px"
-                          >
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 160px;
-                                border-radius: 4px;
-                                margin-bottom: 10px;
-                                animation: blogShimmer 1.4s infinite 0.15s;
-                              "
-                            ></div>
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 14px;
-                                border-radius: 3px;
-                                margin-bottom: 7px;
-                                width: 85%;
-                                animation: blogShimmer 1.4s infinite 0.25s;
-                              "
-                            ></div>
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 14px;
-                                border-radius: 3px;
-                                width: 60%;
-                                animation: blogShimmer 1.4s infinite 0.35s;
-                              "
-                            ></div>
+                          <div class="blog-loading-card" aria-hidden="true">
+                            <div class="blog-loading-cover"></div>
+                            <div class="blog-loading-content">
+                              <div class="blog-loading-line blog-loading-meta"></div>
+                              <div class="blog-loading-line blog-loading-title"></div>
+                              <div class="blog-loading-line"></div>
+                            </div>
                           </div>
-                          <div
-                            class="blog-skeleton"
-                            style="flex: 1 1 30%; min-width: 200px"
-                          >
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 160px;
-                                border-radius: 4px;
-                                margin-bottom: 10px;
-                                animation: blogShimmer 1.4s infinite 0.3s;
-                              "
-                            ></div>
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 14px;
-                                border-radius: 3px;
-                                margin-bottom: 7px;
-                                width: 80%;
-                                animation: blogShimmer 1.4s infinite 0.4s;
-                              "
-                            ></div>
-                            <div
-                              style="
-                                background: #2a2a2a;
-                                height: 14px;
-                                border-radius: 3px;
-                                width: 55%;
-                                animation: blogShimmer 1.4s infinite 0.5s;
-                              "
-                            ></div>
+                          <div class="blog-loading-card" aria-hidden="true">
+                            <div class="blog-loading-cover"></div>
+                            <div class="blog-loading-content">
+                              <div class="blog-loading-line blog-loading-meta"></div>
+                              <div class="blog-loading-line blog-loading-title"></div>
+                              <div class="blog-loading-line"></div>
+                            </div>
                           </div>
                         </div>
                         <style>
@@ -2769,27 +2703,6 @@
                             100% {
                               opacity: 1;
                             }
-                          }
-                          .blog-medium-img {
-                            width: 100%;
-                            height: 160px;
-                            object-fit: cover;
-                            display: block;
-                            border-radius: 3px;
-                          }
-                          .blog-img-placeholder {
-                            width: 100%;
-                            height: 160px;
-                            background: linear-gradient(
-                              135deg,
-                              #1e1e1e 0%,
-                              #2d2d2d 100%
-                            );
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 2rem;
-                            border-radius: 3px;
                           }
                           .blog-error-msg {
                             color: #888;
@@ -2845,11 +2758,12 @@
                         </style>
 
                         <div
-                          class="portfolio-grid three-columns"
+                          class="blog-article-grid"
                           id="blog-grid"
+                          aria-busy="true"
                           style="display: none"
                         ></div>
-                        <div id="blog-empty" style="display: none"></div>
+                        <div id="blog-empty" role="status" aria-live="polite" style="display: none"></div>
                         <div
                           class="ads-resume-post-advertising js-adsense ad-slot-blog"
                         >
@@ -2924,6 +2838,7 @@
                     l = p[p.length - 1] || "";
                   return /^[a-f0-9]{8,16}$/i.test(l) ? l : null;
                 }
+
                 function isTR(t) {
                   return /[ğüşıöçĞÜŞİÖÇ]/.test(t || "");
                 }
@@ -3020,66 +2935,95 @@
                   return best;
                 }
 
-                function mkFig(art, catKey, lang) {
+                function mkCard(art, catKey, lang, index) {
                   var c = CATS[catKey];
-                  var fig = document.createElement("figure");
-                  fig.className = "item standard";
-                  fig.setAttribute(
-                    "data-groups",
-                    '["category_all","' + c.group + '"]',
-                  );
-                  var wrap = document.createElement("div");
-                  wrap.className = "portfolio-item-img";
-                  wrap.style.position = "relative";
+                  var titleId = "blog-article-title-" + index;
+                  var card = document.createElement("article");
+                  card.className = "blog-article-card";
+                  card.lang = lang;
+                  card.setAttribute("data-lang", lang);
+                  card.setAttribute("data-category", catKey);
+
+                  // One native link per card: pointer, touch and keyboard share the same destination.
+                  var link = document.createElement("a");
+                  link.className = "blog-article-link";
+                  link.href = art.url;
+                  link.target = "_blank";
+                  link.rel = "noopener noreferrer";
+                  link.setAttribute("aria-labelledby", titleId);
+                  link.setAttribute("aria-describedby", titleId + "-new-tab");
+
+                  var media = document.createElement("div");
+                  media.className = "blog-article-media";
+                  var placeholder = document.createElement("div");
+                  placeholder.className = "blog-cover-placeholder";
+                  placeholder.setAttribute("aria-hidden", "true");
+                  placeholder.innerHTML = '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M11 5h13l6 6v24H11z"/><path d="M24 5v7h6M16 19h9M16 24h9M16 29h6"/></svg>';
+                  var placeholderLabel = document.createElement("span");
+                  placeholderLabel.textContent = lang === "tr" ? "Kapak görseli yok" : "No cover image";
+                  placeholder.appendChild(placeholderLabel);
+                  media.appendChild(placeholder);
                   if (art.thumbnail) {
-                    var img = document.createElement("img");
-                    img.className = "blog-medium-img";
-                    img.src = art.thumbnail;
-                    img.alt = "";
-                    img.loading = "lazy";
-                    img.onerror = function () {
-                      var p = document.createElement("div");
-                      p.className = "blog-img-placeholder";
-                      p.textContent = c.emoji;
-                      this.parentNode.replaceChild(p, this);
+                    placeholder.hidden = true;
+                    var image = document.createElement("img");
+                    image.className = "blog-article-image";
+                    image.alt = "";
+                    image.loading = "lazy";
+                    image.decoding = "async";
+                    image.onload = function () { media.classList.add("is-loaded"); };
+                    image.onerror = function () {
+                      image.remove();
+                      placeholder.hidden = false;
                     };
-                    wrap.appendChild(img);
-                  } else {
-                    var ph = document.createElement("div");
-                    ph.className = "blog-img-placeholder";
-                    ph.textContent = c.emoji;
-                    wrap.appendChild(ph);
+                    image.src = art.thumbnail;
+                    media.appendChild(image);
                   }
+                  link.appendChild(media);
+
+                  var content = document.createElement("div");
+                  content.className = "blog-article-content";
+                  var meta = document.createElement("div");
+                  meta.className = "blog-article-meta";
                   var badge = document.createElement("span");
-                  badge.style.cssText =
-                    "position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.65);color:#fff;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:700;";
-                  badge.textContent = lang === "tr" ? "TR" : "EN";
-                  wrap.appendChild(badge);
-                  var a = document.createElement("a");
-                  a.href = art.url || "#";
-                  a.target = "_blank";
-                  a.rel = "noopener noreferrer";
-                  a.setAttribute(
-                    "aria-label",
-                    (lang === "tr" ? "Medium'da oku: " : "Read on Medium: ") +
-                      (art.title || "article"),
-                  );
-                  var ico = document.createElement("span");
-                  ico.className = "proj-repo-arrow blog-external-arrow";
-                  ico.setAttribute("aria-hidden", "true");
-                  ico.textContent = "↗";
-                  a.appendChild(ico);
-                  wrap.appendChild(a);
-                  fig.appendChild(wrap);
-                  var h4 = document.createElement("h4");
-                  h4.className = "name";
-                  h4.textContent = art.title || "";
-                  fig.appendChild(h4);
-                  var sp = document.createElement("span");
-                  sp.className = "category";
-                  sp.textContent = c.label;
-                  fig.appendChild(sp);
-                  return fig;
+                  badge.className = "blog-language-badge";
+                  badge.textContent = lang.toUpperCase();
+                  badge.setAttribute("aria-label", lang === "tr" ? "Türkçe yazı" : "English article");
+                  var category = document.createElement("span");
+                  category.className = "blog-article-category";
+                  category.lang = "en";
+                  category.textContent = c.label;
+                  meta.appendChild(badge);
+                  meta.appendChild(category);
+                  content.appendChild(meta);
+
+                  var title = document.createElement("h3");
+                  title.id = titleId;
+                  title.className = "blog-article-title";
+                  title.textContent = art.title || "";
+                  content.appendChild(title);
+                  if (art.excerpt && art.excerpt.trim()) {
+                    var excerpt = document.createElement("p");
+                    excerpt.className = "blog-article-excerpt";
+                    excerpt.textContent = art.excerpt.trim();
+                    content.appendChild(excerpt);
+                  }
+
+                  var read = document.createElement("span");
+                  read.className = "blog-article-read";
+                  read.textContent = lang === "tr" ? "Yazıyı oku" : "Read article";
+                  var arrow = document.createElement("span");
+                  arrow.setAttribute("aria-hidden", "true");
+                  arrow.textContent = "↗";
+                  read.appendChild(arrow);
+                  content.appendChild(read);
+                  var newTab = document.createElement("span");
+                  newTab.id = titleId + "-new-tab";
+                  newTab.className = "sr-only";
+                  newTab.textContent = lang === "tr" ? "Yeni sekmede açılır" : "Opens in a new tab";
+                  content.appendChild(newTab);
+                  link.appendChild(content);
+                  card.appendChild(link);
+                  return card;
                 }
 
                 function showEmpty(catGroup, langFilter) {
@@ -3145,95 +3089,45 @@
                   }
                 }
 
-                function checkCatEmpty() {
-                  var total = 0,
-                    $g = $("#blog-grid");
-                  $g.find("figure.item").each(function () {
-                    var gs = this.getAttribute("data-groups") || "[]";
-                    if (
-                      curCat === "category_all" ||
-                      gs.indexOf('"' + curCat + '"') !== -1
-                    )
-                      total++;
-                  });
-                  if (total === 0 && curCat !== "category_all")
-                    showEmpty(curCat, curLang);
-                  else hideEmpty();
-                }
-
-                /* Update the language selection even when there are no results or Shuffle is unavailable. */
                 function syncBlogLangButtons() {
-                  document.querySelectorAll(".blt-btn").forEach(function (b) {
-                    b.classList.toggle(
-                      "active",
-                      b.getAttribute("data-lang-filter") === curLang,
-                    );
+                  document.querySelectorAll(".blt-btn").forEach(function (button) {
+                    var active = button.getAttribute("data-lang-filter") === curLang;
+                    button.classList.toggle("active", active);
+                    button.setAttribute("aria-pressed", String(active));
                   });
                 }
 
-                function initShuffle() {
-                  if (typeof $ === "undefined" || !$.fn.shuffle) return;
-                  var $g = $("#blog-grid");
-                  try {
-                    $g.shuffle("destroy");
-                  } catch (e) {}
-                  $g.shuffle({ itemSelector: "figure.item", speed: 300 });
-                  if (curCat !== "category_all") {
-                    $g.shuffle("shuffle", curCat);
-                    checkCatEmpty();
-                  }
-                  $("#blog-filters li").removeClass("active");
-                  $("#blog-filters")
-                    .find('[data-group="' + curCat + '"]')
-                    .closest("li")
-                    .addClass("active");
-                  $("#blog-filters")
-                    .find(".filter")
-                    .off("click")
-                    .on("click", function () {
-                      $("#blog-filters li").removeClass("active");
-                      $(this).closest("li").addClass("active");
-                      curCat = $(this).data("group");
-                      hideEmpty();
-                      $g.shuffle(
-                        "shuffle",
-                        curCat === "category_all" ? undefined : curCat,
-                      );
-                      checkCatEmpty();
-                    });
+                function syncBlogCategoryButtons() {
+                  document.querySelectorAll("#blog-filters .blog-category-filter").forEach(function (button) {
+                    var active = button.getAttribute("data-group") === curCat;
+                    button.closest("li").classList.toggle("active", active);
+                    button.setAttribute("aria-pressed", String(active));
+                  });
                 }
 
                 function render() {
                   var grid = document.getElementById("blog-grid");
                   var load = document.getElementById("blog-loading");
                   if (!grid) return;
-                  var vis =
-                    curLang === "all"
-                      ? loaded
-                      : loaded.filter(function (x) {
-                          return x.lang === curLang;
-                        });
+                  // Filter the same resolved language used by the badge, then retain newest-first ordering.
+                  var visible = loaded.filter(function (entry) {
+                    return (curLang === "all" || entry.lang === curLang) &&
+                      (curCat === "category_all" || CATS[entry.catKey].group === curCat);
+                  });
+                  visible.sort(function (a, b) {
+                    return new Date(b.article.date || 0) - new Date(a.article.date || 0);
+                  });
                   load.style.display = "none";
                   hideEmpty();
-                  if (!vis.length) {
-                    grid.style.display = "none";
-                    showEmpty(curCat, curLang);
-                    return;
-                  }
-                  vis.sort(function (a, b) {
-                    return (
-                      new Date(b.article.date || 0) -
-                      new Date(a.article.date || 0)
-                    );
-                  });
-                  var frag = document.createDocumentFragment();
-                  vis.forEach(function (x) {
-                    frag.appendChild(mkFig(x.article, x.catKey, x.lang));
+                  var fragment = document.createDocumentFragment();
+                  visible.forEach(function (entry, index) {
+                    fragment.appendChild(mkCard(entry.article, entry.catKey, entry.lang, index));
                   });
                   grid.innerHTML = "";
-                  grid.appendChild(frag);
-                  grid.style.display = "block";
-                  setTimeout(initShuffle, 80);
+                  grid.appendChild(fragment);
+                  grid.setAttribute("aria-busy", "false");
+                  grid.style.display = visible.length ? "grid" : "none";
+                  if (!visible.length) showEmpty(curCat, curLang);
                 }
                 window.reblog = render;
 
@@ -3257,6 +3151,7 @@
                 })();
 
                 window.setBlogLang = function (lf) {
+                  if (["all", "tr", "en"].indexOf(lf) === -1) return;
                   curLang = lf;
                   syncBlogLangButtons();
                   render();
@@ -3384,6 +3279,15 @@
                   return Promise.all([metaP, articlesP]);
                 }
                 function boot() {
+                  document.querySelectorAll("#blog-filters .blog-category-filter").forEach(function (button) {
+                    button.addEventListener("click", function () {
+                      curCat = button.getAttribute("data-group");
+                      syncBlogCategoryButtons();
+                      render();
+                    });
+                  });
+                  syncBlogLangButtons();
+                  syncBlogCategoryButtons();
                   fetchBlogData();
                 }
 
