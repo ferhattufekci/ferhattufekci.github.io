@@ -44,7 +44,7 @@ Existing body, heading and utility styles retain their fonts, sizes and line hei
 
 ## Layout
 
-Blog and Projects keep their existing responsive grids, gaps and content geometry. Card transforms do not change layout dimensions or move neighboring cards. Blog cover aspect ratio and scale-down image placement preserve source proportions and avoid default crop/upscaling.
+Blog and Projects keep their existing responsive grids, gaps and content geometry. Card transforms do not change layout dimensions or move neighboring cards. Blog covers keep a reserved 16:9 frame and use centered object-fit: cover without stretching. The current landscape photos and centered text illustration were checked for safe cropping; new text/diagram covers require the same content check before publication.
 
 ## Elevation & Depth
 
