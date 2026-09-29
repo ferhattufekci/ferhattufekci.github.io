@@ -28,6 +28,8 @@
   --color-proj-topic-clr: #666666;
   --color-filter-bg:      #f0f2f4;
   --color-filter-active:  #ffffff;
+  --filter-hover-bg:      rgba(255,255,255,0.7);
+  --filter-active-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.06);
   --color-scrollbar-thumb:#dedede;
   --color-blockquote:     #d8d8d8;
   --color-hp-mask:        rgba(10,10,10,0.45);
@@ -69,6 +71,8 @@
   --color-proj-topic-clr: #8b949e;
   --color-filter-bg:      #1c2128;
   --color-filter-active:  #21262d;
+  --filter-hover-bg:      rgba(255,255,255,0.07);
+  --filter-active-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 0.5px var(--color-border);
   --color-scrollbar-thumb:#30363d;
   --color-blockquote:     #30363d;
   --color-hp-mask:        rgba(0,0,0,0.6);
@@ -85,7 +89,6 @@ body,
 .blog-card,
 .lm-info-block,
 .portfolio-filters li a,
-.proj-cat-filters li a,
 .info-block-w-icon,
 .timeline-second-style .left-part,
 .timeline-second-style .right-part,
@@ -347,39 +350,6 @@ textarea.form-control {
   color: var(--color-text-muted);
 }
 
-.pt-page[data-id="blog"] .portfolio-filters,
-.pt-page[data-id="projects"] .proj-cat-filters {
-  background: var(--color-filter-bg) !important;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li.active a,
-.pt-page[data-id="blog"] .portfolio-filters li.active a:hover,
-.pt-page[data-id="projects"] .proj-cat-filters li.active a,
-.pt-page[data-id="projects"] .proj-cat-filters li.active a:hover {
-  background: var(--color-filter-active) !important;
-  color: var(--color-accent) !important;
-  text-decoration: underline !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 0.5px var(--color-border) !important;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li a,
-.pt-page[data-id="projects"] .proj-cat-filters li a {
-  color: var(--color-text-muted) !important;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li a:hover,
-.pt-page[data-id="projects"] .proj-cat-filters li a:hover {
-  color: var(--color-text-primary) !important;
-  background: rgba(255,255,255,0.07) !important;
-  text-decoration: underline !important;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li.active a:hover,
-.pt-page[data-id="projects"] .proj-cat-filters li.active a:hover {
-  color: var(--color-accent) !important;
-  background: var(--color-filter-active) !important;
-}
-
 /* Use different hover-overlay opacities for the light and dark filter surfaces. */
 .blt-btn:hover {
   background: rgba(255, 255, 255, 0.07);
@@ -439,9 +409,6 @@ textarea.form-control {
   color: var(--color-text-muted);
 }
 
-[data-theme="dark"] .filter-scroll-hint::after {
-  background: linear-gradient(to right, transparent, var(--color-surface) 85%);
-}
 
 .lm-info-block {
   background-color: var(--color-surface);

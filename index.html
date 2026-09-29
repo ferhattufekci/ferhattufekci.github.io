@@ -213,6 +213,7 @@
     <link rel="stylesheet" href="css/dark-theme.css" type="text/css" />
     <link rel="stylesheet" href="css/blog-cards.css" type="text/css" />
     <link rel="stylesheet" href="css/card-interactions.css" type="text/css" />
+    <link rel="stylesheet" href="css/category-filters.css" type="text/css" />
     <!-- Calendly renders after page load; load its stylesheet without blocking the first paint. -->
     <link
       rel="stylesheet"
@@ -2003,37 +2004,37 @@
                   <!-- STATIC-SEO:PROJECTS:END -->
                 </noscript>
 
-                <div class="filter-scroll-hint" id="proj-filter-hint">
+                <div class="category-filter-scroll" id="proj-filter-hint">
                   <ul
-                    class="portfolio-filters proj-cat-filters"
+                    class="category-filter-bar"
                     id="proj-filters"
                   >
                     <li class="active">
-                      <a
-                        class="filter btn btn-sm btn-link"
-                        data-group="proj_all"
-                        >All</a
+                      <button type="button"
+                        class="filter category-filter"
+                        data-group="proj_all" aria-pressed="true" data-filter-default
+                        >All</button
                       >
                     </li>
                     <li>
-                      <a
-                        class="filter btn btn-sm btn-link"
-                        data-group="proj_systems"
-                        >Systems Engineering &amp; Business Analysis</a
+                      <button type="button"
+                        class="filter category-filter"
+                        data-group="proj_systems" aria-pressed="false"
+                        >Systems Engineering &amp; Business Analysis</button
                       >
                     </li>
                     <li>
-                      <a
-                        class="filter btn btn-sm btn-link"
-                        data-group="proj_test"
-                        >Test Engineering</a
+                      <button type="button"
+                        class="filter category-filter"
+                        data-group="proj_test" aria-pressed="false"
+                        >Test Engineering</button
                       >
                     </li>
                     <li>
-                      <a
-                        class="filter btn btn-sm btn-link"
-                        data-group="proj_software"
-                        >Software Engineering</a
+                      <button type="button"
+                        class="filter category-filter"
+                        data-group="proj_software" aria-pressed="false"
+                        >Software Engineering</button
                       >
                     </li>
                   </ul>
@@ -2307,6 +2308,10 @@
                   var emptyEl = document.getElementById("proj-empty");
 
                   if (!gridEl) return;
+
+                  document.querySelectorAll("#proj-filters .category-filter").forEach(function (button) {
+                    button.setAttribute("aria-pressed", String(button.getAttribute("data-group") === curPCat));
+                  });
 
                   var vis = allRepos.filter(function (r) {
                     return (
@@ -2627,13 +2632,14 @@
                   <div class="row">
                     <div class="col-xs-12 col-sm-12">
                       <div class="portfolio-page-content blog-card-region">
-                        <div class="filter-scroll-hint" id="blog-filter-hint">
-                          <ul class="portfolio-filters" id="blog-filters">
+                        <div class="category-filter-scroll" id="blog-filter-hint">
+                          <ul class="category-filter-bar" id="blog-filters">
                             <li class="active">
                               <button
                                 type="button"
-                                class="blog-category-filter btn btn-sm btn-link"
+                                class="blog-category-filter category-filter"
                                 data-group="category_all"
+                                data-filter-default
                                 aria-pressed="true"
                               >
                                 <span>All</span>
@@ -2642,7 +2648,7 @@
                             <li>
                               <button
                                 type="button"
-                                class="blog-category-filter btn btn-sm btn-link"
+                                class="blog-category-filter category-filter"
                                 data-group="category_system_engineering"
                                 aria-pressed="false"
                               >Systems Engineering &amp; Business Analysis</button>
@@ -2650,7 +2656,7 @@
                             <li>
                               <button
                                 type="button"
-                                class="blog-category-filter btn btn-sm btn-link"
+                                class="blog-category-filter category-filter"
                                 data-group="category_testing"
                                 aria-pressed="false"
                               >Test Engineering</button>
@@ -2658,7 +2664,7 @@
                             <li>
                               <button
                                 type="button"
-                                class="blog-category-filter btn btn-sm btn-link"
+                                class="blog-category-filter category-filter"
                                 data-group="category_software-development"
                                 aria-pressed="false"
                               >Software Engineering</button>
@@ -3406,6 +3412,7 @@
     ></script>
 
     <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/page-transition-policy.js"></script>
     <script src="js/pages-switcher.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/preloader.js"></script>
@@ -3498,36 +3505,6 @@
         });
       })();
     </script>
-    <script>
-      (function () {
-        function initScrollHint(hintId, listId) {
-          var hint = document.getElementById(hintId);
-          var list = document.getElementById(listId);
-          if (!hint || !list) return;
-
-          function update() {
-            var hasOverflow = list.scrollWidth > list.clientWidth + 2;
-            var atEnd =
-              list.scrollLeft + list.clientWidth >= list.scrollWidth - 4;
-            hint.classList.toggle("has-overflow", hasOverflow);
-            hint.classList.toggle("at-end", atEnd || !hasOverflow);
-          }
-
-          list.addEventListener("scroll", update, { passive: true });
-          window.addEventListener("resize", update);
-          update();
-        }
-
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", function () {
-            initScrollHint("blog-filter-hint", "blog-filters");
-            initScrollHint("proj-filter-hint", "proj-filters");
-          });
-        } else {
-          initScrollHint("blog-filter-hint", "blog-filters");
-          initScrollHint("proj-filter-hint", "proj-filters");
-        }
-      })();
-    </script>
+    <script src="js/category-filter-hints.js"></script>
   </body>
 </html>

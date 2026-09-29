@@ -631,10 +631,10 @@ blockquote {
   max-height: 100%;
   -webkit-perspective: 1500px;
   -moz-perspective: 1500px;
-  perspective: 1500px;
+  perspective: var(--page-perspective, 1500px);
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
+  backface-visibility: var(--page-backface-visibility, hidden);
 }
 
 .pt-page {
@@ -654,10 +654,10 @@ blockquote {
   visibility: hidden;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
+  backface-visibility: var(--page-backface-visibility, hidden);
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  transform: var(--page-rest-transform, translate3d(0, 0, 0));
 }
 
 .section-inner.start-page-full-width + .section-inner.custom-page-content {
@@ -676,7 +676,7 @@ blockquote {
   -webkit-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  transform: var(--page-rest-transform, translate3d(0, 0, 0));
   -ms-transform: none;
 }
 
@@ -4340,85 +4340,6 @@ i.resume-cta__icon {
 
 
 
-.filter-scroll-hint {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters,
-.pt-page[data-id="projects"] .proj-cat-filters {
-  width: fit-content !important;
-  max-width: 100% !important;  
-  margin-left: auto !important;
-  margin-right: 0 !important;
-  display: flex !important;
-  align-items: center;
-  background: #f0f2f4;
-  border-radius: 6px;
-  padding: 3px;
-  gap: 2px;
-  list-style: none;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  margin-bottom: 24px;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters::-webkit-scrollbar,
-.pt-page[data-id="projects"] .proj-cat-filters::-webkit-scrollbar {
-  display: none;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li,
-.pt-page[data-id="projects"] .proj-cat-filters li {
-  display: inline-flex;
-  margin: 0;
-  padding: 0;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li a,
-.pt-page[data-id="blog"] .portfolio-filters li a:hover,
-.pt-page[data-id="projects"] .proj-cat-filters li a,
-.pt-page[data-id="projects"] .proj-cat-filters li a:hover {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: 4px;
-  border: none !important;
-  background: transparent;
-  color: #888;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  font-family: inherit;
-  line-height: 1;
-  white-space: nowrap;
-  text-decoration: none;
-  box-shadow: none;
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li a:hover,
-.pt-page[data-id="projects"] .proj-cat-filters li a:hover {
-  color: #333;
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.pt-page[data-id="blog"] .portfolio-filters li.active a,
-.pt-page[data-id="blog"] .portfolio-filters li.active a:hover,
-.pt-page[data-id="projects"] .proj-cat-filters li.active a,
-.pt-page[data-id="projects"] .proj-cat-filters li.active a:hover {
-  background: #fff;
-  color: #111;
-  box-shadow:
-    0 1px 4px rgba(0, 0, 0, 0.12),
-    0 0 0 0.5px rgba(0, 0, 0, 0.06);
-  border: none !important;
-}
-
 .proj-section-label {
   font-size: 11px;
   font-weight: 700;
@@ -4703,17 +4624,6 @@ i.resume-cta__icon {
 }
 
 @media only screen and (max-width: 768px) {
-  /* Constrain fit-content to the parent so horizontal overflow scrolls instead of expanding the filter bar. */
-  .pt-page[data-id="blog"] .portfolio-filters,
-  .pt-page[data-id="projects"] .proj-cat-filters {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    box-sizing: border-box;
-    padding-right: 32px !important; /* Keep the final tab clear of the scroll-hint gradient. */
-  }
-
   .proj-grid {
     grid-template-columns: 1fr !important;
   }
@@ -4731,28 +4641,6 @@ i.resume-cta__icon {
     content: none;
     margin: 0;
   }
-}
-
-.filter-scroll-hint::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 48px;
-  height: 100%;
-  background: linear-gradient(to right, transparent, #fff 85%);
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 2;
-  opacity: 0;  
-}
-
-.filter-scroll-hint.has-overflow::after {
-  opacity: 1;
-}
-
-.filter-scroll-hint.at-end::after {
-  opacity: 0;
 }
 
 .pt-page[data-id="blog"] .portfolio-page-content,
