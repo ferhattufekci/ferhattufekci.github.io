@@ -7,7 +7,7 @@
     "homepage": "https://codecrafters.io",
     "language": "Markdown",
     "langColor": "#8b949e",
-    "stars": 552678,
+    "stars": 554444,
     "topics": [
       "awesome-list",
       "free",
@@ -25,7 +25,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 517889,
+    "stars": 521155,
     "topics": [
       "awesome",
       "awesome-list",
@@ -42,7 +42,7 @@
     "homepage": "https://APILayer.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 487771,
+    "stars": 490239,
     "topics": [
       "api",
       "apis",
@@ -67,7 +67,7 @@
     "homepage": "https://contribute.freecodecamp.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 456919,
+    "stars": 457469,
     "topics": [
       "careers",
       "certification",
@@ -94,7 +94,7 @@
     "homepage": "https://ebookfoundation.github.io/free-programming-books/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 398817,
+    "stars": 399528,
     "topics": [
       "books",
       "education",
@@ -111,7 +111,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 373864,
+    "stars": 374703,
     "topics": [
       "design",
       "design-patterns",
@@ -136,7 +136,7 @@
     "homepage": "https://roadmap.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 369195,
+    "stars": 369833,
     "topics": [
       "angular-roadmap",
       "backend-roadmap",
@@ -166,7 +166,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 362404,
+    "stars": 362931,
     "topics": [
       "algorithm",
       "algorithms",
@@ -190,7 +190,7 @@
     "homepage": null,
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 297951,
+    "stars": 301805,
     "topics": [
       "ai",
       "brainstorming",
@@ -210,7 +210,7 @@
     "homepage": "https://aihero.dev/skills",
     "language": "Shell",
     "langColor": "#89e051",
-    "stars": 287091,
+    "stars": 296677,
     "topics": []
   },
   {
@@ -221,7 +221,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 286445,
+    "stars": 287229,
     "topics": [
       "beginner-project",
       "cpp",
@@ -241,7 +241,7 @@
     "homepage": "https://ecc.tools",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 277510,
+    "stars": 283542,
     "topics": [
       "ai-agents",
       "anthropic",
@@ -261,7 +261,7 @@
     "homepage": null,
     "language": "C",
     "langColor": "#8b949e",
-    "stars": 251606,
+    "stars": 252531,
     "topics": []
   },
   {
@@ -272,7 +272,7 @@
     "homepage": "https://react.dev",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 250898,
+    "stars": 251354,
     "topics": [
       "declarative",
       "frontend",
@@ -290,7 +290,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 249420,
+    "stars": 251292,
     "topics": [
       "awesome",
       "awesome-list",
@@ -321,7 +321,7 @@
     "homepage": "https://cs.ossu.dev",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 209901,
+    "stars": 210135,
     "topics": [
       "awesome-list",
       "computer-science",
@@ -337,7 +337,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 189705,
+    "stars": 190995,
     "topics": [
       "autogen",
       "autogen-extension",
@@ -356,7 +356,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 180626,
+    "stars": 182083,
     "topics": [
       "agent-skills"
     ]
@@ -369,7 +369,7 @@
     "homepage": "https://code.claude.com/docs/en/overview",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 150313,
+    "stars": 152311,
     "topics": []
   },
   {
@@ -380,7 +380,7 @@
     "homepage": "https://www.techinterviewhandbook.org",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 142990,
+    "stars": 143069,
     "topics": [
       "algorithm",
       "algorithm-interview",
@@ -402,7 +402,7 @@
     "homepage": "https://github.github.com/spec-kit/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 140906,
+    "stars": 141870,
     "topics": [
       "ai",
       "copilot",
@@ -421,7 +421,7 @@
     "homepage": "https://free-for.dev/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 139390,
+    "stars": 139783,
     "topics": [
       "awesome-list",
       "free-for-developers"
@@ -435,7 +435,7 @@
     "homepage": "https://excalidraw.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 133703,
+    "stars": 134142,
     "topics": [
       "canvas",
       "collaboration",
@@ -454,7 +454,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 130051,
+    "stars": 132940,
     "topics": [
       "ai-video-generator",
       "content-creation",
@@ -473,6 +473,59 @@
     ]
   },
   {
+    "name": "graphify",
+    "owner": "Graphify-Labs",
+    "description": "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store.",
+    "url": "https://github.com/Graphify-Labs/graphify",
+    "homepage": "https://www.graphify.com",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 128647,
+    "topics": [
+      "ai-agents",
+      "antigravity",
+      "ast",
+      "claude-code",
+      "code-analysis",
+      "code-search",
+      "codex",
+      "cursor",
+      "developer-tools",
+      "gemini",
+      "graphify",
+      "graphrag",
+      "knowledge-graph",
+      "leiden",
+      "llm",
+      "mcp",
+      "openclaw",
+      "rag",
+      "skills",
+      "tree-sitter"
+    ]
+  },
+  {
+    "name": "awesome-design-md",
+    "owner": "VoltAgent",
+    "description": "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
+    "url": "https://github.com/VoltAgent/awesome-design-md",
+    "homepage": "https://getdesign.md/",
+    "language": null,
+    "langColor": "#8b949e",
+    "stars": 122177,
+    "topics": [
+      "awesome-list",
+      "design-md",
+      "design-system",
+      "design-tokens",
+      "figma",
+      "landing-page",
+      "vibe-coding",
+      "vibe-design",
+      "vibecoding"
+    ]
+  },
+  {
     "name": "generative-ai-for-beginners",
     "owner": "microsoft",
     "description": "21 Lessons, Get Started Building with Generative AI ",
@@ -480,7 +533,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 121244,
+    "stars": 121610,
     "topics": [
       "ai",
       "azure",
@@ -499,36 +552,46 @@
     ]
   },
   {
-    "name": "awesome-design-md",
-    "owner": "VoltAgent",
-    "description": "A collection of DESIGN.md files analysis by popular brand design systems. Drop one into your project and let coding agents generate a matching UI.",
-    "url": "https://github.com/VoltAgent/awesome-design-md",
-    "homepage": "https://getdesign.md/",
-    "language": null,
-    "langColor": "#8b949e",
-    "stars": 120452,
+    "name": "paperclip",
+    "owner": "paperclipai",
+    "description": "The open-source app everyone uses to manage agents at work",
+    "url": "https://github.com/paperclipai/paperclip",
+    "homepage": "https://paperclip.ing",
+    "language": "TypeScript",
+    "langColor": "#3178c6",
+    "stars": 104342,
     "topics": [
-      "awesome-list",
-      "design-md",
-      "design-system",
-      "design-tokens",
-      "figma",
-      "google-stitch",
-      "landing-page",
-      "vibe-coding",
-      "vibe-design",
-      "vibecoding"
+      "acpx",
+      "agent-orchestration",
+      "agent-skills",
+      "agentic-ai",
+      "ai-agents",
+      "ai-engineering",
+      "ai-governance",
+      "ai-tools",
+      "autonomous-agents",
+      "claude",
+      "claude-code",
+      "claude-skills",
+      "codex",
+      "hermes",
+      "llm",
+      "mcp",
+      "multi-agent",
+      "openclaw",
+      "project-management",
+      "workflow-automation"
     ]
   },
   {
     "name": "open-design",
     "owner": "nexu-io",
-    "description": "🎨 Best DeepSeek Harness Design Plugin. The open-source Claude Design alternative. 🖥️ Local-first desktop app. 🖼️ Your coding agent becomes the design engine: prototypes, landing pages, dashboards, slides, images & video — real files, HTML/PDF/PPTX/MP4 export. 🤖 Claude Code / Codex / Cursor / DeepSeek Harness / OpenCode & 20+ CLIs via BYOK.",
+    "description": "The 1st Collaborative AI Design Agent Workspace. Local-first and open source. Create motion, prototypes, websites, apps, dashboards, presentations, images, and videos with your team and AI agents. Share work, exchange feedback, and iterate together in one workspace.",
     "url": "https://github.com/nexu-io/open-design",
     "homepage": "https://open-design.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 100669,
+    "stars": 102320,
     "topics": [
       "agent-skills",
       "ai-design",
@@ -536,12 +599,12 @@
       "claude-code-for-design",
       "claude-design",
       "codex-design",
-      "coding-agents",
       "cursor-design",
       "deepseek",
       "deepseek-harness",
       "design-systems",
       "desktop-app",
+      "desktop-apps",
       "dsh",
       "dsh-plugin",
       "figma-alternative",
@@ -553,17 +616,6 @@
     ]
   },
   {
-    "name": "paperclip",
-    "owner": "paperclipai",
-    "description": "The open-source app everyone uses to manage agents at work",
-    "url": "https://github.com/paperclipai/paperclip",
-    "homepage": "https://paperclip.ing",
-    "language": "TypeScript",
-    "langColor": "#3178c6",
-    "stars": 100618,
-    "topics": []
-  },
-  {
     "name": "every-programmer-should-know",
     "owner": "mtdvio",
     "description": "A collection of (mostly) technical things every software developer should know about",
@@ -571,27 +623,13 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 100525,
+    "stars": 100542,
     "topics": [
       "cc-by",
       "collection",
       "computer-science",
       "educational",
       "novice"
-    ]
-  },
-  {
-    "name": "thefuck",
-    "owner": "nvbn",
-    "description": "Magnificent app which corrects your previous console command.",
-    "url": "https://github.com/nvbn/thefuck",
-    "homepage": null,
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 97896,
-    "topics": [
-      "python",
-      "shell"
     ]
   },
   {
@@ -602,7 +640,7 @@
     "homepage": "https://playwright.dev",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 97526,
+    "stars": 98050,
     "topics": [
       "automation",
       "chrome",
@@ -622,6 +660,20 @@
     ]
   },
   {
+    "name": "thefuck",
+    "owner": "nvbn",
+    "description": "Magnificent app which corrects your previous console command.",
+    "url": "https://github.com/nvbn/thefuck",
+    "homepage": null,
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 97913,
+    "topics": [
+      "python",
+      "shell"
+    ]
+  },
+  {
     "name": "awesome-mcp-servers",
     "owner": "punkpeye",
     "description": "A collection of MCP servers.",
@@ -629,7 +681,7 @@
     "homepage": "https://glama.ai/mcp/servers",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 96177,
+    "stars": 96591,
     "topics": [
       "ai",
       "mcp"
@@ -643,7 +695,7 @@
     "homepage": "https://ragflow.io",
     "language": "Go",
     "langColor": "#00ADD8",
-    "stars": 92048,
+    "stars": 92453,
     "topics": [
       "agent-harness",
       "agentic-ai",
@@ -670,7 +722,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 91430,
+    "stars": 91590,
     "topics": [
       "data-science",
       "education",
@@ -692,9 +744,9 @@
     "description": "Model Context Protocol Servers",
     "url": "https://github.com/modelcontextprotocol/servers",
     "homepage": "https://modelcontextprotocol.io",
-    "language": "JavaScript",
-    "langColor": "#f1e05a",
-    "stars": 91165,
+    "language": "TypeScript",
+    "langColor": "#3178c6",
+    "stars": 91366,
     "topics": []
   },
   {
@@ -705,7 +757,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 84838,
+    "stars": 84906,
     "topics": [
       "ansible",
       "aws",
@@ -736,7 +788,7 @@
     "homepage": "https://www.rtk-ai.app",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 83043,
+    "stars": 83917,
     "topics": [
       "agentic-coding",
       "ai-coding",
@@ -761,70 +813,18 @@
     "homepage": "https://screenshottocode.com",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 80256,
+    "stars": 80487,
     "topics": []
-  },
-  {
-    "name": "ai-agents-for-beginners",
-    "owner": "microsoft",
-    "description": "18 Lessons to Get Started Building AI Agents",
-    "url": "https://github.com/microsoft/ai-agents-for-beginners",
-    "homepage": "https://aka.ms/ai-agents-beginners",
-    "language": "Jupyter Notebook",
-    "langColor": "#8b949e",
-    "stars": 76971,
-    "topics": [
-      "agentic-ai",
-      "agentic-framework",
-      "agentic-rag",
-      "ai-agents",
-      "ai-agents-framework",
-      "autogen",
-      "foundry",
-      "foundry-local",
-      "generative-ai",
-      "microsoft-foundry",
-      "semantic-kernel"
-    ]
-  },
-  {
-    "name": "awesome-claude-skills",
-    "owner": "ComposioHQ",
-    "description": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows",
-    "url": "https://github.com/ComposioHQ/awesome-claude-skills",
-    "homepage": null,
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 76911,
-    "topics": [
-      "agent-skills",
-      "ai-agents",
-      "antigravity",
-      "automation",
-      "claude",
-      "claude-code",
-      "codex",
-      "composio",
-      "cursor",
-      "developer-tools",
-      "gemini-cli",
-      "mcp",
-      "openai-codex",
-      "rube",
-      "saas",
-      "skill",
-      "workflow-automation"
-    ]
   },
   {
     "name": "OmniRoute",
     "owner": "diegosouzapw",
-    "description": "Never stop coding. Free MIT AI gateway: one endpoint, 359 providers (150+ free), 1200+ models Kimi, Claude, GPT, Gemini, GLM, DeepSeek, MiniMax. Works with Claude Code, Codex, Cursor, OpenCode, Cline & Copilot. Quota-aware auto-fallback, RTK+Caveman compression saves 15-95% tokens, MCP/A2A, Desktop/PWA. Built by hundreds of contributors",
+    "description": "Never stop coding. Free MIT AI gateway: one endpoint, 375 providers (150+ free), 1,400+ models Kimi, Claude, GPT, Gemini, GLM, DeepSeek, MiniMax. Works with Claude Code, Codex, Cursor, OpenCode, Cline & Copilot. Quota-aware auto-fallback, RTK+Caveman compression saves 15-95% tokens, MCP/A2A, Desktop/PWA. Built by 900+ contributors",
     "url": "https://github.com/diegosouzapw/OmniRoute",
     "homepage": "https://omniroute.online",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 75482,
+    "stars": 78262,
     "topics": [
       "a2a",
       "ai-agents",
@@ -849,6 +849,89 @@
     ]
   },
   {
+    "name": "ai-agents-for-beginners",
+    "owner": "microsoft",
+    "description": "18 Lessons to Get Started Building AI Agents",
+    "url": "https://github.com/microsoft/ai-agents-for-beginners",
+    "homepage": "https://aka.ms/ai-agents-beginners",
+    "language": "Jupyter Notebook",
+    "langColor": "#8b949e",
+    "stars": 77445,
+    "topics": [
+      "agentic-ai",
+      "agentic-framework",
+      "agentic-rag",
+      "ai-agents",
+      "ai-agents-framework",
+      "autogen",
+      "foundry",
+      "foundry-local",
+      "generative-ai",
+      "microsoft-foundry",
+      "semantic-kernel"
+    ]
+  },
+  {
+    "name": "awesome-claude-skills",
+    "owner": "ComposioHQ",
+    "description": "A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows",
+    "url": "https://github.com/ComposioHQ/awesome-claude-skills",
+    "homepage": null,
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 77411,
+    "topics": [
+      "agent-skills",
+      "ai-agents",
+      "antigravity",
+      "automation",
+      "claude",
+      "claude-code",
+      "codex",
+      "composio",
+      "cursor",
+      "developer-tools",
+      "gemini-cli",
+      "mcp",
+      "openai-codex",
+      "rube",
+      "saas",
+      "skill",
+      "workflow-automation"
+    ]
+  },
+  {
+    "name": "VoiceStudio",
+    "owner": "debpalash",
+    "description": "VoiceStudio is the open-source, fully-local ElevenLabs alternative — voice cloning, voice design, video dubbing, dictation, transcription & audiobook creation in 646 languages.",
+    "url": "https://github.com/debpalash/VoiceStudio",
+    "homepage": "https://voicestudio.sh",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 76323,
+    "topics": [
+      "ai",
+      "audiobook",
+      "cuda",
+      "dubbing",
+      "elevenlabs-alternative",
+      "huggingface",
+      "local-first",
+      "mlx",
+      "omnivoice-studio",
+      "speech-to-text",
+      "text-to-speech",
+      "transcription",
+      "translate",
+      "tts",
+      "voice-ai",
+      "voice-cloning",
+      "voice-generation",
+      "voicestudio",
+      "workflow"
+    ]
+  },
+  {
     "name": "awesome-react",
     "owner": "enaqx",
     "description": "A collection of awesome things regarding React ecosystem",
@@ -856,7 +939,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 74859,
+    "stars": 74958,
     "topics": [
       "awesome",
       "awesome-list",
@@ -878,7 +961,7 @@
     "homepage": "https://frontendchecklist.io",
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 74436,
+    "stars": 74508,
     "topics": [
       "ai-agent",
       "ai-agents",
@@ -905,7 +988,7 @@
     "homepage": "https://colbymchenry.github.io/codegraph/",
     "language": "C",
     "langColor": "#8b949e",
-    "stars": 73797,
+    "stars": 74413,
     "topics": []
   },
   {
@@ -916,7 +999,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 69711,
+    "stars": 69972,
     "topics": [
       "ai",
       "artificial-intelligence",
@@ -938,7 +1021,7 @@
     "homepage": "https://linkedin.com/in/shanraisshan",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 67433,
+    "stars": 67725,
     "topics": [
       "agentic-ai",
       "agentic-coding",
@@ -970,7 +1053,7 @@
     "homepage": null,
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 66359,
+    "stars": 66382,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -992,7 +1075,7 @@
     "homepage": "https://www.youtube.com/channel/UCKvwPt6BifPP54yzH99ff1g?view_as=subscriber",
     "language": "Java",
     "langColor": "#b07219",
-    "stars": 65272,
+    "stars": 65293,
     "topics": [
       "algorithm",
       "algorithm-challenges",
@@ -1024,7 +1107,7 @@
     "homepage": "https://winutil.christitus.com/",
     "language": "PowerShell",
     "langColor": "#8b949e",
-    "stars": 64049,
+    "stars": 64521,
     "topics": []
   },
   {
@@ -1035,44 +1118,12 @@
     "homepage": "https://www.diagrams.net",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 63476,
+    "stars": 63555,
     "topics": [
       "diagram-editor",
       "electron-app",
       "graphics",
       "javascript-applications"
-    ]
-  },
-  {
-    "name": "VoiceStudio",
-    "owner": "debpalash",
-    "description": "VoiceStudio is the open-source, fully-local ElevenLabs alternative — voice cloning, voice design, video dubbing, dictation, transcription & audiobook creation in 646 languages.",
-    "url": "https://github.com/debpalash/VoiceStudio",
-    "homepage": "https://voicestudio.sh",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 59515,
-    "topics": [
-      "ai",
-      "audiobook",
-      "cuda",
-      "dubbing",
-      "elevenlabs-alternative",
-      "huggingface",
-      "local-first",
-      "mlx",
-      "omnivoice-studio",
-      "speech-to-text",
-      "tauri",
-      "text-to-speech",
-      "transcription",
-      "translate",
-      "tts",
-      "voice-ai",
-      "voice-cloning",
-      "voice-generation",
-      "voicestudio",
-      "workflow"
     ]
   },
   {
@@ -1083,7 +1134,7 @@
     "homepage": null,
     "language": "PowerShell",
     "langColor": "#8b949e",
-    "stars": 59102,
+    "stars": 59788,
     "topics": [
       "automated",
       "bloatware",
@@ -1115,7 +1166,7 @@
     "homepage": "https://microsoft.github.io/VibeVoice/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 54786,
+    "stars": 54873,
     "topics": []
   },
   {
@@ -1126,7 +1177,7 @@
     "homepage": "https://developer.chrome.com/docs/devtools/agents",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 53325,
+    "stars": 53818,
     "topics": [
       "browser",
       "chrome",
@@ -1146,7 +1197,7 @@
     "homepage": "https://buymeacoffee.com/crucify020v",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 51472,
+    "stars": 52879,
     "topics": [
       "academic-pipeline",
       "academic-writing",
@@ -1159,20 +1210,6 @@
     ]
   },
   {
-    "name": "awesome-java",
-    "owner": "akullpp",
-    "description": "A curated list of awesome frameworks, libraries and software for the Java programming language.",
-    "url": "https://github.com/akullpp/awesome-java",
-    "homepage": null,
-    "language": null,
-    "langColor": "#8b949e",
-    "stars": 49234,
-    "topics": [
-      "awesome",
-      "awesome-list"
-    ]
-  },
-  {
     "name": "hindsight",
     "owner": "vectorize-io",
     "description": "Hindsight: Agent Memory That Learns",
@@ -1180,12 +1217,26 @@
     "homepage": "https://hindsight.vectorize.io/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 48627,
+    "stars": 51396,
     "topics": [
       "agentic-ai",
       "agents",
       "ai-memory",
       "memory"
+    ]
+  },
+  {
+    "name": "awesome-java",
+    "owner": "akullpp",
+    "description": "A curated list of awesome frameworks, libraries and software for the Java programming language.",
+    "url": "https://github.com/akullpp/awesome-java",
+    "homepage": null,
+    "language": null,
+    "langColor": "#8b949e",
+    "stars": 49296,
+    "topics": [
+      "awesome",
+      "awesome-list"
     ]
   },
   {
@@ -1196,7 +1247,7 @@
     "homepage": "https://react-typescript-cheatsheet.netlify.app",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 47094,
+    "stars": 47098,
     "topics": [
       "cheatsheet",
       "guide",
@@ -1212,7 +1263,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46911,
+    "stars": 46939,
     "topics": [
       "30daysofjavascript",
       "angular",
@@ -1244,7 +1295,7 @@
     "homepage": "https://lecoupa.github.io/awesome-cheatsheets/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 46554,
+    "stars": 46569,
     "topics": [
       "backend",
       "bash",
@@ -1276,7 +1327,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 44875,
+    "stars": 44887,
     "topics": [
       "interview-preparation",
       "interview-questions",
@@ -1301,8 +1352,23 @@
     "homepage": "https://agent-browser.dev",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 43844,
+    "stars": 44222,
     "topics": []
+  },
+  {
+    "name": "claude-plugins-official",
+    "owner": "anthropics",
+    "description": "Official, Anthropic-managed directory of high quality Claude Code Plugins.",
+    "url": "https://github.com/anthropics/claude-plugins-official",
+    "homepage": "https://code.claude.com/docs/en/plugins",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 42965,
+    "topics": [
+      "claude-code",
+      "mcp",
+      "skills"
+    ]
   },
   {
     "name": "claude-howto",
@@ -1312,7 +1378,7 @@
     "homepage": "http://luongnv.com/claude-howto/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 41814,
+    "stars": 41949,
     "topics": [
       "claude-code",
       "guide",
@@ -1327,8 +1393,33 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 39465,
+    "stars": 40330,
     "topics": []
+  },
+  {
+    "name": "airllm",
+    "owner": "lyogavin",
+    "description": "AirLLM 2.8T LLM inference with single 4GB GPU",
+    "url": "https://github.com/lyogavin/airllm",
+    "homepage": null,
+    "language": "Jupyter Notebook",
+    "langColor": "#8b949e",
+    "stars": 39396,
+    "topics": [
+      "chinese-llm",
+      "chinese-nlp",
+      "finetune",
+      "generative-ai",
+      "instruct-gpt",
+      "instruction-set",
+      "llama",
+      "llm",
+      "lora",
+      "open-models",
+      "open-source",
+      "open-source-models",
+      "qlora"
+    ]
   },
   {
     "name": "PageIndex",
@@ -1338,7 +1429,7 @@
     "homepage": "https://pageindex.ai",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 39069,
+    "stars": 39265,
     "topics": [
       "agentic-ai",
       "agents",
@@ -1362,23 +1453,8 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 38479,
+    "stars": 38649,
     "topics": []
-  },
-  {
-    "name": "claude-plugins-official",
-    "owner": "anthropics",
-    "description": "Official, Anthropic-managed directory of high quality Claude Code Plugins.",
-    "url": "https://github.com/anthropics/claude-plugins-official",
-    "homepage": "https://code.claude.com/docs/en/plugins",
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 37715,
-    "topics": [
-      "claude-code",
-      "mcp",
-      "skills"
-    ]
   },
   {
     "name": "claude-code-router",
@@ -1388,7 +1464,7 @@
     "homepage": "https://ccrdesk.top/",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 37634,
+    "stars": 37748,
     "topics": []
   },
   {
@@ -1399,7 +1475,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 37570,
+    "stars": 37650,
     "topics": [
       "data-analysis",
       "data-science",
@@ -1410,31 +1486,6 @@
     ]
   },
   {
-    "name": "airllm",
-    "owner": "lyogavin",
-    "description": "AirLLM 70B inference with single 4GB GPU",
-    "url": "https://github.com/lyogavin/airllm",
-    "homepage": null,
-    "language": "Jupyter Notebook",
-    "langColor": "#8b949e",
-    "stars": 36938,
-    "topics": [
-      "chinese-llm",
-      "chinese-nlp",
-      "finetune",
-      "generative-ai",
-      "instruct-gpt",
-      "instruction-set",
-      "llama",
-      "llm",
-      "lora",
-      "open-models",
-      "open-source",
-      "open-source-models",
-      "qlora"
-    ]
-  },
-  {
     "name": "ai-website-cloner-template",
     "owner": "JCodesMore",
     "description": "Clone any website with one command using AI coding agents",
@@ -1442,7 +1493,7 @@
     "homepage": "https://dsc.gg/jcodesmore",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 36602,
+    "stars": 36989,
     "topics": [
       "ai",
       "ai-agents",
@@ -1473,7 +1524,7 @@
     "homepage": "https://skills.sh",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 33915,
+    "stars": 35561,
     "topics": []
   },
   {
@@ -1484,7 +1535,7 @@
     "homepage": null,
     "language": "MDX",
     "langColor": "#8b949e",
-    "stars": 33493,
+    "stars": 33743,
     "topics": [
       "agentic-ai",
       "agents",
@@ -1496,6 +1547,17 @@
     ]
   },
   {
+    "name": "agent-skills",
+    "owner": "vercel-labs",
+    "description": "Vercel's official collection of agent skills",
+    "url": "https://github.com/vercel-labs/agent-skills",
+    "homepage": "https://skills.sh/vercel-labs/agent-skills",
+    "language": "JavaScript",
+    "langColor": "#f1e05a",
+    "stars": 32625,
+    "topics": []
+  },
+  {
     "name": "refined-github",
     "owner": "refined-github",
     "description": ":octocat: Browser extension that simplifies the GitHub interface and adds useful features",
@@ -1503,7 +1565,7 @@
     "homepage": null,
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 32291,
+    "stars": 32332,
     "topics": [
       "browser-extension",
       "chrome-extension",
@@ -1515,17 +1577,6 @@
     ]
   },
   {
-    "name": "agent-skills",
-    "owner": "vercel-labs",
-    "description": "Vercel's official collection of agent skills",
-    "url": "https://github.com/vercel-labs/agent-skills",
-    "homepage": "https://skills.sh/vercel-labs/agent-skills",
-    "language": "JavaScript",
-    "langColor": "#f1e05a",
-    "stars": 32268,
-    "topics": []
-  },
-  {
     "name": "atuin",
     "owner": "atuinsh",
     "description": "✨ Making your shell magical",
@@ -1533,7 +1584,7 @@
     "homepage": "https://atuin.sh",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 31978,
+    "stars": 32026,
     "topics": [
       "bash",
       "fish",
@@ -1551,7 +1602,7 @@
     "homepage": "https://bit.ly/awesome-gh",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 31316,
+    "stars": 31367,
     "topics": [
       "awesome",
       "awesome-list",
@@ -1563,48 +1614,6 @@
     ]
   },
   {
-    "name": "qmd",
-    "owner": "tobi",
-    "description": "mini cli search engine for your docs, knowledge bases, meeting notes, whatever. Tracking current sota approaches while being all local",
-    "url": "https://github.com/tobi/qmd",
-    "homepage": null,
-    "language": "TypeScript",
-    "langColor": "#3178c6",
-    "stars": 30341,
-    "topics": []
-  },
-  {
-    "name": "90DaysOfDevOps",
-    "owner": "MichaelCade",
-    "description": "This repository started out as a learning in public project for myself and has now become a structured learning map for many in the community. We have 3 years under our belt covering all things DevOps, including Principles, Processes, Tooling and Use Cases surrounding this vast topic. ",
-    "url": "https://github.com/MichaelCade/90DaysOfDevOps",
-    "homepage": "https://www.90daysofdevops.com/",
-    "language": "Shell",
-    "langColor": "#89e051",
-    "stars": 29821,
-    "topics": [
-      "ansible",
-      "backup",
-      "containers",
-      "devops",
-      "iac",
-      "kubernetes",
-      "networking",
-      "terraform"
-    ]
-  },
-  {
-    "name": "knowledge-work-plugins",
-    "owner": "anthropics",
-    "description": "Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork",
-    "url": "https://github.com/anthropics/knowledge-work-plugins",
-    "homepage": null,
-    "language": "Python",
-    "langColor": "#3572A5",
-    "stars": 29191,
-    "topics": []
-  },
-  {
     "name": "security-audit-skill",
     "owner": "cloudflare",
     "description": "A coding-agent skill for multi-phase security audits with independently verified, machine-readable findings",
@@ -1612,33 +1621,37 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 28515,
+    "stars": 31317,
     "topics": []
   },
   {
-    "name": "30-Days-Of-React",
-    "owner": "Asabeneh",
-    "description": "30 Days of  React challenge is a step by step guide to learn React in 30 days.  These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw",
-    "url": "https://github.com/Asabeneh/30-Days-Of-React",
-    "homepage": null,
-    "language": "JavaScript",
-    "langColor": "#f1e05a",
-    "stars": 27513,
+    "name": "pentagi",
+    "owner": "vxcontrol",
+    "description": "Fully autonomous AI Agents system capable of performing complex penetration testing tasks",
+    "url": "https://github.com/vxcontrol/pentagi",
+    "homepage": "https://pentagi.com",
+    "language": "Go",
+    "langColor": "#00ADD8",
+    "stars": 31220,
     "topics": [
-      "30dayofjavascript",
-      "challenge",
-      "css",
-      "html",
-      "html5",
-      "javascript",
-      "js",
-      "programming",
+      "ai-agents",
+      "ai-security-tool",
+      "anthropic",
+      "autonomous-agents",
+      "golang",
+      "gpt",
+      "graphql",
+      "multi-agent-system",
+      "offensive-security",
+      "open-source",
+      "openai",
+      "penetration-testing",
+      "penetration-testing-tools",
       "react",
-      "react-router-dom",
-      "reactjs",
-      "redux",
-      "webdevelopment",
-      "website"
+      "security-automation",
+      "security-testing",
+      "security-tools",
+      "self-hosted"
     ]
   },
   {
@@ -1649,7 +1662,7 @@
     "homepage": "https://context-mode.com",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 26768,
+    "stars": 30877,
     "topics": [
       "antigravity",
       "claude",
@@ -1674,33 +1687,71 @@
     ]
   },
   {
-    "name": "pentagi",
-    "owner": "vxcontrol",
-    "description": "Fully autonomous AI Agents system capable of performing complex penetration testing tasks",
-    "url": "https://github.com/vxcontrol/pentagi",
-    "homepage": "https://pentagi.com",
-    "language": "Go",
-    "langColor": "#00ADD8",
-    "stars": 25621,
+    "name": "qmd",
+    "owner": "tobi",
+    "description": "mini cli search engine for your docs, knowledge bases, meeting notes, whatever. Tracking current sota approaches while being all local",
+    "url": "https://github.com/tobi/qmd",
+    "homepage": null,
+    "language": "TypeScript",
+    "langColor": "#3178c6",
+    "stars": 30483,
+    "topics": []
+  },
+  {
+    "name": "knowledge-work-plugins",
+    "owner": "anthropics",
+    "description": "Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork",
+    "url": "https://github.com/anthropics/knowledge-work-plugins",
+    "homepage": null,
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 30308,
+    "topics": []
+  },
+  {
+    "name": "90DaysOfDevOps",
+    "owner": "MichaelCade",
+    "description": "This repository started out as a learning in public project for myself and has now become a structured learning map for many in the community. We have 3 years under our belt covering all things DevOps, including Principles, Processes, Tooling and Use Cases surrounding this vast topic. ",
+    "url": "https://github.com/MichaelCade/90DaysOfDevOps",
+    "homepage": "https://www.90daysofdevops.com/",
+    "language": "Shell",
+    "langColor": "#89e051",
+    "stars": 29847,
     "topics": [
-      "ai-agents",
-      "ai-security-tool",
-      "anthropic",
-      "autonomous-agents",
-      "golang",
-      "gpt",
-      "graphql",
-      "multi-agent-system",
-      "offensive-security",
-      "open-source",
-      "openai",
-      "penetration-testing",
-      "penetration-testing-tools",
+      "ansible",
+      "backup",
+      "containers",
+      "devops",
+      "iac",
+      "kubernetes",
+      "networking",
+      "terraform"
+    ]
+  },
+  {
+    "name": "30-Days-Of-React",
+    "owner": "Asabeneh",
+    "description": "30 Days of  React challenge is a step by step guide to learn React in 30 days.  These videos may help too: https://www.youtube.com/channel/UC7PNRuno1rzYPb1xLa4yktw",
+    "url": "https://github.com/Asabeneh/30-Days-Of-React",
+    "homepage": null,
+    "language": "JavaScript",
+    "langColor": "#f1e05a",
+    "stars": 27522,
+    "topics": [
+      "30dayofjavascript",
+      "challenge",
+      "css",
+      "html",
+      "html5",
+      "javascript",
+      "js",
+      "programming",
       "react",
-      "security-automation",
-      "security-testing",
-      "security-tools",
-      "self-hosted"
+      "react-router-dom",
+      "reactjs",
+      "redux",
+      "webdevelopment",
+      "website"
     ]
   },
   {
@@ -1711,7 +1762,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 25611,
+    "stars": 25624,
     "topics": []
   },
   {
@@ -1722,7 +1773,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 25425,
+    "stars": 25456,
     "topics": [
       "deep-learning",
       "platform",
@@ -1737,7 +1788,7 @@
     "homepage": "https://vanna.ai/docs/",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 23821,
+    "stars": 23815,
     "topics": [
       "agent",
       "ai",
@@ -1757,7 +1808,7 @@
     "homepage": "https://docs.univer.ai",
     "language": "TypeScript",
     "langColor": "#3178c6",
-    "stars": 22564,
+    "stars": 22674,
     "topics": [
       "board",
       "collaboration",
@@ -1788,7 +1839,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 18903,
+    "stars": 18901,
     "topics": []
   },
   {
@@ -1799,7 +1850,7 @@
     "homepage": null,
     "language": "Jupyter Notebook",
     "langColor": "#8b949e",
-    "stars": 17786,
+    "stars": 17921,
     "topics": []
   },
   {
@@ -1810,7 +1861,7 @@
     "homepage": "https://vasanthk.gitbooks.io/react-bits",
     "language": null,
     "langColor": "#8b949e",
-    "stars": 17420,
+    "stars": 17423,
     "topics": [
       "best-practices",
       "design-patterns",
@@ -1829,7 +1880,7 @@
     "homepage": "https://docs.nvidia.com/openshell/latest/",
     "language": "Rust",
     "langColor": "#dea584",
-    "stars": 15915,
+    "stars": 16661,
     "topics": []
   },
   {
@@ -1840,7 +1891,7 @@
     "homepage": "https://devblogs.microsoft.com/dotnet/",
     "language": "HTML",
     "langColor": "#e34c26",
-    "stars": 15108,
+    "stars": 15112,
     "topics": []
   },
   {
@@ -1851,7 +1902,7 @@
     "homepage": "https://www.gitbook.com/book/krasimir/react-in-patterns/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 13571,
+    "stars": 13568,
     "topics": [
       "data-flow",
       "dependency",
@@ -1868,18 +1919,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 10729,
-    "topics": []
-  },
-  {
-    "name": "React-Native-Apps",
-    "owner": "ReactNativeNews",
-    "description": "Curated List of Open Source React Native Apps.  Curation curtesy of",
-    "url": "https://github.com/ReactNativeNews/React-Native-Apps",
-    "homepage": "https://infinite.red/technologies/react-native",
-    "language": null,
-    "langColor": "#8b949e",
-    "stars": 10396,
+    "stars": 10733,
     "topics": []
   },
   {
@@ -1890,7 +1930,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 9918,
+    "stars": 10644,
     "topics": [
       "ai-agents",
       "anthropic",
@@ -1908,6 +1948,17 @@
     ]
   },
   {
+    "name": "React-Native-Apps",
+    "owner": "ReactNativeNews",
+    "description": "Curated List of Open Source React Native Apps.  Curation curtesy of",
+    "url": "https://github.com/ReactNativeNews/React-Native-Apps",
+    "homepage": "https://infinite.red/technologies/react-native",
+    "language": null,
+    "langColor": "#8b949e",
+    "stars": 10398,
+    "topics": []
+  },
+  {
     "name": "Sophia-Script-for-Windows",
     "owner": "farag2",
     "description": ":zap: The most powerful PowerShell module for fine-tuning Windows 10 & Windows 11 on GitHub",
@@ -1915,7 +1966,7 @@
     "homepage": null,
     "language": "PowerShell",
     "langColor": "#8b949e",
-    "stars": 9792,
+    "stars": 9808,
     "topics": [
       "25h2",
       "26h2",
@@ -1945,7 +1996,7 @@
     "homepage": "https://wwweb-dev-resources.netlify.app/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 8103,
+    "stars": 8099,
     "topics": [
       "chrome-extensions",
       "color-palettes",
@@ -1966,7 +2017,7 @@
     "homepage": "https://dockerlabs.collabnix.com",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 8040,
+    "stars": 8038,
     "topics": [
       "advance",
       "beginners",
@@ -1988,7 +2039,7 @@
     "homepage": "http://owlcarousel2.github.io/OwlCarousel2/",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 7891,
+    "stars": 7886,
     "topics": []
   },
   {
@@ -1999,7 +2050,7 @@
     "homepage": "https://www.npmjs.com/package/opencommit",
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 7545,
+    "stars": 7540,
     "topics": [
       "ai",
       "ai-commit",
@@ -2019,7 +2070,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 5757,
+    "stars": 5828,
     "topics": [
       "academic-research",
       "ai-agents",
@@ -2043,7 +2094,7 @@
     "homepage": null,
     "language": "JavaScript",
     "langColor": "#f1e05a",
-    "stars": 5614,
+    "stars": 5657,
     "topics": []
   },
   {
@@ -2054,7 +2105,7 @@
     "homepage": null,
     "language": "Batchfile",
     "langColor": "#8b949e",
-    "stars": 5515,
+    "stars": 5522,
     "topics": [
       "batch",
       "edge",
@@ -2076,7 +2127,7 @@
     "homepage": "https://aka.ms/GeneralAI",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 4478,
+    "stars": 4484,
     "topics": [
       "agi",
       "gpt",
@@ -2092,19 +2143,24 @@
     ]
   },
   {
-    "name": "kubernetes-kitap",
-    "owner": "mstrYoda",
-    "description": "",
-    "url": "https://github.com/mstrYoda/kubernetes-kitap",
-    "homepage": "https://mstryoda.github.io/kubernetes-kitap/#/",
-    "language": null,
-    "langColor": "#8b949e",
-    "stars": 1884,
+    "name": "replica-skill",
+    "owner": "Jakeschincariol",
+    "description": "Eleven free Claude skills that clone any app: reverse-engineer it, rebuild it, test it for bugs, then fix what its users hate. Free, MIT.",
+    "url": "https://github.com/Jakeschincariol/replica-skill",
+    "homepage": "https://opusjake.ai",
+    "language": "Python",
+    "langColor": "#3572A5",
+    "stars": 3449,
     "topics": [
-      "book",
-      "containers",
-      "kitap",
-      "kubernetes"
+      "agent",
+      "agent-skills",
+      "app-clone",
+      "claude",
+      "claude-code",
+      "claude-skills",
+      "indie-hacker",
+      "reverse-engineering",
+      "saas"
     ]
   },
   {
@@ -2115,7 +2171,7 @@
     "homepage": "https://opusjake.ai/r/linkedin-agent",
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 1882,
+    "stars": 2354,
     "topics": [
       "agent-skills",
       "ai-humanizer",
@@ -2124,6 +2180,22 @@
       "claude-skills",
       "content-marketing",
       "linkedin"
+    ]
+  },
+  {
+    "name": "kubernetes-kitap",
+    "owner": "mstrYoda",
+    "description": "",
+    "url": "https://github.com/mstrYoda/kubernetes-kitap",
+    "homepage": "https://mstryoda.github.io/kubernetes-kitap/#/",
+    "language": null,
+    "langColor": "#8b949e",
+    "stars": 1886,
+    "topics": [
+      "book",
+      "containers",
+      "kitap",
+      "kubernetes"
     ]
   },
   {
@@ -2231,7 +2303,7 @@
     "homepage": null,
     "language": null,
     "langColor": "#8b949e",
-    "stars": 373,
+    "stars": 383,
     "topics": []
   },
   {
@@ -2274,7 +2346,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 143,
+    "stars": 147,
     "topics": []
   },
   {
@@ -2285,7 +2357,7 @@
     "homepage": null,
     "language": "Python",
     "langColor": "#3572A5",
-    "stars": 70,
+    "stars": 94,
     "topics": [
       "agent",
       "chatgpt",
