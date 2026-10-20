@@ -32,6 +32,8 @@ async function selectLanguage(page, language) {
   await press(page.locator(`#blog-lang-toggle [data-lang-filter="${language}"]`));
   await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveCount(1);
   await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveAttribute('data-lang-filter', language);
+  await expect(page.locator('#blog-lang-toggle .active')).toHaveCount(1);
+  await expect(page.locator('#blog-lang-toggle .active')).toHaveAttribute('data-lang-filter', language);
 }
 
 async function openCatalog(page, section, overrides) {
@@ -257,6 +259,24 @@ test('R-FILTER-13 | Given no owned repos but valid starred repos, when categorie
   await navigateToSection(page, 'blog');
   await expect(titles(page)).toHaveCount(6);
   await expectSelection(page, 'projects', 'software');
+});
+
+test('R-FILTER-14 | Given long category labels, when each project filter is selected, then section labels remain entirely within their container', async ({ page }, testInfo) => {
+  await openCatalog(page, 'projects', { 'github-starred.json': starred(1) });
+  for (const category of ['all', 'test', 'software', 'systems']) {
+    await selectCategory(page, 'projects', category);
+    const labels = page.locator('.proj-section-divider-label:visible, .proj-starred-divider-label:visible');
+    for (const label of await labels.all()) {
+      const bounds = await label.evaluate(element => {
+        const child = element.getBoundingClientRect();
+        const parent = element.parentElement.getBoundingClientRect();
+        return { left: child.left, right: child.right, parentLeft: parent.left, parentRight: parent.right };
+      });
+      expect(bounds.left).toBeGreaterThanOrEqual(bounds.parentLeft - 1);
+      expect(bounds.right).toBeLessThanOrEqual(bounds.parentRight + 1);
+    }
+  }
+  await testInfo.attach('project-filter-labels', { body: await page.screenshot({ animations: 'disabled' }), contentType: 'image/png' });
 });
 
 for (const failure of ['network-error', 'malformed-json', { unexpected: true }, []]) {

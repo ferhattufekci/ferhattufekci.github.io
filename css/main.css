@@ -4486,7 +4486,6 @@ i.resume-cta__icon {
   font-weight: 700;
   letter-spacing: 0.06em;
   color: #aaa;
-  white-space: nowrap;
 }
 .proj-starred-note {
   font-size: 11px;
@@ -4557,7 +4556,15 @@ i.resume-cta__icon {
   font-weight: 700;
   letter-spacing: 0.06em;
   color: #aaa;
-  white-space: nowrap;
+}
+
+/* Keep long category names readable inside narrow section dividers. */
+.proj-section-divider-label,
+.proj-starred-divider-label {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 
 .pt-page[data-id="projects"] .section-inner {

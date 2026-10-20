@@ -18,7 +18,7 @@ Bu kişisel portföy için öncelik, ziyaretçinin doğru bölüme ulaşması ve
 | R-DEPLOY-01: kaynak/test/bağımlılıkların yanlışlıkla yayımlanması | Yüksek | Yalnız public dosyalardan artifact; içerik eşitliği ve özel dizinlerin yokluğu |
 | R-CI-01: bütün Git push denemeleri başarısızken yanlış başarılı iş sonucu | Yüksek | Gerçek Bash retry bloğu, izole git/sleep taklitleriyle geçici başarı ve tükenen denemeler için sınanır |
 | R-FIRST-01/02: pahalı kontrollerin erken çalışması veya testlerin ortak dosyaları değiştirmesi | Orta | CI adım sırası; izole proje kökünde içerik üretimi; asıl kaynağın değişmemesi |
-| R-FILTER-01–13: Blog/Projects filtrelerinin birbirini etkilemesi veya yanlış içerik göstermesi | Yüksek | Aşağıdaki karar tablosu, durum geçişleri, gecikmeli/bozuk veri ve sayfalama sınırları; altı tarayıcı projesinde çalışır |
+| R-FILTER-01–14: Blog/Projects filtrelerinin birbirini etkilemesi veya yanlış içerik göstermesi | Yüksek | Aşağıdaki karar tablosu, durum geçişleri, gecikmeli/bozuk veri, responsive etiketler ve sayfalama sınırları; altı tarayıcı projesinde çalışır |
 | JSON-LD, llms.txt, sitemap, JSON snapshot ve bağlantılar | Yüksek | Bütün amaçlanan public dosyalarda HTTP ve biçim kontrolleri |
 | Mevcut filtre ve Medium davranışları | Regresyon | Önceki kategori ve makale testleri de bütün birim test koşularına dahildir |
 
@@ -44,6 +44,7 @@ BDD senaryoları Playwright Test içinde `Given / When / Then` adımlarıyla yü
 | Tanınmayan proje kategorisi | Eksik/yeni/prototip isimli metadata kartta ve filtrede aynı Software varsayılanına gider |
 | Starred sınır değerleri | 0, 1, 20, 21, 40, 41 kayıt; kalan sayı, 20'lik artış, tekrar olmaması, kategori/gezinme sırasında ilerlemenin korunması |
 | Boş owned / dolu starred kataloğu | Sahip olunan depolar boşken starred kartlar ve sayfalama kullanılabilir kalır |
+| Uzun bölüm etiketleri | Her kategoride görünür etiketin sınırları kapsayıcısının içinde kalır; dar ekranda metin kesilmez. Dil seçiminde görsel active sınıfı ve aria-pressed aynı düğmeyi gösterir. |
 
 Gecikmeli veride hatalı boş ekran ve tutarsız varsayılan kategori önce üç başarısız tarayıcı testiyle gösterildi, ardından düzeltildi. Bütün olası veri ve kullanıcı davranışlarının tüketildiği iddia edilmez; tanımlı filtre durum uzayı ve yüksek riskli sınırlar açıkça kapsanır.
 
