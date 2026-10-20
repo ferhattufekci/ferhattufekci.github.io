@@ -60,6 +60,11 @@
     --color-text-secondary: #c9d1d9;
     --color-accent: #58a6ff;
     --color-accessible-link: #58a6ff;
+    --color-surface-alt: var(--color-surface);
+    --color-header-bg: var(--color-surface);
+    --color-mobile-header: var(--color-surface);
+    --color-nav-hover-bg: var(--color-surface);
+    --color-social-bg: var(--color-border);
   }
 }
 

@@ -56,6 +56,10 @@ test('R-SHELL-05 | A path-based 404 remains readable and recoverable with JavaSc
     expect((await page.goto(siteOrigin + '/__no-js-' + randomUUID() + '/nested')).status()).toBe(404);
     await expect(page.getByRole('heading', { name: '404 — Page Not Found', exact: true })).toBeVisible();
     await expect(page.locator('.error-card')).toBeVisible();
+    const surfaces = await page.evaluate(() => ['.error-card', '#site_header', '.mobile-header'].map(selector =>
+      getComputedStyle(document.querySelector(selector)).backgroundColor));
+    expect(surfaces[1]).toBe(surfaces[0]);
+    expect(surfaces[2]).toBe(surfaces[0]);
     await page.getByRole('link', { name: 'Back to Home', exact: true }).click();
     await expect(page).toHaveURL(siteOrigin + '/');
   } finally { await context.close(); }
