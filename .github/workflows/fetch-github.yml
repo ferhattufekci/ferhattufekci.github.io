@@ -72,7 +72,10 @@ jobs:
           git commit -m "chore: update GitHub repos [$(date -u '+%Y-%m-%d %H:%M UTC')]"
 
           for i in 1 2 3 4 5; do
-            git pull --rebase origin main && git push && break
+            if git pull --rebase origin main && git push; then
+              exit 0
+            fi
             echo "Retry $i failed, waiting..."
             sleep $((i * 3))
           done
+          exit 1
