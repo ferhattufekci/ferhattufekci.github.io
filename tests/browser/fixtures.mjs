@@ -33,9 +33,12 @@ export { expect };
 
 export async function expectSection(page, id) {
   // Animations temporarily mark both outgoing and incoming sections as current.
-  // Read count and identity atomically so a transition cannot start between assertions.
-  await expect.poll(() => page.locator('.pt-page-current').evaluateAll(nodes =>
-    nodes.map(node => node.getAttribute('data-id')))).toEqual([id]);
+  // Read count and identity atomically, and allow a document navigation to finish.
+  await expect(async () => {
+    const current = await page.locator('.pt-page-current').evaluateAll(nodes =>
+      nodes.map(node => node.getAttribute('data-id')));
+    expect(current).toEqual([id]);
+  }).toPass({ timeout: 7000 });
 }
 
 export async function navigateToSection(page, id) {
