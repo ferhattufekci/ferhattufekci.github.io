@@ -46,7 +46,7 @@ export async function navigateToSection(page, id) {
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   }
-  const link = page.locator(`.site-main-menu a[href="#${id}"]`);
+  const link = page.locator(`.site-main-menu a:is([href="#${id}"], [href="/#${id}"])`);
   await expect(link).toBeInViewport({ ratio: 1 });
   await link.click();
   await expectSection(page, id);

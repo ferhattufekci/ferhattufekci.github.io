@@ -395,9 +395,7 @@ textarea.form-control:focus {
   text-align: center;
 }
 
-/* Keep portfolio variants separate from Bootstrap's state-specific button rules. */
-.portfolio-button,
-button,
+button:where(:not(.icon-btn)),
 input[type="button"],
 input[type="submit"] {
   display: inline-block;
@@ -421,48 +419,26 @@ input[type="submit"] {
   transition: all 0.3s ease-in-out;
 }
 
-.portfolio-button {
-  font-weight: 400;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-}
-
-.portfolio-button:focus-visible {
-  outline: 2px solid var(--color-accent, #0099e5);
-  outline-offset: 4px;
-}
-
-.portfolio-button:active {
-  transform: translateY(1px);
-  box-shadow: inset 0 2px 4px var(--color-card-shadow, rgba(0, 0, 0, 0.06));
-}
-
-.portfolio-button-primary:hover,
-.portfolio-button-primary:focus-visible,
-button:hover,
-button:focus-visible,
-input[type="button"]:hover,
+button:where(:not(.icon-btn)):focus-visible,
+button:where(:not(.icon-btn)):active,
 input[type="button"]:focus-visible,
-input[type="submit"]:hover,
-input[type="submit"]:focus-visible {
+input[type="button"]:active,
+input[type="submit"]:focus-visible,
+input[type="submit"]:active {
   background-color: #0099e5;
   border-color: #0099e5;
   color: #fff;
 }
 
-.portfolio-button-secondary {
-  border-color: #d5d5d5;
-  background-color: #fff;
+@media (hover: hover) and (pointer: fine) {
+  button:where(:not(.icon-btn)):hover,
+  input[type="button"]:hover,
+  input[type="submit"]:hover {
+    background-color: #0099e5;
+    border-color: #0099e5;
+    color: #fff;
+  }
 }
-
-.portfolio-button-secondary:hover,
-.portfolio-button-secondary:focus-visible {
-  color: #222;
-  border-color: #d5d5d5;
-  background-color: #d5d5d5;
-}
-
 
 .border-top {
   border-top: 2px solid #0099e5;
@@ -1030,51 +1006,69 @@ blockquote {
 }
 
 
-.menu-toggle {
+/* Shared icon-button contract; state colors use the active theme tokens. */
+.icon-btn {
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   width: 34px;
   height: 34px;
-  margin: 8px 10px 8px 4px;
-  cursor: pointer;
-  float: right;
-  border: none;
-  border-radius: 50%;
-  background: #eee;
+  margin: 0;
   padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-social-bg);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  transform: none;
+  transition: background-color 200ms ease, color 200ms ease, transform 150ms ease;
+}
+
+button:focus:not(:focus-visible),
+input[type="button"]:focus:not(:focus-visible),
+input[type="submit"]:focus:not(:focus-visible) {
   outline: none;
-  transition: background-color 0.2s ease-in-out;
 }
 
-.menu-toggle:focus {
-  /* Pointer focus stays neutral; keyboard focus receives the visible ring below. */
-  outline: 2px solid transparent;
+button:focus-visible,
+input[type="button"]:focus-visible,
+input[type="submit"]:focus-visible {
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 
-.menu-toggle:hover,
-.menu-toggle:focus-visible {
-  background-color: #0099e5;
+.icon-btn:active {
+  background: var(--color-accent);
+  transform: scale(0.94);
 }
 
-.menu-toggle:hover i,
-.menu-toggle:focus-visible i {
-  color: #fff;
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover {
+    background: var(--color-accent);
+    transform: var(--icon-hover-transform, none);
+  }
 }
 
-.menu-toggle:focus-visible {
-  outline: 2px solid #0099e5;
-  outline-offset: 3px;
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn { transition: none; }
+  .icon-btn:hover,
+  .icon-btn:active { transform: none; }
+}
+
+.menu-toggle {
+  margin: 8px 10px 8px 4px;
+  float: right;
 }
 
 .menu-toggle i {
-  color: #222;
+  color: inherit;
   font-size: 16px;
   line-height: 1;
-  transition: transform 0.15s ease-in-out;
 }
-
 
 .mobile-menu-overlay {
   display: none;
@@ -1677,10 +1671,15 @@ h3.comment-reply-title:after {
 .resume-personality-info i {
   font-size: 13px;
 }
-.resume-personality-info:hover,
 .resume-personality-info[aria-expanded="true"] {
   background: color-mix(in srgb, var(--color-accent) 16%, var(--color-surface));
   transform: scale(1.08);
+}
+@media (hover: hover) and (pointer: fine) {
+  .resume-personality-info:hover {
+    background: color-mix(in srgb, var(--color-accent) 16%, var(--color-surface));
+    transform: scale(1.08);
+  }
 }
 /* Override Bootstrap button:focus explicitly before applying the keyboard-only focus ring. */
 .resume-personality-info:focus {
@@ -3360,7 +3359,7 @@ blockquote p {
   :root {
     --mobile-header-min-height: 68px;
     --mobile-profile-photo-size: 48px;
-    /* main.js updates this offset from the actual header border-box height. */
+    /* site-shell.js updates this offset from the actual header border-box height. */
     --mobile-header-height: var(--mobile-header-min-height);
   }
 
@@ -4096,7 +4095,7 @@ blockquote p {
   z-index: 100;
 }
 
-.lmpixels-arrows-nav > div {
+.lmpixels-arrows-nav > :is(div, a) {
   display: inline-block;
   padding: 0;
   background-color: #fafafa;
@@ -4118,7 +4117,7 @@ blockquote p {
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
 }
 
-.lmpixels-arrows-nav > div:hover {
+.lmpixels-arrows-nav > :is(div, a):hover {
   color: #0099e5;
 }
 
@@ -4165,7 +4164,7 @@ blockquote p {
 }
 
 @media only screen and (max-width: 480px) {
-  .lmpixels-arrows-nav > div {
+  .lmpixels-arrows-nav > :is(div, a) {
     height: 34px;
     width: 34px;
     line-height: 34px;
@@ -4200,6 +4199,21 @@ blockquote p {
   font-size: 12px;
   text-align: center;
   color: var(--color-text-muted, #9e9e9e);
+}
+
+.copyrights .privacy-link {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.inline-link-tail {
+  white-space: nowrap;
+}
+
+.privacy-link:focus-visible,
+.contact-external-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 figure {
@@ -4337,6 +4351,14 @@ svg.resume-cta__icon {
   height: 16px;
   fill: currentColor;
 }
+
+svg.inline-external-icon {
+  width: 1em;
+  height: 1em;
+  margin-inline-start: 3px;
+  vertical-align: -0.125em;
+}
+
 i.resume-cta__icon {
   font-size: 15px;
   line-height: 1;
@@ -4557,10 +4579,12 @@ i.resume-cta__icon {
     border-color 0.15s,
     background 0.15s;
 }
-.proj-show-more-btn:hover {
-  border-color: #0099e5;
-  color: #0099e5;
-  background: #f5fbff;
+@media (hover: hover) and (pointer: fine) {
+  .proj-show-more-btn:hover {
+    border-color: #0099e5;
+    color: #0099e5;
+    background: #f5fbff;
+  }
 }
 
 .proj-section-divider {
@@ -4616,7 +4640,6 @@ i.resume-cta__icon {
 .blt-btn:active {
   border: none !important;
   box-shadow: none !important;
-  outline: none !important;
 }
 .blt-btn {
   display: inline-flex;
@@ -4640,12 +4663,13 @@ i.resume-cta__icon {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
   vertical-align: middle;
 }
-.blt-btn:hover {
-  color: var(--color-text-primary, #333);
-  background: rgba(255, 255, 255, 0.7);
+@media (hover: hover) and (pointer: fine) {
+  .blt-btn:not(.active):hover {
+    color: var(--color-text-primary, #333);
+    background: rgba(255, 255, 255, 0.7);
+  }
 }
-.blt-btn.active,
-.blt-btn.active:hover {
+.blt-btn.active {
   background: var(--color-filter-active, #fff);
   color: var(--color-accent, #0099e5);
   text-decoration: underline;

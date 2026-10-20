@@ -114,3 +114,178 @@ test('R-BUTTON-03 | Hamburger mouse focus returns to normal while keyboard focus
   await page.keyboard.press('Escape');
   await expect(menu).toHaveAttribute('aria-expanded', 'false');
 });
+
+const ctaProperties = ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing', 'lineHeight',
+  'color', 'backgroundColor', 'borderColor', 'borderWidth', 'borderStyle', 'borderRadius',
+  'padding', 'height', 'alignItems', 'boxShadow', 'transition', 'transform', 'outline', 'outlineOffset'];
+
+async function ctaStates(page, link) {
+  const result = {};
+  async function capture(name) {
+    result[name] = await link.evaluate(async (el, properties) => {
+      getComputedStyle(el).color;
+      await Promise.all(el.getAnimations().map(animation => animation.finished));
+      const style = getComputedStyle(el);
+      return Object.fromEntries(properties.map(property => [property, style[property]]));
+    }, ctaProperties);
+  }
+  await page.mouse.move(0, 0);
+  await capture('normal');
+  const normalWidth = await link.evaluate(el => el.getBoundingClientRect().width);
+  await link.hover();
+  await capture('hover');
+  expect(await link.evaluate(el => el.getBoundingClientRect().width)).toBe(normalWidth);
+  expect(result.hover.height).toBe(result.normal.height);
+  expect(result.hover.borderWidth).toBe(result.normal.borderWidth);
+  await page.mouse.move(0, 0);
+  await page.keyboard.press('Tab');
+  await link.focus();
+  expect(await link.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+  await capture('focus');
+  await page.mouse.click(0, 0);
+  await link.hover();
+  await page.mouse.down();
+  await capture('active');
+  await page.mouse.move(0, 0);
+  await page.mouse.up();
+  return result;
+}
+
+test('R-BUTTON-04 | Both 404 actions match the existing About Me Resume CTA in every interaction state', async ({ page }, testInfo) => {
+  await page.goto('/#about-me');
+  await expectSection(page, 'about-me');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const reference = await ctaStates(page, page.locator('#resumeLink'));
+  const measurements = { reference };
+  for (const path of ['/#blog123', '/404.html']) {
+    for (const name of ['Back to Home', 'View Resume']) {
+      // A fresh document removes prior pointer/keyboard focus from the next sample.
+      await page.goto(path);
+      if (path.includes('#')) {
+        await expectSection(page, 'not-found');
+        await expect(page.locator('.preloader')).toHaveCount(0);
+      }
+      const link = page.getByRole('link', { name, exact: true });
+      const measured = await ctaStates(page, link);
+      measurements[`${path}: ${name}`] = measured;
+      expect(measured).toEqual(reference);
+      const layout = await page.locator('.error-actions').evaluate(el => {
+        const container = el.getBoundingClientRect();
+        const [a, b] = [...el.querySelectorAll('a')].map(link => link.getBoundingClientRect());
+        return { contained: [a, b].every(box => box.left >= container.left - 1 && box.right <= container.right + 1),
+          separated: a.right <= b.left || a.bottom <= b.top, equalHeights: a.height === b.height };
+      });
+      expect(layout).toEqual({ contained: true, separated: true, equalHeights: true });
+    }
+    await testInfo.attach(`cta-${path.includes('#') ? 'hash' : 'standalone'}`, {
+      body: await page.screenshot({ animations: 'disabled' }), contentType: 'image/png'
+    });
+  }
+  await testInfo.attach('computed-cta-states', { body: Buffer.from(JSON.stringify(measurements, null, 2)), contentType: 'application/json' });
+});
+
+async function normalIconBackground(page) {
+  return page.evaluate(() => {
+    const probe = document.createElement('span');
+    probe.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-social-bg');
+    return probe.style.backgroundColor;
+  });
+}
+
+test('R-ICON-01 | Pointer release clears icon controls while keyboard focus stays visible', async ({ page }, testInfo) => {
+  await page.goto('/#blog123');
+  await expectSection(page, 'not-found');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const mobile = Boolean(testInfo.project.use.isMobile);
+  const theme = page.locator(mobile ? '.mobile-theme-toggle' : '.header .theme-toggle-btn');
+  const activate = locator => mobile ? locator.tap() : locator.click();
+  for (let repeat = 0; repeat < 2; repeat++) {
+    const before = await page.locator('html').getAttribute('data-theme');
+    // Start a separate pointer interaction after the preceding keyboard check.
+    if (!mobile) await page.mouse.click(0, 0);
+    await activate(theme);
+    await expect(page.locator('html')).toHaveAttribute('data-theme', before === 'light' ? 'dark' : 'light');
+    if (!mobile) await page.mouse.move(0, 0);
+    async function verifyControl(control) {
+      await expect.poll(async () => (await styles(control)).background).toBe(await normalIconBackground(page));
+      expect((await styles(control)).outline).toBe('none');
+      expect((await styles(control)).transform).toBe('none');
+      await control.focus();
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Shift+Tab');
+      await expect(control).toBeFocused();
+      expect(await control.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+      expect((await styles(control)).outline).toBe('solid');
+      expect(parseFloat((await styles(control)).outlineWidth)).toBeGreaterThanOrEqual(2);
+    }
+    await verifyControl(theme);
+    if (mobile) {
+      const menu = page.locator('.menu-toggle');
+      await activate(menu);
+      await expect(menu).toHaveAttribute('aria-expanded', 'true');
+      await verifyControl(menu);
+    }
+    if (mobile) {
+      await page.keyboard.press('Escape');
+      await expect(page.locator('.menu-toggle')).toHaveAttribute('aria-expanded', 'false');
+    }
+  }
+});
+
+test('R-ICON-02 | Closing the drawer restores keyboard focus without stealing pointer focus', async ({ page }, testInfo) => {
+  await page.goto('/#blog123');
+  await expectSection(page, 'not-found');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const menu = page.locator('.menu-toggle');
+  if (!testInfo.project.use.isMobile) { await expect(menu).toBeHidden(); return; }
+  await menu.tap();
+  const theme = page.locator('.mobile-theme-toggle');
+  await theme.tap();
+  await expect(menu).toHaveAttribute('aria-expanded', 'false');
+  await expect(theme).toBeFocused();
+  await menu.tap();
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeFocused();
+  expect(await menu.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+});
+
+test('R-ICON-03 | Hover motion respects the input device and reduced-motion preference', async ({ page }, testInfo) => {
+  await page.goto('/#about-me');
+  await expectSection(page, 'about-me');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const mobile = Boolean(testInfo.project.use.isMobile);
+  const theme = page.locator(mobile ? '.mobile-theme-toggle' : '.header .theme-toggle-btn');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  if (mobile) {
+    await theme.tap();
+    await expect.poll(async () => (await styles(theme)).transform).toBe('none');
+  } else {
+    await theme.hover();
+    await expect.poll(async () => (await styles(theme)).transform).not.toBe('none');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect.poll(async () => (await styles(theme)).transform).toBe('none');
+  }
+  await page.goto('/#resume');
+  await expectSection(page, 'resume');
+  const info = page.locator('.resume-personality-info');
+  await page.keyboard.press('Tab');
+  await info.focus();
+  expect(await info.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+  expect((await styles(info)).outline).toBe('solid');
+});
+
+test('R-ICON-04 | Trust-page theme controls remain aligned and keyboard accessible', async ({ page }) => {
+  for (const path of ['/about/', '/contact/', '/privacy/']) {
+    await page.goto(path);
+    const theme = page.locator('.theme-toggle-btn');
+    const alignment = await theme.evaluate(el => {
+      const button = el.getBoundingClientRect(), nav = el.closest('nav').getBoundingClientRect();
+      return { right: button.right, navRight: nav.right, width: button.width, height: button.height };
+    });
+    expect(Math.abs(alignment.right - alignment.navRight)).toBeLessThanOrEqual(1);
+    expect(alignment.width).toBe(alignment.height);
+    await page.keyboard.press('Tab');
+    await theme.focus();
+    expect((await styles(theme)).outline).toBe('solid');
+  }
+});

@@ -52,7 +52,10 @@ test('privacy notice reflects actual providers and storage keys', async () => {
 test('custom error has absolute assets, recovery links, a noindex directive and Markdown companion', async () => {
   const { document } = parseHTML(await readFile(join(ROOT, '404.html'), 'utf8'));
   assert.equal(document.querySelector('meta[name="robots"]').getAttribute('content'), 'noindex');
-  for (const node of document.querySelectorAll('link[href],a[href]')) assert.match(node.getAttribute('href'), /^\//);
+  for (const node of document.querySelectorAll('link[href],a[href]')) {
+    // The shared shell includes external social profiles; local targets stay root-absolute.
+    assert.match(node.getAttribute('href'), /^(?:\/|https:\/\/)/);
+  }
   assert.match(await readFile(join(ROOT, '404.md'), 'utf8'), /\[agent guide\]\(\/llms\.txt\)/);
   const response = await fetch(origin + '/deep/missing/path', { headers: { Accept: 'text/markdown' } });
   assert.equal(response.status, 404);

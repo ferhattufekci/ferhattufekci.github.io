@@ -20,119 +20,20 @@
     }
   }
 
-  // Measure the header so resized text and fonts keep navigation and content correctly aligned.
-  function syncMobileHeaderHeight() {
-    var mobileHeader = document.querySelector(".mobile-header");
-    if (!mobileHeader) return;
-
-    var height = mobileHeader.getBoundingClientRect().height;
-    var rootStyle = document.documentElement.style;
-    var value = height + "px";
-
-    if (height > 0) {
-      if (rootStyle.getPropertyValue("--mobile-header-height") !== value) {
-        rootStyle.setProperty("--mobile-header-height", value);
-      }
-    } else {
-      rootStyle.removeProperty("--mobile-header-height");
-    }
-  }
-
-  function mobileMenuHide() {
-    var windowWidth = $(window).width(),
-      siteHeader = $("#site_header");
-
-    if (windowWidth < 992) {
-      siteHeader.addClass("mobile-menu-hide");
-      setTimeout(function () {
-        siteHeader.addClass("animate");
-      }, 500);
-    } else {
-      siteHeader.removeClass("animate");
-    }
-
-    setMobileMenuToggleState(false);
-  }
-
-  // Centralize all close paths so focus, toggle state and body scroll lock remain consistent.
-  function setMobileMenuToggleState(isOpen) {
-    var wasOpen = $("body").hasClass("mobile-menu-open");
-    var menuToggle = $(".menu-toggle");
-
-    $("body").toggleClass("mobile-menu-open", isOpen);
-    menuToggle
-      .attr("aria-expanded", isOpen ? "true" : "false")
-      .attr("aria-label", isOpen ? "Close menu" : "Open menu")
-      .find("i")
-      .toggleClass("fa-bars", !isOpen)
-      .toggleClass("fa-times", isOpen);
-
-    if (wasOpen && !isOpen && menuToggle.is(":visible")) {
-      menuToggle[0].focus({ preventScroll: true });
-    }
-  }
-
   $(window)
     .on("load", function () {
-      syncMobileHeaderHeight();
-
       var ptPage = $(".subpages");
       if (ptPage[0]) {
         PageTransitions.init({
           menu: "ul.site-main-menu",
         });
       }
-    })
-    .on("resize", function () {
-      syncMobileHeaderHeight();
-      mobileMenuHide();
     });
 
   $(document).on("ready", function () {
-    syncMobileHeaderHeight();
-    var mobileHeader = document.querySelector(".mobile-header");
-    if (window.ResizeObserver && mobileHeader) {
-      var mobileHeaderObserver = new ResizeObserver(syncMobileHeaderHeight);
-      mobileHeaderObserver.observe(mobileHeader);
-    }
-    if (document.fonts) {
-      document.fonts.ready.then(syncMobileHeaderHeight);
-    }
-
     var $portfolio_container = $(".portfolio-grid");
     $portfolio_container.imagesLoaded(function () {
       portfolio_init(this);
-    });
-
-    $(".menu-toggle").on("click", function () {
-      syncMobileHeaderHeight();
-      var siteHeader = $("#site_header");
-      var willOpen = siteHeader.hasClass("mobile-menu-hide");
-
-      siteHeader.addClass("animate").toggleClass("mobile-menu-hide");
-      setMobileMenuToggleState(willOpen);
-    });
-
-    $(document).on("click", function (e) {
-      var target = $(e.target);
-      var clickedNavigation = target.closest(".pt-trigger").length > 0;
-      var clickedOutside =
-        $("body").hasClass("mobile-menu-open") &&
-        target.closest("#site_header, .menu-toggle").length === 0;
-
-      if (clickedNavigation || clickedOutside) {
-        mobileMenuHide();
-      }
-    });
-
-    $(document).on("keydown", function (e) {
-      var ESCAPE_KEY = 27;
-      var isEscape = e.key === "Escape" || e.keyCode === ESCAPE_KEY;
-
-      if (isEscape && $("body").hasClass("mobile-menu-open")) {
-        e.preventDefault();
-        mobileMenuHide();
-      }
     });
 
     $(".sidebar-toggle").on("click", function () {

@@ -62,7 +62,7 @@ export function renderDocument({ title, description, path, body, indexable = tru
       <a href="/about/">About</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
-      <button type="button" class="theme-toggle-btn" aria-label="Switch theme">
+      <button type="button" class="icon-btn theme-toggle-btn" aria-label="Switch theme">
         <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
       </button>
     </nav>
