@@ -52,12 +52,12 @@ Doğrulayıcı amaçlanan bütün public asset ve veri dosyalarını, güven say
 
 Tarayıcı kontrolleri açık/koyu tema, 1440/390/320 piksel ekran, bozuk hash'ler, geri/ileri, klavye ve kurtarma bağlantıları, normal gezinme, JavaScript kapalı içerik ve gerçek yol 404 durumunu sınar. Yeni ekranlarda axe erişilebilirlik kontrolleri çalışır. Üçüncü taraf izleme/ağ kaynakları testlerde izole edilir; üretimdeki entegrasyonlar korunur. Risk, test katmanları ve gereksinim eşlemesi için [test stratejisine](TEST-STRATEJISI.md) bakın.
 
-Teslim paketi canlı siteye henüz yüklenmemiştir. Canlı doğrulama raporu bu yüzden teslim anındaki siteyi, yerel rapor ise güncellenmiş dosyaları ölçer. Yeni Is Agentic puanı ancak yayın sonrası Ora yeniden taramasıyla bilinebilir.
+Canlı yayın durumu GitHub Actions'taki son başarılı deploy ve yayın sonrası doğrulama sonucundan kontrol edilir. Yerel rapor ile canlı site raporu ayrı kanıtlardır. Yeni Is Agentic puanı ancak yayın sonrası Ora yeniden taramasıyla bilinebilir.
 
 ## Kalan kararlar
 
 - Güncellenen dosyaların GitHub deposuna yayımlanması için depo erişimi gerekir.
-- Yayının test sonucuna bağlanması için Pages Source ayarı GitHub Actions yapılmalıdır. Bu ayar ve uzaktaki ilk CI çalışması henüz doğrulanmadı.
+- Pages Source ayarı GitHub Actions olarak yapılandırılmıştır. Yayın, kalite işinin başarıyla tamamlanmasına bağlıdır; her yayın için son Actions sonucu kontrol edilmelidir.
 - Gizlilik metni gerçek entegrasyonları belgeler; Analytics/AdSense rıza yönetimi ve sağlayıcı ayarları ayrıca sahibinin kararıdır.
 - GitHub Pages kısıtları kabul edildiği için Markdown müzakeresi ve MCP bu teslimatın açık kalan maddeleridir; başka hosting önerilmiyor.
 
