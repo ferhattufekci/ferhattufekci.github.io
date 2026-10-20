@@ -322,7 +322,7 @@ Selected projects (full list on [GitHub](https://github.com/ferhattufekci)):
 -   [miuul-data-science-and-machine-learning-bootcamp](https://github.com/ferhattufekci/miuul-data-science-and-machine-learning-bootcamp) (Python) — This repo includes the case studies I made in the Data Science & Machine Learning Bootcamp given by Miuul.
 -   [aiup-petclinic](https://github.com/ferhattufekci/aiup-petclinic) — Materials of Spec-driven Development: How AI Changed Everything (And Nothing) by Simon Martinelli @ Spring I/O 26
 -   [dotnet](https://github.com/ferhattufekci/dotnet) — This repo is the official home of .NET on GitHub. It's a great starting point to find many .NET OSS projects from Microsoft and the community, including many that are part of the .NET Foundation.
--   [ferhattufekci.github.io](https://github.com/ferhattufekci/ferhattufekci.github.io) (CSS) — Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.
+-   [ferhattufekci.github.io](https://github.com/ferhattufekci/ferhattufekci.github.io) (HTML) — Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.
 -   [java-champions](https://github.com/ferhattufekci/java-champions) — A list of Java Champions
 -   [SurveyApp](https://github.com/ferhattufekci/SurveyApp) (TypeScript) — Full-stack survey management system built with .NET 8 (Clean Architecture), RESTful API, Entity Framework Core, and React + TypeScript.
 

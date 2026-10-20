@@ -89,23 +89,23 @@
     "description": "Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.",
     "url": "https://github.com/ferhattufekci/ferhattufekci.github.io",
     "homepage": "https://ferhattufekci.github.io/",
-    "language": "CSS",
-    "langColor": "#563d7c",
+    "language": "HTML",
+    "langColor": "#e34c26",
     "languages": [
-      {
-        "name": "CSS",
-        "color": "#563d7c",
-        "percent": 40
-      },
       {
         "name": "HTML",
         "color": "#e34c26",
-        "percent": 39
+        "percent": 37
+      },
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 35
       },
       {
         "name": "JavaScript",
         "color": "#f1e05a",
-        "percent": 21
+        "percent": 28
       }
     ],
     "stars": 0,
@@ -123,7 +123,7 @@
     "pinned": true,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-10-19T02:04:19Z"
+    "updatedAt": "2026-10-20T05:42:52Z"
   },
   {
     "name": "java-champions",
