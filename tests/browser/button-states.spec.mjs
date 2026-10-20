@@ -183,3 +183,93 @@ test('R-BUTTON-04 | Both 404 actions match the existing About Me Resume CTA in e
   }
   await testInfo.attach('computed-cta-states', { body: Buffer.from(JSON.stringify(measurements, null, 2)), contentType: 'application/json' });
 });
+
+async function normalIconBackground(page) {
+  return page.evaluate(() => {
+    const probe = document.createElement('span');
+    probe.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--color-social-bg');
+    return probe.style.backgroundColor;
+  });
+}
+
+test('R-ICON-01 | Pointer release clears icon controls while keyboard focus stays visible', async ({ page }, testInfo) => {
+  await page.goto('/#blog123');
+  await expectSection(page, 'not-found');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const mobile = Boolean(testInfo.project.use.isMobile);
+  const theme = page.locator(mobile ? '.mobile-theme-toggle' : '.header .theme-toggle-btn');
+  const activate = locator => mobile ? locator.tap() : locator.click();
+  for (let repeat = 0; repeat < 2; repeat++) {
+    const before = await page.locator('html').getAttribute('data-theme');
+    // Start a separate pointer interaction after the preceding keyboard check.
+    if (!mobile) await page.mouse.click(0, 0);
+    await activate(theme);
+    await expect(page.locator('html')).toHaveAttribute('data-theme', before === 'light' ? 'dark' : 'light');
+    if (!mobile) await page.mouse.move(0, 0);
+    async function verifyControl(control) {
+      await expect.poll(async () => (await styles(control)).background).toBe(await normalIconBackground(page));
+      expect((await styles(control)).outline).toBe('none');
+      expect((await styles(control)).transform).toBe('none');
+      await control.focus();
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('Shift+Tab');
+      await expect(control).toBeFocused();
+      expect(await control.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+      expect((await styles(control)).outline).toBe('solid');
+      expect(parseFloat((await styles(control)).outlineWidth)).toBeGreaterThanOrEqual(2);
+    }
+    await verifyControl(theme);
+    if (mobile) {
+      const menu = page.locator('.menu-toggle');
+      await activate(menu);
+      await expect(menu).toHaveAttribute('aria-expanded', 'true');
+      await verifyControl(menu);
+    }
+    if (mobile) {
+      await page.keyboard.press('Escape');
+      await expect(page.locator('.menu-toggle')).toHaveAttribute('aria-expanded', 'false');
+    }
+  }
+});
+
+test('R-ICON-02 | Closing the drawer restores keyboard focus without stealing pointer focus', async ({ page }, testInfo) => {
+  await page.goto('/#blog123');
+  await expectSection(page, 'not-found');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const menu = page.locator('.menu-toggle');
+  if (!testInfo.project.use.isMobile) { await expect(menu).toBeHidden(); return; }
+  await menu.tap();
+  const theme = page.locator('.mobile-theme-toggle');
+  await theme.tap();
+  await expect(menu).toHaveAttribute('aria-expanded', 'false');
+  await expect(theme).toBeFocused();
+  await menu.tap();
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeFocused();
+  expect(await menu.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+});
+
+test('R-ICON-03 | Hover motion respects the input device and reduced-motion preference', async ({ page }, testInfo) => {
+  await page.goto('/#about-me');
+  await expectSection(page, 'about-me');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const mobile = Boolean(testInfo.project.use.isMobile);
+  const theme = page.locator(mobile ? '.mobile-theme-toggle' : '.header .theme-toggle-btn');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  if (mobile) {
+    await theme.tap();
+    expect((await styles(theme)).transform).toBe('none');
+  } else {
+    await theme.hover();
+    expect((await styles(theme)).transform).not.toBe('none');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    expect((await styles(theme)).transform).toBe('none');
+  }
+  await page.goto('/#resume');
+  await expectSection(page, 'resume');
+  const info = page.locator('.resume-personality-info');
+  await page.keyboard.press('Tab');
+  await info.focus();
+  expect(await info.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+  expect((await styles(info)).outline).toBe('solid');
+});

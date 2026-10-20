@@ -38,7 +38,7 @@
     }
   }
 
-  function mobileMenuHide() {
+  function mobileMenuHide(restoreFocus) {
     var windowWidth = $(window).width(),
       siteHeader = $("#site_header");
 
@@ -51,11 +51,11 @@
       siteHeader.removeClass("animate");
     }
 
-    setMobileMenuToggleState(false);
+    setMobileMenuToggleState(false, restoreFocus);
   }
 
   // Centralize all close paths so focus, toggle state and body scroll lock remain consistent.
-  function setMobileMenuToggleState(isOpen) {
+  function setMobileMenuToggleState(isOpen, restoreFocus) {
     var wasOpen = $("body").hasClass("mobile-menu-open");
     var menuToggle = $(".menu-toggle");
 
@@ -67,7 +67,7 @@
       .toggleClass("fa-bars", !isOpen)
       .toggleClass("fa-times", isOpen);
 
-    if (wasOpen && !isOpen && menuToggle.is(":visible")) {
+    if (wasOpen && !isOpen && restoreFocus && menuToggle.is(":visible")) {
       menuToggle[0].focus({ preventScroll: true });
     }
   }
@@ -104,13 +104,13 @@
       portfolio_init(this);
     });
 
-    $(".menu-toggle").on("click", function () {
+    $(".menu-toggle").on("click", function (e) {
       syncMobileHeaderHeight();
       var siteHeader = $("#site_header");
       var willOpen = siteHeader.hasClass("mobile-menu-hide");
 
       siteHeader.addClass("animate").toggleClass("mobile-menu-hide");
-      setMobileMenuToggleState(willOpen);
+      setMobileMenuToggleState(willOpen, e.detail === 0);
     });
 
     $(document).on("click", function (e) {
@@ -121,7 +121,7 @@
         target.closest("#site_header, .menu-toggle").length === 0;
 
       if (clickedNavigation || clickedOutside) {
-        mobileMenuHide();
+        mobileMenuHide(e.detail === 0);
       }
     });
 
@@ -131,7 +131,7 @@
 
       if (isEscape && $("body").hasClass("mobile-menu-open")) {
         e.preventDefault();
-        mobileMenuHide();
+        mobileMenuHide(true);
       }
     });
 
