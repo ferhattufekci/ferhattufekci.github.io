@@ -28,14 +28,40 @@ body.trust-page {
 .trust-document footer {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
+}
+
+.trust-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trust-back-link:is(:hover, :active) {
+    text-decoration: underline;
+  }
 }
 
 .trust-document footer {
+  flex-wrap: wrap;
+  gap: 8px 12px;
   margin-top: 40px;
   border-top: 1px solid var(--color-border, #eee);
   padding-top: 20px;
+}
+
+.trust-footer-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.trust-document footer [aria-current="page"] {
+  color: var(--color-text-secondary);
+  font-weight: 500;
 }
 
 .trust-document a:not(.resume-cta) {
@@ -49,4 +75,7 @@ body.trust-page {
 
 .trust-document .theme-toggle-btn {
   margin-left: auto;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
 }
