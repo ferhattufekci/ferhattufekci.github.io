@@ -4202,6 +4202,21 @@ blockquote p {
   color: var(--color-text-muted, #9e9e9e);
 }
 
+.copyrights .privacy-link {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.inline-link-tail {
+  white-space: nowrap;
+}
+
+.privacy-link:focus-visible,
+.contact-external-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
 figure {
   text-align: center;
   margin-top: 16px;
@@ -4337,6 +4352,14 @@ svg.resume-cta__icon {
   height: 16px;
   fill: currentColor;
 }
+
+svg.inline-external-icon {
+  width: 1em;
+  height: 1em;
+  margin-inline-start: 3px;
+  vertical-align: -0.125em;
+}
+
 i.resume-cta__icon {
   font-size: 15px;
   line-height: 1;
