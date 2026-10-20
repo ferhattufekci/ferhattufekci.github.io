@@ -7,8 +7,10 @@
   },
   "scripts": {
     "generate": "node scripts/build-static-seo.js && node scripts/build-agent-content.mjs",
-    "build": "npm run generate && npm run test:unit",
+    "build": "npm run generate && npm run test:unit && npm run test:bdd",
     "preview": "node scripts/preview-pages.mjs",
+    "test:browser": "npm run test:bdd",
+    "test:bdd": "playwright test",
     "test:unit": "node --test",
     "test": "node --test",
     "verify": "node scripts/verify-agent-endpoints.mjs"

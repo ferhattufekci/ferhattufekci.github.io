@@ -1,3 +1,8 @@
+/* A transition can explicitly place one page over its sibling. */
+.pt-page.pt-page-ontop {
+  z-index: 100;
+}
+
 .pt-page-moveToLeft {
 	-webkit-animation: moveToLeft .6s ease both;
 	animation: moveToLeft .6s ease both;
