@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { test, expect, expectSection, isolateThirdParties } from './fixtures.mjs';
+import { test, expect, expectSection, isolateThirdParties, navigateToSection } from './fixtures.mjs';
 
 test('R-404-02 | Given an unknown section, when opened, then an accessible recovery view appears', async ({ page }, testInfo) => {
   await test.step('Given an unknown fragment', async () => {
@@ -49,10 +49,7 @@ test('R-NAV-01 | Given existing navigation, when each menu item is selected, the
   await page.goto('/');
   await expect(page.locator('.preloader')).toHaveCount(0);
   for (const id of ['about-me', 'resume', 'blog', 'projects', 'contact']) {
-    const link = page.locator(`.site-main-menu a[href="#${id}"]`);
-    if (!(await link.isVisible())) await page.locator('.menu-toggle').click();
-    await link.click();
-    await expectSection(page, id);
+    await navigateToSection(page, id);
   }
   await page.evaluate(() => { location.hash = ''; });
   await expectSection(page, 'about-me');
@@ -114,7 +111,10 @@ test('R-THEME-04 | Given a theme preference, when toggled and reloaded, then the
 });
 
 test('R-THEME-02 | Given corrupt stored preferences, when loading, then OS preference remains usable', async ({ page }, testInfo) => {
-  await page.addInitScript(() => localStorage.setItem('ft-theme', 'invalid'));
+  await page.addInitScript(() => {
+    try { localStorage.setItem('ft-theme', 'invalid'); }
+    catch { /* The target page can use storage after navigation. */ }
+  });
   await page.goto('/404.html');
   await expect(page.locator('html')).toHaveAttribute('data-theme', testInfo.project.use.colorScheme);
 });

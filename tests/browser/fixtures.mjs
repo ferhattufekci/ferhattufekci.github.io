@@ -2,7 +2,10 @@ import { test as base, expect } from '@playwright/test';
 import { createPagesServer, listen, close } from '../../scripts/lib/pages-preview.mjs';
 
 export async function isolateThirdParties(context, origin) {
-  await context.addInitScript(() => localStorage.setItem('calendlyPermanentlyClosed', 'true'));
+  await context.addInitScript(() => {
+    try { localStorage.setItem('calendlyPermanentlyClosed', 'true'); }
+    catch { /* Initialization also runs in opaque frames before navigation. */ }
+  });
   await context.route('**/*', route => new URL(route.request().url()).origin === origin
     ? route.continue()
     : route.abort());
@@ -31,4 +34,21 @@ export { expect };
 export async function expectSection(page, id) {
   await expect(page.locator('.pt-page-current')).toHaveCount(1);
   await expect(page.locator('.pt-page-current')).toHaveAttribute('data-id', id);
+}
+
+export async function navigateToSection(page, id) {
+  const toggle = page.locator('.menu-toggle');
+  const mobile = await toggle.isVisible();
+  if (mobile) {
+    // DOM visibility can remain true while the drawer slides off screen.
+    // Its explicit expanded state is the stable contract for opening it.
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  }
+  const link = page.locator(`.site-main-menu a[href="#${id}"]`);
+  await expect(link).toBeInViewport({ ratio: 1 });
+  await link.click();
+  await expectSection(page, id);
+  if (mobile) await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 }
