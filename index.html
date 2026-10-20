@@ -4,19 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+    <!-- THEME-INIT:START -->
     <script>
-      (function () {
-        try {
-          var t = localStorage.getItem("ft-theme");
-          if (!t) {
-            t = window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-          }
-          document.documentElement.setAttribute("data-theme", t);
-        } catch (e) {}
-      })();
+// Build embeds this source before stylesheets on every page to avoid a theme flash.
+(function () {
+  'use strict';
+  var theme;
+  try {
+    theme = localStorage.getItem('ft-theme');
+  } catch (error) {
+    // Browser storage can be disabled; the operating-system preference still works.
+  }
+  if (theme !== 'light' && theme !== 'dark') {
+    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();
     </script>
+    <!-- THEME-INIT:END -->
 
     <title>
       Ferhat Tüfekçi M-Shaped Computer Engineer | Developer, Analyst & Tester
@@ -24,7 +31,7 @@
 
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+      content="width=device-width, initial-scale=1.0"
     />
 
     <meta
@@ -44,6 +51,9 @@
     />
 
     <link rel="canonical" href="https://ferhattufekci.github.io/" />
+    <link rel="alternate" type="text/markdown" href="/index.md" />
+    <link rel="describedby" href="/llms.txt" />
+    <link rel="stylesheet" href="css/error-page.css" />
 
     <link
       rel="alternate"
@@ -121,6 +131,7 @@
             "@id": "https://ferhattufekci.github.io/#about-me",
             "name": "Ferhat Tüfekçi",
             "alternateName": ["Ferhat Tufekci", "Ferhat TÜFEKÇİ"],
+            "description": "Senior software engineer working across systems engineering, business analysis, full-stack development, and quality engineering for mission-critical banking and defense systems.",
             "jobTitle": [
               "Senior Software Engineer",
               "Business Analyst",
@@ -555,7 +566,7 @@
             });
           </script>
 
-          <div class="copyrights">©2010 All Rights Reserved.</div>
+          <div class="copyrights">©2010 All Rights Reserved. <a href="/privacy/">Privacy</a></div>
         </div>
       </header>
 
@@ -828,9 +839,9 @@
                   class="section-title-block second-style resume-title-block"
                 >
                   <h2 class="section-title">Resume</h2>
-                  <h5 class="section-description">
+                  <div class="section-description">
                     <span>10+ Years of Professional Experience</span>
-                  </h5>
+                  </div>
                 </div>
 
                 <div class="section-content">
@@ -1983,10 +1994,10 @@
               <div class="section-inner custom-page-content">
                 <div class="section-title-block second-style">
                   <h2 class="section-title">Projects</h2>
-                  <h5 class="section-description">
+                  <div class="section-description">
                     <span>My Work</span>
                     <span id="proj-updated" class="sync-badge"></span>
-                  </h5>
+                  </div>
                 </div>
 
                 <!-- Non-JavaScript crawlers need static project links. Regenerate this fallback with node scripts/build-static-seo.js. -->
@@ -2565,7 +2576,7 @@
               <div class="section-inner custom-page-content">
                 <div class="section-title-block second-style">
                   <h2 class="section-title">Blog</h2>
-                  <h5 class="section-description">
+                  <div class="section-description">
                     <span>My Articles</span>
                     <span class="blog-lang-toggle" id="blog-lang-toggle">
                       <button
@@ -2611,7 +2622,7 @@
                       </button>
                     </span>
                     <span id="blog-updated" class="sync-badge"></span>
-                  </h5>
+                  </div>
                 </div>
 
                 <!-- Non-JavaScript crawler fallback; regenerate from data/medium-all.json with node scripts/build-static-seo.js. -->
@@ -3312,9 +3323,9 @@
               <div class="section-inner custom-page-content">
                 <div class="section-title-block second-style">
                   <h2 class="section-title" data-i18n="nav.contact">Contact</h2>
-                  <h5 class="section-description">
+                  <div class="section-description">
                     <span>Stay In Touch</span>
-                  </h5>
+                  </div>
                 </div>
                 <div class="section-content">
                   <div class="row">
@@ -3322,13 +3333,14 @@
                       <div class="col-inner bs-30">
                         <div class="lm-info-block gray-default">
                           <i class="lnr lnr-phone-handset"></i>
-                          <h4>
+                          <h3 class="contact-card-title">
                             <a
                               id="h-p"
                               class="contact-info-link"
                               title="Call"
-                            ></a>
-                          </h4>
+                              href="tel:+905076008179"
+                            >+90 507 600 81 79</a>
+                          </h3>
                           <span class="lm-info-block-value"></span>
                           <span class="lm-info-block-text"></span>
                         </div>
@@ -3341,11 +3353,11 @@
                           <i class="fas fa-video"></i>
                           <a
                             href="https://calendly.com/ferhattufekci/60min"
-                            ><h4>
+                            ><h3 class="contact-card-title">
                               <u class="contact-info-link"
                                 ><span>Set Up A Job Interview</span></u
                               >
-                            </h4></a
+                            </h3></a
                           >
                           <span class="lm-info-block-value"></span>
                           <span class="lm-info-block-text"></span>
@@ -3357,13 +3369,14 @@
                       <div class="col-inner bs-30">
                         <div class="lm-info-block gray-default">
                           <i class="lnr lnr-envelope"></i>
-                          <h4>
+                          <h3 class="contact-card-title">
                             <a
                               id="h-m"
                               class="contact-info-link"
                               title="Send email"
-                            ></a>
-                          </h4>
+                              href="mailto:ferhattufekci@outlook.com.tr"
+                            >ferhattufekci@outlook.com.tr</a>
+                          </h3>
                           <span class="lm-info-block-value"></span>
                           <span class="lm-info-block-text"></span>
                         </div>
@@ -3379,11 +3392,11 @@
                             href="https://linktr.ee/ferhattufekci"
                             title="Ferhat Tüfekçi links"
                           >
-                            <h4>
+                            <h3 class="contact-card-title">
                               <u class="contact-info-link"
                                 ><span>All My Links</span></u
                               >
-                            </h4>
+                            </h3>
                           </a>
                           <span class="lm-info-block-value"></span>
                           <span class="lm-info-block-text"></span>

@@ -1,0 +1,82 @@
+.error-card {
+  max-width: 680px;
+  margin: 32px auto;
+  padding: clamp(24px, 5vw, 56px);
+  text-align: center;
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border, #eee);
+  border-radius: 12px;
+}
+
+.error-card .error-code {
+  font-family: Poppins, Helvetica, sans-serif;
+  font-size: clamp(72px, 18vw, 140px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-accent, #0099e5);
+  margin: 0 0 24px;
+}
+
+.error-card p {
+  overflow-wrap: anywhere;
+}
+
+.error-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.error-actions .btn {
+  margin: 0;
+  white-space: normal;
+}
+
+.error-help {
+  margin-top: 28px;
+}
+
+.error-card .error-help a {
+  color: var(--color-accessible-link, #0076b1);
+}
+
+[data-theme="dark"] {
+  --color-accessible-link: #58a6ff;
+}
+
+.error-card a:focus-visible {
+  outline: 2px solid var(--color-accent, #0099e5);
+  outline-offset: 4px;
+}
+
+.no-js .route-error {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --color-bg: #0d1117;
+    --color-surface: #161b22;
+    --color-border: #30363d;
+    --color-text-primary: #e6edf3;
+    --color-text-secondary: #c9d1d9;
+    --color-accent: #58a6ff;
+    --color-accessible-link: #58a6ff;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-actions {
+    flex-direction: column;
+  }
+
+  .error-actions .btn {
+    width: 100%;
+  }
+
+  .error-card {
+    margin: 20px auto;
+  }
+}

@@ -6,14 +6,20 @@ Ferhat Tüfekçi is an M-shaped computer engineer based in Ankara, Turkey. Since
 
 Core skills: Business Analysis, Requirements Engineering, Systems & Software Architecture, Full-Stack Development (Java/Spring, React.js, RESTful APIs), Software Testing (TDD, BDD, TestOps), and Technical Leadership.
 
+## When to use this
+
+- [Agent instructions](https://ferhattufekci.github.io/agent-instructions.md): Use this portfolio to evaluate Ferhat for Java/Spring and React engineering, requirements analysis, systems architecture, or quality engineering roles in banking and defense. Read the resume and project evidence, cite the relevant sources, then use the published contact links if the user wants to make contact. The guide also explains the static JSON snapshots and GitHub Pages interface limits.
+
 ## Core pages
 
-- [About / intro](https://ferhattufekci.github.io/#about-me): Hero intro and "Why Work With Me?" — engineering philosophy, not the CV itself.
+- [About / intro](https://ferhattufekci.github.io/about/index.md): Hero intro and "Why Work With Me?" — engineering philosophy, not the CV itself.
 - [Resume](https://ferhattufekci.github.io/#resume): Full CV as a web page — Summary, Top Skills, Languages, Education, Exam Results, Experience, Engineering Contributions, Skills & Toolset, and Certifications.
 - [Resume (PDF)](https://ferhattufekci.github.io/FerhatTufekci_CV.pdf): Downloadable CV.
 - [Projects](https://ferhattufekci.github.io/#projects): Open-source repositories, filterable by category.
 - [Blog](https://ferhattufekci.github.io/#blog): Articles in Turkish and English on systems engineering, business analysis, software development, and testing.
-- [Contact](https://ferhattufekci.github.io/#contact): Phone, email, and interview scheduling.
+- [Contact](https://ferhattufekci.github.io/contact/index.md): Published phone, email, and interview scheduling links.
+- [Privacy](https://ferhattufekci.github.io/privacy/index.md): Hosting, analytics, advertising, browser storage, external services, and privacy contact.
+- [Portfolio in Markdown](https://ferhattufekci.github.io/index.md): Resume, experience, project and article evidence without scripts or visual markup.
 
 ## Elsewhere
 

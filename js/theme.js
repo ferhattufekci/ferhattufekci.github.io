@@ -15,7 +15,8 @@
 
   function getSaved() {
     try {
-      return localStorage.getItem(STORAGE_KEY);
+      var saved = localStorage.getItem(STORAGE_KEY);
+      return saved === DARK || saved === LIGHT ? saved : null;
     } catch (e) {
       return null;
     }

@@ -10,6 +10,12 @@ on:
       - 'index.html'
       - 'llms.txt'
       - 'sitemap.xml'
+      - 'index.md'
+      - 'about/**'
+      - 'contact/**'
+      - 'privacy/**'
+      - '404.html'
+      - '404.md'
   workflow_dispatch:
 
 permissions:
@@ -35,6 +41,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install agent content build dependencies
+        run: npm ci
+
       - name: Install node-fetch
         run: cd scripts && npm install node-fetch@3
 
@@ -45,13 +54,16 @@ jobs:
         run: node scripts/fetch-medium.js
 
       - name: Regenerate static SEO fallback content
-        run: node scripts/build-static-seo.js
+        run: npm run generate
+
+      - name: Validate generated content
+        run: npm run test:unit
 
       - name: Commit data files
         run: |
           git config --local user.email "ferhattufekci@outlook.com.tr"
           git config --local user.name  "Ferhat Tüfekçi"
-          git add data/ index.html llms.txt sitemap.xml
+          git add data/ index.html index.md llms.txt sitemap.xml about/ contact/ privacy/ 404.html 404.md
 
           if git diff --staged --quiet; then
             echo "No changes to commit"

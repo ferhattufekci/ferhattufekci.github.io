@@ -1,0 +1,22 @@
+{
+  "name": "ferhattufekci-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "generate": "node scripts/build-static-seo.js && node scripts/build-agent-content.mjs",
+    "build": "npm run generate && npm run test:unit",
+    "preview": "node scripts/preview-pages.mjs",
+    "test:unit": "node --test",
+    "test": "node --test",
+    "verify": "node scripts/verify-agent-endpoints.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.0",
+    "@playwright/test": "1.64.1",
+    "linkedom": "0.18.12",
+    "turndown": "7.2.0"
+  }
+}

@@ -419,7 +419,8 @@ textarea.form-control {
   color: var(--color-text-muted);
 }
 
-.lm-info-block h4 {
+.lm-info-block h4,
+.lm-info-block .contact-card-title {
   color: var(--color-text-primary);
 }
 

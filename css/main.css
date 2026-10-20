@@ -2309,7 +2309,8 @@ h3.comment-reply-title:after {
   color: #b5b5b5;
 }
 
-.lm-info-block h4 {
+.lm-info-block h4,
+.lm-info-block .contact-card-title {
   font-size: 16px;
   margin-top: 10px;
   /* Wrap unbroken email addresses when contact cards become narrow at tablet widths. */
@@ -4739,3 +4740,11 @@ i.resume-cta__icon {
   }
 }
 
+
+/* Descriptive subtitles retain their typography without becoming headings. */
+.section-description {
+  font-family: Poppins, Helvetica, sans-serif;
+  font-style: normal;
+  line-height: 1.5em;
+}
+.lm-info-block .contact-card-title { font-size: 16px; }

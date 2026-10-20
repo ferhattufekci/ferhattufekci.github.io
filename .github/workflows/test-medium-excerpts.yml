@@ -29,4 +29,5 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '20'
-      - run: cd scripts && npm test
+      - run: npm ci
+      - run: npm run test:unit

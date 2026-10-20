@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>// Build embeds this source before stylesheets on every page to avoid a theme flash.
+(function () {
+  'use strict';
+  var theme;
+  try {
+    theme = localStorage.getItem('ft-theme');
+  } catch (error) {
+    // Browser storage can be disabled; the operating-system preference still works.
+  }
+  if (theme !== 'light' && theme !== 'dark') {
+    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — Page not found | Ferhat Tüfekçi</title>
+  <meta name="description" content="The requested page could not be found.">
+  <meta name="robots" content="noindex">
+  <link rel="alternate" type="text/markdown" href="/404.md">
+  <link rel="describedby" href="/llms.txt">
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/trust-pages.css">
+  <link rel="stylesheet" href="/css/dark-theme.css">
+  <link rel="stylesheet" href="/css/error-page.css">
+</head>
+<body class="trust-page">
+  <main class="trust-document">
+    <nav aria-label="Portfolio">
+      <a href="/">Ferhat Tüfekçi</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+      <a href="/privacy/">Privacy</a>
+      <button type="button" class="theme-toggle-btn" aria-label="Switch theme">
+        <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+      </button>
+    </nav>
+    <h1>404 — Page not found</h1>
+<div class="error-card">
+  <p class="error-code" aria-hidden="true">404</p>
+  <p>The requested page could not be found. It may have moved or the URL may be incorrect. Use the links below to find a published page.</p>
+  <div class="error-actions">
+    <a class="btn btn-primary" href="/">Back to home</a>
+    <a class="btn btn-secondary" href="/#resume">View resume</a>
+  </div>
+  <p class="error-help"><a href="/llms.txt">Agent guide</a> · <a href="/sitemap.xml">Sitemap</a></p>
+</div>
+    <footer>
+      <a href="/">Portfolio</a>
+      <a href="/llms.txt">Agent guide</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </footer>
+  </main>
+  <script src="/js/theme.js"></script>
+</body>
+</html>

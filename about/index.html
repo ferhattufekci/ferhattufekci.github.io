@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script>// Build embeds this source before stylesheets on every page to avoid a theme flash.
+(function () {
+  'use strict';
+  var theme;
+  try {
+    theme = localStorage.getItem('ft-theme');
+  } catch (error) {
+    // Browser storage can be disabled; the operating-system preference still works.
+  }
+  if (theme !== 'light' && theme !== 'dark') {
+    theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', theme);
+})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Ferhat Tüfekçi | Ferhat Tüfekçi</title>
+  <meta name="description" content="Professional background, engineering approach, and published work of Ferhat Tüfekçi.">
+  <link rel="canonical" href="https://ferhattufekci.github.io/about/">
+  <link rel="alternate" type="text/markdown" href="/about/index.md">
+  <link rel="describedby" href="/llms.txt">
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/trust-pages.css">
+  <link rel="stylesheet" href="/css/dark-theme.css">
+  <link rel="stylesheet" href="/css/error-page.css">
+</head>
+<body class="trust-page">
+  <main class="trust-document">
+    <nav aria-label="Portfolio">
+      <a href="/">Ferhat Tüfekçi</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
+      <a href="/privacy/">Privacy</a>
+      <button type="button" class="theme-toggle-btn" aria-label="Switch theme">
+        <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+      </button>
+    </nav>
+    <h1>About Ferhat Tüfekçi</h1>
+<section>
+<h2>Engineering across the lifecycle</h2>
+<p>Ferhat Tüfekçi is a computer engineer based in Ankara, Turkey. His published professional background spans systems engineering, business analysis, software architecture, full-stack development, and software testing. He describes this combination as an M-shaped engineering profile: breadth across the delivery lifecycle together with the ability to focus deeply on the role a team needs.</p>
+<p>The portfolio documents work in mission-critical banking and defense environments, including experience with HAVELSAN and MilSOFT, freelance software projects, and STEM project management for the Ministry of National Education. It covers requirements analysis, traceability, architecture, Java-based backend services, enterprise interfaces, and quality engineering practices.</p>
+</section>
+<section>
+<h2>How to assess the work</h2>
+<p>The resume explains the context and responsibilities associated with each position. Public GitHub repositories and Medium articles provide additional material to explore. Repository lists may include forks or community projects; consult each repository&#39;s history before attributing a contribution. Employment and skills information on this site is the owner&#39;s published account, and readers can use the contact page to discuss a specific role or project.</p>
+</section>
+<h2>Links</h2>
+<ul>
+<li><a href="/#resume">Read the full resume</a></li>
+<li><a href="/FerhatTufekci_CV.pdf">Download the resume PDF</a></li>
+<li><a href="https://github.com/ferhattufekci">Explore public repositories</a></li>
+<li><a href="/contact/">Contact Ferhat</a></li>
+</ul>
+    <footer>
+      <a href="/">Portfolio</a>
+      <a href="/llms.txt">Agent guide</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </footer>
+  </main>
+  <script src="/js/theme.js"></script>
+</body>
+</html>

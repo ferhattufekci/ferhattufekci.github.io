@@ -8,7 +8,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const INDEX_HTML = join(ROOT, 'index.html');
 const LLMS_TXT = join(ROOT, 'llms.txt');
-const SITEMAP_XML = join(ROOT, 'sitemap.xml');
 const DATA_DIR = join(ROOT, 'data');
 
 const MAX_PROJECTS = 6;
@@ -164,20 +163,6 @@ function updateLlmsTxt() {
   return true;
 }
 
-// Change sitemap lastmod only when generated content changes, keeping scheduled no-op runs truthful.
-function bumpSitemapLastmod() {
-  if (!existsSync(SITEMAP_XML)) {
-    console.warn('⚠️  sitemap.xml not found, skipping.');
-    return;
-  }
-  const today = new Date().toISOString().slice(0, 10);
-  let xml = readFileSync(SITEMAP_XML, 'utf8');
-  const updated = xml.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${today}</lastmod>`);
-  if (updated === xml) return;
-  writeFileSync(SITEMAP_XML, updated, 'utf8');
-  console.log(`✅ sitemap.xml lastmod bumped to ${today}`);
-}
-
 function main() {
   let html = readFileSync(INDEX_HTML, 'utf8');
   const originalHtml = html;
@@ -210,9 +195,6 @@ function main() {
       : 'ℹ️  llms.txt lists unchanged, skipped write',
   );
 
-  if (htmlChanged || llmsChanged) {
-    bumpSitemapLastmod();
-  }
 }
 
 main();
