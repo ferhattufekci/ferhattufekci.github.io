@@ -273,3 +273,19 @@ test('R-ICON-03 | Hover motion respects the input device and reduced-motion pref
   expect(await info.evaluate(el => el.matches(':focus-visible'))).toBe(true);
   expect((await styles(info)).outline).toBe('solid');
 });
+
+test('R-ICON-04 | Trust-page theme controls remain aligned and keyboard accessible', async ({ page }) => {
+  for (const path of ['/about/', '/contact/', '/privacy/']) {
+    await page.goto(path);
+    const theme = page.locator('.theme-toggle-btn');
+    const alignment = await theme.evaluate(el => {
+      const button = el.getBoundingClientRect(), nav = el.closest('nav').getBoundingClientRect();
+      return { right: button.right, navRight: nav.right, width: button.width, height: button.height };
+    });
+    expect(Math.abs(alignment.right - alignment.navRight)).toBeLessThanOrEqual(1);
+    expect(alignment.width).toBe(alignment.height);
+    await page.keyboard.press('Tab');
+    await theme.focus();
+    expect((await styles(theme)).outline).toBe('solid');
+  }
+});

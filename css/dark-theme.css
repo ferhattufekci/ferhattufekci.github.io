@@ -408,14 +408,14 @@ textarea.form-control {
   color: var(--color-accent);
 }
 
-.lmpixels-arrows-nav > div {
+.lmpixels-arrows-nav > :is(div, a) {
   background-color: var(--color-surface-alt);
   border-color: var(--color-border);
   color: var(--color-text-primary);
   box-shadow: 0 0 8px var(--color-card-shadow);
 }
 
-.lmpixels-arrows-nav > div:hover {
+.lmpixels-arrows-nav > :is(div, a):hover {
   color: var(--color-accent);
 }
 

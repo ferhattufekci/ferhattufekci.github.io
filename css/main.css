@@ -3359,7 +3359,7 @@ blockquote p {
   :root {
     --mobile-header-min-height: 68px;
     --mobile-profile-photo-size: 48px;
-    /* main.js updates this offset from the actual header border-box height. */
+    /* site-shell.js updates this offset from the actual header border-box height. */
     --mobile-header-height: var(--mobile-header-min-height);
   }
 
@@ -4095,7 +4095,7 @@ blockquote p {
   z-index: 100;
 }
 
-.lmpixels-arrows-nav > div {
+.lmpixels-arrows-nav > :is(div, a) {
   display: inline-block;
   padding: 0;
   background-color: #fafafa;
@@ -4117,7 +4117,7 @@ blockquote p {
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
 }
 
-.lmpixels-arrows-nav > div:hover {
+.lmpixels-arrows-nav > :is(div, a):hover {
   color: #0099e5;
 }
 
@@ -4164,7 +4164,7 @@ blockquote p {
 }
 
 @media only screen and (max-width: 480px) {
-  .lmpixels-arrows-nav > div {
+  .lmpixels-arrows-nav > :is(div, a) {
     height: 34px;
     width: 34px;
     line-height: 34px;
