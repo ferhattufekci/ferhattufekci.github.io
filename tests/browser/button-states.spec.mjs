@@ -114,3 +114,72 @@ test('R-BUTTON-03 | Hamburger mouse focus returns to normal while keyboard focus
   await page.keyboard.press('Escape');
   await expect(menu).toHaveAttribute('aria-expanded', 'false');
 });
+
+const ctaProperties = ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing', 'lineHeight',
+  'color', 'backgroundColor', 'borderColor', 'borderWidth', 'borderStyle', 'borderRadius',
+  'padding', 'height', 'alignItems', 'boxShadow', 'transition', 'transform', 'outline', 'outlineOffset'];
+
+async function ctaStates(page, link) {
+  const result = {};
+  async function capture(name) {
+    result[name] = await link.evaluate(async (el, properties) => {
+      getComputedStyle(el).color;
+      await Promise.all(el.getAnimations().map(animation => animation.finished));
+      const style = getComputedStyle(el);
+      return Object.fromEntries(properties.map(property => [property, style[property]]));
+    }, ctaProperties);
+  }
+  await page.mouse.move(0, 0);
+  await capture('normal');
+  const normalWidth = await link.evaluate(el => el.getBoundingClientRect().width);
+  await link.hover();
+  await capture('hover');
+  expect(await link.evaluate(el => el.getBoundingClientRect().width)).toBe(normalWidth);
+  expect(result.hover.height).toBe(result.normal.height);
+  expect(result.hover.borderWidth).toBe(result.normal.borderWidth);
+  await page.mouse.move(0, 0);
+  await page.keyboard.press('Tab');
+  await link.focus();
+  expect(await link.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+  await capture('focus');
+  await page.mouse.click(0, 0);
+  await link.hover();
+  await page.mouse.down();
+  await capture('active');
+  await page.mouse.move(0, 0);
+  await page.mouse.up();
+  return result;
+}
+
+test('R-BUTTON-04 | Both 404 actions match the existing About Me Resume CTA in every interaction state', async ({ page }, testInfo) => {
+  await page.goto('/#about-me');
+  await expectSection(page, 'about-me');
+  await expect(page.locator('.preloader')).toHaveCount(0);
+  const reference = await ctaStates(page, page.locator('#resumeLink'));
+  const measurements = { reference };
+  for (const path of ['/#blog123', '/404.html']) {
+    for (const name of ['Back to Home', 'View Resume']) {
+      // A fresh document removes prior pointer/keyboard focus from the next sample.
+      await page.goto(path);
+      if (path.includes('#')) {
+        await expectSection(page, 'not-found');
+        await expect(page.locator('.preloader')).toHaveCount(0);
+      }
+      const link = page.getByRole('link', { name, exact: true });
+      const measured = await ctaStates(page, link);
+      measurements[`${path}: ${name}`] = measured;
+      expect(measured).toEqual(reference);
+      const layout = await page.locator('.error-actions').evaluate(el => {
+        const container = el.getBoundingClientRect();
+        const [a, b] = [...el.querySelectorAll('a')].map(link => link.getBoundingClientRect());
+        return { contained: [a, b].every(box => box.left >= container.left - 1 && box.right <= container.right + 1),
+          separated: a.right <= b.left || a.bottom <= b.top, equalHeights: a.height === b.height };
+      });
+      expect(layout).toEqual({ contained: true, separated: true, equalHeights: true });
+    }
+    await testInfo.attach(`cta-${path.includes('#') ? 'hash' : 'standalone'}`, {
+      body: await page.screenshot({ animations: 'disabled' }), contentType: 'image/png'
+    });
+  }
+  await testInfo.attach('computed-cta-states', { body: Buffer.from(JSON.stringify(measurements, null, 2)), contentType: 'application/json' });
+});

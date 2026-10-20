@@ -16,7 +16,7 @@ test('R-404-02 | Given an unknown section, when opened, then an accessible recov
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     await testInfo.attach('hash-404', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
     await page.keyboard.press('Tab');
-    await expect(page.locator('#route-not-found .portfolio-button-primary')).toBeFocused();
+    await expect(page.getByRole('link', { name: 'Back to Home', exact: true })).toBeFocused();
     await page.keyboard.press('Enter');
     await expectSection(page, 'about-me');
   });

@@ -18,8 +18,8 @@
       '  <p class="error-code" aria-hidden="true">404</p>',
       '  <p>' + escapeHtml(options.message) + '</p>',
       '  <div class="error-actions">',
-      '    <a class="portfolio-button portfolio-button-primary" href="' + escapeHtml(options.homeHref) + '">Back to Home</a>',
-      '    <a class="portfolio-button portfolio-button-secondary" href="' + escapeHtml(options.resumeHref) + '">View Resume</a>',
+      '    <a class="resume-cta" href="' + escapeHtml(options.homeHref) + '">Back to Home</a>',
+      '    <a class="resume-cta" href="' + escapeHtml(options.resumeHref) + '">View Resume</a>',
       '  </div>',
       '  <p class="error-help"><a href="/llms.txt">Agent Guide</a> · <a href="/sitemap.xml">Sitemap</a></p>',
       '</div>'

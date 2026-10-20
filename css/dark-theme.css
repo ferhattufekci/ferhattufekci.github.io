@@ -92,9 +92,7 @@ body,
 .info-block-w-icon,
 .timeline-second-style .left-part,
 .timeline-second-style .right-part,
-.form-control,
-.portfolio-button-primary,
-.portfolio-button-secondary {
+.form-control {
   transition: var(--transition-theme);
 }
 
@@ -221,8 +219,6 @@ blockquote {
   color: var(--color-text-muted);
 }
 
-.portfolio-button-primary,
-.portfolio-button-secondary,
 button,
 input[type="button"],
 input[type="submit"] {
@@ -231,8 +227,6 @@ input[type="submit"] {
   border-color: var(--color-accent);
 }
 
-.portfolio-button-primary:hover,
-.portfolio-button-primary:focus-visible,
 button:hover,
 button:focus-visible,
 input[type="button"]:hover,
@@ -240,18 +234,6 @@ input[type="submit"]:hover {
   background-color: var(--color-accent);
   border-color: var(--color-accent);
   color: #fff;
-}
-
-.portfolio-button-secondary {
-  border-color: var(--color-border-strong);
-  background-color: var(--color-surface);
-}
-
-.portfolio-button-secondary:hover,
-.portfolio-button-secondary:focus-visible {
-  background-color: var(--color-border-strong);
-  border-color: var(--color-border-strong);
-  color: var(--color-text-primary);
 }
 
 .form-control,
