@@ -258,12 +258,12 @@ test('R-ICON-03 | Hover motion respects the input device and reduced-motion pref
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   if (mobile) {
     await theme.tap();
-    expect((await styles(theme)).transform).toBe('none');
+    await expect.poll(async () => (await styles(theme)).transform).toBe('none');
   } else {
     await theme.hover();
-    expect((await styles(theme)).transform).not.toBe('none');
+    await expect.poll(async () => (await styles(theme)).transform).not.toBe('none');
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    expect((await styles(theme)).transform).toBe('none');
+    await expect.poll(async () => (await styles(theme)).transform).toBe('none');
   }
   await page.goto('/#resume');
   await expectSection(page, 'resume');
