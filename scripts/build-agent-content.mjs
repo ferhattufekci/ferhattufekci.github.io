@@ -34,11 +34,11 @@ for (const [slug, page] of Object.entries(pages)) {
 
 const { document: homepage } = parseHTML(source);
 const sections = [...homepage.querySelectorAll('section.pt-page')].map(node => node.outerHTML).join('\n');
-const homepageContent = `<html><body><h1>Ferhat Tüfekçi</h1>${sections}<p><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/llms.txt">Agent guide</a></p></body></html>`;
+const homepageContent = `<html><body><h1>Ferhat Tüfekçi</h1>${sections}<p><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/llms.txt">Agent Guide</a></p></body></html>`;
 await save('index.md', toMarkdown(homepageContent, origin));
 
 await save('404.html', renderDocument({
-  title: '404 — Page not found',
+  title: '404 — Page Not Found',
   description: 'The requested page could not be found.',
   path: '/404.html', indexable: false, origin, themeBoot,
   body: renderErrorCard({
@@ -46,7 +46,7 @@ await save('404.html', renderDocument({
     homeHref: '/', resumeHref: '/#resume'
   })
 }));
-await save('404.md', '# 404 — Page not found\n\nThe requested page could not be found. Check the URL or follow the [agent guide](/llms.txt), [sitemap](/sitemap.xml), or [portfolio](/).\n');
+await save('404.md', '# 404 — Page Not Found\n\nThe requested page could not be found. Check the URL or follow the [agent guide](/llms.txt), [sitemap](/sitemap.xml), or [portfolio](/).\n');
 
 const urls = ['/', '/about/', '/contact/', '/privacy/'];
 await save('sitemap.xml', [

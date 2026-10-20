@@ -27,7 +27,7 @@ export function createPagesServer(root = ROOT) {
       res.end(req.method === 'HEAD' ? undefined : body);
     } catch {
       status = 404;
-      const body = await readFile(join(base, '404.html')).catch(() => Buffer.from('<h1>404 — Page not found</h1>'));
+      const body = await readFile(join(base, '404.html')).catch(() => Buffer.from('<h1>404 — Page Not Found</h1>'));
       res.writeHead(status, { 'Content-Type':'text/html; charset=utf-8', 'Content-Length': body.length });
       res.end(req.method === 'HEAD' ? undefined : body);
     }

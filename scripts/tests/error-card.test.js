@@ -14,8 +14,8 @@ test('R-404-01: shared error card exposes labelled recovery links and escapes te
   assert.equal(document.querySelector('script'), null);
   assert.equal(document.querySelector('.error-card > p:not(.error-code)').textContent, '<script>untrusted()</script>');
   assert.equal(document.querySelector('.error-code').getAttribute('aria-hidden'), 'true');
-  assert.equal(document.querySelector('.btn-primary').textContent, 'Back to home');
-  assert.equal(document.querySelector('.btn-primary').getAttribute('href'), '/?q="bad"');
+  assert.equal(document.querySelector('.portfolio-button-primary').textContent, 'Back to Home');
+  assert.equal(document.querySelector('.portfolio-button-primary').getAttribute('href'), '/?q="bad"');
   assert.equal(document.querySelectorAll('.error-actions a').length, 2);
 });
 test('R-404-02: route error view is idempotent and moves keyboard focus to its heading', async () => {

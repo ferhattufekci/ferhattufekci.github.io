@@ -18,10 +18,10 @@
       '  <p class="error-code" aria-hidden="true">404</p>',
       '  <p>' + escapeHtml(options.message) + '</p>',
       '  <div class="error-actions">',
-      '    <a class="btn btn-primary" href="' + escapeHtml(options.homeHref) + '">Back to home</a>',
-      '    <a class="btn btn-secondary" href="' + escapeHtml(options.resumeHref) + '">View resume</a>',
+      '    <a class="portfolio-button portfolio-button-primary" href="' + escapeHtml(options.homeHref) + '">Back to Home</a>',
+      '    <a class="portfolio-button portfolio-button-secondary" href="' + escapeHtml(options.resumeHref) + '">View Resume</a>',
       '  </div>',
-      '  <p class="error-help"><a href="/llms.txt">Agent guide</a> · <a href="/sitemap.xml">Sitemap</a></p>',
+      '  <p class="error-help"><a href="/llms.txt">Agent Guide</a> · <a href="/sitemap.xml">Sitemap</a></p>',
       '</div>'
     ].join('\n');
   }

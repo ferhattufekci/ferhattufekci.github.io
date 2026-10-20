@@ -13,7 +13,7 @@
     page.innerHTML = [
       '<div class="section-inner custom-page-content">',
       '  <div class="section-title-block second-style">',
-      '    <h2 id="route-error-title" class="section-title" tabindex="-1">404 — Page not found</h2>',
+      '    <h2 id="route-error-title" class="section-title" tabindex="-1">404 — Page Not Found</h2>',
       '  </div>',
       '  <div class="section-content">',
       root.PortfolioErrorCard.render({

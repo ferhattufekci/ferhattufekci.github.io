@@ -70,7 +70,7 @@ export function renderDocument({ title, description, path, body, indexable = tru
 ${body}
     <footer>
       <a href="/">Portfolio</a>
-      <a href="/llms.txt">Agent guide</a>
+      <a href="/llms.txt">Agent Guide</a>
       <a href="/sitemap.xml">Sitemap</a>
     </footer>
   </main>

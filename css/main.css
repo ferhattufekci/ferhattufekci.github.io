@@ -395,8 +395,8 @@ textarea.form-control:focus {
   text-align: center;
 }
 
-.btn-primary,
-.btn-secondary,
+/* Keep portfolio variants separate from Bootstrap's state-specific button rules. */
+.portfolio-button,
 button,
 input[type="button"],
 input[type="submit"] {
@@ -421,26 +421,43 @@ input[type="submit"] {
   transition: all 0.3s ease-in-out;
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
+.portfolio-button {
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.portfolio-button:focus-visible {
+  outline: 2px solid var(--color-accent, #0099e5);
+  outline-offset: 4px;
+}
+
+.portfolio-button:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px var(--color-card-shadow, rgba(0, 0, 0, 0.06));
+}
+
+.portfolio-button-primary:hover,
+.portfolio-button-primary:focus-visible,
 button:hover,
-button:focus,
+button:focus-visible,
 input[type="button"]:hover,
-input[type="button"]:focus,
+input[type="button"]:focus-visible,
 input[type="submit"]:hover,
-input[type="submit"]:focus {
+input[type="submit"]:focus-visible {
   background-color: #0099e5;
   border-color: #0099e5;
   color: #fff;
 }
 
-.btn-secondary {
+.portfolio-button-secondary {
   border-color: #d5d5d5;
   background-color: #fff;
 }
 
-.btn-secondary:hover,
-.btn-secondary:focus {
+.portfolio-button-secondary:hover,
+.portfolio-button-secondary:focus-visible {
   color: #222;
   border-color: #d5d5d5;
   background-color: #d5d5d5;
@@ -1028,6 +1045,12 @@ blockquote {
   padding: 0;
   outline: none;
   transition: background-color 0.2s ease-in-out;
+}
+
+.menu-toggle:focus {
+  /* Pointer focus stays neutral; keyboard focus receives the visible ring below. */
+  outline: 2px solid transparent;
+  outline-offset: 3px;
 }
 
 .menu-toggle:hover,

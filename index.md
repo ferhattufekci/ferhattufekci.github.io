@@ -367,4 +367,4 @@ Stay In Touch
 
 ](https://linktr.ee/ferhattufekci "Ferhat Tüfekçi links")
 
-[About](https://ferhattufekci.github.io/about/) · [Contact](https://ferhattufekci.github.io/contact/) · [Privacy](https://ferhattufekci.github.io/privacy/) · [Agent guide](https://ferhattufekci.github.io/llms.txt)
+[About](https://ferhattufekci.github.io/about/) · [Contact](https://ferhattufekci.github.io/contact/) · [Privacy](https://ferhattufekci.github.io/privacy/) · [Agent Guide](https://ferhattufekci.github.io/llms.txt)

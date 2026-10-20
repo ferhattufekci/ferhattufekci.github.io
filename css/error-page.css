@@ -29,7 +29,7 @@
   margin: 24px 0;
 }
 
-.error-actions .btn {
+.error-actions .portfolio-button {
   margin: 0;
   white-space: normal;
 }
@@ -72,7 +72,7 @@
     flex-direction: column;
   }
 
-  .error-actions .btn {
+  .error-actions .portfolio-button {
     width: 100%;
   }
 

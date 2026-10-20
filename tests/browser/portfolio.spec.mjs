@@ -12,11 +12,11 @@ test('R-404-02 | Given an unknown section, when opened, then an accessible recov
     await expect(page.locator('.preloader')).toHaveCount(0);
   });
   await test.step('Then the heading receives focus and keyboard navigation can recover', async () => {
-    await expect(page.getByRole('heading', { name: '404 — Page not found', exact: true })).toBeFocused();
+    await expect(page.getByRole('heading', { name: '404 — Page Not Found', exact: true })).toBeFocused();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     await testInfo.attach('hash-404', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
     await page.keyboard.press('Tab');
-    await expect(page.locator('#route-not-found .btn-primary')).toBeFocused();
+    await expect(page.locator('#route-not-found .portfolio-button-primary')).toBeFocused();
     await page.keyboard.press('Enter');
     await expectSection(page, 'about-me');
   });
@@ -31,7 +31,7 @@ test('R-NAV-02 | Given malformed or unknown routes, when changed, then no blank 
       await expectSection(page, 'not-found');
     });
   }
-  await page.getByRole('link', { name: 'View resume', exact: true }).click();
+  await page.getByRole('link', { name: 'View Resume', exact: true }).click();
   await expectSection(page, 'resume');
 });
 
@@ -66,7 +66,7 @@ test('R-NAV-05 | Given animation in progress, when an invalid route interrupts i
     location.hash = '#resumes';
   });
   await expectSection(page, 'not-found');
-  await page.getByRole('link', { name: 'View resume', exact: true }).click();
+  await page.getByRole('link', { name: 'View Resume', exact: true }).click();
   await expectSection(page, 'resume');
 });
 
@@ -81,7 +81,7 @@ test('R-NAV-07 | Given repeated initialization, when navigating, then one contro
   await expect(page.locator('#page-ajax-loaded')).toHaveCount(1);
   await expect(page.locator('#route-not-found')).toHaveCount(1);
   await expectSection(page, 'not-found');
-  await page.getByRole('link', { name: 'View resume', exact: true }).click();
+  await page.getByRole('link', { name: 'View Resume', exact: true }).click();
   await expectSection(page, 'resume');
 });
 
@@ -95,10 +95,10 @@ test('R-404-01 | Given a missing path, when HTML or Markdown is requested, then 
     expect(await response.text()).toContain('/llms.txt');
   }
   expect((await page.goto(paths[1])).status()).toBe(404);
-  await expect(page.getByRole('heading', { name: '404 — Page not found', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '404 — Page Not Found', exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await testInfo.attach('path-404', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
-  await page.getByRole('link', { name: 'View resume', exact: true }).click();
+  await page.getByRole('link', { name: 'View Resume', exact: true }).click();
   await expectSection(page, 'resume');
 });
 

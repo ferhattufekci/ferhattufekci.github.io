@@ -93,8 +93,8 @@ body,
 .timeline-second-style .left-part,
 .timeline-second-style .right-part,
 .form-control,
-.btn-primary,
-.btn-secondary {
+.portfolio-button-primary,
+.portfolio-button-secondary {
   transition: var(--transition-theme);
 }
 
@@ -221,8 +221,8 @@ blockquote {
   color: var(--color-text-muted);
 }
 
-.btn-primary,
-.btn-secondary,
+.portfolio-button-primary,
+.portfolio-button-secondary,
 button,
 input[type="button"],
 input[type="submit"] {
@@ -231,10 +231,10 @@ input[type="submit"] {
   border-color: var(--color-accent);
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
+.portfolio-button-primary:hover,
+.portfolio-button-primary:focus-visible,
 button:hover,
-button:focus,
+button:focus-visible,
 input[type="button"]:hover,
 input[type="submit"]:hover {
   background-color: var(--color-accent);
@@ -242,13 +242,13 @@ input[type="submit"]:hover {
   color: #fff;
 }
 
-.btn-secondary {
+.portfolio-button-secondary {
   border-color: var(--color-border-strong);
   background-color: var(--color-surface);
 }
 
-.btn-secondary:hover,
-.btn-secondary:focus {
+.portfolio-button-secondary:hover,
+.portfolio-button-secondary:focus-visible {
   background-color: var(--color-border-strong);
   border-color: var(--color-border-strong);
   color: var(--color-text-primary);
