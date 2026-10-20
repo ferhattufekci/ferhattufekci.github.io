@@ -1,5 +1,9 @@
 # ferhattufekci.github.io
 
+Ajan hazırlığı, GitHub Pages üzerinde yayınlama ve doğrulama: [Türkçe uygulama notları](AGENT-READINESS-TR.md).
+
+Test katmanları, BDD senaryoları ve yayın kalite kapısı: [Test stratejisi](TEST-STRATEJISI.md).
+
 **[🇬🇧 English](#english) | [🇹🇷 Türkçe](#türkçe)**
 
 ---
