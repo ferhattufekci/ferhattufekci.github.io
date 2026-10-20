@@ -135,7 +135,7 @@ export async function verify(base, { allFiles = false, fetchImpl = fetch } = {})
   // presented as a successful content negotiation or MCP implementation.
   for (const homepage of [true, false]) {
     const samples = httpProbes.filter(probe => probe.accept === 'text/markdown' && (probe.path === '/') === homepage);
-    const negotiated = samples.every(result => !result.error && result.contentType?.startsWith('text/markdown') && /(?:^|,\s*)Accept(?:\s*,|\s*$)/i.test(result.vary || '') && result.bodyCharacters > 20 && result.status === (homepage ? 200 : 404));
+    const negotiated = samples.every(result => !result.error && /^text\/markdown(?:;|$)/i.test(result.contentType || '') && /(?:^|,\s*)Accept(?:\s*,|\s*$)/i.test(result.vary || '') && result.bodyCharacters > 20 && result.status === (homepage ? 200 : 404));
     const first = samples[0];
     limitations.push({ requirement: homepage ? 'Homepage Markdown negotiation' : 'Markdown error response', supported: negotiated,
       status: first.status, contentType: first.contentType, vary: first.vary, samples,

@@ -71,3 +71,13 @@ test('R-HTTP-05: network failure is a failed check, not an unsupported capabilit
   assert.equal(probe.error.kind, 'network');
   assert.equal(probe.status, undefined);
 });
+
+test('R-HTTP-06: a Markdown-looking MIME prefix is not a negotiated Markdown representation', async () => {
+  const report = await verify(origin, { fetchImpl: (url, options) => {
+    if (new URL(url).pathname !== '/' || options.headers.Accept !== 'text/markdown') return fetch(url, options);
+    const result = response(url, '# This is a sufficiently long test representation', 'text/markdown-invalid');
+    result.headers.set('Vary', 'Accept');
+    return Promise.resolve(result);
+  } });
+  assert.equal(report.limitations.find(item => item.requirement === 'Homepage Markdown negotiation').supported, false);
+});
