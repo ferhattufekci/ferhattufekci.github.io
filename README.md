@@ -1,6 +1,6 @@
 # ferhattufekci.github.io
 
-Ajan hazırlığı, GitHub Pages üzerinde yayınlama ve doğrulama: [Türkçe uygulama notları](AGENT-READINESS-TR.md).
+Ajan hazırlığı, GitHub Pages üzerinde yayınlama ve doğrulama: [Bakım rehberi](#ajan-hazırlığı-ve-doğrulama).
 
 Test katmanları, BDD senaryoları ve yayın kalite kapısı: [Test stratejisi](TEST-STRATEJISI.md).
 
@@ -124,13 +124,13 @@ Add the repo name to the `EXCLUDE` set in `scripts/fetch-github.js`.
 
 ### SEO / AI Discoverability (GEO & AEO)
 
-The Blog and Projects sections are populated client-side via `fetch()`, which Googlebot renders but many AI answer-engine crawlers (GPTBot, PerplexityBot, and others) don't — they read raw HTML only. Several things exist specifically to make this site's content visible to those crawlers too:
+The Blog and Projects sections use client-side `fetch()`. Raw HTML fallbacks and static Markdown also make their summaries readable to clients that do not execute JavaScript. These files support discovery; they do not guarantee indexing or inclusion in an AI answer.
 
 | What | Where | Purpose |
 |---|---|---|
 | `<noscript>` fallback | `index.html`, inside the Projects and Blog subpages | Real titles/links/descriptions in the raw HTML for crawlers that don't execute JavaScript. Invisible to normal browsers with JS enabled — no visual or duplicate-content impact. |
 | `llms.txt` | site root | Plain-text index (the emerging `llms.txt` convention) summarizing who this site is about, its core pages, and current articles/projects — meant to be fetched directly by LLM-based answer engines. |
-| `scripts/build-static-seo.js` | `scripts/` | Regenerates both of the above from `data/github-repos.json` and `data/medium-all.json`, so they can't go stale. Also bumps `sitemap.xml`'s `<lastmod>`, but only on runs where it actually changed something. |
+| `scripts/build-static-seo.js` and `scripts/build-agent-content.mjs` | `scripts/` | Regenerate fallback HTML, llms.txt, Markdown and the sitemap from source content; unchanged files are not rewritten. |
 | `Person.knowsAbout` | JSON-LD in `index.html` `<head>` | Topical signals for search/AI, drawn from the existing `<meta name="keywords">` list. |
 | AI crawler allowlist | `robots.txt` | Explicitly lists GPTBot, ClaudeBot, PerplexityBot, Google-Extended, and others. Behavior is unchanged (the wildcard `Allow: /` already covered them) — this documents the opt-in. |
 
@@ -281,12 +281,12 @@ Repolar, GitHub Actions aracılığıyla her Pazartesi otomatik olarak çekilir.
 
 ### SEO / AI Keşfedilebilirliği (GEO & AEO)
 
-Blog ve Projects bölümleri client-side `fetch()` ile dolduruluyor; Googlebot bunu render eder ama GPTBot, PerplexityBot gibi birçok AI cevap motoru crawler'ı render etmez — sadece ham HTML'i okur. Bu içeriği o crawler'lara da görünür kılmak için özel olarak eklenenler:
+Blog ve Projects bölümleri istemci tarafında `fetch()` kullanır. Ham HTML yedeği ve statik Markdown, JavaScript çalıştırmayan istemcilerin de özetleri okumasını sağlar. Bu dosyalar keşfi destekler; indekslenme veya AI yanıtlarında görünürlük garantisi değildir.
 
 | Ne | Nerede | Amacı |
 |---|---|---|
 | `<noscript>` yedek içerik | `index.html`, Projects ve Blog alt sayfalarının içinde | JavaScript çalıştırmayan crawler'lar için ham HTML'de gerçek başlık/link/açıklama. JS'li normal tarayıcılarda görünmez — görsel veya duplicate-content etkisi yok. |
-| `llms.txt` | site köküne | Bu sitenin ne olduğunu, ana sayfalarını ve güncel makale/proje listesini özetleyen düz metin dosyası (gelişen `llms.txt` standardı) — LLM tabanlı cevap motorları tarafından doğrudan çekilmesi amaçlanıyor. |
+| `llms.txt` | site köküne | Siteyi, uygun kullanım durumlarını ve kanıt bağlantılarını özetleyen düz metin; `llms.txt` bir öneridir, evrensel zorunluluk değildir. |
 | `scripts/build-static-seo.js` ve `scripts/build-agent-content.mjs` | `scripts/` | Yedek HTML, `llms.txt`, Markdown ve sitemap'i kaynak içerikten yeniden üretir; değişmeyen dosyalar yeniden yazılmaz. |
 | `Person.knowsAbout` | `index.html` `<head>`'indeki JSON-LD | Sitede zaten var olan `<meta name="keywords">` listesinden türetilmiş, arama/AI için konu sinyalleri. |
 | AI crawler izin listesi | `robots.txt` | GPTBot, ClaudeBot, PerplexityBot, Google-Extended ve diğerlerini açıkça listeler. Davranış değişmedi (joker `Allow: /` zaten kapsıyordu) — bu sadece niyeti belgeliyor. |
@@ -319,3 +319,34 @@ Ticari kullanım, yeniden dağıtım veya türev çalışmalar için önceden ya
 [![Yazar](https://img.shields.io/badge/yazar-ferhattufekci-red)](https://github.com/ferhattufekci)
 [![LinkedIn](https://img.shields.io/badge/iletişim-linkedin-blue)](https://www.linkedin.com/in/ferhattufekci/)
 [![Medium](https://img.shields.io/badge/blog-medium-black)](https://medium.com/@ferhattufekci)
+
+## Ajan hazırlığı ve doğrulama
+
+Site `https://ferhattufekci.github.io` adresinde GitHub Pages üzerinde yayımlanır. Pages `build_type=workflow` kullanır: `pages.yml` → ortak kalite işi → yalnız public dosyalardan `.pages-site` artifact'i → deploy → canlı GET doğrulaması. `.nojekyll` korunur. Node yalnız üretim/test içindir. Kalite başarısızsa yayın yapılmaz; GITHUB_TOKEN veri commitleri `workflow_run` üzerinden tekrar sınanır.
+
+| Kaynak | Üretici / tüketici |
+| --- | --- |
+| Medium RSS / GitHub API | `scripts/fetch-medium.js`, `scripts/fetch-github.js` → `data/*.json`; tarayıcı Blog/Projects ve üreticiler bu snapshot'ları okur |
+| `data/github-repos.json`, `data/medium-all.json` | `build-static-seo.js` → `index.html` içindeki işaretli noscript alanları ve `llms.txt` listeleri |
+| `index.html`, `content/trust-pages.json`, `js/theme-init.js`, `js/error-card.js` | `build-agent-content.mjs` → `index.md`, güven sayfalarının HTML/Markdown'ı, `404.html`, `404.md`, `sitemap.xml` |
+| `llms.txt`, `agent-instructions.md` | Elle bakımı yapılan kullanım rehberi; llms.txt içindeki işaretli listeler otomatik üretilir |
+
+Üretilen dosyayı tek başına düzenlemeyin; kaynağını güncelleyip `npm run generate` çalıştırın. Person açıklaması ve statik iletişim bağlantıları `index.html` içindedir. Trust içerikleri `content/trust-pages.json` içinden güncellenir; gizlilik metni mevcut Analytics, AdSense, Calendly ve tarayıcı depolamasını açıklar. Sağlayıcı/rıza yönetimi ayarları site sahibinin kararıdır.
+
+**Platform sınırları:** GitHub Pages aynı URL'nin gövdesini ve Content-Type'ını Accept'e göre değiştiren uygulama kodu çalıştırmaz; [özel MIME ayarı da sunmaz](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#mime-types-on-github-pages). `/index.md` faydalı bir alternatiftir; ana sayfada Markdown müzakeresi değildir. `/404.html`, olmayan kök/iç içe yollarda açıklamalı HTML ve gerçek 404 sağlar; Markdown hata yanıtı sağlamaz. Hash sunucuya gitmediği için `/#resumes` HTTP 200 içinde istemci 404 görünümüdür. `.md` MIME türü canlı yanıttan ölçülür.
+
+**MCP:** Bu portföy ürün API'si veya tool servisi ilan etmez. [Smithery `github` kaydı](https://smithery.ai/servers/GitHub), ana sayfası github.com olan GitHub platformu entegrasyonudur; portföyün servisi olduğuna kanıt değildir. Denetimin tam registry kimliği/eşleştirme yöntemi paylaşılmadığından yanlış eşleştirmenin mekanizması doğrulanamaz. [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) POST/JSON-RPC çalışma zamanı gerektirir; statik JSON handshake değildir. Güncel sürümde [server/discover](https://modelcontextprotocol.io/specification/2026-07-28/server/discover) ve istek başına metadata vardır; `initialize` önceki sürümlere aittir. İncelenen transport/discovery bölümleri `/.well-known/mcp` zorunluluğu tanımlamaz. Bu audit yoluna dosya eklemek bir MCP servisi oluşturmaz. Pages üzerinde harici altyapısız sunucu kurulmaz; sahte manifest eklenmez.
+
+```powershell
+npm ci
+npx playwright install chromium
+npm run build
+npm run verify -- --local --artifact --all --output=verification-local.json
+npm run verify -- https://ferhattufekci.github.io --all --output=verification-production.json
+```
+
+Doğrulayıcı her koşuda public envanterde bulunmayan yeni UUID kök/iç içe yollar üretir; ana sayfayı ve bu yolları iki Accept değeriyle GET üzerinden ölçer. Durum, final URL, Content-Type, Vary ve gövde kanıtı kaydedilir. Ağ, HTTP ve içerik/biçim hataları ayrıdır; 200 HTML fallback geçerli JSON sayılmaz. İmkânsız platform beklentileri `limitations` içinde kalır, geçmiş kontrol sayılmaz ve normal CI'ı sürekli kırmaz. Yerel sunucu gerçek Pages header davranışını kanıtlamaz; yayın sonrası rapor ve Actions commit'i birlikte kontrol edilir.
+
+Temizlikte bu rehbere taşınan mükerrer uygulama notu kaldırılmıştır. Test stratejisi, doğrulama/ads/crawler dosyaları, CSS tarafından kullanılan eski font formatları ve ayrı CI kontrol adları korunur; import edilmemeleri dış kullanımlarının olmadığı anlamına gelmez. Yeni Is Agentic puanı ancak yeni Ora taramasıyla bilinebilir.
+
+Biçim kaynakları: [llms.txt önerisi](https://llmstxt.org/), [GitHub Pages özel 404](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site). Riskler, kategori karar tablosu, FIRST ve BDD kapsamı [test stratejisindedir](TEST-STRATEJISI.md).
