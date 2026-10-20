@@ -1,4 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
+import { randomUUID } from 'node:crypto';
 import { test, expect, expectSection, isolateThirdParties, navigateToSection } from './fixtures.mjs';
 
 test('R-404-02 | Given an unknown section, when opened, then an accessible recovery view appears', async ({ page }, testInfo) => {
@@ -85,13 +86,15 @@ test('R-NAV-07 | Given repeated initialization, when navigating, then one contro
 });
 
 test('R-404-01 | Given a missing path, when HTML or Markdown is requested, then the true status stays 404', async ({ page, request }, testInfo) => {
-  for (const accept of ['text/html', 'text/markdown']) {
-    const response = await request.get('/deep/missing/path', { headers: { Accept: accept } });
+  const token = randomUUID();
+  const paths = [`/__bdd-missing-${token}`, `/__bdd-missing-${token}/deep/path`];
+  for (const path of paths) for (const accept of ['text/html', 'text/markdown']) {
+    const response = await request.get(path, { headers: { Accept: accept } });
     expect(response.status()).toBe(404);
     expect(response.headers()['content-type']).toContain('text/html');
     expect(await response.text()).toContain('/llms.txt');
   }
-  expect((await page.goto('/deep/missing/path')).status()).toBe(404);
+  expect((await page.goto(paths[1])).status()).toBe(404);
   await expect(page.getByRole('heading', { name: '404 — Page not found', exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await testInfo.attach('path-404', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });

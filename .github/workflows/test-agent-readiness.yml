@@ -23,8 +23,11 @@ jobs:
         run: npm ci
       - name: Generate deterministic content
         run: npm run generate
+      - name: Prepare test reports
+        run: mkdir -p work/qa
       - name: Fail fast on unit, component, and HTTP regressions
-        run: npm run test:unit
+        shell: bash
+        run: npm run test:unit | tee work/qa/unit.tap
       - name: Install browser and OS dependencies
         run: npx playwright install --with-deps chromium
       - name: Run BDD and accessibility checks

@@ -18,6 +18,7 @@ Bu kişisel portföy için öncelik, ziyaretçinin doğru bölüme ulaşması ve
 | R-DEPLOY-01: kaynak/test/bağımlılıkların yanlışlıkla yayımlanması | Yüksek | Yalnız public dosyalardan artifact; içerik eşitliği ve özel dizinlerin yokluğu |
 | R-CI-01: bütün Git push denemeleri başarısızken yanlış başarılı iş sonucu | Yüksek | Gerçek Bash retry bloğu, izole git/sleep taklitleriyle geçici başarı ve tükenen denemeler için sınanır |
 | R-FIRST-01/02: pahalı kontrollerin erken çalışması veya testlerin ortak dosyaları değiştirmesi | Orta | CI adım sırası; izole proje kökünde içerik üretimi; asıl kaynağın değişmemesi |
+| R-HTTP-01–05: eski probe önbelleği, soft-404, yanlış MIME, bozuk XML/JSON ve ağ hatasının karışması | Yüksek | Her koşuda UUID kök/iç içe GET matrisi; bilerek bozulmuş yanıtlar; header/gövde kanıtı; strict XML parser; platform sınırları ayrı tutulur |
 | R-FILTER-01–14: Blog/Projects filtrelerinin birbirini etkilemesi veya yanlış içerik göstermesi | Yüksek | Aşağıdaki karar tablosu, durum geçişleri, gecikmeli/bozuk veri, responsive etiketler ve sayfalama sınırları; altı tarayıcı projesinde çalışır |
 | JSON-LD, llms.txt, sitemap, JSON snapshot ve bağlantılar | Yüksek | Bütün amaçlanan public dosyalarda HTTP ve biçim kontrolleri |
 | Mevcut filtre ve Medium davranışları | Regresyon | Önceki kategori ve makale testleri de bütün birim test koşularına dahildir |
@@ -62,6 +63,7 @@ FIRST ilkeleri bu proje için şu şekilde uygulanır:
 - Sabit `sleep` yoktur; Playwright'ın yeniden deneyen durum doğrulamaları kullanılır. Test koşusu tekrarları `0` olarak ayarlıdır; aralıklı hata otomatik tekrarlarla gizlenmez.
 - Harici Analytics/AdSense/Calendly kaynakları izole edilir. Testler dış servisin erişilebilirliğini veya randevu oluşturmayı doğrulamaz ve mesaj göndermez.
 - Hata halinde trace, ekran görüntüsü ve video; bütün koşularda HTML, JUnit ve JSON raporları üretilir. CI artifact saklama süresi 14 gündür.
+- Birim testlerinin TAP çıktısı da CI artifact'ine kaydedilir. Bash `pipefail` sayesinde raporu `tee` ile kaydetmek başarısız testi başarılıya çevirmez.
 - axe denetimi yeni ekranları kapsar. Tüm eski portföy için WCAG sertifikasyonu değildir; otomasyon bütün kullanılabilirlik veya ekran okuyucu sorunlarını yakalayamaz.
 - Windows'ta hazırlanmış piksel görüntüleri Linux CI için eşik olarak kullanılmaz. Ekran görüntüleri inceleme kanıtıdır; responsive taşma, semantik, odak ve kontrast otomatik doğrulanır. Önceki sürümle tipografi/geometri karşılaştırması ayrıca teslim kanıtlarında bulunur.
 
