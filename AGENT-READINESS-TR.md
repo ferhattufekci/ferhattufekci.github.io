@@ -13,6 +13,7 @@ Verilen RAR arşivindeki `8353e8a` sürümü incelenerek yalnızca GitHub Pages 
 - `/#resumes`, `/#res`, bozuk kodlanmış hash ve tanımlı olmayan alt bölüm adresleri site içinde 404 görünümüyle karşılanır. Mevcut yan menü, tema ve mobil düzen korunur. Ana sayfa/özgeçmiş bağlantıları, geri/ileri ve geçerli menü yolları çalışır. Geçersiz hash hiçbir CSS seçicisine eklenmez.
 - Hata görünümü ve güven sayfaları sitenin kayıtlı açık/koyu tema tercihini kullanır; tema düğmesi ve mobil düzen desteklenir.
 - GitHub/Medium senkronizasyon iş akışları artık veriyle birlikte Markdown çıktılarını da yeniden üretip kaydeder. Yeni CI iş akışı birim/HTTP testlerini ve tarayıcı kontrollerini çalıştırır.
+- Blog kategori/dil durumu ile Projects kategori ve starred ilerlemesi bağımsız olarak sınanır. Veri gelmeden yapılan seçim artık erken “sonuç yok” ekranı göstermez; bilinmeyen proje kategorisinin kart ve filtre eşleşmesi aynı varsayılanı kullanır.
 
 ## GitHub Pages nedeniyle açık kalan denetimler
 
@@ -28,7 +29,7 @@ Denetimde anılan Smithery `github` kaydının bu kişisel portföye ait olduğu
 
 ## Dosyaları yayımlama
 
-Paket kökündeki site dosyalarını mevcut GitHub Pages deposuna ekleyin; `.nojekyll` dosyasını koruyun. Testleri yayın için zorunlu kılmak amacıyla **Settings → Pages → Source: GitHub Actions** seçilmelidir. Yeni `pages.yml` yalnız başarılı kalite kontrolünden sonra `.pages-site` artifact'ini yayımlar. Node.js ve npm yalnızca içerik üretimi ve test içindir; site ziyaretçileri için bir Node sunucusu gerekmez. Hosting GitHub Pages olarak kalır.
+Değişiklikler mevcut GitHub deposuna atomik commitler halinde gönderilir. **Settings → Pages → Source: GitHub Actions** etkinleştirilmiştir. `pages.yml` yalnız başarılı kalite kontrolünden sonra `.pages-site` artifact'ini yayımlar. Node.js ve npm yalnızca içerik üretimi ve test içindir; site ziyaretçileri için bir Node sunucusu gerekmez. Hosting GitHub Pages olarak kalır. `.nojekyll` dosyası yayın paketinde korunur.
 
 ```powershell
 npm ci
@@ -56,7 +57,7 @@ Canlı yayın durumu GitHub Actions'taki son başarılı deploy ve yayın sonras
 
 ## Kalan kararlar
 
-- Güncellenen dosyaların GitHub deposuna yayımlanması için depo erişimi gerekir.
+- Depo erişimi ve GitHub Actions yayını bu çalışma sırasında doğrulanmıştır; ek hosting veya servis kimlik bilgisi gerekmez.
 - Pages Source ayarı GitHub Actions olarak yapılandırılmıştır. Yayın, kalite işinin başarıyla tamamlanmasına bağlıdır; her yayın için son Actions sonucu kontrol edilmelidir.
 - Gizlilik metni gerçek entegrasyonları belgeler; Analytics/AdSense rıza yönetimi ve sağlayıcı ayarları ayrıca sahibinin kararıdır.
 - GitHub Pages kısıtları kabul edildiği için Markdown müzakeresi ve MCP bu teslimatın açık kalan maddeleridir; başka hosting önerilmiyor.

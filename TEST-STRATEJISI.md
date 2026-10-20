@@ -17,6 +17,8 @@ Bu kişisel portföy için öncelik, ziyaretçinin doğru bölüme ulaşması ve
 | R-A11Y-01: yeni ekranlarda erişilebilirlik kusurları | Yüksek | Yeni 404 ve güven sayfalarında axe WCAG A/AA kontrolleri; gerçek klavye/odak senaryosu |
 | R-DEPLOY-01: kaynak/test/bağımlılıkların yanlışlıkla yayımlanması | Yüksek | Yalnız public dosyalardan artifact; içerik eşitliği ve özel dizinlerin yokluğu |
 | R-CI-01: bütün Git push denemeleri başarısızken yanlış başarılı iş sonucu | Yüksek | Gerçek Bash retry bloğu, izole git/sleep taklitleriyle geçici başarı ve tükenen denemeler için sınanır |
+| R-FIRST-01/02: pahalı kontrollerin erken çalışması veya testlerin ortak dosyaları değiştirmesi | Orta | CI adım sırası; izole proje kökünde içerik üretimi; asıl kaynağın değişmemesi |
+| R-FILTER-01–13: Blog/Projects filtrelerinin birbirini etkilemesi veya yanlış içerik göstermesi | Yüksek | Aşağıdaki karar tablosu, durum geçişleri, gecikmeli/bozuk veri ve sayfalama sınırları; altı tarayıcı projesinde çalışır |
 | JSON-LD, llms.txt, sitemap, JSON snapshot ve bağlantılar | Yüksek | Bütün amaçlanan public dosyalarda HTTP ve biçim kontrolleri |
 | Mevcut filtre ve Medium davranışları | Regresyon | Önceki kategori ve makale testleri de bütün birim test koşularına dahildir |
 
@@ -25,6 +27,25 @@ Bu kişisel portföy için öncelik, ziyaretçinin doğru bölüme ulaşması ve
 Yeni tema regresyonu ve erişilebilirlik kontrast kontrolü önce başarısız çalıştırıldı, ardından düzeltildi. Bütün eski kodun başlangıçtan beri TDD ile yazıldığı iddia edilmez. Yeni ortak modüller saf fonksiyonlar veya küçük DOM bileşenleri olarak doğrudan sınanabilir.
 
 BDD senaryoları Playwright Test içinde `Given / When / Then` adımlarıyla yürütülür; ayrı bir Cucumber çalışma zamanı kullanılmaz. Altı proje, 1440/390/320 piksel ile açık/koyu tema kombinasyonlarını kapsar. Mobil projelerde dokunmatik giriş ve mobil viewport da taklit edilir. Gerçek telefon donanımı veya Safari/Firefox kapsamı iddia edilmez.
+
+## Blog ve Projects regresyon kapsamı
+
+`tests/browser/categories.spec.mjs`, istekleri test başına sabit JSON snapshot'larıyla karşılar. Medium/GitHub hesabında içerik değişmesi test beklentilerini değiştirmez. Her senaryo yeni context ile başlar; senaryoların sırasına ve önceki seçime bağımlılık yoktur.
+
+| Karar / geçiş | Otomatik kontrol |
+| --- | --- |
+| Blog dört kategori × üç dil | 12 kombinasyonda tam başlık listesi, en yeniden eskiye sıralama, dil/kategori rozetleri ve tek aktif/aria-pressed seçimi |
+| Projects dört kategori | Sabitlenmiş + normal, yalnız sabitlenmiş, yalnız normal kartlar; bölüm görünürlüğü ve etiketler |
+| Sayfalar arası bağımsızlık | Projects dört kategori × Blog dört kategori × üç dil: 48 durum; diğer sayfanın seçimi değişmez, geri dönüşte kartlar doğrulanır |
+| Durum geçişleri | Menü, geri/ileri, tema değişimi, tekrar ziyaret, seri filtre değişiklikleri ve iç içe etiket hedeflerine tıklama |
+| Boş sonuç ve kurtarma | Dil/kategori kesişiminde sıfır sonuç, boş proje kategorisi, tüm katalogların boş olması ve All'a dönüş |
+| Hatalı veri | Ağ hatası, geçersiz JSON, dizi olmayan yanıt, kısmi kategori eksikliği; bir sayfadaki hata diğer sayfayı bozmaz |
+| Geç gelen veri | İstek tamamlanmadan seçim yapılır; yükleme göstergesi korunur ve son seçimle doğru sonuç üretilir |
+| Tanınmayan proje kategorisi | Eksik/yeni/prototip isimli metadata kartta ve filtrede aynı Software varsayılanına gider |
+| Starred sınır değerleri | 0, 1, 20, 21, 40, 41 kayıt; kalan sayı, 20'lik artış, tekrar olmaması, kategori/gezinme sırasında ilerlemenin korunması |
+| Boş owned / dolu starred kataloğu | Sahip olunan depolar boşken starred kartlar ve sayfalama kullanılabilir kalır |
+
+Gecikmeli veride hatalı boş ekran ve tutarsız varsayılan kategori önce üç başarısız tarayıcı testiyle gösterildi, ardından düzeltildi. Bütün olası veri ve kullanıcı davranışlarının tüketildiği iddia edilmez; tanımlı filtre durum uzayı ve yüksek riskli sınırlar açıkça kapsanır.
 
 ## Güvenilir ve bakımı yapılabilir testler
 

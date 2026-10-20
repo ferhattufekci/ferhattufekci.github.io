@@ -287,7 +287,7 @@ Blog ve Projects bölümleri client-side `fetch()` ile dolduruluyor; Googlebot b
 |---|---|---|
 | `<noscript>` yedek içerik | `index.html`, Projects ve Blog alt sayfalarının içinde | JavaScript çalıştırmayan crawler'lar için ham HTML'de gerçek başlık/link/açıklama. JS'li normal tarayıcılarda görünmez — görsel veya duplicate-content etkisi yok. |
 | `llms.txt` | site köküne | Bu sitenin ne olduğunu, ana sayfalarını ve güncel makale/proje listesini özetleyen düz metin dosyası (gelişen `llms.txt` standardı) — LLM tabanlı cevap motorları tarafından doğrudan çekilmesi amaçlanıyor. |
-| `scripts/build-static-seo.js` | `scripts/` | Yukarıdaki ikisini `data/github-repos.json` ve `data/medium-all.json`'dan yeniden üretir, böylece bayatlayamazlar. Ayrıca `sitemap.xml`'in `<lastmod>`'unu günceller — ama yalnızca gerçekten bir şey değiştiyse. |
+| `scripts/build-static-seo.js` ve `scripts/build-agent-content.mjs` | `scripts/` | Yedek HTML, `llms.txt`, Markdown ve sitemap'i kaynak içerikten yeniden üretir; değişmeyen dosyalar yeniden yazılmaz. |
 | `Person.knowsAbout` | `index.html` `<head>`'indeki JSON-LD | Sitede zaten var olan `<meta name="keywords">` listesinden türetilmiş, arama/AI için konu sinyalleri. |
 | AI crawler izin listesi | `robots.txt` | GPTBot, ClaudeBot, PerplexityBot, Google-Extended ve diğerlerini açıkça listeler. Davranış değişmedi (joker `Allow: /` zaten kapsıyordu) — bu sadece niyeti belgeliyor. |
 
