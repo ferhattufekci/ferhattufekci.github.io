@@ -1,11 +1,11 @@
 // Non-JavaScript crawlers need static links in noscript and llms.txt; publishing Actions regenerate the marked regions.
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { join, dirname } from 'path';
+import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, '..');
+const ROOT = process.env.PORTFOLIO_ROOT ? resolve(process.env.PORTFOLIO_ROOT) : join(__dirname, '..');
 const INDEX_HTML = join(ROOT, 'index.html');
 const LLMS_TXT = join(ROOT, 'llms.txt');
 const DATA_DIR = join(ROOT, 'data');

@@ -28,6 +28,14 @@ BDD senaryoları Playwright Test içinde `Given / When / Then` adımlarıyla yü
 
 ## Güvenilir ve bakımı yapılabilir testler
 
+FIRST ilkeleri bu proje için şu şekilde uygulanır:
+
+- **Fast:** Birim/bileşen/HTTP katmanı CI'da tarayıcı indirilmeden çalışır; hata pahalı aşamaları ve yayını durdurur.
+- **Independent:** Üretim ve paketleme testleri ayrı geçici proje kopyalarında çalışır. Testler kaynak dosyaları veya ortak yayın paketini değiştirmez; tarayıcı senaryoları ayrı context kullanır.
+- **Repeatable:** Kilitli bağımlılıklar, yerel HTTP sunucusu ve dış servis izolasyonu kullanılır. İçerik üretiminin idempotent olması ayrıca doğrulanır.
+- **Self-validating:** Kontroller açık assertion ve çıkış kodlarıyla sonuçlanır; raporları gözle yorumlamak geçme koşulu değildir.
+- **Timely:** Yeni regresyon önce başarısız testle gösterilir, ardından düzeltilir. FIRST'teki Timely ve TDD'nin test-first döngüsü ilişkilidir; CI sırası tek başına TDD kanıtı değildir.
+
 - Her tarayıcı senaryosu yeni context ve depolama ile başlar. Sunucular worker başına geçici yerel port kullanır ve kapanır.
 - Sabit `sleep` yoktur; Playwright'ın yeniden deneyen durum doğrulamaları kullanılır. Test koşusu tekrarları `0` olarak ayarlıdır; aralıklı hata otomatik tekrarlarla gizlenmez.
 - Harici Analytics/AdSense/Calendly kaynakları izole edilir. Testler dış servisin erişilebilirliğini veya randevu oluşturmayı doğrulamaz ve mesaj göndermez.

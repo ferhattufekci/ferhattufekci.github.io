@@ -21,10 +21,16 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      - name: Generate deterministic content
+        run: npm run generate
+      - name: Fail fast on unit, component, and HTTP regressions
+        run: npm run test:unit
       - name: Install browser and OS dependencies
         run: npx playwright install --with-deps chromium
-      - name: Generate, test, and package public assets
-        run: npm run build
+      - name: Run BDD and accessibility checks
+        run: npm run test:bdd
+      - name: Package only the verified public assets
+        run: npm run package:pages
       - name: Verify the exact deployment artifact
         run: npm run verify -- --local --artifact --all --output=work/qa/endpoints.json
       - name: Save test reports and failure diagnostics

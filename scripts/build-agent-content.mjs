@@ -1,11 +1,12 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { parseHTML } from 'linkedom';
-import { ROOT } from './lib/public-files.mjs';
+import { ROOT as DEFAULT_ROOT } from './lib/public-files.mjs';
 import { renderDocument, renderTrustContent, replaceThemeBoot, toMarkdown } from './lib/agent-documents.mjs';
 
 const require = createRequire(import.meta.url);
+const ROOT = process.env.PORTFOLIO_ROOT ? resolve(process.env.PORTFOLIO_ROOT) : DEFAULT_ROOT;
 const { render: renderErrorCard } = require('../js/error-card.js');
 const origin = 'https://ferhattufekci.github.io';
 const themeBoot = (await readFile(join(ROOT, 'js/theme-init.js'), 'utf8')).replace(/\r\n/g, '\n').trim();

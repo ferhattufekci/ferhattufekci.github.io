@@ -7,6 +7,7 @@ import { parseHTML } from 'linkedom';
 import { ROOT } from '../lib/public-files.mjs';
 import { createPagesServer, listen, close } from '../lib/pages-preview.mjs';
 import { verify } from '../verify-agent-endpoints.mjs';
+import { withProjectFixture } from './helpers/project-fixture.js';
 
 let server, origin;
 before(async () => { server = createPagesServer(); origin = await listen(server); });
@@ -59,12 +60,19 @@ test('custom error has absolute assets, recovery links, a noindex directive and 
 });
 
 test('Markdown generator and synchronized content are deterministic', async () => {
-  const paths = ['index.md', '404.html', '404.md', 'sitemap.xml', 'about/index.html', 'about/index.md', 'contact/index.html', 'contact/index.md', 'privacy/index.html', 'privacy/index.md', 'llms.txt', 'index.html'];
-  const before = await Promise.all(paths.map(path => readFile(join(ROOT, path), 'utf8')));
-  execFileSync(process.execPath, ['scripts/build-static-seo.js'], { cwd: ROOT });
-  execFileSync(process.execPath, ['scripts/build-agent-content.mjs'], { cwd: ROOT });
-  const after = await Promise.all(paths.map(path => readFile(join(ROOT, path), 'utf8')));
-  assert.deepEqual(after, before);
+  await withProjectFixture(async root => {
+    const paths = ['index.md', '404.html', '404.md', 'sitemap.xml', 'about/index.html', 'about/index.md', 'contact/index.html', 'contact/index.md', 'privacy/index.html', 'privacy/index.md', 'llms.txt', 'index.html'];
+    const options = { cwd: ROOT, env: { ...process.env, PORTFOLIO_ROOT: root } };
+    function generate() {
+      execFileSync(process.execPath, ['scripts/build-static-seo.js'], options);
+      execFileSync(process.execPath, ['scripts/build-agent-content.mjs'], options);
+    }
+    generate();
+    const before = await Promise.all(paths.map(path => readFile(join(root, path), 'utf8')));
+    generate();
+    const after = await Promise.all(paths.map(path => readFile(join(root, path), 'utf8')));
+    assert.deepEqual(after, before);
+  });
 });
 
 test('sync workflows regenerate and commit Markdown together with source data', async () => {

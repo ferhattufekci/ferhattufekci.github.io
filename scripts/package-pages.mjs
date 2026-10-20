@@ -3,8 +3,8 @@ import { join, resolve, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { ROOT, inventory } from './lib/public-files.mjs';
 
-export async function packagePages() {
-  const root = resolve(ROOT);
+export async function packagePages(projectRoot = ROOT) {
+  const root = resolve(projectRoot);
   const destination = resolve(root, '.pages-site');
   // Never remove a caller-supplied path or follow a substituted directory link.
   if (dirname(destination) !== root) throw new Error('Invalid Pages artifact directory.');
@@ -14,7 +14,7 @@ export async function packagePages() {
   });
   if (previous?.isSymbolicLink()) throw new Error('Pages artifact directory must not be a symlink.');
   await rm(destination, { recursive: true, force: true });
-  for (const path of [...await inventory(), '.nojekyll']) {
+  for (const path of [...await inventory(root), '.nojekyll']) {
     const target = join(destination, path);
     await mkdir(dirname(target), { recursive: true });
     await cp(join(root, path), target);
