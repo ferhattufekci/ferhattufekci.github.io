@@ -7,6 +7,24 @@ const NON_CONTENT = [
   '#proj-loading', '#blog-loading', '.proj-show-more-btn'
 ].join(', ');
 
+const DOCUMENT_LINKS = [
+  { slug: 'about', label: 'About', href: '/about/' },
+  { slug: 'contact', label: 'Contact', href: '/contact/' },
+  { slug: 'privacy', label: 'Privacy', href: '/privacy/' },
+  { slug: 'agent-guide', label: 'Agent Guide', href: '/llms.txt' },
+  { slug: 'sitemap', label: 'Sitemap', href: '/sitemap.xml' }
+];
+
+function renderFooter(currentPage) {
+  return DOCUMENT_LINKS.map(({ slug, label, href }, index) => {
+    const item = slug === currentPage
+      ? `<span aria-current="page">${escapeHtml(label)}</span>`
+      : `<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+    const separator = index ? '<span aria-hidden="true">·</span> ' : '';
+    return `<span class="trust-footer-item">${separator}${item}</span>`;
+  }).join('\n      ');
+}
+
 export function escapeHtml(value) {
   const entities = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
   return String(value).replace(/[&<>"']/g, character => entities[character]);
@@ -35,7 +53,7 @@ export function renderTrustContent(page) {
   return [...sections, '<h2>Links</h2>', '<ul>', ...links, '</ul>'].join('\n');
 }
 
-export function renderDocument({ title, description, path, body, indexable = true, origin, themeBoot }) {
+export function renderDocument({ title, description, path, body, indexable = true, currentPage = null, origin, themeBoot }) {
   const markdownPath = path === '/404.html' ? '/404.md' : path + 'index.md';
   return `<!doctype html>
 <html lang="en">
@@ -58,10 +76,7 @@ export function renderDocument({ title, description, path, body, indexable = tru
 <body class="trust-page">
   <main class="trust-document">
     <nav aria-label="Portfolio">
-      <a href="/">Ferhat Tüfekçi</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/privacy/">Privacy</a>
+      <a class="trust-back-link" href="/"><span aria-hidden="true">←</span> Back to portfolio</a>
       <button type="button" class="icon-btn theme-toggle-btn" aria-label="Switch theme">
         <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
       </button>
@@ -69,9 +84,7 @@ export function renderDocument({ title, description, path, body, indexable = tru
     <h1>${escapeHtml(title)}</h1>
 ${body}
     <footer>
-      <a href="/">Portfolio</a>
-      <a href="/llms.txt">Agent Guide</a>
-      <a href="/sitemap.xml">Sitemap</a>
+      ${renderFooter(currentPage)}
     </footer>
   </main>
   <script src="/js/theme.js"></script>

@@ -26,7 +26,7 @@ const source = replaceThemeBoot(await readFile(join(ROOT, 'index.html'), 'utf8')
 await save('index.html', source);
 for (const [slug, page] of Object.entries(pages)) {
   const html = renderDocument({
-    ...page, path: `/${slug}/`, body: renderTrustContent(page), origin, themeBoot
+    ...page, path: `/${slug}/`, currentPage: slug, body: renderTrustContent(page), origin, themeBoot
   });
   await mkdir(join(ROOT, slug), { recursive: true });
   await save(`${slug}/index.html`, html);

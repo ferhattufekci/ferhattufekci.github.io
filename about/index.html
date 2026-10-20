@@ -34,10 +34,7 @@
 <body class="trust-page">
   <main class="trust-document">
     <nav aria-label="Portfolio">
-      <a href="/">Ferhat Tüfekçi</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-      <a href="/privacy/">Privacy</a>
+      <a class="trust-back-link" href="/"><span aria-hidden="true">←</span> Back to portfolio</a>
       <button type="button" class="icon-btn theme-toggle-btn" aria-label="Switch theme">
         <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
       </button>
@@ -60,9 +57,11 @@
 <li><a href="/contact/">Contact Ferhat</a></li>
 </ul>
     <footer>
-      <a href="/">Portfolio</a>
-      <a href="/llms.txt">Agent Guide</a>
-      <a href="/sitemap.xml">Sitemap</a>
+      <span class="trust-footer-item"><span aria-current="page">About</span></span>
+      <span class="trust-footer-item"><span aria-hidden="true">·</span> <a href="/contact/">Contact</a></span>
+      <span class="trust-footer-item"><span aria-hidden="true">·</span> <a href="/privacy/">Privacy</a></span>
+      <span class="trust-footer-item"><span aria-hidden="true">·</span> <a href="/llms.txt">Agent Guide</a></span>
+      <span class="trust-footer-item"><span aria-hidden="true">·</span> <a href="/sitemap.xml">Sitemap</a></span>
     </footer>
   </main>
   <script src="/js/theme.js"></script>
