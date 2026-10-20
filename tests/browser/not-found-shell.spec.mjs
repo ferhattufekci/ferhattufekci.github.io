@@ -42,6 +42,11 @@ test('R-SHELL-04 | Missing fragments and root/nested paths present the same shel
     await theme.click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', initial === 'light' ? 'dark' : 'light');
     await theme.click();
+    const nextSection = page.getByRole('link', { name: 'Next section: About Me', exact: true });
+    await page.keyboard.press('Tab');
+    await nextSection.focus();
+    expect(await nextSection.evaluate(el => el.matches(':focus-visible'))).toBe(true);
+    expect(await nextSection.evaluate(el => getComputedStyle(el).outlineStyle)).toBe('solid');
     await navigateToSection(page, 'resume');
     await expect(page).toHaveURL(/\/#resume$/);
     await expectSection(page, 'resume');
@@ -56,6 +61,10 @@ test('R-SHELL-05 | A path-based 404 remains readable and recoverable with JavaSc
     expect((await page.goto(siteOrigin + '/__no-js-' + randomUUID() + '/nested')).status()).toBe(404);
     await expect(page.getByRole('heading', { name: '404 — Page Not Found', exact: true })).toBeVisible();
     await expect(page.locator('.error-card')).toBeVisible();
+    const surfaces = await page.evaluate(() => ['.error-card', '#site_header', '.mobile-header'].map(selector =>
+      getComputedStyle(document.querySelector(selector)).backgroundColor));
+    expect(surfaces[1]).toBe(surfaces[0]);
+    expect(surfaces[2]).toBe(surfaces[0]);
     await page.getByRole('link', { name: 'Back to Home', exact: true }).click();
     await expect(page).toHaveURL(siteOrigin + '/');
   } finally { await context.close(); }
