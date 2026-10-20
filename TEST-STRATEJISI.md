@@ -30,9 +30,10 @@ For this personal portfolio, the priorities are helping visitors reach the corre
 | R-FIRST-01/02: expensive checks run too early or tests mutate shared files | Medium | CI step order; generation in an isolated project root; original source remains unchanged |
 | R-HTTP-01–07: cached probes, soft-404, incorrect MIME, malformed XML/JSON, network errors and broken CV links | High | UUID root/nested GET matrix; deliberately corrupted responses; exact MIME and body evidence; strict XML; actual CV link + PDF header/signature; platform limits reported separately |
 | R-FILTER-01–14: Blog/Projects filters affect each other or show incorrect content | High | Decision table below, state transitions, delayed/malformed data, responsive labels and pagination boundaries; run in six browser projects |
-| R-BUTTON-01–03: stuck pointer focus, vendor pressed colors or inconsistent error labels | Medium | Both error views; two-way hover, pressed state, Tab/Shift+Tab/Enter, retained keyboard focus and mobile hamburger; six viewport/theme projects |
+| R-BUTTON-01–04: stuck pointer focus, vendor pressed colors or inconsistent error labels | Medium | Both error views; two-way hover, pressed state, Tab/Shift+Tab/Enter, retained keyboard focus and mobile hamburger; six viewport/theme projects |
 | R-ICON-01–04: sticky touch hover, pointer focus rings or lost drawer focus | High | Desktop/coarse-touch pointer release, keyboard/Escape restoration, reduced motion and trust-page alignment in both themes |
 | R-SHELL-01–05: drifting 404 layouts, copy, nested links or false HTTP success | High | Source-shell mutation test, shared content/links, real 404 at fresh root/nested paths, no-JS recovery and shared navigation |
+| R-LINK-01/02: changed footer/contact typography or link semantics | Medium | Six computed font properties, exact existing SVG paths, icon alignment, keyboard activation and local/new-tab destinations |
 | R-DOC-01–03: documentation links open the wrong language | Medium | Language section ownership, matching guide/strategy anchors, return links and translated risk/command parity |
 | JSON-LD, llms.txt, sitemap, JSON snapshots and links | High | HTTP and format checks for all intended public files |
 | Existing filter and Medium behavior | Regression | Earlier category and article tests remain in every unit test run |
@@ -130,9 +131,10 @@ Bu kişisel portföy için öncelik, ziyaretçinin doğru bölüme ulaşması ve
 | R-FIRST-01/02: pahalı kontrollerin erken çalışması veya testlerin ortak dosyaları değiştirmesi | Orta | CI adım sırası; izole proje kökünde içerik üretimi; asıl kaynağın değişmemesi |
 | R-HTTP-01–07: eski probe önbelleği, soft-404, yanlış MIME, bozuk XML/JSON, ağ hatası ve bozuk CV bağlantısı | Yüksek | UUID kök/iç içe GET matrisi; bilerek bozulmuş yanıtlar; tam MIME ve gövde kanıtı; strict XML; gerçek CV linki + PDF header/imzası; platform sınırları ayrı tutulur |
 | R-FILTER-01–14: Blog/Projects filtrelerinin birbirini etkilemesi veya yanlış içerik göstermesi | Yüksek | Aşağıdaki karar tablosu, durum geçişleri, gecikmeli/bozuk veri, responsive etiketler ve sayfalama sınırları; altı tarayıcı projesinde çalışır |
-| R-BUTTON-01–03: takılı fare odağı, kütüphaneden gelen basılı durum rengi veya tutarsız hata etiketleri | Orta | İki hata görünümü; çift yönlü hover, basılı durum, Tab/Shift+Tab/Enter, korunan klavye odağı ve mobil hamburger; altı ekran/tema projesi |
+| R-BUTTON-01–04: takılı fare odağı, kütüphaneden gelen basılı durum rengi veya tutarsız hata etiketleri | Orta | İki hata görünümü; çift yönlü hover, basılı durum, Tab/Shift+Tab/Enter, korunan klavye odağı ve mobil hamburger; altı ekran/tema projesi |
 | R-ICON-01–04: takılı dokunma hover'ı, fare odak çerçevesi veya kaybolan menü odağı | Yüksek | İki temada masaüstü/dokunmatik bırakma, klavye/Escape odağı, azaltılmış hareket ve güven sayfası hizalaması |
 | R-SHELL-01–05: farklılaşan 404 düzeni, mesaj, iç içe bağlantılar veya yanlış HTTP başarısı | Yüksek | Kaynak kabuğu değiştiren üretim testi, ortak içerik/hedefler, yeni kök/iç içe yollarda gerçek 404, JS kapalı kurtarma ve ortak gezinme |
+| R-LINK-01/02: footer/iletişim tipografisi veya bağlantı semantiğinin değişmesi | Orta | Altı hesaplanmış font özelliği, mevcut SVG path eşitliği, ikon hizası, klavye ve yerel/yeni sekme hedefleri |
 | R-DOC-01–03: dokümantasyon bağlantılarının yanlış dili açması | Orta | Dil bölümü kapsamı, eşleşen rehber/strateji anchor'ları, dönüş bağlantıları ve çevrilen risk/komutların eşitliği |
 | JSON-LD, llms.txt, sitemap, JSON snapshot ve bağlantılar | Yüksek | Bütün amaçlanan public dosyalarda HTTP ve biçim kontrolleri |
 | Mevcut filtre ve Medium davranışları | Regresyon | Önceki kategori ve makale testleri de bütün birim test koşularına dahildir |
