@@ -11,6 +11,7 @@ async function styles(locator) {
 }
 
 test('R-BUTTON-01 | Error actions leave hover, retain keyboard focus and use theme colors when pressed', async ({ page }, testInfo) => {
+  let sharedAppearance;
   for (const path of ['/#resumes', '/404.html']) {
     await page.goto(path);
     if (path.includes('#')) {
@@ -22,6 +23,9 @@ test('R-BUTTON-01 | Error actions leave hover, retain keyboard focus and use the
     await page.mouse.move(0, 0);
     const homeNormal = await styles(home);
     const resumeNormal = await styles(resume);
+    const appearance = [homeNormal, resumeNormal].map(({ background, border, color }) => ({ background, border, color }));
+    if (sharedAppearance) expect(appearance, 'Hash and standalone 404 actions share the same palette').toEqual(sharedAppearance);
+    else sharedAppearance = appearance;
     for (const [first, second, normal] of [[home, resume, homeNormal], [resume, home, resumeNormal]]) {
       await first.hover();
       await expect.poll(async () => (await styles(first)).background).not.toBe(normal.background);

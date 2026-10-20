@@ -38,7 +38,7 @@ body.trust-page {
   padding-top: 20px;
 }
 
-.trust-document a:not(.btn) {
+.trust-document a:not(.portfolio-button) {
   color: var(--color-accessible-link, #0076b1);
 }
 
