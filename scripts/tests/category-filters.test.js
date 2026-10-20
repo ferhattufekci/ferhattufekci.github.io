@@ -218,7 +218,7 @@ test('an empty Projects category still updates aria-pressed before returning', a
     createElement: () => ({})
   };
   vm.runInNewContext(index.slice(start, end) + '\nrender();', {
-    document, allRepos: [], curPCat: 'proj_systems',
+    document, allRepos: [], curPCat: 'proj_systems', reposLoaded: true,
     CAT_LABELS: { proj_systems: 'Systems Engineering & Business Analysis' }, CAT_MAP: {}
   });
   assert.deepEqual(controls.map(button => button.pressed), ['false', 'true', 'false', 'false']);

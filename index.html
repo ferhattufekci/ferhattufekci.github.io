@@ -2197,6 +2197,13 @@
 
                 var allRepos = [];
                 var curPCat = "proj_all";
+                var reposLoaded = false;
+
+                function projectGroup(category) {
+                  return Object.prototype.hasOwnProperty.call(CAT_MAP, category)
+                    ? CAT_MAP[category]
+                    : "proj_software";
+                }
 
                 function mkOwnerBadge(r) {
                   if (!r.owner || r.owner.toLowerCase() === "ferhattufekci")
@@ -2239,7 +2246,7 @@
                   card.setAttribute(
                     "data-pgroups",
                     '["proj_all","' +
-                      (CAT_MAP[r.category] || "proj_software") +
+                      projectGroup(r.category) +
                       '"]',
                   );
                   card.setAttribute("data-plang", r.lang || "en");
@@ -2324,9 +2331,12 @@
                     button.setAttribute("aria-pressed", String(button.getAttribute("data-group") === curPCat));
                   });
 
+                  // Selection can change during fetch; empty means settled with no matches.
+                  if (!reposLoaded) return;
+
                   var vis = allRepos.filter(function (r) {
                     return (
-                      curPCat === "proj_all" || CAT_MAP[r.category] === curPCat
+                      curPCat === "proj_all" || projectGroup(r.category) === curPCat
                     );
                   });
 
@@ -2522,9 +2532,11 @@
                     })
                     .then(function (data) {
                       if (Array.isArray(data)) allRepos = data;
+                      reposLoaded = true;
                       render();
                     })
                     .catch(function () {
+                      reposLoaded = true;
                       render();
                     });
 
@@ -2827,6 +2839,7 @@
                 var loaded = [];
                 var curLang = "all";
                 var curCat = "category_all";
+                var articlesLoaded = false;
 
                 function gj(u) {
                   return fetch(u)
@@ -3130,6 +3143,7 @@
                   var grid = document.getElementById("blog-grid");
                   var load = document.getElementById("blog-loading");
                   if (!grid) return;
+                  if (!articlesLoaded) return;
                   // Filter the same resolved language used by the badge, then retain newest-first ordering.
                   var visible = loaded.filter(function (entry) {
                     return (curLang === "all" || entry.lang === curLang) &&
@@ -3285,15 +3299,18 @@
                     .then(function (it) {
                       if (it && it.length) {
                         loaded = it;
+                        articlesLoaded = true;
                         render();
                         return;
                       }
                       return fromRSS().then(function (it2) {
                         if (it2 && it2.length) loaded = it2;
+                        articlesLoaded = true;
                         render();
                       });
                     })
                     .catch(function () {
+                      articlesLoaded = true;
                       render();
                     });
                   return Promise.all([metaP, articlesP]);
