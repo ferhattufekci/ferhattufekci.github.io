@@ -1,0 +1,42 @@
+name: Verify portfolio
+on:
+  workflow_call:
+    inputs:
+      publish:
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.ref }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install browser and OS dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Generate, test, and package public assets
+        run: npm run build
+      - name: Verify the exact deployment artifact
+        run: npm run verify -- --local --artifact --all --output=work/qa/endpoints.json
+      - name: Save test reports and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-reports
+          path: work/qa/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Upload tested Pages artifact
+        if: inputs.publish
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .pages-site

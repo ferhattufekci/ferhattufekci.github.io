@@ -101,7 +101,7 @@ export async function verify(base, { allFiles = false } = {}) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const local = process.argv.includes('--local');
-  const server = local ? createPagesServer() : null;
+  const server = local ? createPagesServer(process.argv.includes('--artifact') ? join(ROOT, '.pages-site') : ROOT) : null;
   try {
     const base = local ? await listen(server) : (process.argv.slice(2).find(arg => !arg.startsWith('--')) || 'https://ferhattufekci.github.io');
     const report = await verify(base, { allFiles: process.argv.includes('--all') });

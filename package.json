@@ -7,11 +7,12 @@
   },
   "scripts": {
     "generate": "node scripts/build-static-seo.js && node scripts/build-agent-content.mjs",
-    "build": "npm run generate && npm run test:unit && npm run test:bdd",
+    "build": "npm run generate && npm run test:unit && npm run test:bdd && npm run package:pages",
     "preview": "node scripts/preview-pages.mjs",
     "test:browser": "npm run test:bdd",
     "test:bdd": "playwright test",
     "test:unit": "node --test",
+    "package:pages": "node scripts/package-pages.mjs",
     "test": "node --test",
     "verify": "node scripts/verify-agent-endpoints.mjs"
   },
