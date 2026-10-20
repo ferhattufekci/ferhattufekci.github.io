@@ -18,7 +18,7 @@ Bu kişisel portföy için öncelik, ziyaretçinin doğru bölüme ulaşması ve
 | R-DEPLOY-01: kaynak/test/bağımlılıkların yanlışlıkla yayımlanması | Yüksek | Yalnız public dosyalardan artifact; içerik eşitliği ve özel dizinlerin yokluğu |
 | R-CI-01: bütün Git push denemeleri başarısızken yanlış başarılı iş sonucu | Yüksek | Gerçek Bash retry bloğu, izole git/sleep taklitleriyle geçici başarı ve tükenen denemeler için sınanır |
 | R-FIRST-01/02: pahalı kontrollerin erken çalışması veya testlerin ortak dosyaları değiştirmesi | Orta | CI adım sırası; izole proje kökünde içerik üretimi; asıl kaynağın değişmemesi |
-| R-HTTP-01–06: eski probe önbelleği, soft-404, yanlış MIME, bozuk XML/JSON ve ağ hatasının karışması | Yüksek | Her koşuda UUID kök/iç içe GET matrisi; bilerek bozulmuş yanıtlar; tam MIME eşleşmesi, header/gövde kanıtı; strict XML parser; platform sınırları ayrı tutulur |
+| R-HTTP-01–07: eski probe önbelleği, soft-404, yanlış MIME, bozuk XML/JSON, ağ hatası ve bozuk CV bağlantısı | Yüksek | UUID kök/iç içe GET matrisi; bilerek bozulmuş yanıtlar; tam MIME ve gövde kanıtı; strict XML; gerçek CV linki + PDF header/imzası; platform sınırları ayrı tutulur |
 | R-FILTER-01–14: Blog/Projects filtrelerinin birbirini etkilemesi veya yanlış içerik göstermesi | Yüksek | Aşağıdaki karar tablosu, durum geçişleri, gecikmeli/bozuk veri, responsive etiketler ve sayfalama sınırları; altı tarayıcı projesinde çalışır |
 | JSON-LD, llms.txt, sitemap, JSON snapshot ve bağlantılar | Yüksek | Bütün amaçlanan public dosyalarda HTTP ve biçim kontrolleri |
 | Mevcut filtre ve Medium davranışları | Regresyon | Önceki kategori ve makale testleri de bütün birim test koşularına dahildir |

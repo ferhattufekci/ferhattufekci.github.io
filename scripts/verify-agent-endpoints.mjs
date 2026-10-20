@@ -106,7 +106,13 @@ export async function verify(base, { allFiles = false, fetchImpl = fetch } = {})
     assert.ok(person.description.length > 20);
     assert.equal(document.querySelector('#h-m').getAttribute('href'), 'mailto:ferhattufekci@outlook.com.tr');
     assert.equal(document.querySelector('#h-p').getAttribute('href'), 'tel:+905076008179');
-    return { description: person.description };
+    const resumeHref = document.querySelector('.pt-page[data-id="resume"] .resume-bottom-cta a')?.getAttribute('href');
+    requireValue(Boolean(resumeHref) && new URL(resumeHref, origin + '/').pathname === '/FerhatTufekci_CV.pdf', 'link', 'Resume download must link to the published CV');
+    const pdf = await get('/FerhatTufekci_CV.pdf');
+    requireValue(pdf.status === 200, 'http-status', `CV returned HTTP ${pdf.status}`);
+    requireValue(/^application\/pdf(?:;|$)/i.test(pdf.contentType || ''), 'content-type', `CV returned ${pdf.contentType}`);
+    requireValue(pdf.body.startsWith('%PDF-'), 'format', 'CV response is not a PDF document');
+    return { description: person.description, resumeHref, pdfStatus: pdf.status, pdfContentType: pdf.contentType };
   });
   await check('llms.txt format, when-to-use guidance and local Markdown links', async () => {
     const { body } = await get('/llms.txt');

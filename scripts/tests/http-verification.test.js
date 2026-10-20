@@ -81,3 +81,12 @@ test('R-HTTP-06: a Markdown-looking MIME prefix is not a negotiated Markdown rep
   } });
   assert.equal(report.limitations.find(item => item.requirement === 'Homepage Markdown negotiation').supported, false);
 });
+
+test('R-HTTP-07: an available PDF does not hide a broken resume download link', async () => {
+  const report = await verify(origin, { fetchImpl: async (url, options) => {
+    const result = await fetch(url, options);
+    if (new URL(url).pathname !== '/') return result;
+    return response(url, (await result.text()).replace('href="FerhatTufekci_CV.pdf"', 'href="missing-cv.pdf"'), 'text/html');
+  } });
+  assert.ok(report.checks.some(check => !check.pass && check.kind === 'link'));
+});
