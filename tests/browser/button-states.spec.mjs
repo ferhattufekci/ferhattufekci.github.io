@@ -3,7 +3,8 @@ import { test, expect, expectSection } from './fixtures.mjs';
 async function styles(locator) {
   return locator.evaluate(async el => {
     getComputedStyle(el).backgroundColor;
-    await Promise.all(el.getAnimations().map(animation => animation.finished));
+    // Input/media changes can cancel a transition; cancellation also settles it.
+    await Promise.allSettled(el.getAnimations().map(animation => animation.finished));
     const s = getComputedStyle(el);
     return { background: s.backgroundColor, border: s.borderColor, color: s.color,
       outline: s.outlineStyle, outlineWidth: s.outlineWidth, transform: s.transform };
