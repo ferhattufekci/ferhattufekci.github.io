@@ -1,9 +1,5 @@
 # ferhattufekci.github.io
 
-Ajan hazırlığı, GitHub Pages üzerinde yayınlama ve doğrulama: [Bakım rehberi](#ajan-hazırlığı-ve-doğrulama).
-
-Test katmanları, BDD senaryoları ve yayın kalite kapısı: [Test stratejisi](TEST-STRATEJISI.md).
-
 **[🇬🇧 English](#english) | [🇹🇷 Türkçe](#türkçe)**
 
 ---
@@ -13,6 +9,11 @@ Test katmanları, BDD senaryoları ve yayın kalite kapısı: [Test stratejisi](
 Personal portfolio website of **Ferhat Tüfekçi**.
 
 **Live:** https://ferhattufekci.github.io
+
+### Documentation
+
+- [Maintenance guide](#maintenance-guide): agent readiness, GitHub Pages deployment and verification.
+- [Test strategy](TEST-STRATEJISI.md#test-strategy-en): test layers, BDD scenarios and the deployment quality gate.
 
 ### Tech Stack
 
@@ -141,6 +142,39 @@ The Blog and Projects sections use client-side `fetch()`. Raw HTML fallbacks and
 node scripts/build-static-seo.js
 ```
 
+<a id="maintenance-guide"></a>
+
+### Agent readiness and verification
+
+The site is published at `https://ferhattufekci.github.io` on GitHub Pages. Pages uses `build_type=workflow`: `pages.yml` → shared quality job → `.pages-site` artifact containing only public files → deployment → live GET verification. `.nojekyll` is retained. Node is used only for generation and testing. A failed quality job blocks deployment; data commits made with GITHUB_TOKEN are tested through `workflow_run`.
+
+| Source | Producer / consumer |
+| --- | --- |
+| Medium RSS / GitHub API | `scripts/fetch-medium.js`, `scripts/fetch-github.js` → `data/*.json`; the browser's Blog/Projects sections and generators read these snapshots |
+| `data/github-repos.json`, `data/medium-all.json` | `build-static-seo.js` → marked noscript sections in `index.html` and lists in `llms.txt` |
+| `index.html`, `content/trust-pages.json`, `js/theme-init.js`, `js/error-card.js` | `build-agent-content.mjs` → `index.md`, trust-page HTML/Markdown, `404.html`, `404.md`, `sitemap.xml` |
+| `llms.txt`, `agent-instructions.md` | Manually maintained usage guidance; marked lists in llms.txt are generated automatically |
+
+Update the source rather than editing a generated file alone, then run `npm run generate`. The Person description and static contact links live in `index.html`. Trust-page content comes from `content/trust-pages.json`; the privacy text describes the existing Analytics, AdSense, Calendly and browser storage usage. Provider and consent-management settings are the site owner's responsibility.
+
+**Platform limits:** GitHub Pages does not run application code that changes a URL's body and Content-Type based on Accept; it also [does not support custom MIME configuration](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#mime-types-on-github-pages). `/index.md` is a useful alternative representation, not Markdown negotiation on the homepage. `/404.html` provides explanatory HTML and a real 404 for missing root and nested paths; it does not provide a Markdown error response. Since fragments are not sent to the server, `/#resumes` shows a client-side 404 view within an HTTP 200 document. The MIME type of `.md` files is measured from live responses.
+
+**MCP:** This portfolio does not declare a product API or tool service. The [Smithery `github` entry](https://smithery.ai/servers/GitHub), whose homepage is github.com, integrates with the GitHub platform; it is not evidence of a service owned by this portfolio. The audit's exact registry ID and matching method were not supplied, so the mechanism behind a possible incorrect match cannot be confirmed. [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) requires a POST/JSON-RPC runtime; static JSON is not a handshake. The current revision uses [server/discover](https://modelcontextprotocol.io/specification/2026-07-28/server/discover) and per-request metadata; `initialize` belongs to earlier revisions. The reviewed transport/discovery sections do not require `/.well-known/mcp`. Adding a file at that audit path does not create an MCP service. Pages cannot run the server without external infrastructure; no fake manifest is added.
+
+```powershell
+npm ci
+npx playwright install chromium
+npm run build
+npm run verify -- --local --artifact --all --output=verification-local.json
+npm run verify -- https://ferhattufekci.github.io --all --output=verification-production.json
+```
+
+Each verification run generates fresh UUID root and nested paths absent from the public inventory, then GETs the homepage and those paths with both Accept values. It records status, final URL, Content-Type, Vary and body evidence. Network, HTTP and content/format errors are distinct; an HTML fallback with status 200 is not valid JSON. Unsupported platform capabilities remain in `limitations`, do not count as passed capabilities and do not permanently break normal CI. A local server cannot prove the real Pages header behavior; inspect the post-deployment report together with the Actions commit.
+
+The duplicate implementation note was removed after its maintenance information was moved into this guide. The test strategy, verification/ads/crawler files, older font formats referenced by CSS and separate CI check names are retained; absence of imports does not prove absence of external consumers. A new Is Agentic score requires a new Ora scan.
+
+Format references: [llms.txt proposal](https://llmstxt.org/), [GitHub Pages custom 404](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site). Risk coverage, the category decision table, FIRST and BDD are documented in the [Test strategy](TEST-STRATEJISI.md#test-strategy-en).
+
 ### Run Locally
 
 ```bash
@@ -170,6 +204,11 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 **Ferhat Tüfekçi**'nin kişisel portföy web sitesi.
 
 **Canlı:** https://ferhattufekci.github.io
+
+### Dokümantasyon
+
+- [Bakım rehberi](#bakim-rehberi): ajan hazırlığı, GitHub Pages üzerinde yayınlama ve doğrulama.
+- [Test stratejisi](TEST-STRATEJISI.md#test-strategy-tr): test katmanları, BDD senaryoları ve yayın kalite kapısı.
 
 ### Teknoloji Yığını
 
@@ -298,29 +337,9 @@ Blog ve Projects bölümleri istemci tarafında `fetch()` kullanır. Ham HTML ye
 node scripts/build-static-seo.js
 ```
 
-### Yerel Çalıştırma
+<a id="bakim-rehberi"></a>
 
-```bash
-# VS Code Live Server (önerilen)
-# index.html üzerine sağ tıkla → Open with Live Server
-
-# Veya Python ile
-python3 -m http.server 8000
-```
-
-### Lisans
-
-Bu proje portföy ve tanıtım amaçlı yayımlanmıştır.  
-Tüm kişisel içerik, makaleler, görseller ve marka öğeleri **Ferhat Tüfekçi**'ye aittir.  
-Ticari kullanım, yeniden dağıtım veya türev çalışmalar için önceden yazılı izin alınması gerekmektedir.
-
-### Yazar
-
-[![Yazar](https://img.shields.io/badge/yazar-ferhattufekci-red)](https://github.com/ferhattufekci)
-[![LinkedIn](https://img.shields.io/badge/iletişim-linkedin-blue)](https://www.linkedin.com/in/ferhattufekci/)
-[![Medium](https://img.shields.io/badge/blog-medium-black)](https://medium.com/@ferhattufekci)
-
-## Ajan hazırlığı ve doğrulama
+### Ajan hazırlığı ve doğrulama
 
 Site `https://ferhattufekci.github.io` adresinde GitHub Pages üzerinde yayımlanır. Pages `build_type=workflow` kullanır: `pages.yml` → ortak kalite işi → yalnız public dosyalardan `.pages-site` artifact'i → deploy → canlı GET doğrulaması. `.nojekyll` korunur. Node yalnız üretim/test içindir. Kalite başarısızsa yayın yapılmaz; GITHUB_TOKEN veri commitleri `workflow_run` üzerinden tekrar sınanır.
 
@@ -349,4 +368,26 @@ Doğrulayıcı her koşuda public envanterde bulunmayan yeni UUID kök/iç içe 
 
 Temizlikte bu rehbere taşınan mükerrer uygulama notu kaldırılmıştır. Test stratejisi, doğrulama/ads/crawler dosyaları, CSS tarafından kullanılan eski font formatları ve ayrı CI kontrol adları korunur; import edilmemeleri dış kullanımlarının olmadığı anlamına gelmez. Yeni Is Agentic puanı ancak yeni Ora taramasıyla bilinebilir.
 
-Biçim kaynakları: [llms.txt önerisi](https://llmstxt.org/), [GitHub Pages özel 404](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site). Riskler, kategori karar tablosu, FIRST ve BDD kapsamı [test stratejisindedir](TEST-STRATEJISI.md).
+Biçim kaynakları: [llms.txt önerisi](https://llmstxt.org/), [GitHub Pages özel 404](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site). Riskler, kategori karar tablosu, FIRST ve BDD kapsamı [Test stratejisi](TEST-STRATEJISI.md#test-strategy-tr) belgesindedir.
+
+### Yerel Çalıştırma
+
+```bash
+# VS Code Live Server (önerilen)
+# index.html üzerine sağ tıkla → Open with Live Server
+
+# Veya Python ile
+python3 -m http.server 8000
+```
+
+### Lisans
+
+Bu proje portföy ve tanıtım amaçlı yayımlanmıştır.<br>
+Tüm kişisel içerik, makaleler, görseller ve marka öğeleri **Ferhat Tüfekçi**'ye aittir.<br>
+Ticari kullanım, yeniden dağıtım veya türev çalışmalar için önceden yazılı izin alınması gerekmektedir.
+
+### Yazar
+
+[![Yazar](https://img.shields.io/badge/yazar-ferhattufekci-red)](https://github.com/ferhattufekci)
+[![LinkedIn](https://img.shields.io/badge/iletişim-linkedin-blue)](https://www.linkedin.com/in/ferhattufekci/)
+[![Medium](https://img.shields.io/badge/blog-medium-black)](https://medium.com/@ferhattufekci)
