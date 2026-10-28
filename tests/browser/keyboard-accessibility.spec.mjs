@@ -46,7 +46,9 @@ test('R-KEYBOARD-01 | Every page has a visible sequential focus order, working s
     await visibleFocus(skip);
     if (path === '/#blog' || path === '/#projects') await expect(page.locator(path === '/#blog' ? '#blog-loading' : '#proj-loading')).toBeHidden();
     const expected = await page.evaluate(() => [...document.querySelectorAll('a[href],button,input,select,textarea,summary,[tabindex]')]
-      .filter(el => el.tabIndex >= 0 && !el.closest('[inert]') && el.getClientRects().length && getComputedStyle(el).visibility === 'visible')
+      // Chromium can retain layout rectangles for descendants of closed details.
+      // Those controls are correctly hidden and must not become Tab stops.
+      .filter(el => el.tabIndex >= 0 && !el.closest('[inert]') && el.checkVisibility({ visibilityProperty: true }))
       .map((el, index) => { el.dataset.keyboardAuditId = String(index); return String(index); }));
     const visited = new Set([await skip.getAttribute('data-keyboard-audit-id')]), order = [];
     // Traverse from the first document stop. Browser chrome focus after the last
