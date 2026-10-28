@@ -103,6 +103,27 @@ test('R-KEYBOARD-02 | Menu, theme and route history have predictable focus under
       await page.keyboard.press('Escape');
       await expect(toggle).toBeFocused();
       await visibleFocus(toggle);
+      for (const closeWith of ['resize', 'backdrop']) {
+        await page.keyboard.press('Enter');
+        await expect(page.locator('.site-main-menu a').first()).toBeFocused();
+        if (closeWith === 'resize') {
+          const viewport = page.viewportSize();
+          await page.setViewportSize({ ...viewport, width: viewport.width + 1 });
+        } else {
+          await page.locator('.mobile-menu-overlay').click({ position: { x: 10, y: 500 } });
+        }
+        await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+        await expect(toggle).toBeFocused();
+        // Pointer dismissal need not paint a keyboard ring; Tab still continues
+        // from the returned toggle instead of losing its place on body.
+      }
+      await page.keyboard.press('Enter');
+      await expect(page.locator('.site-main-menu a').first()).toBeFocused();
+      await tabTo(page, theme);
+      await page.keyboard.press('Space');
+      await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      await visibleFocus(theme);
+      await tabTo(page, toggle);
       await page.keyboard.press('Space');
     }
     const resume = page.locator('.site-main-menu a[href="#resume"]');

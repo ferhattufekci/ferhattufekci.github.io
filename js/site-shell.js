@@ -41,6 +41,7 @@
     function setOpen(open, restoreFocus) {
       if (!open && openingMotion) { openingMotion.cancel(); openingMotion = null; }
       var wasOpen = document.body.classList.contains('mobile-menu-open');
+      var returnFocus = restoreFocus || header.contains(document.activeElement) || document.activeElement === document.body;
       document.body.classList.toggle('mobile-menu-open', open);
       header.classList.toggle('mobile-menu-hide', !open);
       toggle.setAttribute('aria-expanded', String(open));
@@ -48,7 +49,7 @@
       var icon = toggle.querySelector('i');
       icon.classList.toggle('fa-bars', !open);
       icon.classList.toggle('fa-times', open);
-      if (wasOpen && !open && restoreFocus && toggle.getClientRects().length) {
+      if (wasOpen && !open && returnFocus && toggle.getClientRects().length) {
         toggle.focus({ preventScroll: true });
       }
       // Descendant visibility transitions can still intercept taps after the drawer fades out.
@@ -96,7 +97,9 @@
     document.addEventListener('click', function (event) {
       var navigation = event.target.closest('.pt-trigger');
       var outside = document.body.classList.contains('mobile-menu-open') && !event.target.closest('#site_header, .menu-toggle');
-      if (navigation || outside) setOpen(false, event.detail === 0);
+      // Keep an outside control's native focus; return only focus lost by hiding
+      // the drawer (or by a pointer click on its non-focusable backdrop).
+      if (navigation || outside) setOpen(false, false);
     });
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && document.body.classList.contains('mobile-menu-open')) {
