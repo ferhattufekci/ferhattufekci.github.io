@@ -82,10 +82,11 @@
       // The drawer precedes its toggle in the DOM. Enter it explicitly when
       // opened by keyboard; ordinary navigation does not need a focus trap.
       if (event.detail === 0 && toggle.getAttribute('aria-expanded') === 'true') {
-        // Descendants also transition inherited visibility. Focus only after
-        // that actual transition finishes, and only if the user has not moved on.
-        openingMotion = PortfolioMotionCompletion.wait([header, overlay].concat(Array.from(header.querySelectorAll('a'))), 'transition');
-        openingMotion.finished.then(function () {
+        // Wait for the actual drawer motion, without overriding a later action.
+        var motion = openingMotion = PortfolioMotionCompletion.wait([header, overlay], 'transition');
+        motion.finished.then(function () {
+          if (openingMotion !== motion) return;
+          openingMotion = null;
           if (toggle.getAttribute('aria-expanded') === 'true' && document.activeElement === toggle) {
             header.querySelector('.site-main-menu a').focus({ preventScroll: true });
           }
