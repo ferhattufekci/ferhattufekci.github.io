@@ -11,6 +11,7 @@ flowchart LR
   S --> B[Build Site]
   B --> V[Verify Artifact]
   B --> T[Browser Tests: 2 shards]
+  B --> K[Cross-browser Keyboard Tests]
   U --> T
   C --> T
   T --> M[Merge Test Reports]
@@ -21,11 +22,12 @@ flowchart LR
   T --> G
   M --> G
   V --> G
+  K --> G
   G --> D[Deploy GitHub Pages]
   D --> P[Verify Production]
 ```
 
-Static checks and unit tests are independent. Build generates and packages once. Each browser shard and the parallel endpoint check download the same immutable Pages artifact by ID, extract its tar, and validate every file against its manifest. Deploy selects that artifact's unique `pages-<source SHA>` name within the same run. Production verification downloads the same ID again; it never rebuilds the release.
+Static checks and unit tests are independent. Build generates and packages once. Each browser shard, the keyboard job and the parallel endpoint check download the same immutable Pages artifact by ID, extract its tar, and validate every file against its manifest. Deploy selects that artifact's unique `pages-<source SHA>` name within the same run. Production verification downloads the same ID again; it never rebuilds the release.
 
 `build-metadata.json` contains schema version, source SHA, a sorted file inventory with size/SHA-256, and SHA-256 of the inventory's JSON representation. Metadata itself is excluded from that inventory, avoiding a self-hash cycle. The uploaded artifact's ID identifies the archive; `contentSha256` identifies its public contents. These values and the deployment URL appear in Actions summaries.
 
@@ -47,7 +49,7 @@ Build records all expected test IDs. Each shard records assigned IDs, outcomes, 
 
 Baseline run `40496763074` had a 994-second quality job: browser tests 955s, Chromium/OS installation 21s, units 5s, npm install 1s and generation 1s. Overall screenshot duration was 17m09s; quality/deploy/verification consumed 1,020 job-seconds (17 runner-minutes). Browser execution was the measured bottleneck. Duplicate standalone category/excerpt unit workflows were removed; their tests remain in the full unit suite. New run summaries show actual shard and job timings; compare elapsed time and summed runner-minutes, not only the longest job. Queue/cache/network differences prevent a universal speedup claim.
 
-Normal gating remains Chromium. Optional WebKit transition tests are available through `npm run test:motion:webkit`; Firefox and a full cross-engine matrix were not added without evidence of benefit. Neither emulation nor engine testing proves physical-device coverage.
+The full Chromium suite remains mandatory. The keyboard audit also requires Firefox and WebKit at desktop/mobile widths in both themes, plus the WebKit touch-arrow matrix. **Cross-browser Keyboard Tests** is an explicit quality-gate dependency and retains its JSON results and failure evidence. These focused checks cover genuine engine differences found during the audit; they do not imply that every existing test runs on every engine. Additional WebKit transition tests remain available through `npm run test:motion:webkit`. See [the keyboard audit](keyboard-accessibility.md) for scope, known local Windows WebKit keyboard settings and manual-testing limits. Neither emulation nor engine testing proves physical-device coverage.
 
 ## Runtime and maintenance
 
@@ -75,6 +77,8 @@ npm run verify -- --local --artifact --all --output=work/qa/verification-artifac
 npm run preview
 ```
 
+For the additional mandatory keyboard/touch checks, install Firefox and WebKit with `npx playwright install firefox webkit`, then run `npx playwright test --config=playwright.keyboard.config.mjs` and `npx playwright test --config=playwright.webkit.config.mjs tests/browser/arrow-controls.spec.mjs`. CI additionally installs their Linux system dependencies and sets `PORTFOLIO_TEST_ROOT=.pages-site` so these checks exercise the verified artifact.
+
 `build` runs generation → units → packaging/metadata → browser regression against `.pages-site`. `test:browser` is the source-tree development loop; `test:artifact` validates metadata then tests the packaged output. The former `test:bdd` name was removed: Given/When/Then descriptions help express behavior, but the suite is Playwright browser regression, not a formal BDD framework.
 
 ## Investigating failures and rerunning
@@ -101,9 +105,9 @@ Local sequential shards avoid conflating one Windows machine's resource limits w
 
 ## Production checks and failure handling
 
-The deployment action's `page_url` is the verification target. Readiness checks the expected metadata/source and eight critical files against the tested artifact, including the PDF. A stale `200 OK` is insufficient. Cache-busted requests retry every five seconds within a two-minute deadline; each request is bounded. The existing 112 endpoint checks retain HTTP/MIME/content/PDF coverage.
+The deployment action's `page_url` is the verification target. Readiness checks the expected metadata/source and twelve critical files against the tested artifact, including the shared keyboard stylesheet, site shell and PDF. A stale `200 OK` is insufficient. Cache-busted requests retry every five seconds within a two-minute deadline; each request is bounded. The existing endpoint checks retain HTTP/MIME/content/PDF coverage.
 
-After readiness, a short browser smoke uses actual production assets and catalogs in desktop/mobile light/dark contexts. It tests Blog/Projects filtering, fixed controls, Contact's fixed heading, Resume navigation, expanded/collapsed Certifications, PDF visibility/access and first-party errors. Hash routes are exercised in the browser because URL fragments are not sent in HTTP requests. Third-party vendor availability is outside this smoke's scope. The full regression suite is not repeated on production.
+After readiness, a short browser smoke uses actual production assets and catalogs in desktop/mobile light/dark contexts. It tests Blog/Projects filtering, fixed controls, Contact's fixed heading, Resume navigation, expanded/collapsed Certifications, PDF visibility/access and first-party errors. Actual Tab/Shift+Tab, Enter and Space verify initial Resume controls, Contact link focus boxes and arrow reachability/retained focus; touch-enabled mobile contexts also check restored arrow color. Hash routes are exercised in the browser because URL fragments are not sent in HTTP requests. Third-party vendor availability is outside this smoke's scope. The full regression suite is not repeated on production.
 
 If quality fails, inspect the failed step, unit TAP, per-shard trace/screenshots and merged report. Missing reports are failures, not permission to skip the gate. Use `npx playwright show-trace <trace.zip>` for browser failures. Rerun failed jobs for a diagnosed environmental failure; rerun all jobs to obtain a fresh complete measurement. Retrying does not erase the original failure evidence. If main advanced, start a new main run rather than publishing a superseded source.
 
