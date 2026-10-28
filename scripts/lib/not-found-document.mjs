@@ -43,10 +43,11 @@ export function renderNotFoundDocument({ source, errorCard, origin, themeBoot })
   }
   document.documentElement.lang = portfolio.documentElement.lang || 'en';
   document.body.innerHTML = [
+    '<a class="skip-link" href="#main">Skip to content</a>',
     portfolio.querySelector('body > h1').outerHTML,
-    '<div id="page" class="page">', ...shell,
-    '<main id="main" class="site-main" aria-labelledby="route-error-title"><div class="pt-wrapper"><div class="subpages">',
-    errorCard.renderView(true), '</div></div></main></div>',
+    '<div id="page" class="page">', ...shell.slice(0, -1),
+    '<main id="main" class="site-main" tabindex="-1" aria-labelledby="route-error-title"><div class="pt-wrapper"><div class="subpages">',
+    errorCard.renderView(true), '</div></div></main>', shell[shell.length - 1], '</div>',
     '<script src="/js/theme.js"></script>',
     '<script src="/js/motion-completion.js"></script>',
     '<script src="/js/site-shell.js"></script>'

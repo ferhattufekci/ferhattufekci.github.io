@@ -3,6 +3,7 @@ var PageTransitions = (function ($) {
     var sectionsContainer = $(".subpages"),
         isAnimating = false,
         pendingRoute = false,
+        navigationFocus = null,
         waitingForMenu = false,
         routeVersion = 0,
         transitionMotion,
@@ -25,6 +26,7 @@ var PageTransitions = (function ($) {
         $('.pt-trigger').on("click", function (e) {
             e.preventDefault();
             var targetHref = $(this).attr('href');
+            if (e.originalEvent) navigationFocus = 'heading';
             // Hash changes are the single navigation entry point, including queued clicks.
             if (location.hash === targetHref) routeCurrentHash();
             else location.hash = targetHref;
@@ -32,12 +34,14 @@ var PageTransitions = (function ($) {
 
         $('body').append('<div id="page-ajax-loaded" class="page-ajax-loaded animated rotateInDownRight"></div>');
         $(window).on('hashchange.portfolioRoutes', routeCurrentHash);
-        if (!location.hash) location.hash = $(routeMenu + ' a').first().attr('href');
+        if (location.hash) navigationFocus = 'heading';
+        else history.replaceState(null, '', $(routeMenu + ' a').first().attr('href'));
         routeCurrentHash();
 
         ajaxLoader();
 
-        $(".lmpixels-arrow-right").click(function() {
+        $(".lmpixels-arrow-right").click(function(event) {
+            navigationFocus = event.originalEvent && event.originalEvent.detail === 0 ? this : null;
             var activeItem = $('.site-main-menu li.active');
             activeItem.next("li").children("a").click();
             if ( !activeItem.length || activeItem.is(':last-child') ) {
@@ -45,7 +49,8 @@ var PageTransitions = (function ($) {
             }
         });
 
-        $(".lmpixels-arrow-left").click(function() {
+        $(".lmpixels-arrow-left").click(function(event) {
+            navigationFocus = event.originalEvent && event.originalEvent.detail === 0 ? this : null;
             var activeItem = $('.site-main-menu li.active');
             activeItem.prev("li").children("a").click();
             if ( !activeItem.length || activeItem.is(':first-child') ) {
@@ -67,6 +72,7 @@ var PageTransitions = (function ($) {
         if (isAnimating || waitingForMenu) { pendingRoute = true; return; }
         // Selecting the current page must not schedule a closure that can consume the next menu opening.
         if (route === '#' + sectionsContainer.data('current')) {
+            navigationFocus = null;
             ajaxLoader();
             return;
         }
@@ -94,6 +100,7 @@ var PageTransitions = (function ($) {
     }
 
     function showNotFound() {
+        navigationFocus = null;
         routeVersion++;
         waitingForMenu = false;
         if (window.PortfolioSiteShell) PortfolioSiteShell.closeMenu();
@@ -109,6 +116,7 @@ var PageTransitions = (function ($) {
         pendingRoute = false;
         sectionsContainer.data('current', 'not-found');
         $('ul.site-main-menu li').removeClass('active');
+        $('.site-main-menu a').removeAttr('aria-current');
         $('#page-ajax-loaded').hide();
         $('body').removeClass('ajax-page-visible');
         setPageAvailable(errorPage, true);
@@ -126,7 +134,9 @@ var PageTransitions = (function ($) {
             
         if(navLink) {
             $('ul.site-main-menu li').removeClass('active');
+            $('.site-main-menu a').removeAttr('aria-current');
             navLink.addClass('active');
+            $(item).attr('aria-current', 'page');
         }
     }
 
@@ -263,11 +273,16 @@ var PageTransitions = (function ($) {
 
     function onEndAnimation($pageWrapper, $nextPage, $currentPage, moveFocus) {
         resetPage($nextPage, $currentPage);
-        if (moveFocus) {
+        if (moveFocus || navigationFocus === 'heading') {
             var heading = $nextPage.find('h1, h2').first();
             heading.attr('tabindex', '-1');
             if (heading.length) heading[0].focus({ preventScroll: true });
         }
+        // Native fragment focusing must not discard a keyboard arrow's focus.
+        if (navigationFocus && navigationFocus !== 'heading') {
+            navigationFocus.focus({ preventScroll: true });
+        }
+        navigationFocus = null;
         document.dispatchEvent(new CustomEvent('portfolio:page-settled', { detail: { page: $nextPage[0] } }));
         if (pendingRoute) { pendingRoute = false; routeCurrentHash(); }
     }

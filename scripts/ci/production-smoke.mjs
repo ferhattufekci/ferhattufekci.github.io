@@ -6,6 +6,22 @@ const base = new URL(process.argv[2]);
 const output = 'work/qa/production-smoke';
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch();
+async function tabTo(page, target) {
+  const reverse = await target.evaluate(el =>
+    !!(document.activeElement.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING));
+  for (let n = 0; n < 150; n++) {
+    await page.keyboard.press(reverse ? 'Shift+Tab' : 'Tab');
+    if (await target.evaluate(el => el === document.activeElement)) return;
+  }
+  throw new Error(`Production control is unreachable by Tab: ${target}`);
+}
+async function expectKeyboardFocus(target) {
+  await expect(target).toBeFocused();
+  await expect(target).toBeInViewport();
+  await expect.poll(() => target.evaluate(el =>
+    el.matches(':focus-visible') ? parseFloat(getComputedStyle(el).outlineWidth) : 0
+  )).toBeGreaterThanOrEqual(2);
+}
 const report = {
   base: base.href,
   sourceSha: process.env.SOURCE_SHA,
@@ -18,6 +34,8 @@ try {
     for (const colorScheme of ['light', 'dark']) {
       const context = await browser.newContext({
         viewport: { width, height: 900 },
+        isMobile: width < 1000,
+        hasTouch: width < 1000,
         colorScheme,
         reducedMotion: 'reduce'
       });
@@ -61,6 +79,10 @@ try {
         const nav = page.getByRole('navigation', {
           name: 'Resume section navigation'
         });
+        await page.keyboard.press('Tab');
+        await expectKeyboardFocus(nav.getByRole('button', { name: 'All', exact: true }));
+        await page.keyboard.press('Tab');
+        await expectKeyboardFocus(nav.getByRole('button', { name: 'Summary', exact: true }));
         await expect(nav.locator('[aria-current]')).toHaveText('All');
         await nav
           .getByRole('button', { name: 'Education', exact: true })
@@ -162,6 +184,36 @@ try {
           await page.screenshot({
             path: `${output}/${id}-${width}-${colorScheme}.png`
           });
+        }
+        const contactLinks = page.locator('.pt-page-current .contact-card-title > a');
+        for (const link of await contactLinks.all()) {
+          await tabTo(page, link);
+          await expectKeyboardFocus(link);
+          assert.equal(await link.evaluate(el => el.getClientRects().length), 1);
+          assert.ok((await link.boundingBox()).width > 70);
+        }
+        // The last content link must lead to the fixed arrows in document order.
+        await page.keyboard.press('Tab');
+        await expectKeyboardFocus(page.locator('.lmpixels-arrow-left'));
+        await page.keyboard.press('Tab');
+        await expectKeyboardFocus(page.locator('.lmpixels-arrow-right'));
+        await page.keyboard.press('Enter');
+        await expect(page.locator('.pt-page-current')).toHaveAttribute('data-id', 'about-me');
+        await expectKeyboardFocus(page.locator('.lmpixels-arrow-right'));
+        await page.keyboard.press('Shift+Tab');
+        await page.keyboard.press('Space');
+        await expect(page.locator('.pt-page-current')).toHaveAttribute('data-id', 'contact');
+        await expectKeyboardFocus(page.locator('.lmpixels-arrow-left'));
+        await page.screenshot({ path: `${output}/keyboard-contact-${width}-${colorScheme}.png` });
+        if (width < 1000) {
+          const normalColor = await page.locator('.lmpixels-arrow-left').evaluate(el => getComputedStyle(el).color);
+          for (const [direction, destination] of [['left', 'projects'], ['right', 'contact']]) {
+            const arrow = page.locator(`.lmpixels-arrow-${direction}`);
+            await arrow.tap();
+            await expect(page.locator('.pt-page-current')).toHaveCount(1);
+            await expect(page.locator('.pt-page-current')).toHaveAttribute('data-id', destination);
+            await expect.poll(() => arrow.evaluate(el => getComputedStyle(el).color)).toBe(normalColor);
+          }
         }
         assert.deepEqual(report.errors, []);
         report.contexts.push({ width, colorScheme, passed: true, data: loadedData });

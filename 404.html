@@ -30,8 +30,10 @@
 
 
 
-<link rel="stylesheet" href="/css/error-page.css"><link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"><link rel="stylesheet" href="/css/animate.css" type="text/css"><link rel="stylesheet" href="/css/animations.css" type="text/css"><link rel="stylesheet" href="/css/owl.carousel.css" type="text/css"><link rel="stylesheet" href="/css/main.css" type="text/css"><link rel="stylesheet" href="/css/hero-fix.css" type="text/css"><link rel="stylesheet" href="/css/dark-theme.css" type="text/css"><link rel="stylesheet" href="/css/blog-cards.css" type="text/css"><link rel="stylesheet" href="/css/card-interactions.css" type="text/css"><link rel="stylesheet" href="/css/category-filters.css" type="text/css"><link rel="stylesheet" href="/css/page-content-panels.css" type="text/css"></head>
-<body><h1 class="sr-only">Ferhat Tüfekçi</h1>
+
+<link rel="stylesheet" href="/css/error-page.css"><link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css"><link rel="stylesheet" href="/css/animate.css" type="text/css"><link rel="stylesheet" href="/css/animations.css" type="text/css"><link rel="stylesheet" href="/css/owl.carousel.css" type="text/css"><link rel="stylesheet" href="/css/main.css" type="text/css"><link rel="stylesheet" href="/css/hero-fix.css" type="text/css"><link rel="stylesheet" href="/css/dark-theme.css" type="text/css"><link rel="stylesheet" href="/css/blog-cards.css" type="text/css"><link rel="stylesheet" href="/css/card-interactions.css" type="text/css"><link rel="stylesheet" href="/css/category-filters.css" type="text/css"><link rel="stylesheet" href="/css/page-content-panels.css" type="text/css"><link rel="stylesheet" href="/css/keyboard.css"></head>
+<body><a class="skip-link" href="#main">Skip to content</a>
+<h1 class="sr-only">Ferhat Tüfekçi</h1>
 <div id="page" class="page">
 <header id="site_header" class="header mobile-menu-hide">
         <div class="header-content clearfix">
@@ -73,8 +75,8 @@
             <a href="https://linktr.ee/ferhattufekci" target="_blank" rel="noopener noreferrer" title="Ferhat Tüfekçi Links"><i class="fa fa-link" aria-hidden="true"></i></a>
           </div>
 
-          <button class="icon-btn theme-toggle-btn mobile-hidden" aria-label="Switch to dark mode" title="Dark mode">
-            <span class="theme-toggle-icon">🌙</span>
+          <button type="button" class="icon-btn theme-toggle-btn mobile-hidden" aria-label="Switch to dark mode" title="Dark mode">
+            <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
           </button>
 
 
@@ -101,8 +103,8 @@
           </div>
         </div>
 
-        <button class="icon-btn theme-toggle-btn mobile-theme-toggle mobile-visible" aria-label="Switch to dark mode" title="Dark mode">
-          <span class="theme-toggle-icon">🌙</span>
+        <button type="button" class="icon-btn theme-toggle-btn mobile-theme-toggle mobile-visible" aria-label="Switch to dark mode" title="Dark mode">
+          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
         </button>
 
         <button type="button" class="icon-btn menu-toggle mobile-visible" aria-label="Open menu" aria-expanded="false" aria-controls="site_header">
@@ -110,15 +112,7 @@
         </button>
       </div>
 <div class="mobile-menu-overlay" aria-hidden="true"></div>
-<div class="lmpixels-arrows-nav">
-        <a aria-label="Previous section: Contact" href="/#contact" class="lmpixels-arrow-left">
-          <i class="lnr lnr-chevron-left"></i>
-        </a>
-        <a aria-label="Next section: About Me" href="/#about-me" class="lmpixels-arrow-right">
-          <i class="lnr lnr-chevron-right"></i>
-        </a>
-      </div>
-<main id="main" class="site-main" aria-labelledby="route-error-title"><div class="pt-wrapper"><div class="subpages">
+<main id="main" class="site-main" tabindex="-1" aria-labelledby="route-error-title"><div class="pt-wrapper"><div class="subpages">
 <section id="route-not-found" class="pt-page route-error pt-page-current" data-id="not-found" aria-labelledby="route-error-title">
   <div class="section-inner custom-page-content">
     <div class="section-title-block second-style">
@@ -137,7 +131,16 @@
     </div>
   </div>
 </section>
-</div></div></main></div>
+</div></div></main>
+<div class="lmpixels-arrows-nav">
+        <a aria-label="Previous section: Contact" href="/#contact" class="lmpixels-arrow-left">
+          <i class="lnr lnr-chevron-left" aria-hidden="true"></i>
+        </a>
+        <a aria-label="Next section: About Me" href="/#about-me" class="lmpixels-arrow-right">
+          <i class="lnr lnr-chevron-right" aria-hidden="true"></i>
+        </a>
+      </div>
+</div>
 <script src="/js/theme.js"></script>
 <script src="/js/motion-completion.js"></script>
 <script src="/js/site-shell.js"></script></body>

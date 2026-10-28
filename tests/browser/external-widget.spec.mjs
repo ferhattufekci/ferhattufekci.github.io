@@ -31,9 +31,17 @@ test('R-EXTERNAL-01 | Given blocked storage and an available scheduler, then bad
   await page.goto('/#resume');
   await expectSection(page, 'resume');
   await expect(page.locator('.calendly-close-btn')).toBeVisible();
+  await expect(page.locator('.calendly-close-btn')).toHaveAttribute('type', 'button');
+  await expect(page.locator('.calendly-close-btn')).toHaveAccessibleName('Dismiss interview booking widget');
   expect(await page.evaluate(() => window.fixtureCalendlyCalls)).toBe(1);
-  await page.locator('.calendly-close-btn').click();
+  for (let step = 0; step < 150; step++) {
+    await page.keyboard.press('Tab');
+    if (await page.locator('.calendly-close-btn').evaluate(el => el === document.activeElement)) break;
+  }
+  await expect(page.locator('.calendly-close-btn')).toBeFocused();
+  await page.keyboard.press('Space');
   await expect(page.locator('.calendly-badge-widget')).toBeHidden();
+  await expect(page.locator('.theme-toggle-btn:visible')).toBeFocused();
   const initial = testInfo.project.use.colorScheme;
   await expect(page.locator('html')).toHaveAttribute('data-theme', initial);
   await page.locator('.theme-toggle-btn:visible').click();

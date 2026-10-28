@@ -7,7 +7,8 @@ export const requiredChecks = [
   'build-site',
   'browser-tests',
   'verify-artifact',
-  'merge-test-reports'
+  'merge-test-reports',
+  'keyboard-tests'
 ];
 export function resolveSource(eventName, event, ref, sha, mainSha) {
   assert.equal(

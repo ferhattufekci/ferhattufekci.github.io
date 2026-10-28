@@ -561,18 +561,10 @@ Stay In Touch
 
 ### [+90 507 600 81 79](tel:+905076008179 "Call")
 
-[
-
-### Set Up A Job Interview
-
-](https://calendly.com/ferhattufekci/60min)
+### [Set Up A Job Interview](https://calendly.com/ferhattufekci/60min)
 
 ### [ferhattufekci@outlook.com.tr](mailto:ferhattufekci@outlook.com.tr "Send email")
 
-[
-
-### All My Links
-
-](https://linktr.ee/ferhattufekci "Ferhat Tüfekçi links")
+### [All My Links](https://linktr.ee/ferhattufekci "Ferhat Tüfekçi links")
 
 [About](https://ferhattufekci.github.io/about/) · [Contact](https://ferhattufekci.github.io/contact/) · [Privacy](https://ferhattufekci.github.io/privacy/) · [Agent Guide](https://ferhattufekci.github.io/llms.txt)

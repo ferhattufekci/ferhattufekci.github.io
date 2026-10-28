@@ -226,6 +226,7 @@
     <link rel="stylesheet" href="css/card-interactions.css" type="text/css" />
     <link rel="stylesheet" href="css/category-filters.css" type="text/css" />
     <link rel="stylesheet" href="css/page-content-panels.css" type="text/css" />
+    <link rel="stylesheet" href="css/keyboard.css" />
     <!-- Calendly renders after page load; load its stylesheet without blocking the first paint. -->
     <link
       rel="stylesheet"
@@ -376,6 +377,7 @@
   </head>
 
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <h1 class="sr-only">Ferhat Tüfekçi</h1>
 
     <div class="preloader" role="status" aria-label="Page loading" aria-busy="true">
@@ -464,11 +466,12 @@
           </div>
 
           <button
+            type="button"
             class="icon-btn theme-toggle-btn mobile-hidden"
             aria-label="Switch to dark mode"
             title="Dark mode"
           >
-            <span class="theme-toggle-icon">🌙</span>
+            <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
           </button>
 
           <style>
@@ -502,6 +505,8 @@
               font-size: 12px;
               color: #666;
               z-index: 99;
+              padding: 0;
+              margin: 0;
               transition: all 0.2s ease;
             }
 
@@ -547,17 +552,23 @@
                   parentElement: document.getElementById("calendlyContainer"),
                 });
 
-                setTimeout(function () {
+                function attachBadgeClose() {
                   const badgeContent = document.querySelector(
                     ".calendly-badge-content",
                   );
                   if (badgeContent) {
-                    const closeBtn = document.createElement("div");
+                    const closeBtn = document.createElement("button");
+                    closeBtn.type = "button";
+                    closeBtn.setAttribute("aria-label", "Dismiss interview booking widget");
                     closeBtn.className = "calendly-close-btn";
                     closeBtn.innerHTML = "×";
 
                     closeBtn.addEventListener("click", function (e) {
                       e.stopPropagation();
+                      if (document.activeElement === closeBtn) {
+                        const theme = Array.from(document.querySelectorAll('.theme-toggle-btn')).find(button => button.getClientRects().length);
+                        if (theme) theme.focus({ preventScroll: true });
+                      }
                       document
                         .querySelector(".calendly-badge-widget")
                         .classList.add("calendly-permanently-hidden");
@@ -568,9 +579,18 @@
                       }
                     });
 
-                    badgeContent.appendChild(closeBtn);
+                    badgeContent.parentElement.appendChild(closeBtn);
+                    return true;
                   }
-                }, 1000);
+                  return false;
+                }
+                if (!attachBadgeClose()) {
+                  const badgeObserver = new MutationObserver(function () {
+                    if (attachBadgeClose()) badgeObserver.disconnect();
+                  });
+                  badgeObserver.observe(document.body, { childList: true, subtree: true });
+                  window.addEventListener('pagehide', function () { badgeObserver.disconnect(); }, { once: true });
+                }
               }
             });
           </script>
@@ -608,11 +628,12 @@
         </div>
 
         <button
+          type="button"
           class="icon-btn theme-toggle-btn mobile-theme-toggle mobile-visible"
           aria-label="Switch to dark mode"
           title="Dark mode"
         >
-          <span class="theme-toggle-icon">🌙</span>
+          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
         </button>
 
         <button
@@ -628,19 +649,10 @@
 
       <div class="mobile-menu-overlay" aria-hidden="true"></div>
 
-      <div class="lmpixels-arrows-nav">
-        <div class="lmpixels-arrow-left">
-          <i class="lnr lnr-chevron-left"></i>
-        </div>
-        <div class="lmpixels-arrow-right">
-          <i class="lnr lnr-chevron-right"></i>
-        </div>
-      </div>
-
-      <div id="main" class="site-main" role="main">
+      <div id="main" class="site-main" role="main" tabindex="-1">
         <div class="pt-wrapper">
           <div class="subpages">
-            <section class="pt-page" data-id="about-me" id="about-me">
+            <section class="pt-page" data-id="about-me" id="about-me" tabindex="0" aria-label="About Me content">
               <div class="section-inner start-page-full-width">
                 <div class="start-page-full-width">
                   <div class="row">
@@ -862,7 +874,7 @@
                 <nav class="resume-navigation" aria-label="Resume section navigation">
                   <span class="sr-only" id="resume-navigation-all-description">Return to the beginning of the full resume.</span>
                   <div class="category-filter-scroll">
-                    <ul class="category-filter-bar">
+                    <ul class="category-filter-bar" tabindex="-1">
                       <li><button type="button" class="category-filter" data-resume-target="all" data-filter-default aria-current="location" aria-describedby="resume-navigation-all-description">All</button></li>
                       <li><button type="button" class="category-filter" data-resume-target="resume-summary">Summary</button></li>
                       <li><button type="button" class="category-filter" data-resume-target="resume-top-skills">Top Skills</button></li>
@@ -2346,6 +2358,7 @@
 <div class="category-filter-scroll" id="proj-filter-hint">
                   <ul
                     class="category-filter-bar"
+                    tabindex="-1"
                     id="proj-filters"
                   >
                     <li class="active">
@@ -2508,8 +2521,10 @@
                             "
                           >
                             <button
+                              type="button"
                               class="proj-show-more-btn"
                               id="proj-starred-more-btn"
+                              aria-controls="proj-starred-grid"
                               onclick="showMoreStarred()"
                             >
                               Show more
@@ -2835,6 +2850,7 @@
                     starredShown,
                     starredShown + STARRED_PAGE,
                   );
+                  var restoreFocus = moreWrap.contains(document.activeElement);
                   next.forEach(function (r) {
                     frag.appendChild(mkStarCard(r));
                   });
@@ -2847,6 +2863,9 @@
                     moreWrap.style.display = "block";
                   } else {
                     moreWrap.style.display = "none";
+                    if (restoreFocus && next.length) {
+                      grid.children[starredShown - next.length].querySelector('a[href]').focus();
+                    }
                   }
                 }
 
@@ -2983,7 +3002,7 @@
                   </div>
                 </div>
 <div class="category-filter-scroll" id="blog-filter-hint">
-                          <ul class="category-filter-bar" id="blog-filters">
+                          <ul class="category-filter-bar" id="blog-filters" tabindex="-1">
                             <li class="active">
                               <button
                                 type="button"
@@ -3722,10 +3741,11 @@
                       <div class="col-inner bs-30">
                         <div class="lm-info-block gray-default">
                           <i class="fas fa-video"></i>
+                          <h3 class="contact-card-title">
                           <a
                             class="contact-external-link"
                             href="https://calendly.com/ferhattufekci/60min"
-                            ><h3 class="contact-card-title">
+                            >
                               <u class="contact-info-link"
                                 ><span>Set Up A Job <span class="inline-link-tail">Interview<svg
                                       class="resume-cta__icon inline-external-icon"
@@ -3734,8 +3754,9 @@
                                       focusable="false"
                                     ><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path><path d="M5 5h6v2H7v10h10v-4h2v6H5V5z"></path></svg></span></span></u
                               >
-                            </h3></a
+                            </a
                           >
+                          </h3>
                           <span class="lm-info-block-value"></span>
                           <span class="lm-info-block-text"></span>
                         </div>
@@ -3764,13 +3785,13 @@
                       <div class="col-inner bs-30">
                         <div class="lm-info-block gray-default">
                           <i class="lnr lnr-link"></i>
+                          <h3 class="contact-card-title">
                           <a
                             class="contact-external-link"
                             data-bs-toggle="tooltip"
                             href="https://linktr.ee/ferhattufekci"
                             title="Ferhat Tüfekçi links"
                           >
-                            <h3 class="contact-card-title">
                               <u class="contact-info-link"
                                 ><span>All My <span class="inline-link-tail">Links<svg
                                       class="resume-cta__icon inline-external-icon"
@@ -3779,8 +3800,8 @@
                                       focusable="false"
                                     ><path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"></path><path d="M5 5h6v2H7v10h10v-4h2v6H5V5z"></path></svg></span></span></u
                               >
-                            </h3>
                           </a>
+                          </h3>
                           <span class="lm-info-block-value"></span>
                           <span class="lm-info-block-text"></span>
                         </div>
@@ -3793,6 +3814,14 @@
             </section>
           </div>
         </div>
+      </div>
+      <div class="lmpixels-arrows-nav">
+        <button type="button" class="lmpixels-arrow-left" aria-label="Previous page">
+          <i class="lnr lnr-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="lmpixels-arrow-right" aria-label="Next page">
+          <i class="lnr lnr-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
 
@@ -3865,10 +3894,6 @@
         function close() {
           tip.classList.remove("is-open");
           btn.setAttribute("aria-expanded", "false");
-          // Blur on close so the independent CSS focus rule cannot keep the tooltip visible.
-          if (document.activeElement === btn) {
-            btn.blur();
-          }
           // Suppress hover until pointer exit so closing by click also hides the CSS hover tooltip.
           btn.classList.add("suppress-hover-tip");
         }
@@ -3889,8 +3914,9 @@
         });
 
         btn.addEventListener("mouseleave", function () {
-          btn.classList.remove("suppress-hover-tip");
+          if (!btn.matches(':focus-visible')) btn.classList.remove("suppress-hover-tip");
         });
+        btn.addEventListener("blur", function () { btn.classList.remove("suppress-hover-tip"); });
 
         document.addEventListener("click", function (e) {
           if (e.target === btn || btn.contains(e.target)) return;

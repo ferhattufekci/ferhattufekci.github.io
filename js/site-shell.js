@@ -3,12 +3,30 @@
   'use strict';
 
   function init() {
+    var skip = document.querySelector('.skip-link');
+    if (skip) skip.addEventListener('click', function (event) {
+      // The SPA owns route hashes. Skipping repeated navigation must keep its URL.
+      event.preventDefault();
+      var target = document.querySelector('.pt-page-current h1, .pt-page-current h2') || document.getElementById('main');
+      if (target) {
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+      }
+    });
     var header = document.getElementById('site_header');
     var mobileHeader = document.querySelector('.mobile-header');
     var toggle = document.querySelector('.menu-toggle');
     if (!header || !mobileHeader || !toggle) return;
     var overlay = document.querySelector('.mobile-menu-overlay');
-    var closing = Promise.resolve(), closingMotion;
+    // Hybrid devices can expose mouse hover while a touch leaves :hover latched.
+    // Track input modality only here; pressed/cancelled state remains native CSS.
+    var arrows = document.querySelector('.lmpixels-arrows-nav');
+    if (arrows) ['pointerover', 'pointermove', 'pointerdown'].forEach(function (type) {
+      arrows.addEventListener(type, function (event) {
+        if (arrows.getAttribute('data-pointer-type') !== event.pointerType) arrows.setAttribute('data-pointer-type', event.pointerType);
+      });
+    });
+    var closing = Promise.resolve(), closingMotion, openingMotion;
 
     function syncHeaderHeight() {
       var height = mobileHeader.getBoundingClientRect().height;
@@ -21,6 +39,7 @@
     }
 
     function setOpen(open, restoreFocus) {
+      if (!open && openingMotion) { openingMotion.cancel(); openingMotion = null; }
       var wasOpen = document.body.classList.contains('mobile-menu-open');
       document.body.classList.toggle('mobile-menu-open', open);
       header.classList.toggle('mobile-menu-hide', !open);
@@ -60,6 +79,18 @@
       syncHeaderHeight();
       header.classList.add('animate');
       setOpen(toggle.getAttribute('aria-expanded') !== 'true', event.detail === 0);
+      // The drawer precedes its toggle in the DOM. Enter it explicitly when
+      // opened by keyboard; ordinary navigation does not need a focus trap.
+      if (event.detail === 0 && toggle.getAttribute('aria-expanded') === 'true') {
+        // Descendants also transition inherited visibility. Focus only after
+        // that actual transition finishes, and only if the user has not moved on.
+        openingMotion = PortfolioMotionCompletion.wait([header, overlay].concat(Array.from(header.querySelectorAll('a'))), 'transition');
+        openingMotion.finished.then(function () {
+          if (toggle.getAttribute('aria-expanded') === 'true' && document.activeElement === toggle) {
+            header.querySelector('.site-main-menu a').focus({ preventScroll: true });
+          }
+        });
+      }
     });
     document.addEventListener('click', function (event) {
       var navigation = event.target.closest('.pt-trigger');

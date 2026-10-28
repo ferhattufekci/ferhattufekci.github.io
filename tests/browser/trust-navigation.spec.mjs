@@ -22,6 +22,8 @@ test('R-TRUST-04 | Trust headers offer one accessible return action while footer
     }
     await expect(footer.getByRole('link', { name: 'Portfolio', exact: true })).toHaveCount(0);
     await page.keyboard.press('Tab');
+    await expect(page.getByRole('link', { name: 'Skip to content', exact: true })).toBeFocused();
+    await page.keyboard.press('Tab');
     await expect(back).toBeFocused();
     expect(await back.evaluate(el => getComputedStyle(el).outlineStyle)).toBe('solid');
     expect(await back.evaluate(el => parseFloat(getComputedStyle(el).outlineWidth))).toBeGreaterThanOrEqual(2);

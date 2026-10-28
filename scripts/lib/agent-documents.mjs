@@ -3,7 +3,7 @@ import TurndownService from 'turndown';
 
 const NON_CONTENT = [
   'script', 'style', 'iframe', 'nav', 'footer', '.preloader', '.js-adsense',
-  '.sync-badge', '.category-filter-scroll', '.blog-lang-toggle',
+  '.skip-link', '.sync-badge', '.category-filter-scroll', '.blog-lang-toggle',
   '#proj-loading', '#blog-loading', '.proj-show-more-btn'
 ].join(', ');
 
@@ -84,9 +84,11 @@ export function renderDocument({ title, description, path, body, indexable = tru
   <link rel="stylesheet" href="/css/trust-pages.css">
   <link rel="stylesheet" href="/css/dark-theme.css">
   <link rel="stylesheet" href="/css/error-page.css">
+  <link rel="stylesheet" href="/css/keyboard.css">
 </head>
 <body class="trust-page">
-  <main class="trust-document">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <main id="main" class="trust-document" tabindex="-1">
     <nav aria-label="Portfolio">
       <a class="trust-back-link" href="/"><span aria-hidden="true">←</span> Back to portfolio</a>
       <button type="button" class="icon-btn theme-toggle-btn" aria-label="Switch theme">

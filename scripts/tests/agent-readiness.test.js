@@ -68,7 +68,11 @@ test('custom error has absolute assets, recovery links, a noindex directive and 
   assert.equal(document.querySelector('meta[name="robots"]').getAttribute('content'), 'noindex');
   for (const node of document.querySelectorAll('link[href],a[href]')) {
     // The shared shell includes external social profiles; local targets stay root-absolute.
-    assert.match(node.getAttribute('href'), /^(?:\/|https:\/\/)/);
+    const href = node.getAttribute('href');
+    if (href.startsWith('#')) {
+      assert.equal(node.className, 'skip-link');
+      assert.ok(document.getElementById(href.slice(1)), 'Skip link resolves inside the error document');
+    } else assert.match(href, /^(?:\/|https:\/\/)/);
   }
   assert.match(await readFile(join(ROOT, '404.md'), 'utf8'), /\[agent guide\]\(\/llms\.txt\)/);
   const response = await fetch(origin + '/deep/missing/path', { headers: { Accept: 'text/markdown' } });
