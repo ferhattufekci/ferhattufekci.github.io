@@ -44,31 +44,31 @@ function detectCat(name, description, topics) {
   return best[1] > 0 ? best[0] : 'software';  
 }
 
-function detectLang(repoLang) {
-  // repo.language is a programming language; infer the TR/EN content language from the description instead.
-  return null;  
-}
-
 function isTR(text) {
   return /[ğüşıöçĞÜŞİÖÇ]/.test(text || '');
 }
 
 async function fetchJSON(url) {
-  const { default: fetch } = await import('node-fetch');
-  const res = await fetch(url, { headers: HEADERS });
+  const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(20000) });
   if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
   return res.json();
 }
 
 async function fetchGraphQL(query) {
-  const { default: fetch } = await import('node-fetch');
   const res = await fetch('https://api.github.com/graphql', {
     method:  'POST',
     headers: { ...HEADERS, 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ query })
+    body:    JSON.stringify({ query }),
+    signal:  AbortSignal.timeout(20000)
   });
   if (!res.ok) throw new Error(`GraphQL HTTP ${res.status}`);
-  return res.json();
+  const data = await res.json();
+  const nodes = data?.data?.user?.pinnedItems?.nodes;
+  if (data?.errors?.length || !Array.isArray(nodes) ||
+      nodes.some(node => typeof node?.name !== 'string' || !node.name)) {
+    throw new Error('Invalid pinned repositories response');
+  }
+  return data;
 }
 
 async function fetchPinnedNames() {
@@ -76,21 +76,16 @@ async function fetchPinnedNames() {
     console.log('⚠️  GITHUB_TOKEN yok — pinned repolar tespit edilemez, hepsi normal gösterilir.');
     return new Set();
   }
-  try {
-    const data = await fetchGraphQL(`{
-      user(login: "${USERNAME}") {
-        pinnedItems(first: 6, types: REPOSITORY) {
-          nodes { ... on Repository { name } }
-        }
+  const data = await fetchGraphQL(`{
+    user(login: "${USERNAME}") {
+      pinnedItems(first: 6, types: REPOSITORY) {
+        nodes { ... on Repository { name } }
       }
-    }`);
-    const names = (data?.data?.user?.pinnedItems?.nodes || []).map(n => n.name);
-    console.log(`📌 Pinned: ${names.join(', ') || '(yok)'}`);
-    return new Set(names);
-  } catch (e) {
-    console.log('⚠️  Pinned fetch hatası:', e.message);
-    return new Set();
-  }
+    }
+  }`);
+  const names = data.data.user.pinnedItems.nodes.map(n => n.name);
+  console.log(`📌 Pinned: ${names.join(', ') || '(yok)'}`);
+  return new Set(names);
 }
 
 async function fetchAllRepos() {
@@ -100,6 +95,7 @@ async function fetchAllRepos() {
     const batch = await fetchJSON(
       `https://api.github.com/users/${USERNAME}/repos?type=public&per_page=100&page=${page}`
     );
+    if (!Array.isArray(batch)) throw new Error('Invalid repositories response');
     if (!batch.length) break;
     repos.push(...batch);
     if (batch.length < 100) break;
@@ -128,23 +124,22 @@ const LANG_COLORS = {
 };
 
 async function fetchLanguages(repoName) {
-  try {
-    const data = await fetchJSON(
-      `https://api.github.com/repos/${USERNAME}/${repoName}/languages`
-    );
-    if (!data || typeof data !== 'object') return [];
-    const total = Object.values(data).reduce((s, v) => s + v, 0);
-    if (total === 0) return [];
-    return Object.entries(data)
-      .sort((a, b) => b[1] - a[1])
-      .map(([lang, bytes]) => ({
-        name:    lang,
-        color:   LANG_COLORS[lang] || '#8b949e',
-        percent: Math.round((bytes / total) * 100),
-      }));
-  } catch (e) {
-    return [];
+  const data = await fetchJSON(
+    `https://api.github.com/repos/${USERNAME}/${repoName}/languages`
+  );
+  if (!data || typeof data !== 'object' || Array.isArray(data) ||
+      Object.values(data).some(bytes => !Number.isFinite(bytes) || bytes < 0)) {
+    throw new Error(`Invalid languages response for ${repoName}`);
   }
+  const total = Object.values(data).reduce((s, v) => s + v, 0);
+  if (total === 0) return [];
+  return Object.entries(data)
+    .sort((a, b) => b[1] - a[1])
+    .map(([lang, bytes]) => ({
+      name:    lang,
+      color:   LANG_COLORS[lang] || '#8b949e',
+      percent: Math.round((bytes / total) * 100),
+    }));
 }
 
 async function fetchStarred() {
@@ -154,6 +149,7 @@ async function fetchStarred() {
     const batch = await fetchJSON(
       `https://api.github.com/users/${USERNAME}/starred?per_page=100&page=${page}`
     );
+    if (!Array.isArray(batch)) throw new Error('Invalid starred repositories response');
     if (!batch.length) break;
     repos.push(...batch);
     if (batch.length < 100) break;
@@ -177,6 +173,7 @@ async function run() {
 
   console.log(`\n📡 GitHub repoları çekiliyor: @${USERNAME}`);
   const [allRepos, pinnedNames] = await Promise.all([fetchAllRepos(), fetchPinnedNames()]);
+  if (!allRepos.length) throw new Error('GitHub returned no repositories; existing data left unchanged.');
 
   const out = [];
 
@@ -216,8 +213,6 @@ async function run() {
     return b.stars - a.stars;
   });
 
-  writeFileSync(join(DATA_DIR, 'github-repos.json'), JSON.stringify(out, null, 2), 'utf-8');
-
   const meta = {
     lastUpdated: new Date().toISOString(),
     counts: {
@@ -228,18 +223,16 @@ async function run() {
       software:out.filter(r => r.category === 'software').length,
     }
   };
-  writeFileSync(join(DATA_DIR, 'github-meta.json'), JSON.stringify(meta, null, 2), 'utf-8');
-  console.log('\n✅ Tamamlandı:', meta.counts);
-
   console.log('\n⭐ Starred repolar çekiliyor...');
-  try {
-    const starred = await fetchStarred();
-    starred.sort((a, b) => b.stars - a.stars);
-    writeFileSync(join(DATA_DIR, 'github-starred.json'), JSON.stringify(starred, null, 2), 'utf-8');
-    console.log(`💾 github-starred.json: ${starred.length} repo`);
-  } catch (e) {
-    console.log('⚠️  Starred fetch hatası:', e.message);
-  }
+  const starred = await fetchStarred();
+  starred.sort((a, b) => b.stars - a.stars);
+
+  // Complete every upstream request before replacing any published snapshot.
+  writeFileSync(join(DATA_DIR, 'github-repos.json'), JSON.stringify(out, null, 2), 'utf-8');
+  writeFileSync(join(DATA_DIR, 'github-meta.json'), JSON.stringify(meta, null, 2), 'utf-8');
+  writeFileSync(join(DATA_DIR, 'github-starred.json'), JSON.stringify(starred, null, 2), 'utf-8');
+  console.log(`💾 github-starred.json: ${starred.length} repo`);
+  console.log('\n✅ Tamamlandı:', meta.counts);
 }
 
 run().catch(err => { console.error('Fatal:', err); process.exit(1); });

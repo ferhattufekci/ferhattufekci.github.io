@@ -34,6 +34,17 @@ async function wheel(page, area, touch, minimum = 100) {
     finally { await session.detach(); }
   } else { await page.mouse.move(x, y); await page.mouse.wheel(0, 420); }
   await expect.poll(() => area.evaluate(el => el.scrollTop)).toBeGreaterThan(minimum);
+  // A touchEnd can leave momentum scrolling in flight. Observe the actual
+  // position settling before taking the baseline for exact equality checks.
+  await area.evaluate(el => new Promise(resolve => {
+    let position = el.scrollTop, changedAt = performance.now();
+    function frame(now) {
+      if (el.scrollTop !== position) { position = el.scrollTop; changedAt = now; }
+      if (now - changedAt >= 200) resolve();
+      else requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }));
 }
 async function singleOwner(page, id) {
   const result = await panel(page, id).evaluate(el => {

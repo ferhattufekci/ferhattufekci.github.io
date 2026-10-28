@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'fs';
 import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { SaxesParser } from 'saxes';
 import ArticleLanguage from '../js/medium-language.js';
 import ArticleExcerpt from '../js/medium-excerpt.js';
 
@@ -63,7 +64,6 @@ function hexIdFromUrl(url) {
 }
 
 async function fetchText(url, accept = 'application/rss+xml, text/xml, */*') {
-  const { default: fetch } = await import('node-fetch');
   const res = await fetch(url, {
     headers: {
       'User-Agent': accept === 'text/html'
@@ -92,6 +92,8 @@ const firstImage  = html => { const m = html.match(/<img[^>]+src="([^"]+)"/i); r
 const { decodeEntities, selectExcerpt } = ArticleExcerpt;
 
 export function parseRSS(xml) {
+  // Reject truncated/malformed feeds before extracting or replacing any articles.
+  new SaxesParser().write(xml).close();
   const articles = [];
   let   excluded = 0;
 

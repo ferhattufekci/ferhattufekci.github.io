@@ -55,6 +55,14 @@ Project Node is 22; action runtime is independently Node 24. Actions are pinned 
 
 Default permission is contents read. Only deployment has Pages/OIDC write. Production reporting adds Actions read for timing evidence. Each job has a timeout; production readiness has a separate two-minute deadline. Static checks parse JS/JSON/YAML and run verified actionlint plus ShellCheck in CI. `npm ci` enforces the committed lockfile.
 
+Both data-sync workflows install from the repository root and cache against `package-lock.json`. The fetchers use Node's built-in `fetch` (supported by the project's Node >=20 requirement), so they need no separate HTTP package or install in `scripts/`. Keep `scripts/package.json`'s ESM boundary: the shared browser helpers in `js/` are also imported as CommonJS by the Medium fetcher.
+
+Medium validates the complete RSS XML with the existing locked `saxes` dependency before extracting articles, so a truncated response containing some complete items cannot replace a valid snapshot. Production browser smoke also compares Blog/Projects card counts with the published JSON datasets, rather than treating a hidden loading indicator as proof of loaded content.
+
+GitHub REST/GraphQL failures fail the sync before any snapshot is replaced, including failures while fetching languages or later starred pages. An empty repositories response is rejected; legitimate empty language maps and starred lists remain supported. `GITHUB_TOKEN` is supplied to the GitHub fetch step for pinned repositories; local public runs without a token retain the existing unpinned mode. Medium keeps its existing optional public-preview/cache fallback and rejects an unusable RSS feed before writing.
+
+Run `node --test scripts/tests/sync-fetchers.test.js` for the focused regression checks (also included in `npm run test:unit`). They spawn both real entry points with native fetch redirected to a local HTTP fixture, covering dependency loading, pagination, filters, credentials, failure exits and unchanged snapshots on upstream errors.
+
 ## Local commands
 
 ```powershell
@@ -68,6 +76,12 @@ npm run preview
 ```
 
 `build` runs generation → units → packaging/metadata → browser regression against `.pages-site`. `test:browser` is the source-tree development loop; `test:artifact` validates metadata then tests the packaged output. The former `test:bdd` name was removed: Given/When/Then descriptions help express behavior, but the suite is Playwright browser regression, not a formal BDD framework.
+
+## Investigating failures and rerunning
+
+Open the failed run and identify its resolved source SHA before comparing results. Unit TAP, each shard's blob/results/traces, merged HTML/JUnit reports and artifact verification are retained as named run artifacts. Inspect the failing assertion or request, fix its cause, and run the affected check locally; the resulting source revision must pass the complete quality gate. Do not change assertions, skip tests or reuse reports from another run to make the gate green. In Actions, a rerun uses that run's original revision; changes require a new run. If main advanced, publish the new main revision rather than redeploying the superseded source.
+
+A failed **Verify Production** after a successful deployment means the site was deployed but is not verified; no automatic rollback has occurred. Inspect `production-verification` for bounded readiness attempts, expected/actual release metadata, endpoint failures, browser results and failure screenshots/traces. Compare the tested artifact ID, manifest source SHA and content hash with the live `build-metadata.json`. For a transient verification failure, rerun on the same still-current SHA; for a code/data failure, fix it and pass a fresh quality/deployment/production run. Keep the production concurrency lock intact throughout.
 
 To reproduce shard assignment in PowerShell after packaging:
 

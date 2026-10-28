@@ -21,6 +21,7 @@ try {
         colorScheme,
         reducedMotion: 'reduce'
       });
+      const loadedData = {};
       await context.addInitScript(() =>
         localStorage.setItem('calendlyPermanentlyClosed', 'true')
       );
@@ -115,10 +116,22 @@ try {
           await expect(
             page.locator(`.pt-page-current:not([inert])[data-id="${id}"]`)
           ).toBeVisible();
-          if (id === 'blog' || id === 'projects')
+          if (id === 'blog' || id === 'projects') {
             await expect(
               page.locator(id === 'blog' ? '#blog-loading' : '#proj-loading')
             ).toBeHidden();
+            const dataPath = id === 'blog' ? 'data/medium-all.json' : 'data/github-repos.json';
+            const response = await context.request.get(new URL(dataPath, base).href);
+            assert.equal(response.status(), 200, dataPath);
+            const items = await response.json();
+            assert.ok(Array.isArray(items) && items.length > 0, `Expected published data: ${dataPath}`);
+            const cards = page.locator(id === 'blog'
+              ? '#blog-grid .blog-article-card'
+              : '#proj-pinned .proj-card, #proj-grid .proj-card');
+            await expect(cards).toHaveCount(items.length);
+            await expect(cards.first()).toBeVisible();
+            loadedData[id] = { publishedItems: items.length, renderedCards: await cards.count() };
+          }
           if (id === 'contact')
             await page.setViewportSize({ width, height: 480 });
           const controls = page.locator(
@@ -151,7 +164,7 @@ try {
           });
         }
         assert.deepEqual(report.errors, []);
-        report.contexts.push({ width, colorScheme, passed: true });
+        report.contexts.push({ width, colorScheme, passed: true, data: loadedData });
         await context.tracing.stop();
       } catch (error) {
         await page

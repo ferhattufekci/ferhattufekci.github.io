@@ -21,6 +21,9 @@ jobs:
     # Pin the runner version to reduce allocation delays in the rolling latest pool.
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: .
     steps:
       - name: Check out main source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -32,8 +35,9 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: package-lock.json
 
-      - name: Install agent content build dependencies
+      - name: Install locked project dependencies
         run: npm ci
 
       - name: Fetch Medium articles
