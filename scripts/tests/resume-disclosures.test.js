@@ -7,7 +7,8 @@ import { parseHTML } from 'linkedom';
 import { ROOT } from '../lib/public-files.mjs';
 import { toMarkdown } from '../lib/agent-documents.mjs';
 
-// Production facts captured before the UX change; intentionally independent of rendering.
+// Reviewed source facts; only the intentional 2026-11-01 education summary was updated.
+// Keep this fixture independent of rendering rather than regenerating it from HTML.
 const before = JSON.parse(await readFile(join(ROOT, 'tests/fixtures/resume-content.json'), 'utf8'));
 const { document } = parseHTML(await readFile(join(ROOT, 'index.html'), 'utf8'));
 const resume = document.querySelector('#resume');
@@ -42,8 +43,8 @@ test('R-RESUME-01: summary, nine chunks, source facts, links and PDF remain inta
   assert.deepEqual([...resume.querySelectorAll('a')].map(a => ['href', 'target', 'rel'].map(key => a.getAttribute(key))), before.links);
   assert.equal(resume.querySelector('.resume-bottom-cta').closest('details'), null);
   const pdf = await readFile(join(ROOT, 'FerhatTufekci_CV.pdf'));
-  // Updated CV independently verified against remote main before history consolidation.
-  assert.equal(createHash('sha256').update(pdf).digest('hex'), '6483c5c081131c058e60adf2f0c70cfe5429d7c0e9d1aa2b0fcc6346cedfd12a');
+  // Intentional 2026-11-01 CV update: seven-page PDF parsed and rendered independently.
+  assert.equal(createHash('sha256').update(pdf).digest('hex'), 'a120476efac4777f3f28b2260ef5ce23bec7538b11950891d534033cb6fdbfeb');
   for (const [name, expected] of [['Education', before.education], ['Experience', before.experience], ['Engineering Contributions', before.contributions]]) {
     assert.equal(items(name).length, expected.length);
     items(name).forEach((item, index) => {
