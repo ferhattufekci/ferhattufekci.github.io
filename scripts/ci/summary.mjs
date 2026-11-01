@@ -40,6 +40,15 @@ if (mode === 'quality') {
   } catch {
     text += 'Incomplete reports: quality gate must fail.\n';
   }
+  try {
+    const diagnostic = JSON.parse(await readFile('work/qa/coverage-diagnostics.json', 'utf8'));
+    text += `\nAvailable browser blobs: ${diagnostic.blobs}\n\n`;
+    for (const [name, job] of Object.entries(diagnostic.upstream))
+      text += `- ${name}: ${job.result}\n`;
+    for (const error of diagnostic.errors) text += `\n- ${error}\n`;
+  } catch {
+    text += '\nCoverage diagnostics were not produced; inspect setup and artifact download steps.\n';
+  }
 } else if (mode === 'production') {
   text += `Deployment completed: ${process.env.DEPLOYMENT_URL}\n\nProduction verification: ${process.env.RESULT}\n\nArtifact ID: ${process.env.ARTIFACT_ID}\n\nA verification failure does not perform an automatic rollback.\n`;
   for (const [name, path] of [

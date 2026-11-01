@@ -59,41 +59,62 @@ else if (command === 'current') {
   );
   await output('content-sha256', metadata.contentSha256);
 } else if (command === 'coverage') {
-  const expected = JSON.parse(
-    await readFile('work/qa/expected-tests.json', 'utf8')
-  );
-  const reports = [];
+  const reports = [], errors = [];
+  const upstream = JSON.parse(process.env.CHECK_RESULTS || '{}');
+  let expected, blobs = 0;
   // A local rerun must not publish a previous run's summary or merge stale blobs.
   await rm('work/qa/coverage-summary.json', { force: true });
   await rm('work/qa/all-blob-reports', { recursive: true, force: true });
   await mkdir('work/qa/all-blob-reports', { recursive: true });
+  try {
+    expected = JSON.parse(await readFile('work/qa/expected-tests.json', 'utf8'));
+  } catch (error) {
+    errors.push(error.code === 'ENOENT'
+      ? 'Missing expected test inventory (check build-site and test-inventory download)'
+      : `Invalid expected test inventory: ${error.message}`);
+  }
   for (const index of [1, 2]) {
     const base = `work/qa/shards/browser-report-${index}`;
-    reports.push(JSON.parse(await readFile(`${base}/coverage.json`, 'utf8')));
-    const blobs = (await readdir(`${base}/blob`)).filter((name) =>
-      name.endsWith('.zip')
-    );
-    if (blobs.length !== 1)
-      throw new Error(`Missing or ambiguous blob for shard ${index}`);
-    await copyFile(
-      `${base}/blob/${blobs[0]}`,
-      `work/qa/all-blob-reports/shard-${index}.zip`
-    );
+    try {
+      reports.push(JSON.parse(await readFile(`${base}/coverage.json`, 'utf8')));
+    } catch (error) {
+      errors.push(error.code === 'ENOENT'
+        ? `Missing shard ${index} coverage report (${base}/coverage.json)`
+        : `Invalid shard ${index} coverage report: ${error.message}`);
+    }
+    // Diagnostic blobs are useful even when coverage is missing or a test failed.
+    try {
+      const files = (await readdir(`${base}/blob`)).filter(name => name.endsWith('.zip'));
+      if (files.length !== 1) throw new Error('expected exactly one blob ZIP');
+      await copyFile(`${base}/blob/${files[0]}`, `work/qa/all-blob-reports/shard-${index}.zip`);
+      blobs++;
+    } catch (error) {
+      errors.push(`Missing or ambiguous blob for shard ${index}: ${error.code === 'ENOENT' ? 'no blob directory' : error.message}`);
+    }
   }
-  const summary = validateCoverage(expected, reports);
-  await writeFile(
-    'work/qa/coverage-summary.json',
-    JSON.stringify(
-      {
+  let summary;
+  if (expected !== undefined) {
+    try {
+      summary = validateCoverage(expected, reports);
+    } catch (error) {
+      errors.push(`Coverage rejected: ${error.message}`);
+    }
+  }
+  await writeFile('work/qa/coverage-diagnostics.json', JSON.stringify({ upstream, blobs, errors }, null, 2));
+  // Output before failing so the workflow can still merge available diagnostics.
+  await output('blobs', blobs);
+  if (errors.length) {
+    console.error(`Browser coverage incomplete or failed. Upstream: ${Object.entries(upstream).map(([name, job]) => `${name}=${job.result}`).join(', ') || 'not supplied'}`);
+    for (const error of errors) console.error(`- ${error}`);
+    process.exitCode = 1;
+  } else {
+    await writeFile('work/qa/coverage-summary.json', JSON.stringify({
         ...summary,
         reports: reports.map(({ results, assigned, ...rest }) => ({
           ...rest,
           tests: results.length
         }))
-      },
-      null,
-      2
-    )
-  );
-  await output('tests', summary.tests);
+      }, null, 2));
+    await output('tests', summary.tests);
+  }
 } else throw new Error(`Unknown CI command: ${command}`);

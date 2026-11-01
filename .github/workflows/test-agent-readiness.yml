@@ -179,7 +179,7 @@ jobs:
         run: npm run test:browser -- --shard="$CI_SHARD/2"
       - name: Publish browser-report-${{ matrix.shard }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
+        if: always() && hashFiles(format('work/qa/shard-{0}/**', matrix.shard)) != ''
         with:
           name: browser-report-${{ matrix.shard }}
           path: work/qa/shard-${{ matrix.shard }}/
@@ -276,6 +276,8 @@ jobs:
     needs:
       - build-site
       - browser-tests
+      - static-checks
+      - unit-tests
     steps:
       - name: Check out resolved source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -288,25 +290,32 @@ jobs:
           node-version: "22"
           cache: npm
       - name: Install locked dependencies
+        id: dependencies
         run: npm ci
       - name: Download tested artifact
+        if: always() && steps.dependencies.outcome == 'success' && needs.build-site.result == 'success'
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: test-inventory
           path: work/qa
       - name: Download shard reports
+        if: always() && steps.dependencies.outcome == 'success' && needs.browser-tests.result != 'skipped'
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           pattern: browser-report-*
           path: work/qa/shards
       - name: Require complete disjoint test coverage
+        id: coverage
+        if: always() && steps.dependencies.outcome == 'success'
+        env:
+          CHECK_RESULTS: ${{ toJSON(needs) }}
         run: node scripts/ci/commands.mjs coverage
       - name: Merge browser reports
-        if: always()
+        if: always() && steps.coverage.outputs.blobs != '' && steps.coverage.outputs.blobs != '0'
         run: npx playwright merge-reports --config=playwright.merge.config.mjs work/qa/all-blob-reports
       - name: Publish merged-browser-report
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        if: always()
+        if: always() && hashFiles('work/qa/merged-report/**', 'work/qa/merged-junit.xml', 'work/qa/merged-results.json') != ''
         with:
           name: merged-browser-report
           path: |-
@@ -316,8 +325,18 @@ jobs:
             work/qa/coverage-summary.json
           retention-days: 7
           if-no-files-found: error
+      - name: Publish browser coverage diagnostics
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always() && hashFiles('work/qa/coverage-diagnostics.json') != ''
+        with:
+          name: browser-coverage-diagnostics
+          path: |-
+            work/qa/coverage-diagnostics.json
+            work/qa/coverage-summary.json
+          retention-days: 7
+          if-no-files-found: error
       - name: Summarize browser coverage
-        if: always()
+        if: always() && steps.dependencies.outcome == 'success'
         run: node scripts/ci/summary.mjs coverage
   quality-gate:
     name: Quality Gate

@@ -16,6 +16,8 @@ flowchart LR
   C --> T
   T --> M[Merge Test Reports]
   B --> M
+  U --> M
+  C --> M
   U --> G[Quality Gate]
   C --> G
   B --> G
@@ -46,6 +48,8 @@ Quality Gate explicitly requires success from every required job, including repo
 Playwright already used `fullyParallel: true` and two workers. These remain. Six Chromium profiles cover three viewports in light/dark themes; they are not six browser engines. Each of two shards runs its assigned subset once on its own Ubuntu runner. Worker contexts/storage and local server ports are isolated; fixtures control third-party services. Retries remain zero, so flaky outcomes cannot silently pass.
 
 Build records all expected test IDs. Each shard records assigned IDs, outcomes, retries, duration and runner resources beside its blob report. The merger requires exactly two reports, one blob per shard and the complete, disjoint expected-test union. Missing, duplicate, skipped, retried and failed tests fail validation. HTML, JUnit and JSON reports are merged; failed shards retain traces, screenshots and video. Reports are retained seven days. Cache keys include OS, architecture, runner generation, project Node version and lockfile hash; OS browser dependencies are still installed.
+
+When upstream checks skip the browser jobs, the collector records their results and every missing shard in `browser-coverage-diagnostics`. Coverage still fails. Available blobs are collected independently of coverage validation, so failed or partial runs can still produce diagnostic HTML/JUnit/JSON reports. Merge runs only when a blob exists; merged-report upload runs only when report files exist. No placeholder test reports are created, and the quality gate continues to require every job and both complete, passing shards. `scripts/tests/ci-reports.test.js` covers the report CLI, stale evidence cleanup, invalid reports, upstream diagnostics and workflow conditions.
 
 Baseline run `40496763074` had a 994-second quality job: browser tests 955s, Chromium/OS installation 21s, units 5s, npm install 1s and generation 1s. Overall screenshot duration was 17m09s; quality/deploy/verification consumed 1,020 job-seconds (17 runner-minutes). Browser execution was the measured bottleneck. Duplicate standalone category/excerpt unit workflows were removed; their tests remain in the full unit suite. New run summaries show actual shard and job timings; compare elapsed time and summed runner-minutes, not only the longest job. Queue/cache/network differences prevent a universal speedup claim.
 
