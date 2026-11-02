@@ -95,17 +95,17 @@
       {
         "name": "JavaScript",
         "color": "#f1e05a",
-        "percent": 43
+        "percent": 53
       },
       {
         "name": "HTML",
         "color": "#e34c26",
-        "percent": 31
+        "percent": 26
       },
       {
         "name": "CSS",
         "color": "#563d7c",
-        "percent": 26
+        "percent": 21
       }
     ],
     "stars": 0,
@@ -123,7 +123,7 @@
     "pinned": true,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-10-26T02:29:14Z"
+    "updatedAt": "2026-11-02T04:57:40Z"
   },
   {
     "name": "java-champions",
