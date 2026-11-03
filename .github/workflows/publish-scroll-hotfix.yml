@@ -47,6 +47,7 @@ jobs:
           name: ${{ env.ARTIFACT_NAME }}
           path: .pages-site
           retention-days: 7
+          include-hidden-files: true
       - name: Reject a superseded repair
         run: node scripts/ci/commands.mjs current "$SOURCE_SHA"
       - name: Deploy the repair artifact
