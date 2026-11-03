@@ -866,9 +866,7 @@
                   class="section-title-block second-style resume-title-block"
                 >
                   <h2 class="section-title">Resume</h2>
-                  <div class="section-description">
-                    <span>10+ Years of Professional Experience</span>
-                  </div>
+                  <div class="section-description" aria-hidden="true"></div>
                 </div>
 
                 <nav class="resume-navigation" aria-label="Resume section navigation">
@@ -2345,7 +2343,6 @@
 <div class="section-title-block second-style">
                   <h2 class="section-title">Projects</h2>
                   <div class="section-description">
-                    <span>My Work</span>
                     <span id="proj-updated" class="sync-badge"></span>
                   </div>
                 </div>
@@ -2948,7 +2945,6 @@
 <div class="section-title-block second-style">
                   <h2 class="section-title">Blog</h2>
                   <div class="section-description">
-                    <span>My Articles</span>
                     <span class="blog-lang-toggle" id="blog-lang-toggle">
                       <button
                         class="blt-btn active"
@@ -3177,6 +3173,8 @@
 
             <script src="js/medium-language.js"></script>
             <script src="js/medium-excerpt.js"></script>
+            <script src="js/blog-sharing-data.js"></script>
+            <script src="js/blog-sharing.js"></script>
             <script>
               (function () {
                 var CATS = {
@@ -3339,6 +3337,9 @@
                   link.setAttribute("aria-labelledby", titleId);
                   link.setAttribute("aria-describedby", titleId + "-new-tab");
 
+                  var main = document.createElement("div");
+                  main.className = "blog-article-main";
+
                   var media = document.createElement("div");
                   media.className = "blog-article-media";
                   var placeholder = document.createElement("div");
@@ -3364,7 +3365,7 @@
                     image.src = art.thumbnail;
                     media.appendChild(image);
                   }
-                  link.appendChild(media);
+                  main.appendChild(media);
 
                   var content = document.createElement("div");
                   content.className = "blog-article-content";
@@ -3404,19 +3405,25 @@
 
                   var read = document.createElement("span");
                   read.className = "blog-article-read";
-                  read.textContent = lang === "tr" ? "Yazıyı oku" : "Read article";
+                  var readLabel = document.createElement("span");
+                  readLabel.className = "blog-article-read-label";
+                  readLabel.textContent = lang === "tr" ? "Oku" : "Read";
+                  read.appendChild(readLabel);
                   var arrow = document.createElement("span");
+                  arrow.className = "blog-article-read-icon";
                   arrow.setAttribute("aria-hidden", "true");
                   arrow.textContent = "↗";
                   read.appendChild(arrow);
-                  content.appendChild(read);
                   var newTab = document.createElement("span");
                   newTab.id = titleId + "-new-tab";
                   newTab.className = "sr-only";
                   newTab.textContent = lang === "tr" ? "Yeni sekmede açılır" : "Opens in a new tab";
                   content.appendChild(newTab);
-                  link.appendChild(content);
+                  main.appendChild(content);
+                  link.appendChild(main);
+                  link.appendChild(read);
                   card.appendChild(link);
+                  PortfolioBlogSharing.attach(card, art, lang);
                   return card;
                 }
 
@@ -3504,6 +3511,7 @@
                   var load = document.getElementById("blog-loading");
                   if (!grid) return;
                   if (!articlesLoaded) return;
+                  PortfolioBlogSharing.close();
                   // Filter the same resolved language used by the badge, then retain newest-first ordering.
                   var visible = loaded.filter(function (entry) {
                     return (curLang === "all" || entry.lang === curLang) &&

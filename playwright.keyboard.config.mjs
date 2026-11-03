@@ -3,7 +3,7 @@ import base from './playwright.config.mjs';
 
 export default defineConfig({
   ...base,
-  testMatch: '**/keyboard-accessibility.spec.mjs',
+  testMatch: ['**/keyboard-accessibility.spec.mjs', '**/blog-sharing-keyboard.spec.mjs'],
   outputDir: 'work/qa/keyboard-results',
   reporter: [['line'], ['json', { outputFile: 'work/qa/keyboard-results.json' }]],
   projects: ['firefox', 'webkit'].flatMap(browserName => [1440, 390].flatMap(width => ['light', 'dark'].map(colorScheme => ({

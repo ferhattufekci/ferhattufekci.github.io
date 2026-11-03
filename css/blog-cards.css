@@ -33,18 +33,281 @@
 }
 
 .blog-article-card {
-  display: flex;
+  /* Share each row's article/action/disclosure tracks, not one flex budget.
+     Only the disclosure track grows when feedback or the manual URL appears. */
+  display: grid;
+  grid-row: span 3;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: subgrid;
+  column-gap: 12px;
+  row-gap: 0;
 }
 
+/* Secondary actions remain siblings of the native article link, in flow. */
+.blog-share-trigger,
+.blog-share-panel button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+  text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  /* Focus must appear immediately; legacy buttons transition every property. */
+  transition: none;
+}
+.blog-share-trigger {
+  grid-row: 2;
+  grid-column: 2;
+  align-self: center;
+  justify-self: end;
+  max-width: 100%;
+  margin: 0 12px 10px 0;
+  padding-inline: 10px;
+  border-radius: var(--card-radius, 6px);
+}
+.blog-share-trigger svg,
+.blog-share-actions svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.blog-share-trigger,
+.blog-share-trigger:is(:hover, :active, :focus-visible),
+.blog-share-panel button,
+.blog-share-panel button:is(:hover, :active, :focus-visible) {
+  background: transparent;
+  color: var(--card-link-color);
+}
+/* Only the label is decorated; the entire 44px button remains a hit target. */
+.blog-share-trigger:focus-visible > span,
+.blog-share-actions button:focus-visible > span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.blog-share-trigger[aria-expanded="true"] {
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 1px var(--color-border-strong);
+}
+@media (hover: hover) and (pointer: fine) {
+  .blog-share-trigger:hover > span,
+  .blog-share-actions button:hover > span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+.blog-share-panel {
+  position: relative;
+  grid-row: 3;
+  grid-column: 1 / -1;
+  align-self: start;
+  justify-self: end;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: calc(100% - 34px);
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  margin: 0 12px 18px 22px;
+  padding: 8px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--card-radius, 6px);
+  background: var(--color-surface);
+  box-shadow: 0 4px 12px var(--color-card-shadow);
+  color: var(--color-text-primary);
+}
+.blog-share-panel::before,
+.blog-share-panel::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-inline: 7px solid transparent;
+  border-bottom: 7px solid var(--color-border-strong);
+  top: -7px;
+  right: 30px;
+}
+.blog-share-panel::after {
+  border-inline-width: 6px;
+  border-bottom: 6px solid var(--color-surface);
+  top: -5px;
+  right: 31px;
+}
+.blog-share-panel[data-mode="native"] {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.blog-share-panel[data-mode="native"]::before,
+.blog-share-panel[data-mode="native"]::after { display: none; }
+/* Native idle/pending has no grid contribution. The clipped 1px live region
+   remains exposed to assistive technology; only the trigger paints progress. */
+.blog-share-panel[data-mode="native"][data-inline="true"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  max-width: 0;
+  margin: 0;
+  padding: 0;
+}
+.blog-share-panel[data-inline="true"] .blog-share-feedback {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+.blog-share-panel[data-inline="true"] .blog-share-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.blog-share-actions { display: flex; flex-direction: column; align-items: stretch; gap: 0; min-width: 0; }
+.blog-share-actions button { max-width: 100%; margin: 0; padding-inline: 10px; }
+.blog-share-actions button:focus-visible { background: var(--card-hover-surface); }
+@media (hover: hover) and (pointer: fine) {
+  .blog-share-trigger:not([aria-expanded="true"]):hover,
+  .blog-share-actions button:hover { background: var(--card-hover-surface); }
+}
+.blog-share-feedback {
+  --blog-feedback-accent: var(--color-text-secondary);
+  --blog-feedback-surface: color-mix(in srgb, var(--color-text-primary) 4%, var(--color-surface-alt));
+  display: grid;
+  min-width: 0;
+}
+/* Keep the stable, empty live region exposed, without a visible empty box. */
+.blog-share-feedback:has(.blog-share-status:not(:empty)) {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--card-radius, 6px);
+  background: var(--blog-feedback-surface);
+}
+.blog-share-feedback[data-state="success"] {
+  --blog-feedback-accent: color-mix(in srgb, var(--color-success) 75%, var(--color-text-primary));
+  --blog-feedback-surface: color-mix(in srgb, var(--color-success) 6%, var(--color-surface-alt));
+}
+.blog-share-feedback[data-state="pending"] { --blog-feedback-accent: var(--card-link-color); }
+.blog-share-feedback[data-state="error"] {
+  --blog-feedback-accent: color-mix(in srgb, var(--color-danger) 80%, var(--color-text-primary));
+  --blog-feedback-surface: color-mix(in srgb, var(--color-danger) 5%, var(--color-surface-alt));
+}
+.blog-share-status {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  gap: 8px;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.blog-share-status svg {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  fill: none;
+  stroke: var(--blog-feedback-accent);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .blog-share-status[data-state="pending"] svg { animation: blogShareProgress 1s linear infinite; }
+  .blog-share-trigger[aria-busy="true"] svg { animation: blogShareProgress 1s linear infinite; }
+}
+@keyframes blogShareProgress { to { transform: rotate(360deg); } }
+.blog-share-manual { min-width: 0; }
+.blog-share-manual:not([hidden]) { margin-top: 10px; }
+.blog-share-manual label {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 6px;
+}
+.blog-share-manual input {
+  transition: none;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 4px;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 16px;
+}
+.blog-share-panel[hidden], .blog-share-actions[hidden], .blog-share-manual[hidden] { display: none; }
+
 .blog-article-link {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+  grid-row: 1 / span 2;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-template-columns: subgrid;
+  row-gap: 0;
   min-width: 0;
   border-radius: inherit;
   color: var(--color-text-primary);
   text-decoration: none;
   cursor: pointer;
+}
+
+.blog-article-main {
+  grid-row: 1;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Text keeps its size when the two action targets need separate lines. */
+@container blog-cards (max-width: 16em) {
+  .blog-article-card {
+    grid-row: span 4;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .blog-share-trigger {
+    grid-row: 3;
+    grid-column: 1;
+    justify-self: end;
+    margin: 0 12px 10px 0;
+  }
+  .blog-share-panel { grid-row: 4; }
 }
 
 .blog-article-media,
@@ -106,6 +369,10 @@
   padding: 22px;
 }
 
+.blog-article-card:has(.blog-share-trigger) .blog-article-content {
+  padding-bottom: 0;
+}
+
 .blog-article-meta {
   display: flex;
   align-items: baseline;
@@ -159,16 +426,35 @@
 }
 
 .blog-article-read {
+  grid-row: 2;
+  grid-column: 1;
+  align-self: center;
+  justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  min-height: 24px;
-  margin-top: auto;
-  padding-top: 8px;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: calc(100% - 22px);
+  margin: 0 0 10px 22px;
+  padding: 8px 0;
   color: var(--card-link-color);
   font-size: 13px;
   font-weight: 600;
   line-height: 1.5;
+  text-decoration: none;
+}
+
+.blog-article-read-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  line-height: 1;
 }
 
 #blog-lang-toggle .blt-btn:focus-visible {

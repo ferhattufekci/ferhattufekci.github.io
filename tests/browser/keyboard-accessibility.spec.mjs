@@ -15,11 +15,15 @@ async function tabTo(page, target, reverse) {
 async function visibleFocus(target) {
   await expect(target).toBeFocused();
   await expect(target).toBeInViewport();
-  await expect.poll(() => target.evaluate(el => parseFloat(getComputedStyle(el).outlineWidth)), {
+  // A single native card anchor owns focus; its Read action paints the ring.
+  // Audit that visible descendant, retaining the same minimum ring threshold.
+  await expect.poll(() => target.evaluate(el => parseFloat(getComputedStyle(
+    el.matches('.blog-article-link') ? el.querySelector('.blog-article-read') : el).outlineWidth)), {
     message: await target.evaluate(el => `Visible focus ring on ${el.outerHTML.slice(0, 200)}`)
   }).toBeGreaterThanOrEqual(2);
   const state = await target.evaluate(el => {
-    const s = getComputedStyle(el), r = el.getBoundingClientRect();
+    const indicator = el.matches('.blog-article-link') ? el.querySelector('.blog-article-read') : el;
+    const s = getComputedStyle(indicator), r = indicator.getBoundingClientRect();
     const x = Math.max(0, Math.min(innerWidth - 1, r.left + r.width / 2));
     const y = Math.max(0, Math.min(innerHeight - 1, r.top + Math.min(r.height / 2, 12)));
     const top = document.elementFromPoint(x, y);
@@ -157,7 +161,8 @@ test('R-KEYBOARD-02 | Menu, theme and route history have predictable focus under
 test('R-KEYBOARD-03 | Filters retain focus, disclosures keep native keyboard behavior and dismissing information retains its trigger', async ({ page }) => {
   await mockCatalog(page);
   await ready(page, '/#blog');
-  const language = page.getByRole('button', { name: /English|EN/, exact: true });
+  const language = page.locator('#blog-lang-toggle').getByRole('button', { name: /English|EN/, exact: true });
+  await expect(language).toHaveCount(1);
   await tabTo(page, language);
   await page.keyboard.press('Space');
   await expect(language).toHaveAttribute('aria-pressed', 'true');
@@ -248,7 +253,10 @@ test('R-KEYBOARD-07 | At 200% CSS zoom navigation, filters and Contact links rem
     await ready(page, route);
     await page.locator('body').evaluate(el => { el.style.zoom = '2'; });
     expect(await page.locator('body').evaluate(el => getComputedStyle(el).zoom)).toBe('2');
-    const controls = route.includes('blog') ? page.locator('[data-id="blog"] button') : page.locator('[data-id="contact"] .contact-card-title a');
+    // Closed disclosure actions are intentionally absent from sequential focus.
+    // R-KEYBOARD-01 still audits the complete Tab order, including hidden stops.
+    const controls = route.includes('blog') ? page.locator('[data-id="blog"] button:visible') : page.locator('[data-id="contact"] .contact-card-title a');
+    expect(await controls.count()).toBeGreaterThan(0);
     for (const control of await controls.all()) {
       await tabTo(page, control);
       await visibleFocus(control);

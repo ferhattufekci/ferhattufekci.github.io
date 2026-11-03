@@ -56,8 +56,6 @@ I strengthen teams by clarifying complexity, improving collaboration, and accele
 
 ## Resume
 
-10+ Years of Professional Experience
-
 ### Summary
 
 The opportunity to solve real-world problems using nothing more than a computer in my room shaped both my education and my career.
@@ -523,8 +521,6 @@ University of Illinois Urbana-Champaign
 
 ## Projects
 
-My Work
-
 Selected projects (full list on [GitHub](https://github.com/ferhattufekci)):
 
 -   [miuul-data-science-and-machine-learning-bootcamp](https://github.com/ferhattufekci/miuul-data-science-and-machine-learning-bootcamp) (Python) — This repo includes the case studies I made in the Data Science & Machine Learning Bootcamp given by Miuul.
@@ -543,8 +539,6 @@ Selected projects (full list on [GitHub](https://github.com/ferhattufekci)):
 These are repositories starred by me, not my own work.
 
 ## Blog
-
-My Articles
 
 Recent articles (full archive on [Medium](https://medium.com/@ferhattufekci)):
 

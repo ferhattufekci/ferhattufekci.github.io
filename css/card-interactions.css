@@ -20,7 +20,6 @@
 }
 
 .blog-article-image,
-.blog-article-read > span,
 .proj-repo-arrow,
 .proj-owner-arrow {
   transition-property: transform, color;
@@ -66,17 +65,6 @@
     border-color var(--card-transition-duration) var(--card-transition-easing);
 }
 
-.blog-article-link:focus-visible::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: var(--card-radius);
-  pointer-events: none;
-}
-
-.blog-article-link:focus-visible,
-.blog-article-link:focus-visible::after,
 .proj-name:focus-visible::after {
   outline: 3px solid var(--color-accent);
   outline-offset: -3px;
@@ -89,26 +77,21 @@
   border-color: var(--color-accent);
 }
 
-.blog-article-card:has(.blog-article-link:focus-visible),
 .proj-card:has(a:focus-visible) {
-  transform: translateY(var(--card-hover-lift));
   border-color: var(--card-hover-border);
   background-color: var(--card-hover-surface);
   box-shadow: var(--card-hover-shadow);
 }
 
-.blog-article-link:focus-visible .blog-article-image {
-  transform: scale(var(--card-image-hover-scale));
-}
+.proj-card:has(a:focus-visible) { transform: translateY(var(--card-hover-lift)); }
 
-.blog-article-link:focus-visible .blog-article-read > span,
 .proj-name:focus-visible .proj-repo-arrow,
 .proj-owner-badge:focus-visible .proj-owner-arrow {
   transform: translate(var(--card-arrow-offset), calc(-1 * var(--card-arrow-offset)));
   color: var(--card-link-color);
 }
 
-.blog-article-link:focus-visible .blog-article-read,
+.blog-article-link:focus-visible .blog-article-read-label,
 .proj-name:focus-visible,
 .proj-owner-badge:focus-visible {
   text-decoration: underline;
@@ -118,24 +101,24 @@
 @media (hover: hover) and (pointer: fine) {
   .blog-article-card:hover,
   .proj-card:hover {
-    transform: translateY(var(--card-hover-lift));
     border-color: var(--card-hover-border);
     background-color: var(--card-hover-surface);
     box-shadow: var(--card-hover-shadow);
   }
 
+  .proj-card:hover { transform: translateY(var(--card-hover-lift)); }
+
   .blog-article-card:hover .blog-article-image {
     transform: scale(var(--card-image-hover-scale));
   }
 
-  .blog-article-link:hover .blog-article-read > span,
   .proj-name:hover .proj-repo-arrow,
   .proj-owner-badge:hover .proj-owner-arrow {
     transform: translate(var(--card-arrow-offset), calc(-1 * var(--card-arrow-offset)));
     color: var(--card-link-color);
   }
 
-  .blog-article-link:hover .blog-article-read,
+  .blog-article-link:hover .blog-article-read-label,
   .proj-name:hover,
   .proj-owner-badge:hover {
     text-decoration: underline;
