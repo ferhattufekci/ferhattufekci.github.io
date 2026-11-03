@@ -75,6 +75,12 @@ Run `node --test scripts/tests/sync-fetchers.test.js` for the focused regression
 
 ## Local commands
 
+Advertising regressions run in the six Chromium projects and the existing eight
+Firefox/WebKit desktop/mobile theme projects. Only the external provider is
+simulated; application initialization and the actual scroll panel remain real.
+No real-fill/account approval claim follows from those tests. Dynamic In-feed
+advertising remains disabled until its verified account snippet is configured.
+
 ```powershell
 npm ci
 npm run lint
