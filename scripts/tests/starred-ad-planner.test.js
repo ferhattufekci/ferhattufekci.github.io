@@ -49,8 +49,9 @@ test('SM-03/05/10 | Failed or unfilled reservations continue consuming the docum
   assert.deepEqual(result.placements, []); assert.deepEqual(result.state.reservedKeys, originalKeys);
 });
 
-test('SM-12/14/15 | Production dynamic feed ads stay disabled without a verified In-feed unit; the fixed In-article slot is not repurposed', () => {
+test('SM-12/14/15 | Production feed ads use the supplied In-feed unit and retain the approved spacing and quota', () => {
   const { starred } = require('../../js/adsense-config.js');
-  assert.equal(starred.enabled, false); assert.equal(starred.unit, null);
+  assert.equal(starred.enabled, true); assert.deepEqual(starred.unit, facts.productionUnit);
+  assert.notEqual(starred.unit.slot, '2029775306', 'The static unit is not repurposed');
   for (const [key, value] of Object.entries(facts.policy)) assert.equal(starred[key], value);
 });

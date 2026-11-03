@@ -84,10 +84,10 @@ inner Projects/Blog scrollport without rewriting provider styles or creative siz
 fixed controls and keyboard paging across provider fill states.
 
 Starred expansion uses the pure `js/starred-ad-planner.js` and the same ad owner.
-`js/adsense-config.js` keeps dynamic In-feed advertising disabled until a dedicated,
-verified In-feed configuration is supplied. Static Projects uses `autorelaxed`;
+`js/adsense-config.js` enables the configured In-feed unit for manual expansion.
+Static Projects uses `autorelaxed`;
 static Blog retains its `fluid` layout key. These existing static settings are not
-reused for new dynamic placements. When enabled, every 40 unique manually revealed cards can reserve one
+reused for new dynamic placements. Every 40 unique manually revealed cards can reserve one
 placement, with at most two per document; failed/no-fill reservations still count.
 The first 20 cards, filters, themes and revisits do not create opportunities.
 Run the two advertising browser specs and both advertising Node test files after
@@ -316,10 +316,10 @@ ve optimized yanıtlar korunur. Gizli sayfalar global kuyruğa istenmemiş birim
 açmaz. Sağlayıcı içeriği kırpılmaz veya yeniden renklendirilmez.
 
 Starred genişletmesi saf `js/starred-ad-planner.js` ve aynı reklam yöneticisini
-kullanır. Gerçek In-feed kodu doğrulanana kadar `js/adsense-config.js` içindeki
-dinamik reklam kapalıdır. Sabit Projects `autorelaxed`, Blog ise mevcut `fluid`
+kullanır. `js/adsense-config.js` içindeki ayrı In-feed birimi manuel genişletme
+için etkindir. Sabit Projects `autorelaxed`, Blog ise mevcut `fluid`
 layout key ayarını kullanır; bu sabit ayarlar yeni dinamik yerleşimlere kopyalanmaz.
-Etkinleştirildiğinde her 40 yeni benzersiz manuel kart bir yerleşim fırsatı
+Her 40 yeni benzersiz manuel kart bir yerleşim fırsatı
 yaratır; belge başına en fazla iki rezervasyon vardır ve hata/no-fill kotayı
 iade etmez. İlk 20 kart, filtre, tema ve rota dönüşleri fırsat yaratmaz.
 Değişikliklerde iki reklam browser spec'i ile iki Node test dosyasını çalıştırın.

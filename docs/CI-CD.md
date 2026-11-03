@@ -126,7 +126,8 @@ Advertising regressions run in the six Chromium projects and the existing eight
 Firefox/WebKit desktop/mobile theme projects. Only the external provider is
 simulated; application initialization and the actual scroll panel remain real.
 No real-fill/account approval claim follows from those tests. Dynamic In-feed
-advertising remains disabled until its verified account snippet is configured.
+advertising uses its separately configured account unit; the production-configuration
+contract checks its exact attributes, and disabled configuration remains covered.
 
 ```powershell
 npm ci

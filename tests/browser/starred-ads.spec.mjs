@@ -17,7 +17,7 @@ async function expand(page, expected) {
 }
 
 test('SM-01/02/03/06/14 | Actual 20/40/60/80/100/140-card progression reserves at most two independent placements', async ({ page }) => {
-  await open(page, 140);
+  await open(page, 140, { dynamic: null });
   for (const [total, count] of [[20,0],[40,0],[60,1],[80,1],[100,2],[120,2],[140,2]]) {
     if (total > 20) await expand(page, total);
     await expect(placements(page)).toHaveCount(count);
@@ -29,6 +29,12 @@ test('SM-01/02/03/06/14 | Actual 20/40/60/80/100/140-card progression reserves a
   }
   await expect(more(page)).toBeHidden();
   expect(await placements(page).evaluateAll(nodes => nodes.map(node => node.getAttribute('data-ad-placement')))).toEqual(['starred-ad-1', 'starred-ad-2']);
+  const configured = await placements(page).first().evaluate(el => {
+    const ins = el.querySelector('ins') || el.querySelector('template').content.querySelector('ins');
+    return { client: ins.dataset.adClient, slot: ins.dataset.adSlot,
+      format: ins.dataset.adFormat, layoutKey: ins.dataset.adLayoutKey };
+  });
+  expect(configured).toEqual(facts.productionUnit);
 });
 
 for (const [total, count] of [[59,0],[99,1]]) {
@@ -105,8 +111,8 @@ test('SM-09/10/11/14 | No-fill consumes its reserved quota; history, theme and c
   await handle.dispose();
 });
 
-test('SM-01/10/13/15 | Without verified production In-feed configuration, all real cards remain available and no dynamic ad is enabled', async ({ page }) => {
-  await open(page, 100, { dynamic: null, script: 'blocked' });
+test('SM-01/10/13/15 | With feed advertising disabled, all real cards remain available and no dynamic ad is enabled', async ({ page }) => {
+  await open(page, 100, { dynamic: { ...facts.policy, enabled: false, unit: null }, script: 'blocked' });
   for (const total of [40,60,80,100]) await expand(page, total);
   await expect(placements(page)).toHaveCount(0); expect(await requestKeys(page)).toEqual([]);
   await expect(page.locator('#proj-grid .proj-card')).not.toHaveCount(0);

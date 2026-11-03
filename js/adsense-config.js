@@ -7,9 +7,13 @@
   'use strict';
   return {
     starred: {
-      // Enable only after supplying the actual In-feed unit from the account.
-      enabled: false,
-      unit: null,
+      enabled: true,
+      unit: {
+        client: 'ca-pub-1316559702402555',
+        slot: '4564169804',
+        format: 'fluid',
+        layoutKey: '-ef+6k-30-ac+ty'
+      },
       everyNewCards: 40,
       maxPlacements: 2,
       minCardsEachSide: 6,
