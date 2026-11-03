@@ -14,7 +14,6 @@ import {
   resolveSource,
   validateCoverage
 } from './policy.mjs';
-import { verifyMetadata } from './build-metadata.mjs';
 
 const [command, ...args] = process.argv.slice(2);
 async function output(name, value) {
@@ -53,6 +52,7 @@ else if (command === 'current') {
   ).split(/\s/)[0];
   requireCurrentSource(args[0], actual);
 } else if (command === 'artifact') {
+  const { verifyMetadata } = await import('./build-metadata.mjs');
   const metadata = await verifyMetadata(
     args[0] || '.pages-site',
     process.env.SOURCE_SHA || args[1]

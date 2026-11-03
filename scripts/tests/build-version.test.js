@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, mkdtemp, cp, rm } from 'node:fs/promises';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
 import { parseHTML } from 'linkedom';
 import YAML from 'yaml';
 import { packagePages } from '../package-pages.mjs';
@@ -137,6 +139,24 @@ test('R-BUILD-B06 | AC08/10 | Missing, duplicated and reversed insertion markers
 });
 
 test('R-BUILD-B07 | AC03/04/05/12 | Workflow keeps resolved-source and exact-artifact deployment and distinguishes rebuilt attempts', async () => {
+  // Resolve Source intentionally runs before npm ci. Exercise an isolated checkout
+  // with no ancestor node_modules, not the developer's installed dependency tree.
+  const bootstrap = await mkdtemp(join(tmpdir(), 'portfolio-ci-bootstrap-'));
+  try {
+    await cp('scripts/ci', join(bootstrap, 'scripts/ci'), { recursive: true });
+    const eventPath = join(bootstrap, 'event.json');
+    await writeFile(eventPath, JSON.stringify({ repository: { full_name: repository } }));
+    const result = spawnSync(process.execPath, ['scripts/ci/commands.mjs', 'resolve'], {
+      cwd: bootstrap, encoding: 'utf8', env: { ...process.env,
+        GITHUB_EVENT_PATH: eventPath, GITHUB_EVENT_NAME: 'pull_request',
+        GITHUB_REF: 'refs/pull/24/merge', GITHUB_SHA: sha }
+    });
+    assert.equal(result.status, 0, 'Pre-install source resolution must succeed: ' + result.stderr);
+    assert.match(result.stdout, new RegExp(`sha=${sha}`));
+    assert.match(result.stdout, /publish=false/);
+  } finally {
+    await rm(bootstrap, { recursive: true, force: true });
+  }
   const p = YAML.parse(await readFile('.github/workflows/pages.yml', 'utf8'));
   const q = YAML.parse(await readFile('.github/workflows/test-agent-readiness.yml', 'utf8'));
   const build = q.jobs['build-site'];
