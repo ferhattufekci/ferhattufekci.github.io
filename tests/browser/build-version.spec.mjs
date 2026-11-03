@@ -167,6 +167,13 @@ test('R-BUILD-V05 | AC09 | Long run numbers survive 200% CSS zoom and narrow ref
       const link = page.locator('a.build-info');
       await expect(link).toHaveText('Build 12345678901234567890.123');
       await tabTo(page, link);
+      // Preserve the real pointer+keyboard combination seen on the Linux runner.
+      // A translated full-width menu link must not expand the drawer's scroll area.
+      const menuLink = page.locator('.site-main-menu a[href="#resume"]');
+      const menuBox = await menuLink.boundingBox();
+      await page.mouse.move(menuBox.x + 12, menuBox.y + menuBox.height / 2);
+      await expect.poll(() => menuLink.evaluate(el => el.matches(':hover'))).toBe(true);
+      await menuLink.evaluate(el => Promise.all(el.getAnimations().map(animation => animation.finished)));
       await visibleGeometry(page);
       await page.locator('body').evaluate(el => { el.style.zoom = ''; });
       await page.setViewportSize({ width: 320, height: 480 });

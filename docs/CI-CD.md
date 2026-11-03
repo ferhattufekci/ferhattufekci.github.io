@@ -76,7 +76,7 @@ flowchart LR
   D --> P[Verify Production]
 ```
 
-Static checks and unit tests are independent. Build generates and packages once. Each browser shard, the keyboard job and the parallel endpoint check download the same immutable Pages artifact by ID, extract its tar, and validate every file against its manifest. Deploy selects that artifact's unique `pages-<source SHA>` name within the same run. Production verification downloads the same ID again; it never rebuilds the release.
+Static checks and unit tests are independent. Build generates and packages once. Each browser shard, the keyboard job and the parallel endpoint check download the same immutable Pages artifact by ID, extract its tar, and validate every file against its manifest. Deploy selects that artifact's unique `pages-<run ID>-<build attempt>-<source SHA>` name within the same run. Production verification downloads the same ID again; it never rebuilds the release.
 
 `build-metadata.json` contains schema version, source SHA, a sorted file inventory with size/SHA-256, and SHA-256 of the inventory's JSON representation. Metadata itself is excluded from that inventory, avoiding a self-hash cycle. The uploaded artifact's ID identifies the archive; `contentSha256` identifies its public contents. These values and the deployment URL appear in Actions summaries.
 
@@ -167,7 +167,7 @@ Local sequential shards avoid conflating one Windows machine's resource limits w
 
 ## Production checks and failure handling
 
-The deployment action's `page_url` is the verification target. Readiness checks the expected metadata/source and twelve critical files against the tested artifact, including the shared keyboard stylesheet, site shell and PDF. A stale `200 OK` is insufficient. Cache-busted requests retry every five seconds within a two-minute deadline; each request is bounded. The existing endpoint checks retain HTTP/MIME/content/PDF coverage.
+The deployment action's `page_url` is the verification target. Readiness checks the expected metadata/source, manifest-listed critical assets and all five build-bearing HTML shells against the tested artifact, including the shared keyboard stylesheet, site shell and PDF. A stale `200 OK` is insufficient. Cache-busted requests retry every five seconds within a two-minute deadline; each request is bounded. The existing endpoint checks retain HTTP/MIME/content/PDF coverage.
 
 After readiness, a short browser smoke uses actual production assets and catalogs in desktop/mobile light/dark contexts. It tests Blog/Projects filtering, fixed controls, Contact's fixed heading, Resume navigation, expanded/collapsed Certifications, PDF visibility/access and first-party errors. Actual Tab/Shift+Tab, Enter and Space verify initial Resume controls, Contact link focus boxes and arrow reachability/retained focus; touch-enabled mobile contexts also check restored arrow color. Hash routes are exercised in the browser because URL fragments are not sent in HTTP requests. Third-party vendor availability is outside this smoke's scope. The full regression suite is not repeated on production.
 
