@@ -1,6 +1,56 @@
 import { test, expect, navigateToSection, expectSection } from './fixtures.mjs';
 import { adFixture, slot, calls, requested, respond, geometry, enterAdPage, layoutShifts } from './helpers/adsense.mjs';
 import { measureContrast } from './helpers/visual-metrics.mjs';
+import { articles, mockCatalog, starred } from './data/catalog.mjs';
+
+for (const section of ['projects', 'blog']) {
+  test(`R-AD-SCROLL-01 | ${section}: fluid SDK ancestor auto sizing preserves the bounded panel, native scroll input and natural creative height`, async ({ page }, info) => {
+    await adFixture(page, { synchronous: 'filled', starredCount: 61, fluidAncestorSizing: true });
+    await mockCatalog(page, { 'github-starred.json': starred(61), ...Object.fromEntries(['systems', 'test', 'software'].map(category => [
+      `medium-${category}.json`, Array.from({ length: 18 }, (_, index) => ({ ...articles[category][index % 2],
+        title: `${category} scrolling article ${index}`, url: `https://medium.com/@fixture/scroll-${category}-${index}` }))
+    ])) });
+    await enterAdPage(page, section); await requested(page, section);
+    const current = page.locator(`.pt-page[data-id="${section}"]`);
+    const shell = current.locator(':scope > .section-inner');
+    const panel = current.locator('.page-content-panel');
+    const controls = current.locator('.page-controls-panel');
+    const fixed = await controls.boundingBox();
+    for (const state of ['filled', 'unfilled', 'unfill-optimized']) {
+      await respond(page, section, state, 600);
+      expect(await shell.evaluate(el => [el.style.height, el.style.getPropertyPriority('height')])).toEqual(['auto', 'important']);
+      const sizes = await panel.evaluate(el => ({ height: el.clientHeight, content: el.scrollHeight,
+        shellHeight: el.parentElement.clientHeight, pageHeight: el.closest('.pt-page').clientHeight }));
+      expect(sizes.shellHeight).toBeLessThanOrEqual(sizes.pageHeight + 1);
+      expect(sizes.content).toBeGreaterThan(sizes.height + 100);
+      await panel.press('Home');
+      const box = await panel.boundingBox(), x = Math.round(box.x + box.width * .6), y = Math.round(box.y + box.height * .8);
+      if (info.project.use.browserName === 'chromium' && info.project.use.hasTouch) {
+        const input = await page.context().newCDPSession(page);
+        try {
+          await input.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+          for (let step = 1; step <= 10; step++) {
+            await input.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: y - Math.min(350, box.height * .6) * step / 10 }] });
+            await page.evaluate(() => new Promise(requestAnimationFrame));
+          }
+          await input.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+        } finally { await input.detach(); }
+      } else if (info.project.use.browserName === 'webkit' && info.project.use.hasTouch) {
+        // Playwright does not support mouse.wheel in mobile WebKit. Exercise
+        // native keyboard paging there; Chromium touch above covers gestures.
+        await panel.press('PageDown');
+      } else {
+        await page.mouse.move(x, y); await page.mouse.wheel(0, 420);
+      }
+      await expect.poll(() => panel.evaluate(el => el.scrollTop)).toBeGreaterThan(100);
+      expect(await controls.boundingBox()).toEqual(fixed);
+      expect(await current.evaluate(el => [el.scrollTop, document.scrollingElement.scrollTop])).toEqual([0, 0]);
+      await panel.press('End');
+      await expect.poll(() => panel.evaluate(el => el.scrollHeight - el.clientHeight - el.scrollTop)).toBeLessThanOrEqual(1);
+      if (state !== 'unfilled') await expect(slot(page, section).locator('iframe')).toHaveCSS('height', '600px');
+    }
+  });
+}
 
 for (const section of ['projects', 'blog']) {
   test(`AC-01/02/03 | ${section}: an iframe plus unfilled leaves no ad shell or own spacing`, async ({ page }, info) => {
