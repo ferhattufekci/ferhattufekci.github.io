@@ -4,6 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
+import { createHash } from 'node:crypto';
 import { parseHTML } from 'linkedom';
 import { ROOT } from '../lib/public-files.mjs';
 import { withProjectFixture } from './helpers/project-fixture.js';
@@ -22,7 +23,13 @@ test('R-SHELL-01: static 404 keeps the portfolio shell and absolute nested-path 
   const menu = document => [...document.querySelectorAll('.site-main-menu a')].map(link => [link.textContent.trim(), new URL(link.getAttribute('href'), 'https://ferhattufekci.github.io/').href]);
   assert.deepEqual(menu(output), menu(source));
   for (const node of output.querySelectorAll('[src], link[href], .pt-trigger[href]')) assert.match(node.getAttribute('src') || node.getAttribute('href'), /^\//);
-  assert.deepEqual([...output.querySelectorAll('script[src]')].map(node => node.getAttribute('src')), ['/js/theme.js', '/js/motion-completion.js', '/js/site-shell.js']);
+  const expectedScripts = ['/js/theme.js', '/js/motion-completion.js', '/js/site-shell.js'];
+  const scriptUrls = [...output.querySelectorAll('script[src]')].map(node => new URL(node.getAttribute('src'), 'https://ferhattufekci.github.io'));
+  assert.deepEqual(scriptUrls.map(url => url.pathname), expectedScripts);
+  for (const url of scriptUrls) {
+    const bytes = await readFile(join(ROOT, url.pathname.slice(1)));
+    assert.equal(url.searchParams.get('v'), createHash('sha256').update(bytes).digest('hex').slice(0, 16), '404 requests the current script bytes');
+  }
   assert.equal(output.querySelector('#calendlyContainer'), null);
   assert.equal(output.querySelector('#site_header script'), null);
 });

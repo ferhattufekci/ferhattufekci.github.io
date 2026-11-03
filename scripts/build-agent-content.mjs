@@ -6,6 +6,7 @@ import { ROOT as DEFAULT_ROOT } from './lib/public-files.mjs';
 import { renderDocument, renderTrustContent, replaceThemeBoot, toMarkdown } from './lib/agent-documents.mjs';
 import { renderNotFoundDocument } from './lib/not-found-document.mjs';
 import { synchronizeResumeDisclosures } from './lib/resume-disclosures.mjs';
+import { versionLocalAssets } from './lib/asset-versions.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = process.env.PORTFOLIO_ROOT ? resolve(process.env.PORTFOLIO_ROOT) : DEFAULT_ROOT;
@@ -23,12 +24,12 @@ async function save(path, content) {
   if (previous !== content) await writeFile(file, content);
 }
 
-const source = synchronizeResumeDisclosures(replaceThemeBoot(await readFile(join(ROOT, 'index.html'), 'utf8'), themeBoot));
+const source = await versionLocalAssets(synchronizeResumeDisclosures(replaceThemeBoot(await readFile(join(ROOT, 'index.html'), 'utf8'), themeBoot)), ROOT, 'index.html');
 await save('index.html', source);
 for (const [slug, page] of Object.entries(pages)) {
-  const html = renderDocument({
+  const html = await versionLocalAssets(renderDocument({
     ...page, path: `/${slug}/`, currentPage: slug, body: renderTrustContent(page), origin, themeBoot
-  });
+  }), ROOT, `${slug}/index.html`);
   await mkdir(join(ROOT, slug), { recursive: true });
   await save(`${slug}/index.html`, html);
   await save(`${slug}/index.md`, toMarkdown(html, origin));
@@ -39,7 +40,7 @@ const sections = [...homepage.querySelectorAll('section.pt-page')].map(node => n
 const homepageContent = `<html><body><h1>Ferhat Tüfekçi</h1>${sections}<p><a href="/about/">About</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/llms.txt">Agent Guide</a></p></body></html>`;
 await save('index.md', toMarkdown(homepageContent, origin));
 
-await save('404.html', renderNotFoundDocument({ source, errorCard, origin, themeBoot }));
+await save('404.html', await versionLocalAssets(renderNotFoundDocument({ source, errorCard, origin, themeBoot }), ROOT, '404.html'));
 await save('404.md', '# ' + errorCard.content.title + '\n\n' + errorCard.content.message + '\n\nCheck the URL or follow the [agent guide](/llms.txt), [sitemap](/sitemap.xml), or [portfolio](/).\n');
 
 const urls = ['/', '/about/', '/contact/', '/privacy/'];
