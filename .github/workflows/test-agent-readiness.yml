@@ -130,7 +130,9 @@ jobs:
   browser-tests:
     name: Browser Tests (${{ matrix.shard }}/2)
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    # 546 passing tests took 19.7 minutes in run 41599615772. Allow setup,
+    # report finalization and runner variance without changing test timeouts.
+    timeout-minutes: 25
     needs:
       - build-site
       - static-checks
