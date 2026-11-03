@@ -12,6 +12,9 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
+  /* Fluid ads can set an inline height:auto!important on this application grid.
+     Keep its containing-page bound without changing provider creative sizes. */
+  max-height: 100%;
   min-height: 0;
   padding: 0;
   overflow: hidden;

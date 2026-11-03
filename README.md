@@ -77,6 +77,12 @@ no-fill and SDK load failures collapse the empty shell; pending and optimized
 responses are retained. Hidden pages do not expose unrequested units to the
 global SDK queue. Provider creatives are neither clipped nor recolored.
 
+The application content grid remains bounded by its containing page even when
+the fluid SDK applies important auto height to that ancestor. This preserves the
+inner Projects/Blog scrollport without rewriting provider styles or creative sizes.
+`R-AD-SCROLL-01` reproduces that external sizing side effect and checks wheel/touch,
+fixed controls and keyboard paging across provider fill states.
+
 Starred expansion uses the pure `js/starred-ad-planner.js` and the same ad owner.
 `js/adsense-config.js` keeps dynamic In-feed advertising disabled until a verified
 In-feed unit is supplied. The existing In-article unit must not be reused as

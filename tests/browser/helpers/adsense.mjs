@@ -3,8 +3,8 @@ import { mockCatalog, starred } from '../data/catalog.mjs';
 
 // Synthetic SDK at the external provider seam; the actual application controller
 // still runs. Never send ad requests, click ads or copy controller logic here.
-export async function adFixture(page, { script = 'ready', synchronous = null, widthBlocked = false, starredCount = 3, dynamic = null } = {}) {
-  await page.addInitScript(({ synchronous, widthBlocked }) => {
+export async function adFixture(page, { script = 'ready', synchronous = null, widthBlocked = false, starredCount = 3, dynamic = null, fluidAncestorSizing = false } = {}) {
+  await page.addInitScript(({ synchronous, widthBlocked, fluidAncestorSizing }) => {
     const probe = window.__adFixture = { calls: [], synchronous, mode: 'normal', resources: [], shifts: [], phase: null };
     probe.layoutShiftSupported = !!window.PerformanceObserver?.supportedEntryTypes?.includes('layout-shift');
     if (probe.layoutShiftSupported) new PerformanceObserver(list => {
@@ -47,12 +47,15 @@ export async function adFixture(page, { script = 'ready', synchronous = null, wi
         if (probe.mode === 'throw-before') throw new Error('Synthetic SDK rejection');
         if (!ins) throw new Error('No unprocessed ad unit');
         ins.setAttribute('data-adsbygoogle-status', 'done');
+        // Observed on the real fluid SDK: ancestor auto sizing must not remove
+        // the application's bounded scrollport. This is provider behavior only.
+        if (fluidAncestorSizing) ins.closest('.section-inner').style.setProperty('height', 'auto', 'important');
         if (probe.synchronous) probe.respond(key.startsWith('static-') ? ins.closest('.pt-page').getAttribute('data-id') : key, probe.synchronous);
         if (probe.mode === 'throw-after') throw new Error('Synthetic SDK rejection after processing');
       } };
       for (const entry of queued) window.adsbygoogle.push(entry);
     };
-  }, { synchronous, widthBlocked });
+  }, { synchronous, widthBlocked, fluidAncestorSizing });
   let release;
   const gate = script === 'late' ? new Promise(resolve => { release = resolve; }) : Promise.resolve();
   await page.route('**/pagead/js/adsbygoogle.js?*', async route => {
