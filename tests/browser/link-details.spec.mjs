@@ -64,7 +64,12 @@ test('R-LINK-01 | Privacy inherits copyright typography, keeps theme color and s
   const copyright = page.locator('.header .copyrights');
   const privacy = copyright.getByRole('link', { name: 'Privacy', exact: true });
   expect(await font(privacy)).toEqual(await font(copyright));
-  expect((await copyright.textContent()).replace(/\s+/g, ' ').trim()).toBe('©2010 All Rights Reserved. Privacy');
+  const authoredCopyright = await copyright.evaluate(el => {
+    const copy = el.cloneNode(true);
+    copy.querySelectorAll('.build-info-row').forEach(node => node.remove());
+    return copy.textContent.replace(/\s+/g, ' ').trim();
+  });
+  expect(authoredCopyright).toBe('©2010 All Rights Reserved. Privacy');
   expect(await privacy.evaluate(el => getComputedStyle(el).color)).toBe(
     await page.locator('.resume-personality-link-hint').evaluate(el => getComputedStyle(el).color)
   );
@@ -83,7 +88,7 @@ test('R-LINK-01 | Privacy inherits copyright typography, keeps theme color and s
   await expect(page).toHaveURL(/\/privacy\/$/);
   await openContact(page);
   await openDrawerIfMobile(page);
-  await page.locator('.copyrights a svg').click();
+  await page.locator('.copyrights .privacy-link svg').click();
   await expect(page).toHaveURL(/\/privacy\/$/);
 });
 

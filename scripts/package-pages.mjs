@@ -4,8 +4,11 @@ import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { ROOT, inventory } from './lib/public-files.mjs';
 import { createMetadata } from './ci/build-metadata.mjs';
+import { resolveBuildContext, applyBuildIdentity } from './ci/build-identity.mjs';
 
-export async function packagePages(projectRoot = ROOT, sourceSha = process.env.SOURCE_SHA || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim()) {
+export async function packagePages(projectRoot = ROOT, sourceSha = process.env.SOURCE_SHA || execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim(), buildEnvironment = process.env) {
+  if (!/^[a-f0-9]{40}$/.test(sourceSha)) throw new Error('Invalid build source SHA.');
+  const build = resolveBuildContext(buildEnvironment);
   const root = resolve(projectRoot);
   const destination = resolve(root, '.pages-site');
   // Never remove a caller-supplied path or follow a substituted directory link.
@@ -21,7 +24,8 @@ export async function packagePages(projectRoot = ROOT, sourceSha = process.env.S
     await mkdir(dirname(target), { recursive: true });
     await cp(join(root, path), target);
   }
-  await createMetadata(destination, sourceSha);
+  await applyBuildIdentity(destination, build);
+  await createMetadata(destination, sourceSha, build);
   return destination;
 }
 

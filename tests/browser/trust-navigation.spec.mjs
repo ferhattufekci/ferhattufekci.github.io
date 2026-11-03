@@ -15,7 +15,7 @@ test('R-TRUST-04 | Trust headers offer one accessible return action while footer
     await expect(back.locator('[aria-hidden="true"]')).toHaveText('←');
     const footer = page.locator('footer');
     await expect(footer.locator('[aria-current="page"]')).toHaveText(label);
-    await expect(footer.getByRole('link')).toHaveCount(4);
+    await expect(footer.locator('.trust-footer-item').getByRole('link')).toHaveCount(4);
     for (const [name, href] of secondary) {
       if (name === label) await expect(footer.getByRole('link', { name, exact: true })).toHaveCount(0);
       else await expect(footer.getByRole('link', { name, exact: true })).toHaveAttribute('href', href);

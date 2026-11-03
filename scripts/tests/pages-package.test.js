@@ -26,7 +26,7 @@ test('R-DEPLOY-01: deployment artifact contains exactly public assets without re
       await mkdir(dirname(file), { recursive: true });
       await writeFile(file, 'Synthetic private test input; no credentials.');
     }
-    const destination = await packagePages(root);
+    const destination = await packagePages(root, undefined, {});
     assert.deepEqual(await artifactFiles(destination), [...await inventory(root), '.nojekyll', 'build-metadata.json'].sort(),
       'The complete artifact inventory must contain no extra source or maintenance files');
     await readFile(join(destination, '.nojekyll'));

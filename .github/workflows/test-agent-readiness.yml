@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     outputs:
-      artifact-name: pages-${{ inputs.source-sha }}
+      artifact-name: pages-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.source-sha }}
       artifact-id: ${{ steps.pages.outputs.artifact_id }}
       content-sha256: ${{ steps.manifest.outputs.content-sha256 }}
     steps:
@@ -123,7 +123,7 @@ jobs:
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         id: pages
         with:
-          name: pages-${{ inputs.source-sha }}
+          name: pages-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.source-sha }}
           path: .pages-site
           retention-days: 7
           include-hidden-files: true

@@ -257,3 +257,20 @@ npm run verify -- --local --artifact --all --output=verification-local.json
 Bu yayın kapısı GitHub deposunda **Settings → Pages → Build and deployment → Source: GitHub Actions** seçeneğiyle etkinleştirilmiştir. Eski “Deploy from a branch” seçeneğine dönülürse testlerden bağımsız yayın gerçekleşebilir; yalnız test dosyası eklemek bunu engellemez. Branch protection/ruleset içinde kalite kontrolünü zorunlu yapmak ayrıca depo yöneticisinin yapabileceği bir işlemdir.
 
 GitHub üzerindeki koşu, runner ve yayın sonuçları Actions geçmişinden doğrulanır; bu sonuçlar yerel test kanıtlarından ayrıdır. Hosting GitHub Pages olarak kalır. Markdown Accept müzakeresi ve canlı MCP sınırlamaları test raporunda açıkça ayrı tutulur.
+
+### Artifact build identity
+
+The packaged HTML build link is tested through the real package function and HTTP
+preview, not by injecting the feature into the DOM. `build-version.test.js` covers
+context validation, resolved source, marker/inventory/source-byte integrity,
+rerun names, artifact identity and rejection of an old build on the same SHA.
+`build-version.spec.mjs` covers native links/new tabs, no-JS static documents,
+shared hash-route identity, drawer Tab/Escape, short windows, long run numbers,
+CSS zoom and an old open document beside a new artifact. It participates in the
+existing Chromium matrix and Firefox/WebKit keyboard matrix. The independent
+430px cache projects retain their original scope. Existing package privacy,
+quality gates, zero retries and strict assertions remain mandatory.
+
+Full OS/browser-menu zoom, screen-reader output, physical devices and actual
+GitHub rerun execution need separate manual evidence; CSS zoom/engine emulation
+and deterministic rerun tests do not establish those manual results.

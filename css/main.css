@@ -773,8 +773,10 @@ blockquote {
   position: relative;
   margin: 0 auto;
   min-height: 100%;
-  /* Reserve the footer height and bottom offset on short desktop screens. */
-  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  /* The footer participates in layout and can grow with text or build identity. */
+  padding-bottom: 22px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -4256,11 +4258,9 @@ blockquote p {
 
 .header .copyrights {
   width: 100%;
-  position: absolute;
-  /* Leave space above the browser link-hover status strip at the bottom of the viewport. */
-  bottom: 22px;
-  left: 0;
-  right: 0;
+  position: static;
+  flex: none;
+  margin-top: auto;
   padding: 5px 10px 15px;
   line-height: 14px;
   font-size: 12px;

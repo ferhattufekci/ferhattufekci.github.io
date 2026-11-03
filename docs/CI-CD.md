@@ -1,5 +1,52 @@
 # Portfolio CI/CD
 
+## Static build identity
+
+The footer shows `Build <runNumber>.<buildAttempt>` and links to the producing
+**Portfolio CI/CD** run summary. This is an artifact identity, not SemVer, a count
+of successful deployments or a health badge. PRs and failed runs can leave gaps
+in the run counter. The existing package version does not change for a deployment.
+
+Packaging validates the caller's GitHub Actions server, repository, workflow and
+decimal run identifiers before replacing an artifact. A reusable workflow uses
+the caller's GitHub context ([GitHub reference](https://docs.github.com/en/actions/reference/workflows-and-actions/reusing-workflow-configurations#github-context)).
+The resolved source SHA still comes from the existing source policy, including
+the newer data commit resolved after a trusted synchronization run; the build URL
+uses the calling Pages run ID, never the upstream writer ID or the run number.
+
+`packagePages` copies the public inventory, fills one bounded `BUILD-INFO`
+insertion point in each portfolio/document shell, then hashes the final bytes.
+`build-metadata.json` schema 2 contains `sourceSha`, `contentSha256`, `files` and
+`build: {runId, runNumber, buildAttempt, runUrl}`. Run fields are decimal strings
+to avoid integer precision loss. Metadata excludes itself from its hash inventory.
+Only packaged HTML carries the identity; source HTML and generated Markdown do
+not. The five target shells are index, about, contact, privacy and 404. Verification
+HTML and every other public file retain their source bytes.
+
+Local packaging without CI context hides the indicator and records `build: null`;
+it creates no invented Actions URL. In CI, incomplete or invalid identity is a
+packaging error. No browser API request, backend or second version JSON is used.
+Cached HTML therefore keeps its own identity even after another run is published.
+
+Artifact names distinguish the producing run and build attempt as well as source
+SHA. A new run or rebuilt attempt gets its own immutable artifact. A deploy-only
+rerun consumes the original build job's artifact name/ID output and does not
+regenerate content or rewrite its identity using the deploy attempt's environment.
+The same tested artifact is deployed. Current-source rejection, concurrency,
+mandatory checks and production permissions remain unchanged.
+
+Readiness compares the complete manifest, critical asset bytes and the real static
+build links on all five shells. The same SHA with an older build identity does not
+pass. A successful deploy followed by a failed smoke check still serves the deployed
+artifact's identity; the footer makes no automatic claim about run/site health.
+
+`build-version.test.js` and `build-version.spec.mjs` cover this contract, with
+deterministic fixture identities, static/no-JS links, native new-tab navigation,
+local fallback, reruns, source preservation, two themes, drawer keyboard access,
+short/narrow viewports and CSS zoom. Physical devices, screen readers, native
+browser-menu zoom and real GitHub rerun execution require separate manual evidence;
+automated emulation is not a physical-device result.
+
 `pages.yml` owns release policy and calls `test-agent-readiness.yml` for quality checks. The workflow name is **Portfolio CI/CD**; job IDs describe dependencies, job names label the Actions UI, step names describe actions, and npm scripts remain usable locally.
 
 ## Flow and artifact identity

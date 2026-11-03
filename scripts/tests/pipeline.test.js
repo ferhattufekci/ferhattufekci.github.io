@@ -180,8 +180,9 @@ const files = criticalFiles.map((path) => ({
   sha256: hash(path)
 }));
 const manifest = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   sourceSha: sha,
+  build: null,
   files,
   contentSha256: contentHash(files)
 };

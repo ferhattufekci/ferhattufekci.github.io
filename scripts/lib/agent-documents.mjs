@@ -4,7 +4,7 @@ import TurndownService from 'turndown';
 const NON_CONTENT = [
   'script', 'style', 'iframe', 'nav', 'footer', '.preloader', '.js-adsense',
   '.skip-link', '.sync-badge', '.category-filter-scroll', '.blog-lang-toggle',
-  '#proj-loading', '#blog-loading', '.proj-show-more-btn'
+  '#proj-loading', '#blog-loading', '.proj-show-more-btn', '.build-info'
 ].join(', ');
 
 const DOCUMENT_LINKS = [
@@ -85,6 +85,7 @@ export function renderDocument({ title, description, path, body, indexable = tru
   <link rel="stylesheet" href="/css/dark-theme.css">
   <link rel="stylesheet" href="/css/error-page.css">
   <link rel="stylesheet" href="/css/keyboard.css">
+  <link rel="stylesheet" href="/css/build-info.css">
 </head>
 <body class="trust-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -99,6 +100,7 @@ export function renderDocument({ title, description, path, body, indexable = tru
 ${body}
     <footer>
       ${renderFooter(currentPage)}
+      <!-- BUILD-INFO:START --><!-- BUILD-INFO:END -->
     </footer>
   </main>
   <script src="/js/theme.js"></script>
