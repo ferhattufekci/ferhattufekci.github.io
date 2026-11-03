@@ -3,6 +3,23 @@ import { adFixture, slot, calls, requested, respond, geometry, enterAdPage, layo
 import { measureContrast } from './helpers/visual-metrics.mjs';
 import { articles, mockCatalog, starred } from './data/catalog.mjs';
 
+test('R-AD-EMPTY-01 | A provider-hidden empty iframe never becomes a filled creative or visible empty message', async ({ page }) => {
+  await adFixture(page); await enterAdPage(page, 'blog'); await requested(page, 'blog');
+  await respond(page, 'blog', null, 600);
+  const wrapper = slot(page, 'blog'), frame = wrapper.locator('iframe');
+  await frame.evaluate(el => {
+    el.srcdoc = '<!doctype html><html><body>empty</body></html>';
+    el.style.display = 'none';
+  });
+  await expect(frame).toBeHidden();
+  await expect(wrapper).not.toHaveClass(/is-filled/);
+  await expect(wrapper.getByText('Advertisements', { exact: true })).toBeHidden();
+  await respond(page, 'blog', 'unfilled', 600);
+  await expect.poll(async () => (await geometry(wrapper)).height).toBe(0);
+  await expect(frame).toBeHidden();
+  await expect(wrapper).not.toHaveClass(/is-filled/);
+});
+
 for (const section of ['projects', 'blog']) {
   test(`R-AD-SCROLL-01 | ${section}: fluid SDK ancestor auto sizing preserves the bounded panel, native scroll input and natural creative height`, async ({ page }, info) => {
     await adFixture(page, { synchronous: 'filled', starredCount: 61, fluidAncestorSizing: true });
