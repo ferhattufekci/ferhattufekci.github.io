@@ -13,7 +13,7 @@ test('AC-01/09/10 | Provider state classification never equates processing, unkn
   for (const input of [null, undefined, 0, {}, []]) assert.equal(classifyStatus(input), 'waiting');
 });
 
-test('AC-13/15 | Both declared units match the exact user-supplied In-article snippet and remain excluded from Markdown', async () => {
+test('AC-13/15 | Declared units retain the per-page request formats and remain excluded from Markdown', async () => {
   const { document } = parseHTML(await readFile(new URL('../../index.html', import.meta.url), 'utf8'));
   for (const page of ['projects', 'blog']) {
     const slot = document.querySelector(`.ad-slot-${page}`);
@@ -22,9 +22,10 @@ test('AC-13/15 | Both declared units match the exact user-supplied In-article sn
     // an inactive unit. Validate authored configuration in either location.
     const ins = slot.querySelector('ins.adsbygoogle') || slot.querySelector('template')?.content.querySelector('ins.adsbygoogle');
     assert.ok(ins, `${page}: authored unit exists`);
+    const unit = facts.units[page];
     for (const [attribute, value] of Object.entries({ 'data-ad-client': facts.publisher,
-      'data-ad-slot': facts.slot, 'data-ad-format': facts.format, 'data-ad-layout': facts.layout })) assert.equal(ins.getAttribute(attribute), value, `${page}: ${attribute}`);
-    assert.equal(ins.hasAttribute('data-ad-layout-key'), false);
+      'data-ad-slot': facts.slot, 'data-ad-format': unit.format, 'data-ad-layout': unit.layout,
+      'data-ad-layout-key': unit.layoutKey, 'data-full-width-responsive': unit.fullWidth })) assert.equal(ins.getAttribute(attribute), value, `${page}: ${attribute}`);
   }
   assert.equal(document.querySelector('amp-auto-ads'), null);
   assert.equal(document.querySelector('script[custom-element="amp-auto-ads"]'), null);
