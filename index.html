@@ -219,14 +219,15 @@
     <link rel="stylesheet" href="css/animate.css?v=2faed2dab1cae781" type="text/css" />
     <link rel="stylesheet" href="css/animations.css?v=d06db7059ec84420" type="text/css" />
     <link rel="stylesheet" href="css/owl.carousel.css?v=67525619190cda63" type="text/css" />
-    <link rel="stylesheet" href="css/main.css?v=30380601d62ad575" type="text/css" />
+    <link rel="stylesheet" href="css/main.css?v=f6c63c136c9a1c50" type="text/css" />
     <link rel="stylesheet" href="css/hero-fix.css?v=4935c6053ed4a6ff" type="text/css" />
-    <link rel="stylesheet" href="css/dark-theme.css?v=84246cf568211a93" type="text/css" />
+    <link rel="stylesheet" href="css/dark-theme.css?v=9c4fa07b89b8b3a8" type="text/css" />
     <link rel="stylesheet" href="css/blog-cards.css?v=4b4f15dd378c58f7" type="text/css" />
     <link rel="stylesheet" href="css/card-interactions.css?v=51dad1ea111817fd" type="text/css" />
     <link rel="stylesheet" href="css/category-filters.css?v=b403f269118b8fd7" type="text/css" />
     <link rel="stylesheet" href="css/page-content-panels.css?v=dc8427a2f375701c" type="text/css" />
     <link rel="stylesheet" href="css/keyboard.css?v=66b71b1c6d57e78c" />
+    <link rel="stylesheet" href="css/adsense.css?v=cf76cf99439d663d" />
     <!-- Calendly renders after page load; load its stylesheet without blocking the first paint. -->
     <link
       rel="stylesheet"
@@ -236,16 +237,15 @@
     />
 
     <script src="js/modernizr.custom.js?v=05d1bb503b50cf5e"></script>
+    <script src="js/adsense-config.js?v=30f24849cd0e94a6"></script>
+    <script src="js/adsense.js?v=47edeb12a7c069c5"></script>
+    <script src="js/starred-ad-planner.js?v=8cb0546b5f4e1f61"></script>
+    <script src="js/starred-ads.js?v=c5bcfd6488a77f91"></script>
 
     <script
       async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1316559702402555"
       crossorigin="anonymous"
-    ></script>
-    <script
-      async
-      custom-element="amp-auto-ads"
-      src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"
     ></script>
 
     <script
@@ -2477,18 +2477,23 @@
 
                         <div id="proj-empty" style="display: none"></div>
 
-                        <div
+                        <aside
                           class="ads-resume-post-advertising js-adsense ad-slot-projects"
+                          aria-labelledby="projects-ad-label"
                         >
+                          <span class="ad-label" id="projects-ad-label">Advertisements</span>
+                          <template>
                           <ins
                             class="adsbygoogle"
-                            style="display: block"
+                            style="display:block; text-align:center;"
                             data-ad-client="ca-pub-1316559702402555"
                             data-ad-slot="2029775306"
-                            data-ad-format="autorelaxed"
+                            data-ad-layout="in-article"
+                            data-ad-format="fluid"
                           >
                           </ins>
-                        </div>
+                          </template>
+                        </aside>
 
                         <div id="proj-starred-wrap" style="display: none">
                           <div class="proj-starred-divider">
@@ -2836,16 +2841,13 @@
                     grid.innerHTML = "";
                     starredShown = 0;
                   }
-                  var frag = document.createDocumentFragment();
                   var next = allStarred.slice(
                     starredShown,
                     starredShown + STARRED_PAGE,
                   );
                   var restoreFocus = moreWrap.contains(document.activeElement);
-                  next.forEach(function (r) {
-                    frag.appendChild(mkStarCard(r));
-                  });
-                  grid.appendChild(frag);
+                  var newCards = next.map(mkStarCard);
+                  window.PortfolioStarredAds.append(grid, newCards, next.map(function (r) { return r.url; }), reset);
                   starredShown += next.length;
                   wrap.style.display = "block";
                   var remaining = allStarred.length - starredShown;
@@ -2855,7 +2857,7 @@
                   } else {
                     moreWrap.style.display = "none";
                     if (restoreFocus && next.length) {
-                      grid.children[starredShown - next.length].querySelector('a[href]').focus();
+                      newCards[0].querySelector('a[href]').focus();
                     }
                   }
                 }
@@ -2901,7 +2903,11 @@
                     })
                     .then(function (data) {
                       if (Array.isArray(data)) {
-                        allStarred = data;
+                        var seenStarred = new Set();
+                        allStarred = data.filter(function (repo) {
+                          if (!repo.url || seenStarred.has(repo.url)) return false;
+                          seenStarred.add(repo.url); return true;
+                        });
                         renderStarred(true);
                       }
                     })
@@ -3150,20 +3156,24 @@
                           style="display: none"
                         ></div>
                         <div id="blog-empty" role="status" aria-live="polite" style="display: none"></div>
-                        <div
+                        <aside
                           class="ads-resume-post-advertising js-adsense ad-slot-blog"
+                          aria-labelledby="blog-ad-label"
                         >
+                          <span class="ad-label" id="blog-ad-label">Advertisements</span>
+                          <template>
                           <ins
                             class="adsbygoogle"
-                            style="display: block"
+                            style="display:block; text-align:center;"
                             data-ad-client="ca-pub-1316559702402555"
                             data-ad-slot="2029775306"
                             data-ad-format="fluid"
-                            data-ad-layout-key="-6t+ed+2i-1n-4w"
+                            data-ad-layout="in-article"
                             data-full-width-responsive="true"
                           >
                           </ins>
-                        </div>
+                          </template>
+                        </aside>
                       </div>
                     </div>
                   </div>
@@ -3847,7 +3857,7 @@
     <script src="js/jquery.shuffle.min.js?v=59ae6e57567a00b3"></script>
     <script src="js/owl.carousel.min.js?v=b394d33b2a7ec654"></script>
     <script src="js/site-shell.js?v=54ecb9a2a2f495d2"></script>
-    <script src="js/main.js?v=6247aae99c4c4697"></script>
+    <script src="js/main.js?v=28cdb8abd8f47691"></script>
     <script type="text/javascript">
       $("document").ready(function () {
         // Encode the source phone number to deter basic scrapers while producing a usable tel: link.

@@ -205,10 +205,10 @@ test('R-KEYBOARD-04 | Loading the final starred page moves focus out of its disa
   const more = page.locator('#proj-starred-more-btn');
   await tabTo(page, more);
   await visibleFocus(more);
-  const before = await page.locator('#proj-starred-grid > *').count();
+  const before = await page.locator('#proj-starred-grid .proj-card').count();
   await page.keyboard.press('Enter');
   await expect(more).toBeHidden();
-  const next = page.locator('#proj-starred-grid > *').nth(before).locator('a').first();
+  const next = page.locator('#proj-starred-grid .proj-card').nth(before).locator('a').first();
   await expect(next).toBeFocused();
   await visibleFocus(next);
 });

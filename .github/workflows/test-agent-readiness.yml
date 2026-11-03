@@ -190,7 +190,9 @@ jobs:
   keyboard-tests:
     name: Cross-browser Keyboard Tests
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    # The 506-case suite reached case 403 when the 20-minute job budget expired.
+    # Allow remaining cases, touch checks and reports; test timeouts stay unchanged.
+    timeout-minutes: 30
     needs: build-site
     env:
       PORTFOLIO_TEST_ROOT: .pages-site

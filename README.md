@@ -69,6 +69,23 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 | Projects | GitHub repositories with category filters, pinned repos, and starred section |
 | Contact | Phone, email, Calendly interview scheduler, and links |
 
+### Manual advertising units
+
+`js/adsense.js` owns both Projects and Blog units; `css/adsense.css` owns their
+outer presentation. Only provider `data-ad-status` determines fill. Confirmed
+no-fill and SDK load failures collapse the empty shell; pending and optimized
+responses are retained. Hidden pages do not expose unrequested units to the
+global SDK queue. Provider creatives are neither clipped nor recolored.
+
+Starred expansion uses the pure `js/starred-ad-planner.js` and the same ad owner.
+`js/adsense-config.js` keeps dynamic In-feed advertising disabled until a verified
+In-feed unit is supplied. The existing In-article unit must not be reused as
+In-feed. When enabled, every 40 unique manually revealed cards can reserve one
+placement, with at most two per document; failed/no-fill reservations still count.
+The first 20 cards, filters, themes and revisits do not create opportunities.
+Run the two advertising browser specs and both advertising Node test files after
+changes. Synthetic provider tests do not prove account approval or real ad fill.
+
 ### Blog — Medium Auto-Sync
 
 Articles are automatically fetched from Medium every 6 hours via GitHub Actions.
@@ -282,6 +299,23 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 | Blog | Medium makaleleri — dil (EN/TR) ve kategori filtreleriyle |
 | Projects | GitHub repoları — kategori filtresi, sabitlenmiş repolar ve yıldızlı repolar |
 | Contact | Telefon, e-posta, Calendly mülakat planlayıcı ve bağlantılar |
+
+### Manuel reklam birimleri
+
+Projects ve Blog birimlerini tek `js/adsense.js`, dış sunumlarını
+`css/adsense.css` yönetir. Dolum yalnız sağlayıcının `data-ad-status` değerinden
+anlaşılır. Kesin no-fill ve SDK yükleme hatasında boş kabuk kapanır; bekleyen
+ve optimized yanıtlar korunur. Gizli sayfalar global kuyruğa istenmemiş birim
+açmaz. Sağlayıcı içeriği kırpılmaz veya yeniden renklendirilmez.
+
+Starred genişletmesi saf `js/starred-ad-planner.js` ve aynı reklam yöneticisini
+kullanır. Gerçek In-feed kodu doğrulanana kadar `js/adsense-config.js` içindeki
+dinamik reklam kapalıdır; mevcut In-article birimi In-feed olarak kullanılmaz.
+Etkinleştirildiğinde her 40 yeni benzersiz manuel kart bir yerleşim fırsatı
+yaratır; belge başına en fazla iki rezervasyon vardır ve hata/no-fill kotayı
+iade etmez. İlk 20 kart, filtre, tema ve rota dönüşleri fırsat yaratmaz.
+Değişikliklerde iki reklam browser spec'i ile iki Node test dosyasını çalıştırın.
+Sentetik sağlayıcı testleri hesap onayı veya gerçek reklam dolumu kanıtı değildir.
 
 ### Blog — Medium Otomatik Senkronizasyonu
 

@@ -1,0 +1,16 @@
+{
+  "publisher": "ca-pub-1316559702402555",
+  "slot": "2029775306",
+  "format": "fluid",
+  "layout": "in-article",
+  "label": "Advertisements",
+  "states": [
+    { "input": "", "expected": "waiting" },
+    { "input": "done", "expected": "waiting" },
+    { "input": "unknown", "expected": "waiting" },
+    { "input": "FILLED", "expected": "waiting" },
+    { "input": "filled", "expected": "filled" },
+    { "input": "unfilled", "expected": "unfilled" },
+    { "input": "unfill-optimized", "expected": "optimized" }
+  ]
+}
