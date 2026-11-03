@@ -4,7 +4,7 @@ import { measureContrast } from './helpers/visual-metrics.mjs';
 import { articles, mockCatalog, starred } from './data/catalog.mjs';
 
 for (const section of ['projects', 'blog']) {
-  test(`R-AD-SCROLL-01 | ${section}: fluid SDK ancestor auto sizing preserves the bounded panel, wheel/touch scrolling and natural creative height`, async ({ page }, info) => {
+  test(`R-AD-SCROLL-01 | ${section}: fluid SDK ancestor auto sizing preserves the bounded panel, native scroll input and natural creative height`, async ({ page }, info) => {
     await adFixture(page, { synchronous: 'filled', starredCount: 61, fluidAncestorSizing: true });
     await mockCatalog(page, { 'github-starred.json': starred(61), ...Object.fromEntries(['systems', 'test', 'software'].map(category => [
       `medium-${category}.json`, Array.from({ length: 18 }, (_, index) => ({ ...articles[category][index % 2],
@@ -35,6 +35,10 @@ for (const section of ['projects', 'blog']) {
           }
           await input.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
         } finally { await input.detach(); }
+      } else if (info.project.use.browserName === 'webkit' && info.project.use.hasTouch) {
+        // Playwright does not support mouse.wheel in mobile WebKit. Exercise
+        // native keyboard paging there; Chromium touch above covers gestures.
+        await panel.press('PageDown');
       } else {
         await page.mouse.move(x, y); await page.mouse.wheel(0, 420);
       }
