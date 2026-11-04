@@ -183,6 +183,31 @@ test('AC-09 | An SDK arriving after the old ten-second boot deadline still serve
   expect(await calls(page)).toEqual(['blog']);
 });
 
+for (const section of ['projects', 'blog']) {
+  test(`AC-05/13 | ${section}: the request waits for the page's own content, then spends exactly one request below it`, async ({ page }) => {
+    await adFixture(page, { synchronous: 'filled' });
+    let release; const held = new Promise(resolve => { release = resolve; });
+    // Registered after the fixture's catalog routes, so it runs first and defers to them once released.
+    await page.route('**/data/*.json', async route => { await held; await route.fallback(); });
+    await page.goto('/#' + section, { waitUntil: 'load' });
+    await expectSection(page, section);
+    const loading = page.locator(section === 'blog' ? '#blog-loading' : '#proj-loading');
+    await expect(loading).toBeVisible();
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    // SDK is ready and the unit is otherwise eligible (current, settled, visible, wide enough): only content is pending.
+    expect(await calls(page)).toEqual([]);
+    await expect(slot(page, section).locator('ins.adsbygoogle')).toHaveCount(0);
+    release();
+    await requested(page, section);
+    await expect(loading).toBeHidden();
+    const cards = page.locator(section === 'blog' ? '.blog-article-card' : '#proj-grid .proj-card');
+    await expect(cards).not.toHaveCount(0);
+    const [cardBox, adBox] = await Promise.all([cards.last().boundingBox(), slot(page, section).boundingBox()]);
+    expect(adBox.y).toBeGreaterThanOrEqual(cardBox.y + cardBox.height - 1);
+    expect(await calls(page)).toEqual([section]);
+  });
+}
+
 test('AC-11 | Removing a waiting unit releases its observers and never triggers a later request', async ({ page }) => {
   await page.clock.install(); await adFixture(page, { widthBlocked: true }); await enterAdPage(page, 'projects');
   await slot(page, 'projects').evaluate(el => { window.__removedAd = el; el.remove(); });

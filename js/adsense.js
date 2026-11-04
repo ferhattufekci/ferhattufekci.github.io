@@ -89,7 +89,17 @@
       var style = root.getComputedStyle(node);
       if (style.display === 'none' || style.visibility === 'hidden' || style.visibility === 'collapse') return false;
     }
-    return record.near && record.wrapper.getBoundingClientRect().width >= record.minimumWidth;
+    if (!record.near || record.wrapper.getBoundingClientRect().width < record.minimumWidth) return false;
+    return !pendingContent(record);
+  }
+  // A unit may name the page's own loading placeholder (data-ad-await). While it
+  // is displayed the content above the unit has not been rendered, so the unit's
+  // position is provisional: requesting now would size the creative against a
+  // layout that the first cards are about to push away.
+  function pendingContent(record) {
+    var selector = record.wrapper.getAttribute('data-ad-await'), page = record.wrapper.closest('.pt-page');
+    var placeholder = selector && page ? page.querySelector(selector) : null;
+    return !!placeholder && root.getComputedStyle(placeholder).display !== 'none';
   }
   function mount(record) {
     if (record.ins) return;
@@ -175,6 +185,10 @@
     render(record);
     record.resizeObserver = new root.ResizeObserver(schedulePump);
     record.resizeObserver.observe(wrapper);
+    // Hiding the placeholder changes its box, which re-evaluates this unit.
+    var awaited = wrapper.getAttribute('data-ad-await'), awaitedPage = wrapper.closest('.pt-page');
+    var placeholder = awaited && awaitedPage ? awaitedPage.querySelector(awaited) : null;
+    if (placeholder) record.resizeObserver.observe(placeholder);
     if (dynamic) {
       record.scrollRoot = wrapper.closest('.page-content-panel');
       if (root.IntersectionObserver) {

@@ -75,7 +75,11 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 outer presentation. Only provider `data-ad-status` determines fill. Confirmed
 no-fill and SDK load failures collapse the empty shell; pending and optimized
 responses are retained. Hidden pages do not expose unrequested units to the
-global SDK queue. Provider creatives are neither clipped nor recolored.
+global SDK queue.
+A unit may name its page's loading placeholder in `data-ad-await` (Projects and
+Blog do); it is requested only after that placeholder is hidden, so the one request
+is made against the final content layout instead of the empty loading state
+(`AC-05/13`). Provider creatives are neither clipped nor recolored.
 
 The application content grid remains bounded by its containing page even when
 the fluid SDK applies important auto height to that ancestor. This preserves the
