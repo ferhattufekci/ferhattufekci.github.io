@@ -82,6 +82,40 @@
   .js .page-controls-panel .section-title { margin-bottom: 2px; }
   .js .page-controls-panel .section-title::after { margin-top: 0; }
 }
+/* The scrolling panel owns the scrollbar; the global arrows are siblings,
+   so their viewport-edge inset must also clear the panel's scrollbar. */
+@media (min-width: 992px) {
+  .js .page {
+    --panel-scrollbar-width: 8px;
+  }
+
+  .js .panel-page:is([data-id="resume"], [data-id="blog"], [data-id="projects"]) .page-content-panel {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text-muted) var(--color-surface);
+  }
+
+  /* WebKit fallback where standardized scrollbar properties are unavailable. */
+  .js .panel-page:is([data-id="resume"], [data-id="blog"], [data-id="projects"]) .page-content-panel::-webkit-scrollbar {
+    width: var(--panel-scrollbar-width);
+  }
+
+  .js .panel-page:is([data-id="resume"], [data-id="blog"], [data-id="projects"]) .page-content-panel::-webkit-scrollbar-track {
+    background-color: var(--color-surface);
+  }
+
+  .js .panel-page:is([data-id="resume"], [data-id="blog"], [data-id="projects"]) .page-content-panel::-webkit-scrollbar-thumb {
+    background-color: var(--color-text-muted);
+    border: 1px solid var(--color-surface);
+    border-radius: 999px;
+  }
+
+  /* Keep the original 15px visual gap measured from the scrollbar's inner edge,
+     rather than from the outer viewport edge. Other sections stay unchanged. */
+  .js .page:has(.panel-page.pt-page-current:is([data-id="resume"], [data-id="blog"], [data-id="projects"])) > .lmpixels-arrows-nav {
+    right: calc(15px + var(--panel-scrollbar-width));
+  }
+}
+
 @media print {
   /* Release the screen's height chain only when one of these pages is printed. */
   .js body:has(.panel-page.pt-page-current),
