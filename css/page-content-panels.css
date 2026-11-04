@@ -53,6 +53,29 @@
   padding: 16px var(--panel-inline-space) 60px;
   scroll-padding-block: 16px;
 }
+/* The panel is this page's vertical scroll owner, so the desktop scrollbar design
+   must be applied to it directly: the shared rules in main.css and dark-theme.css
+   name .pt-page, which is overflow:hidden here, and left this scroller with the
+   browser default (15px, light track). The page arrows (.lmpixels-arrows-nav) sit
+   15px from the viewport edge, which clears this 5px bar by 10px, as on About Me,
+   but touched a 15px one. Applied by input device rather than width, so touch
+   devices keep their overlay scrollbars and narrow desktop windows are covered. */
+@media (any-hover: hover) and (any-pointer: fine) {
+  .js .page-content-panel::-webkit-scrollbar { width: 5px; }
+  .js .page-content-panel::-webkit-scrollbar-track { background-color: var(--color-surface); }
+  .js .page-content-panel::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar-thumb);
+    outline: 1px solid slategrey;
+  }
+  /* Browsers without ::-webkit-scrollbar (Firefox) take the standard properties;
+     setting them in Chromium would switch off the rules above. */
+  @supports not selector(::-webkit-scrollbar) {
+    .js .page-content-panel {
+      scrollbar-width: thin;
+      scrollbar-color: slategrey var(--color-surface);
+    }
+  }
+}
 /* Let the last heading reach the top even when its disclosure is closed.
    Keep the PDF in natural flow; unused space follows the final content. */
 .resume-ending { margin-top: 46px; }
