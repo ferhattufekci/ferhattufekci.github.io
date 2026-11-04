@@ -22,14 +22,19 @@ const test = base.extend({
     });
   }, { scope: 'worker' }]
 });
-async function openMenu(page) {
+async function openMenu(page, keyboard = false) {
   const toggle = page.locator('.menu-toggle');
   if (await toggle.isVisible() && await toggle.getAttribute('aria-expanded') !== 'true') {
-    await toggle.click();
+    if (keyboard) {
+      await tabTo(page, toggle);
+      await page.keyboard.press('Enter');
+      await expect(page.locator('.site-main-menu a').first()).toBeFocused();
+    } else await toggle.click();
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
   }
 }
 async function tabTo(page, link) {
+  if (await link.evaluate(el => el === document.activeElement)) return;
   const reverse = await link.evaluate(el =>
     !!(document.activeElement.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING));
   for (let n = 0; n < 100; n++) {
@@ -143,7 +148,7 @@ test('R-BUILD-V04 | AC09 | Short desktop and narrow drawer keep build, copyright
     await page.setViewportSize(viewport);
     await page.goto('/');
     await expect(page.locator('.preloader')).toHaveCount(0);
-    await openMenu(page);
+    await openMenu(page, true);
     const link = page.locator('a.build-info');
     await tabTo(page, link);
     await visibleGeometry(page);
@@ -163,7 +168,7 @@ test('R-BUILD-V05 | AC09 | Long run numbers survive 200% CSS zoom and narrow ref
       await page.goto(origin);
       await expect(page.locator('.preloader')).toHaveCount(0);
       await page.locator('body').evaluate(el => { el.style.zoom = '2'; });
-      await openMenu(page);
+      await openMenu(page, true);
       const link = page.locator('a.build-info');
       await expect(link).toHaveText('Build 12345678901234567890.123');
       await tabTo(page, link);
@@ -177,7 +182,7 @@ test('R-BUILD-V05 | AC09 | Long run numbers survive 200% CSS zoom and narrow ref
       await visibleGeometry(page);
       await page.locator('body').evaluate(el => { el.style.zoom = ''; });
       await page.setViewportSize({ width: 320, height: 480 });
-      await openMenu(page);
+      await openMenu(page, true);
       await tabTo(page, link);
       await visibleGeometry(page);
       await info.attach('build-long-number', { body: await page.screenshot(), contentType: 'image/png' });
