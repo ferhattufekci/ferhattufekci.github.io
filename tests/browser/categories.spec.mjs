@@ -172,14 +172,17 @@ test('R-FILTER-06 | Given unknown repository metadata, when selecting Software, 
   await expect(page.locator('#proj-empty')).toBeHidden();
 });
 
-test('R-FILTER-10 | Given independent catalogs, when all 48 category/language state combinations occur, then each page retains its own selection', async ({ page }) => {
-  await openCatalog(page, 'projects');
-  const expectedProjects = {
-    all: [['systems-pinned', 'testing-pinned'], ['systems-rest', 'software-rest']],
-    systems: [['systems-pinned'], ['systems-rest']],
-    test: [['testing-pinned'], []], software: [[], ['software-rest']]
-  };
-  for (const projectCategory of Object.keys(projectGroups)) {
+// One test per Projects category: the same 48 category/language cells, split so that each test owns its own
+// 30 s budget (about a quarter of the former single run) instead of all 48 sharing one. Assertions, timeouts and
+// retries are unchanged; a slow runner now fails one cell group with its own report instead of timing out the lot.
+for (const projectCategory of Object.keys(projectGroups)) {
+  test(`R-FILTER-10 | Given independent catalogs, when Projects=${projectCategory} meets all 12 Blog category/language combinations, then each page retains its own selection`, async ({ page }) => {
+    await openCatalog(page, 'projects');
+    const expectedProjects = {
+      all: [['systems-pinned', 'testing-pinned'], ['systems-rest', 'software-rest']],
+      systems: [['systems-pinned'], ['systems-rest']],
+      test: [['testing-pinned'], []], software: [[], ['software-rest']]
+    }[projectCategory];
     await selectCategory(page, 'projects', projectCategory);
     await navigateToSection(page, 'blog');
     for (const blogCategory of Object.keys(blogGroups)) {
@@ -188,19 +191,19 @@ test('R-FILTER-10 | Given independent catalogs, when all 48 category/language st
         await test.step(`Projects=${projectCategory}; Blog=${blogCategory}; language=${language}`, async () => {
           await selectLanguage(page, language);
           await expect(titles(page)).toHaveText(expectedArticles[blogCategory][language]);
-          await expect(names(page, 'proj-pinned')).toHaveText(expectedProjects[projectCategory][0]);
-          await expect(names(page, 'proj-grid')).toHaveText(expectedProjects[projectCategory][1]);
+          await expect(names(page, 'proj-pinned')).toHaveText(expectedProjects[0]);
+          await expect(names(page, 'proj-grid')).toHaveText(expectedProjects[1]);
           await expectSelection(page, 'projects', projectCategory);
         });
       }
     }
     await navigateToSection(page, 'projects');
     await expectSelection(page, 'projects', projectCategory);
-    await expect(names(page, 'proj-pinned')).toHaveText(expectedProjects[projectCategory][0]);
-    await expect(names(page, 'proj-grid')).toHaveText(expectedProjects[projectCategory][1]);
+    await expect(names(page, 'proj-pinned')).toHaveText(expectedProjects[0]);
+    await expect(names(page, 'proj-grid')).toHaveText(expectedProjects[1]);
     await expectSelection(page, 'blog', 'software');
-  }
-});
+  });
+}
 
 test('R-FILTER-11 | Given all catalogs and RSS unavailable, when every category is selected, then settled empty states remain usable', async ({ page }) => {
   await openCatalog(page, 'blog', {
