@@ -24,7 +24,7 @@ test('AC-13/15 | Declared units retain the per-page request formats and remain e
     assert.ok(ins, `${page}: authored unit exists`);
     const unit = facts.units[page];
     for (const [attribute, value] of Object.entries({ 'data-ad-client': facts.publisher,
-      'data-ad-slot': facts.slot, 'data-ad-format': unit.format, 'data-ad-layout': unit.layout,
+      'data-ad-slot': unit.slot, 'data-ad-format': unit.format, 'data-ad-layout': unit.layout,
       'data-ad-layout-key': unit.layoutKey, 'data-full-width-responsive': unit.fullWidth })) assert.equal(ins.getAttribute(attribute), value, `${page}: ${attribute}`);
   }
   assert.equal(document.querySelector('amp-auto-ads'), null);

@@ -89,8 +89,9 @@ fixed controls and keyboard paging across provider fill states.
 
 Starred expansion uses the pure `js/starred-ad-planner.js` and the same ad owner.
 `js/adsense-config.js` enables the configured In-feed unit for manual expansion.
-Static Projects uses `autorelaxed`;
-static Blog retains its `fluid` layout key. These existing static settings are not
+Static Projects uses `autorelaxed` with the account's Multiplex slot (`1912820269`, "multiplex reklam yatay esnek"):
+the format must match the slot's unit type in AdSense, and `2029775306` is an In-article unit.
+Static Blog retains its `fluid` layout key. These existing static settings are not
 reused for new dynamic placements. Every 40 unique manually revealed cards can reserve one
 placement, with at most two per document; failed/no-fill reservations still count.
 The first 20 cards, filters, themes and revisits do not create opportunities.
