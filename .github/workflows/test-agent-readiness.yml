@@ -130,9 +130,11 @@ jobs:
   browser-tests:
     name: Browser Tests (${{ matrix.shard }}/2)
     runs-on: ubuntu-24.04
-    # 546 passing tests took 19.7 minutes in run 41599615772. Allow setup,
-    # report finalization and runner variance without changing test timeouts.
-    timeout-minutes: 25
+    # Shards took 17-24 minutes in runs 41988673520, 42021093807, 42028696513
+    # and reached the former 25-minute deadline in run 42043003964, which
+    # cancelled the job and blocked the release. Keep about 1.6x headroom for
+    # runner variance without changing test timeouts or retries.
+    timeout-minutes: 40
     needs:
       - build-site
       - static-checks
@@ -191,9 +193,11 @@ jobs:
     name: Cross-browser Keyboard Tests
     runs-on: ubuntu-24.04
     # Run 41731506040 passed 530 engine cases in 25.8m, then the 30m job
-    # deadline interrupted touch arrows. Include setup, build-label coverage,
-    # arrows and reports without changing test timeouts or retries.
-    timeout-minutes: 35
+    # deadline interrupted touch arrows. Later runs took 23-33 minutes and
+    # run 42043003964 reached the 35-minute deadline. Include setup,
+    # build-label coverage, arrows and reports with about 1.5x headroom,
+    # without changing test timeouts or retries.
+    timeout-minutes: 50
     needs: build-site
     env:
       PORTFOLIO_TEST_ROOT: .pages-site
