@@ -2,7 +2,7 @@
   "publisher": "ca-pub-1316559702402555",
   "units": {
     "projects": { "slot": "1912820269", "format": "autorelaxed", "layout": null, "layoutKey": null, "fullWidth": null },
-    "blog": { "slot": "2029775306", "format": "fluid", "layout": null, "layoutKey": "-6t+ed+2i-1n-4w", "fullWidth": "true" }
+    "blog": { "slot": "2029775306", "format": "fluid", "layout": "in-article", "layoutKey": null, "fullWidth": null }
   },
   "label": "Advertisements",
   "states": [
