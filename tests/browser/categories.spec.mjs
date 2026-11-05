@@ -145,6 +145,26 @@ test('R-FILTER-04 | Given a category with no articles in a language, when filter
   await expectSelection(page, 'projects', 'test');
 });
 
+test('SEC-RSS-01 | Given the Medium RSS fallback returns hostile content, when the Blog renders, then no script runs and only https article links are bound', async ({ page }) => {
+  // Third-party response (CORS proxy). All first-party category files are empty, so the fallback is the data source.
+  const item = (title, link, body) => `<item><title>${title}</title><link>${link}</link><pubDate>Mon, 05 Jan 2026 12:00:00 GMT</pubDate>` +
+    `<category>testing</category><description><![CDATA[${body}]]></description></item>`;
+  const rss = `<?xml version="1.0"?><rss version="2.0"><channel>${[
+    item('Hostile Handler', 'https://medium.com/@fixture/hostile-handler',
+      '<p>Body text</p><img src="x:invalid" onerror="window.__rssXss = (window.__rssXss || 0) + 1">'),
+    item('Script Scheme', 'javascript:window.__rssXss=1', 'Plain body'),
+    item('Honest Article', 'https://medium.com/@fixture/honest-article', 'Plain body')
+  ].join('')}</channel></rss>`;
+  await page.route('https://api.allorigins.win/**', route => route.fulfill({ json: { contents: rss } }));
+  await mockCatalog(page, { 'medium-systems.json': [], 'medium-test.json': [], 'medium-software.json': [] });
+  await page.goto('/#blog');
+  await expectSection(page, 'blog');
+  await expect(titles(page)).toHaveText(['Hostile Handler', 'Honest Article']);
+  const hrefs = await page.locator('#blog-grid a.blog-article-link').evaluateAll(links => links.map(link => link.getAttribute('href')));
+  expect(hrefs).toEqual(['https://medium.com/@fixture/hostile-handler', 'https://medium.com/@fixture/honest-article']);
+  expect(await page.evaluate(() => window.__rssXss)).toBeUndefined();
+});
+
 test('R-FILTER-05 | Given no repos in a selected category, when returning to All, then pinned and ordinary cards recover without duplicates', async ({ page }) => {
   await openCatalog(page, 'projects', { 'github-repos.json': [repo('systems-only', 'systems', true)] });
   for (const category of ['test', 'software']) {

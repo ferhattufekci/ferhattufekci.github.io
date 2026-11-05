@@ -3598,6 +3598,15 @@
                   });
                 }
 
+                // The RSS fallback arrives through a third-party CORS proxy: treat every field as untrusted.
+                function httpsUrl(value) {
+                  try {
+                    return new URL(value).protocol === "https:" ? value : "";
+                  } catch (error) {
+                    return "";
+                  }
+                }
+
                 function parseRSSXml(xml) {
                   var doc = new DOMParser().parseFromString(xml, "text/xml"),
                     out = [],
@@ -3606,8 +3615,9 @@
                     var it = items[i];
                     var title =
                       (it.querySelector("title") || {}).textContent || "";
-                    var link =
-                      (it.querySelector("link") || {}).textContent || "";
+                    var link = httpsUrl(
+                      ((it.querySelector("link") || {}).textContent || "").trim(),
+                    );
                     var pub =
                       (it.querySelector("pubDate") || {}).textContent || "";
                     var enc =
@@ -3620,10 +3630,12 @@
                     });
                     var mth = it.getElementsByTagNameNS("*", "thumbnail")[0],
                       im = cnt.match(/<img[^>]+src="([^"]+)"/i);
-                    var thumb =
-                      (mth && mth.getAttribute("url")) || (im ? im[1] : null);
-                    var div = document.createElement("div");
-                    div.innerHTML = cnt;
+                    var thumb = httpsUrl(
+                      (mth && mth.getAttribute("url")) || (im ? im[1] : ""),
+                    );
+                    // A parsed (inert) document never loads resources or runs handlers; an element
+                    // assigned through innerHTML would, even when detached.
+                    var bodyText = new DOMParser().parseFromString(cnt, "text/html").body.textContent || "";
                     var description = it.querySelector("description");
                     var ex = MediumArticleExcerpt.selectExcerpt({
                       description: description ? description.textContent : "",
@@ -3637,7 +3649,7 @@
                       lang: it.getAttribute("xml:lang") || it.getAttribute("lang"),
                       language: (it.querySelector("language") || {}).textContent,
                       title: title,
-                      content: div.textContent || "",
+                      content: bodyText,
                     });
                     out.push({
                       article: {
