@@ -7,11 +7,14 @@ import {
   rm,
   copyFile
 } from 'node:fs/promises';
+import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import {
   requireQuality,
   requireCurrentSource,
   resolveSource,
+  planRecovery,
+  repository,
   validateCoverage
 } from './policy.mjs';
 
@@ -51,6 +54,33 @@ else if (command === 'current') {
     { encoding: 'utf8' }
   ).split(/\s/)[0];
   requireCurrentSource(args[0], actual);
+} else if (command === 'recover') {
+  // Reads facts with the workflow token, asks the pure policy, performs one action.
+  const runId = args[0];
+  assert.match(runId || '', /^\d+$/, 'Run id must be decimal');
+  const attempt = args[1];
+  assert.match(attempt || '', /^\d+$/, 'Run attempt must be decimal');
+  const gh = (...parts) =>
+    JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
+  const base = `repos/${repository}`;
+  const run = gh(`${base}/actions/runs/${runId}/attempts/${attempt}`);
+  const { jobs } = gh('--paginate', '--slurp', `${base}/actions/runs/${runId}/attempts/${attempt}/jobs?per_page=100`)
+    .reduce((all, page) => ({ jobs: all.jobs.concat(page.jobs) }), { jobs: [] });
+  const annotations = {};
+  for (const job of jobs.filter((item) => item.conclusion === 'cancelled'))
+    annotations[job.id] = gh(`${base}/check-runs/${job.id}/annotations`);
+  const mainSha = execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], {
+    encoding: 'utf8'
+  }).split(/\s/)[0];
+  const tipRuns = gh(
+    `${base}/actions/workflows/pages.yml/runs?branch=main&head_sha=${mainSha}&per_page=100`
+  ).workflow_runs;
+  const plan = planRecovery({ run, jobs, annotations, mainSha, tipRuns });
+  console.log(`recovery=${plan.action} (${plan.reason})`);
+  if (plan.action === 'rerun')
+    execFileSync('gh', ['run', 'rerun', runId, '--failed', '--repo', repository], { stdio: 'inherit' });
+  else if (plan.action === 'dispatch')
+    execFileSync('gh', ['workflow', 'run', 'pages.yml', '--ref', 'main', '--repo', repository], { stdio: 'inherit' });
 } else if (command === 'artifact') {
   const { verifyMetadata } = await import('./build-metadata.mjs');
   const metadata = await verifyMetadata(

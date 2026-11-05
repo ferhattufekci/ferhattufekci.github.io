@@ -1,0 +1,42 @@
+name: Recover Production Release
+
+# Follows a finished production run and, only for infrastructure causes (job
+# deadline, superseded by a newer main commit), starts the follow-up run that
+# the failure prevented. Genuine test failures are never retried.
+on:
+  workflow_run:
+    workflows:
+      - Portfolio CI/CD
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    name: Recover Release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: github.repository == 'ferhattufekci/ferhattufekci.github.io' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository && (github.event.workflow_run.conclusion == 'failure' || github.event.workflow_run.conclusion == 'cancelled')
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      # workflow_run executes the default branch's workflow with a write token,
+      # so only trusted main code is checked out; no pull request code runs here.
+      - name: Check out default branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Recover release when the cause is infrastructure
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: node scripts/ci/commands.mjs recover "$RUN_ID" "$RUN_ATTEMPT"

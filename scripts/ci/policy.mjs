@@ -71,6 +71,80 @@ export function requireCurrentSource(expected, actual) {
     'Superseded source: refusing to deploy an older run'
   );
 }
+const productionWorkflow = {
+  name: 'Portfolio CI/CD',
+  path: '.github/workflows/pages.yml'
+};
+const productionEvents = ['push', 'workflow_run', 'workflow_dispatch'];
+const timeoutAnnotation = /exceeded the maximum execution time/i;
+const supersededStep = 'Reject superseded release';
+// Downstream aggregators fail because an upstream job did; they carry no cause.
+const aggregateJobs = ['Merge Test Reports', 'Quality Gate'];
+const jobLabel = (job) => String(job.name).split(' / ').pop();
+const isAggregate = (job) => aggregateJobs.includes(jobLabel(job));
+const isSupersededDeploy = (job) =>
+  job.conclusion === 'failure' &&
+  (job.steps || []).some(
+    (step) => step.name === supersededStep && step.conclusion === 'failure'
+  );
+function isProductionRun(run) {
+  return (
+    run?.name === productionWorkflow.name &&
+    run.path === productionWorkflow.path &&
+    run.head_branch === 'main' &&
+    run.head_repository?.full_name === repository &&
+    productionEvents.includes(run.event)
+  );
+}
+/**
+ * Decide whether a finished production run needs an automatic follow-up.
+ * Pure: callers supply facts read from the Actions API and act on the answer.
+ *
+ * - rerun: the run lost jobs to the job deadline (infrastructure), is still the
+ *   newest main commit and was not retried yet.
+ * - dispatch: a newer main commit exists (or the run was rejected as
+ *   superseded) and no run exists for that commit, so nothing will publish it.
+ * - none: genuine test failures, manual cancellation, retried runs, and any case
+ *   where another run already covers the newest commit. A real failure must
+ *   stay visible, never be retried away.
+ */
+export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
+  assert.match(mainSha, /^[a-f0-9]{40}$/, 'Invalid main SHA');
+  const none = (reason) => ({ action: 'none', reason });
+  if (!isProductionRun(run)) return none('Not a production run');
+  if (!['failure', 'cancelled'].includes(run.conclusion))
+    return none(`Run concluded ${run.conclusion}`);
+  const real = jobs.filter(
+    (job) =>
+      job.conclusion === 'failure' && !isAggregate(job) && !isSupersededDeploy(job)
+  );
+  if (real.length)
+    return none(`Genuine failure: ${real.map((job) => job.name).join(', ')}`);
+  const cancelled = jobs.filter((job) => job.conclusion === 'cancelled');
+  const timedOut =
+    cancelled.length > 0 &&
+    cancelled.every((job) =>
+      (annotations?.[job.id] || []).some((note) =>
+        timeoutAnnotation.test(note.message || '')
+      )
+    );
+  const superseded = jobs.some(isSupersededDeploy);
+  if (!timedOut && !superseded)
+    return none('No infrastructure cause (manual cancellation or unknown)');
+  if (timedOut && run.head_sha === mainSha) {
+    return run.run_attempt === 1
+      ? { action: 'rerun', reason: 'Job deadline exceeded on the newest commit' }
+      : none('Already retried once');
+  }
+  if (run.head_sha === mainSha)
+    return none('Superseded rejection on the newest commit needs investigation');
+  const covered = (tipRuns || []).some(
+    (other) => other.head_sha === mainSha && isProductionRun(other)
+  );
+  return covered
+    ? none('A newer run already covers main')
+    : { action: 'dispatch', reason: 'Main advanced and no run covers it' };
+}
 export function validateCoverage(expected, shards, count = 2) {
   assert.equal(shards.length, count, 'Missing shard report');
   const all = new Set(expected);
