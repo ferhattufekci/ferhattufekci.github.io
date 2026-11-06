@@ -30,7 +30,7 @@
       }
     });
 
-  $(document).on("ready", function () {
+  $(function () {
     var $portfolio_container = $(".portfolio-grid");
     $portfolio_container.imagesLoaded(function () {
       portfolio_init(this);
