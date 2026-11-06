@@ -6,6 +6,8 @@
 # step (median of 128 recorded runs, maximum 108 seconds) into 474 and 585
 # seconds in run 42108859656, which then hit the 10 minute job deadline. The
 # timeout counts seconds without data, so a healthy 21 MB download is unaffected.
+# It does not help when the mirror keeps sending data very slowly (pull request
+# runs 42169381575 and 42169563198 lost 50 minutes that way); see docs/CI-CD.md.
 set -euo pipefail
 printf '%s\n' \
   'Acquire::http::Timeout "20";' \
