@@ -12,8 +12,10 @@ import {
   requireQuality,
   requireCurrentSource,
   resolveSource,
+  repository,
   validateCoverage
 } from './policy.mjs';
+import { recover } from './recovery.mjs';
 
 const [command, ...args] = process.argv.slice(2);
 async function output(name, value) {
@@ -51,6 +53,32 @@ else if (command === 'current') {
     { encoding: 'utf8' }
   ).split(/\s/)[0];
   requireCurrentSource(args[0], actual);
+} else if (command === 'recover') {
+  const gh = (...parts) =>
+    JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
+  const mainSha = execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], {
+    encoding: 'utf8'
+  }).split(/\s/)[0];
+  const act = (action) => {
+    const [runId] = args;
+    execFileSync(
+      'gh',
+      action === 'rerun'
+        ? ['run', 'rerun', runId, '--failed', '--repo', repository]
+        : ['workflow', 'run', 'pages.yml', '--ref', 'main', '--repo', repository],
+      { stdio: 'inherit' }
+    );
+  };
+  // Acting is opt-in (repository variable); everything else only reports.
+  const observeOnly = process.env.RECOVERY_ACT !== 'true';
+  const plan = await recover({ runId: args[0], attempt: args[1], api: gh, mainSha, act, observeOnly });
+  const line = `recovery=${plan.action} mode=${observeOnly ? 'observe' : 'act'} performed=${plan.performed} (${plan.reason})`;
+  console.log(line);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    await appendFile(
+      process.env.GITHUB_STEP_SUMMARY,
+      `## Release recovery\n\nRun \`${args[0]}\` attempt \`${args[1]}\` against main \`${mainSha}\`.\n\n- Decision: **${plan.action}**\n- Mode: ${observeOnly ? 'observe only (no action taken)' : 'act'}\n- Performed: ${plan.performed}\n- Reason: ${plan.reason}\n`
+    );
 } else if (command === 'artifact') {
   const { verifyMetadata } = await import('./build-metadata.mjs');
   const metadata = await verifyMetadata(
