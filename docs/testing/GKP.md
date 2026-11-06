@@ -61,6 +61,7 @@ Standart makale beklenen sırası All/All için: **Systems EN, Testing TR, Softw
 - **S-5:** [güven içeriği](../../content/trust-pages.json), [üretici](../../scripts/lib/agent-documents.mjs), [404 kaynağı](../../js/error-card.js).
 - **S-6:** [HTTP doğrulayıcı](../../scripts/verify-agent-endpoints.mjs), [yayın envanteri](../../scripts/lib/public-files.mjs), [yayın akışı](../../.github/workflows/pages.yml).
 - **S-7:** [test stratejisi](../../TEST-STRATEGY.md#test-strategy-tr), [otomasyon denetimi](TEST-AUDIT.md).
+- **S-8:** [reklam yaşam döngüsü](../../js/adsense.js), [reklam ayarları](../../js/adsense-config.js), [reklam BDD](../../tests/browser/adsense.spec.mjs), [durum sözleşmesi](../../scripts/tests/adsense.test.js).
 
 ## GEREKSİNİMLER ve izlenebilirlik matrisi
 
@@ -110,6 +111,9 @@ Kapsam sütunundaki **Designed** yalnızca manuel tasarım bağlantısı olduğu
 | R-HTTP-01 | GET matrisi ve makine dosyaları gerçek durum/gövdeyle kontrol edilir | S-6 | GKP-003, GKP-024 | http-verification.test.js; HTTP/biçim | Yüksek | Designed | Üç hosting/kapsam kısıtı ayrı raporlanır |
 | R-CI-02 | Canlı doğrulama test edilmiş artifact'in kaynak SHA'sını kullanır | S-6 | GKP-026 | first-principles.test.js + actionlint; CI sözleşmesi | Yüksek | Designed | GitHub yürütmesi yayın yetkisi sonrası |
 | R-EXTERNAL-01 | İsteğe bağlı randevu scripti veya storage hatası uncaught hata üretmez | S-1 | GKP-029 | external-widget.spec.mjs; negatif/hata toleransı | Orta | Designed | Harici servisin kendisi test kapsamı dışındadır |
+| R-AD-01 | Her reklam birimi sayfanın kendi içeriği ve genişliği yerleştikten sonra yalnız bir kez istenir | S-8 | GKP-030 | adsense.spec.mjs AC-05/06, AC-05/13; yaşam döngüsü/zaman | Yüksek | Designed | Gerçek reklam sunucusu yanıtı test edilmez |
+| R-AD-02 | Blog (yazı içi) ve Projects (Multiplex) kodları hesaptaki birim türüyle eşleşir | S-8 | GKP-030 | adsense.test.js AC-13/15; sözleşme | Yüksek | Designed | Türün hesapla eşleşmesi hesap panelinden doğrulanır; depoda kanıtı yok |
+| R-AD-03 | Doldurulmayan veya engellenen reklam boş kabuk bırakmaz; içerik ve gezinme çalışır | S-8 | GKP-030 | adsense.spec.mjs AC-01/02/03, AC-08/14; negatif | Yüksek | Designed | Doldurma oranı ve gösterim kabul ölçütü değildir |
 
 ## TEST DURUMLARI
 
@@ -422,6 +426,17 @@ Her vakanın adı, amacı, tekniği, önceliği ve otomasyon ilişkisi başlıkt
 | Randevu scripti | Kurtarma | 2 | Contact, Resume ve tema kontrollerini kullan. | İki bölüm doğru açılır; tema iki yönde değişir; doğrudan Set Up A Job Interview bağlantısının href'i https://calendly.com/ferhattufekci/60min olarak korunur. | Navigasyon ve DOM hedefi | Not Run | R-EXTERNAL-01 | ÖK-1, ÖK-2 | Aynı engelli script oturumu | Hizmetin çevrimiçi başarısı kabul ölçütü değildir |
 | Randevu scripti | Temizlik | 3 | Request Blocking engelini kaldır; test profilini kapat. | Sonraki oturumda kural ve geçici storage paylaşılmaz; kaynak dosyası değiştirilmemiştir. | İzolasyon | Not Run | R-EXTERNAL-01 | ÖK-2, ÖK-5 | Teste özel profil | Script erişimi gerçek ağ durumuna bağlıdır |
 
+### GKP-030 — Reklam birimi sözleşmesi ve üretim gözlemi
+
+**Amaç:** reklam isteğinin zamanlamasını, birim türü eşleşmesini ve doldurulmama davranışını kabul etmek; gerçek doldurmayı yalnız gözlemlemek. **Tür:** Pozitif, negatif, gözlem. **Öncelik:** Yüksek. **Otomasyon:** R-AD-01/02/03 Chromium'da sentetik sağlayıcıyla kapsanır; üretim doldurma gözlemi (adım 4) otomasyonsuzdur ve RTM gereksinimi değildir (AÇ-8). Reklama tıklanmaz, yenileme veya sahte trafik üretilmez.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Reklam sözleşmesi | Birim türü ve kaynak | 1 | index.html'de Blog ve Projects reklam `<ins>` öğelerini incele; hesaptaki birim listesiyle (yalnız görüntüleme) karşılaştır. | Blog `data-ad-slot` 2029775306 ve `data-ad-layout="in-article"` + `fluid`; Projects 1912820269 ve `data-ad-format="autorelaxed"`; her ikisi hesapta aynı türde görünür. | Kaynak ve hesap paneli | Not Run | R-AD-02 | ÖK-1 | Blog ve Projects öğeleri | Hesap paneli kanıtı depoda yoktur |
+| Reklam isteği | Zamanlama | 2 | `npm run preview` ile Blog ve Projects'e git; DevTools Network'te adsbygoogle isteklerini say. Kartlar yüklenirken ve sonrasında kaydet. | Her birim için kartlar görünür olana kadar istek yok; sonra tek istek ve kartların altında yer alır. | İstek sayısı ve sırası | Not Run | R-AD-01 | ÖK-2, ÖK-4 | Yerel önizleme | Yerel önizleme gerçek reklam sunucusu kanıtı değildir |
+| Engellenen reklam | Boş kabuk | 3 | DevTools Request Blocking ile `pagead2.googlesyndication.com` engelle; cache kapalı reload yap; Blog ve Projects'te filtre ve gezinmeyi kullan. | Boş reklam kutusu veya ayrılmış boşluk kalmaz; katalog, filtreler ve gezinme çalışır. | Görsel ve DOM | Not Run | R-AD-03 | ÖK-1, ÖK-2 | Engellenmiş sağlayıcı | Gerçek doldurmama yanıtı ayrıca gözlenir |
+| Üretim gözlemi | Doldurma durumu | 4 | Canlı sitede Blog ve Projects'i aç (reklama tıklama, sayfayı reklam için yenileme); birimlerin `data-ad-status` değerini yalnız oku ve kaydet. | `filled` veya `unfilled` olarak kaydedilir; `unfilled` ise boş kabuk yoktur. Dolmama hata sayılmaz. | Salt okunur gözlem | Not Run | R-AD-03 | ÖK-1 | Canlı site | Yeni birimlerin dolması zaman alabilir; hesap onay iletisi ve gizlilik ayarları hesap panelinden ayrıca denetlenir |
+
 ## Yürütme kaydı ve açıklıklar
 
 Her vaka ve her matris hücresi için şu kayıt çoğaltılır; kaynak prosedürdeki Not Run değerlerini topluca Pass'e çevirmeyin. Gerçek sonuç bir gözlem, beklenen sonuç ise yukarıdaki kabul ölçütüdür.
@@ -439,6 +454,8 @@ Her vaka ve her matris hücresi için şu kayıt çoğaltılır; kaynak prosedü
 - **AÇ-5:** Resume içi ayrı bölüm navigasyonu, Scroll Spy, sticky bölüm menüsü ve bölüm linkine basınca tüm içeriği otomatik açma mevcut değildir. Bu özellikler için gereksinim **Pending Requirement Clarification**, test kapsamı **Not Covered / Requires Test Design**; mevcut yan menü ile karıştırılmaz ve RTM'nin doğrulanmış davranış paydasına eklenmez.
 - **AÇ-6:** Resmi SRS, kurumsal gereksinim kimlikleri, gözden geçiren/onaylayan ve kabul toleransları yok; hepsi TBD. Buradaki risk öncelikleri test mühendisliği önerisidir.
 - **AÇ-7:** Markdown content negotiation, Markdown hata gövdesi ve çalışan MCP bu statik hosting/kapsam altında karşılanmıyor. Bunlar başarıya çevrilmez; yeni skor/uygunluk garantisi verilmez.
+
+- **AÇ-8:** Gerçek reklam doldurma, gösterim ve gelir kabul ölçütü değildir ve otomasyonla doğrulanamaz; yalnız GKP-030 adım 4'te salt okunur gözlenir. Hesap tarafı (gizlilik ve mesajlar, onay iletisi, yeni birimlerin dolma süresi) depoda kanıtlanamaz ve ürün sahibi tarafından kontrol edilmelidir. Reklama tıklanmaz ve geçersiz trafik üretilmez.
 
 ### Bakım ve doğrulama
 
