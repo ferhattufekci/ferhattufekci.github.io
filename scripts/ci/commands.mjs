@@ -69,8 +69,16 @@ else if (command === 'current') {
       { stdio: 'inherit' }
     );
   };
-  const plan = await recover({ runId: args[0], attempt: args[1], api: gh, mainSha, act });
-  console.log(`recovery=${plan.action} (${plan.reason})`);
+  // Acting is opt-in (repository variable); everything else only reports.
+  const observeOnly = process.env.RECOVERY_ACT !== 'true';
+  const plan = await recover({ runId: args[0], attempt: args[1], api: gh, mainSha, act, observeOnly });
+  const line = `recovery=${plan.action} mode=${observeOnly ? 'observe' : 'act'} performed=${plan.performed} (${plan.reason})`;
+  console.log(line);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    await appendFile(
+      process.env.GITHUB_STEP_SUMMARY,
+      `## Release recovery\n\nRun \`${args[0]}\` attempt \`${args[1]}\` against main \`${mainSha}\`.\n\n- Decision: **${plan.action}**\n- Mode: ${observeOnly ? 'observe only (no action taken)' : 'act'}\n- Performed: ${plan.performed}\n- Reason: ${plan.reason}\n`
+    );
 } else if (command === 'artifact') {
   const { verifyMetadata } = await import('./build-metadata.mjs');
   const metadata = await verifyMetadata(

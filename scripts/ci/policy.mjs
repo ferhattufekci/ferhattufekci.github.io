@@ -138,8 +138,12 @@ export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
   }
   if (run.head_sha === mainSha)
     return none('Superseded rejection on the newest commit needs investigation');
+  // A skipped run (writer failed, so resolve-source never ran) built nothing.
   const covered = (tipRuns || []).some(
-    (other) => other.head_sha === mainSha && isProductionRun(other)
+    (other) =>
+      other.head_sha === mainSha &&
+      isProductionRun(other) &&
+      other.conclusion !== 'skipped'
   );
   return covered
     ? none('A newer run already covers main')

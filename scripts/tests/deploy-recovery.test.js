@@ -130,11 +130,13 @@ test('R-CI-RECOVER-12: the recovery workflow is a least-privilege, main-only fol
   const triggers = text.slice(text.indexOf('\non:'), text.indexOf('\npermissions:'));
   assert.match(triggers, /workflow_run:\s+workflows:\s+- Portfolio CI\/CD\s+types:\s+- completed/);
   assert.doesNotMatch(triggers, /pull_request|push:|schedule:/);
+  assert.match(triggers, /workflow_dispatch:/);
   assert.match(text, /^permissions:\n  contents: read$/m);
   assert.match(text, /^ {4}permissions:\n {6}contents: read\n {6}actions: write$/m);
   assert.doesNotMatch(text, /contents: write|pull-requests|id-token|pages:/);
   const guard = text.match(/^ {4}if: (.+)$/m)?.[1] || '';
   for (const part of [
+    "github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'",
     "github.event.workflow_run.head_branch == 'main'",
     'github.event.workflow_run.head_repository.full_name == github.repository',
     "github.event.workflow_run.conclusion == 'failure'",
@@ -144,6 +146,13 @@ test('R-CI-RECOVER-12: the recovery workflow is a least-privilege, main-only fol
   assert.match(text, /ref: \$\{\{ github\.sha \}\}/);
   assert.match(text, /persist-credentials: false/);
   assert.match(text, /commands\.mjs recover "\$RUN_ID" "\$RUN_ATTEMPT"/);
+  // Acting is opt-in and impossible from a manual dispatch.
+  assert.match(text, /RECOVERY_ACT: \$\{\{ github\.event_name == 'workflow_run' && vars\.PORTFOLIO_RECOVERY_ACT == 'true' && 'true' \|\| 'false' \}\}/);
+  // Per-run concurrency: a shared group would drop all but one pending recovery.
+  assert.match(text, /group: portfolio-recovery-\$\{\{ github\.event\.workflow_run\.id \|\| inputs\.run-id \}\}/);
+  // Untrusted-looking values reach the shell only through env.
+  const runLines = text.split('\n').filter((line) => /^\s+run: /.test(line));
+  for (const line of runLines) assert.doesNotMatch(line, /\$\{\{/);
 });
 test('R-CI-RECOVER-13: a deployed release whose verification hit its deadline is retried on the newest commit and left alone once main moved on', () => {
   // Real run 42108859656: Deploy succeeded, Verify Production exceeded 10 minutes.
@@ -166,7 +175,7 @@ test('R-CI-RECOVER-14: the API-reading path asks for annotations only on cancell
   const api = async (...parts) => {
     const url = parts.at(-1);
     calls.push(parts.join(' '));
-    if (url.includes('/annotations')) return annotations[url.match(/check-runs\/(\d+)/)[1]];
+    if (url.includes('/annotations')) return [annotations[url.match(/check-runs\/(\d+)/)[1]]];
     if (url.includes('/jobs?')) return [{ jobs: jobs.slice(0, 5) }, { jobs: jobs.slice(5) }];
     if (url.includes('/workflows/pages.yml/runs')) return { workflow_runs: [] };
     return run;
@@ -186,4 +195,29 @@ test('R-CI-RECOVER-14: the API-reading path asks for annotations only on cancell
   assert.equal(none.action, 'none');
   assert.deepEqual(acts, []);
   await assert.rejects(recover({ runId: 'x', attempt: '1', api, mainSha: tip, act() {} }), /decimal/);
+});
+test('R-CI-RECOVER-15: a skipped run for the newest commit built nothing and does not count as coverage', () => {
+  // Real run 42129120936 shape: workflow_run at the tip with every job skipped.
+  const { run, jobs } = superseded();
+  const mainSha = hex('e');
+  const skipped = { ...run, id: 3, head_sha: mainSha, event: 'workflow_run', run_attempt: 1, conclusion: 'skipped' };
+  assert.equal(planRecovery({ run, jobs, mainSha, tipRuns: [skipped] }).action, 'dispatch');
+  const failed = { ...skipped, conclusion: 'failure' };
+  assert.equal(planRecovery({ run, jobs, mainSha, tipRuns: [failed] }).action, 'none');
+});
+test('R-CI-RECOVER-16: observe-only mode reports the decision and never acts', async () => {
+  const { recover } = await import('../ci/recovery.mjs');
+  const { run, jobs, annotations } = clone(fixture.timeout);
+  const acts = [];
+  const api = async (...parts) => {
+    const url = parts.at(-1);
+    if (url.includes('/annotations')) return [annotations[url.match(/check-runs\/(\d+)/)[1]]];
+    if (url.includes('/jobs?')) return [{ jobs }];
+    if (url.includes('/workflows/pages.yml/runs')) return { workflow_runs: [] };
+    return run;
+  };
+  const observed = await recover({ runId: '1', attempt: '1', api, mainSha: tip, act: async (a) => acts.push(a), observeOnly: true });
+  assert.deepEqual([observed.action, observed.performed, acts], ['rerun', false, []]);
+  const acted = await recover({ runId: '1', attempt: '1', api, mainSha: tip, act: async (a) => acts.push(a) });
+  assert.deepEqual([acted.action, acted.performed, acts], ['rerun', true, ['rerun']]);
 });
