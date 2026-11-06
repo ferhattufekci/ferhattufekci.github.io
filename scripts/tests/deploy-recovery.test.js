@@ -159,3 +159,31 @@ test('R-CI-RECOVER-13: a deployed release whose verification hit its deadline is
     'none'
   );
 });
+test('R-CI-RECOVER-14: the API-reading path asks for annotations only on cancelled jobs, pages jobs, and performs exactly one action', async () => {
+  const { recover } = await import('../ci/recovery.mjs');
+  const { run, jobs, annotations } = clone(fixture.timeout);
+  const calls = [], acts = [];
+  const api = async (...parts) => {
+    const url = parts.at(-1);
+    calls.push(parts.join(' '));
+    if (url.includes('/annotations')) return annotations[url.match(/check-runs\/(\d+)/)[1]];
+    if (url.includes('/jobs?')) return [{ jobs: jobs.slice(0, 5) }, { jobs: jobs.slice(5) }];
+    if (url.includes('/workflows/pages.yml/runs')) return { workflow_runs: [] };
+    return run;
+  };
+  const plan = await recover({ runId: '42043003964', attempt: '1', api, mainSha: tip, act: async (a) => acts.push(a) });
+  assert.equal(plan.action, 'rerun');
+  assert.deepEqual(acts, ['rerun']);
+  assert.deepEqual(
+    calls.filter((c) => c.includes('annotations')).map((c) => c.match(/check-runs\/(\d+)/)[1]).sort(),
+    ['127298757947', '127298854348']
+  );
+  assert.ok(calls.some((c) => c.startsWith('--paginate --slurp ')), 'jobs must be paged');
+  assert.ok(calls.some((c) => c.includes(`head_sha=${tip}`)));
+  // A decision of none performs nothing.
+  acts.length = 0;
+  const none = await recover({ runId: '42043003964', attempt: '2', api: async (...p) => { const r = await api(...p); return r === run ? { ...run, run_attempt: 2 } : r; }, mainSha: tip, act: async (a) => acts.push(a) });
+  assert.equal(none.action, 'none');
+  assert.deepEqual(acts, []);
+  await assert.rejects(recover({ runId: 'x', attempt: '1', api, mainSha: tip, act() {} }), /decimal/);
+});
