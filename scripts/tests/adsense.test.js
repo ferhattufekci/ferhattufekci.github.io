@@ -13,7 +13,7 @@ test('AC-01/09/10 | Provider state classification never equates processing, unkn
   for (const input of [null, undefined, 0, {}, []]) assert.equal(classifyStatus(input), 'waiting');
 });
 
-test('AC-13/15 | Declared units retain the per-page request formats and remain excluded from Markdown', async () => {
+test('R-AD-02 | AC-13/15 | Declared units retain the per-page request formats and remain excluded from Markdown', async () => {
   const { document } = parseHTML(await readFile(new URL('../../index.html', import.meta.url), 'utf8'));
   for (const page of ['projects', 'blog']) {
     const slot = document.querySelector(`.ad-slot-${page}`);

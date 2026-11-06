@@ -70,7 +70,7 @@ for (const section of ['projects', 'blog']) {
 }
 
 for (const section of ['projects', 'blog']) {
-  test(`AC-01/02/03 | ${section}: an iframe plus unfilled leaves no ad shell or own spacing`, async ({ page }, info) => {
+  test(`R-AD-03 | AC-01/02/03 | ${section}: an iframe plus unfilled leaves no ad shell or own spacing`, async ({ page }, info) => {
     await adFixture(page); await enterAdPage(page, section); await requested(page, section);
     const wrapper = slot(page, section);
     await respond(page, section, null);
@@ -111,7 +111,7 @@ for (const section of ['projects', 'blog']) {
   }
 }
 
-test('AC-05/06 | Width and ancestor eligibility settle before one request, even after repeated lifecycle/resize events', async ({ page }) => {
+test('R-AD-01 | AC-05/06 | Width and ancestor eligibility settle before one request, even after repeated lifecycle/resize events', async ({ page }) => {
   await page.clock.install(); await adFixture(page, { widthBlocked: true }); await enterAdPage(page, 'projects');
   const current = page.locator('section[data-id="projects"]');
   for (let index = 0; index < 3; index++) await page.evaluate(() => {
@@ -162,7 +162,7 @@ test('AC-09/10 | Provider optimization after no-fill preserves the same unit wit
   expect(await calls(page)).toEqual(['projects']); await original.dispose();
 });
 
-test('AC-08/14 | A blocked SDK leaves no empty shell while catalog, filters and navigation remain usable', async ({ page }) => {
+test('R-AD-03 | AC-08/14 | A blocked SDK leaves no empty shell while catalog, filters and navigation remain usable', async ({ page }) => {
   await adFixture(page, { script: 'blocked' }); await enterAdPage(page, 'projects');
   expect(await calls(page)).toEqual([]);
   const wrapper = slot(page, 'projects');
@@ -184,7 +184,7 @@ test('AC-09 | An SDK arriving after the old ten-second boot deadline still serve
 });
 
 for (const section of ['projects', 'blog']) {
-  test(`AC-05/13 | ${section}: the request waits for the page's own content, then spends exactly one request below it`, async ({ page }) => {
+  test(`R-AD-01 | AC-05/13 | ${section}: the request waits for the page's own content, then spends exactly one request below it`, async ({ page }) => {
     await adFixture(page, { synchronous: 'filled' });
     let release; const held = new Promise(resolve => { release = resolve; });
     // Registered after the fixture's catalog routes, so it runs first and defers to them once released.
