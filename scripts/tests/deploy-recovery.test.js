@@ -269,9 +269,9 @@ test('R-CI-RECOVER-20: workflow_run production runs are keyed on the data commit
   assert.match(run.head_sha, /^02dc911/);
 });
 
-// Synthetic: GitHub's message for a step with `timeout-minutes` (first real
-// observation is pending); the job shape is taken from real run 42043003964.
-const stepTimeoutNote = [{ message: "The action 'Install keyboard test browsers' has timed out after 5 minutes." }];
+// The annotation text is real (run 42205318156, job 127850644185, a pull request
+// run); the job names and ids around it come from real run 42043003964.
+const stepTimeoutNote = [{ message: "The action 'Install Chromium dependencies' has timed out after 5 minutes." }];
 test('R-CI-RECOVER-21: a step deadline in an install step is retried once on the newest commit', () => {
   const { run, jobs } = timeout();
   const keyboard = jobs.find((job) => job.name.endsWith('Cross-browser Keyboard Tests'));
