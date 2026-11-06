@@ -117,6 +117,8 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: pw-${{ runner.os }}-${{ runner.arch }}-ubuntu24-node22-${{ hashFiles('package-lock.json') }}
+      - name: Bound apt network stalls
+        run: bash scripts/ci/bound-apt-network.sh
       - name: Install Chromium dependencies
         run: npx playwright install --with-deps chromium
       - name: Test published browser flows
