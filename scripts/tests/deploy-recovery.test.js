@@ -221,3 +221,49 @@ test('R-CI-RECOVER-16: observe-only mode reports the decision and never acts', a
   const acted = await recover({ runId: '1', attempt: '1', api, mainSha: tip, act: async (a) => acts.push(a) });
   assert.deepEqual([acted.action, acted.performed, acts], ['rerun', true, ['rerun']]);
 });
+test('R-CI-RECOVER-17: mixed causes and unknown job conclusions never recover', () => {
+  // Superseded deploy plus a manually cancelled job: the manual stop wins.
+  const sup = superseded();
+  sup.jobs.find((job) => job.name === 'Verify Production').conclusion = 'cancelled';
+  assert.equal(planRecovery({ run: sup.run, jobs: sup.jobs, annotations: {}, mainSha: hex('f'), tipRuns: [] }).action, 'none');
+  // Conclusions without a benign meaning are genuine, even beside a deadline loss.
+  for (const conclusion of ['timed_out', 'neutral', 'action_required', null]) {
+    const { run, jobs, annotations } = timeout();
+    jobs.find((job) => job.name.endsWith('Unit Tests')).conclusion = conclusion;
+    const plan = planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] });
+    assert.equal(plan.action, 'none', String(conclusion));
+    assert.match(plan.reason, /Genuine failure/);
+  }
+});
+test('R-CI-RECOVER-18: the API may suffix the workflow path with its ref', () => {
+  const { run, jobs, annotations } = timeout();
+  run.path = '.github/workflows/pages.yml@refs/heads/main';
+  assert.equal(planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] }).action, 'rerun');
+  run.path = '.github/workflows/other.yml@refs/heads/main';
+  assert.equal(planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] }).action, 'none');
+});
+test('R-CI-RECOVER-19: a decision made on a stale attempt is dropped before acting', async () => {
+  const { recover } = await import('../ci/recovery.mjs');
+  const { run, jobs, annotations } = clone(fixture.timeout);
+  const acts = [];
+  let latestAttempt = 1;
+  const api = async (...parts) => {
+    const url = parts.at(-1);
+    if (url.includes('/annotations')) return [annotations[url.match(/check-runs\/(\d+)/)[1]]];
+    if (url.includes('/jobs?')) return [{ jobs }];
+    if (url.includes('/workflows/pages.yml/runs')) return { workflow_runs: [] };
+    return /\/attempts\/\d+$/.test(url) ? run : { ...run, run_attempt: latestAttempt };
+  };
+  const act = async (a) => acts.push(a);
+  assert.equal((await recover({ runId: '1', attempt: '1', api, mainSha: tip, act })).performed, true);
+  latestAttempt = 2; // a person reran it while the decision was being made
+  const stale = await recover({ runId: '1', attempt: '1', api, mainSha: tip, act });
+  assert.deepEqual([stale.action, stale.performed, acts], ['none', false, ['rerun']]);
+});
+test('R-CI-RECOVER-20: workflow_run production runs are keyed on the data commit they were triggered at', () => {
+  // Real data: run 42043003964 (event workflow_run) has head_sha 02dc911, the
+  // 14:13 data commit that was main when it started, so head_sha === main works.
+  const { run } = timeout();
+  assert.equal(run.event, 'workflow_run');
+  assert.match(run.head_sha, /^02dc911/);
+});

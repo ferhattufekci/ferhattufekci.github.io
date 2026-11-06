@@ -90,7 +90,8 @@ const isSupersededDeploy = (job) =>
 function isProductionRun(run) {
   return (
     run?.name === productionWorkflow.name &&
-    run.path === productionWorkflow.path &&
+    // The API may append the ref ('path@refs/heads/main') for some events.
+    String(run.path).split('@')[0] === productionWorkflow.path &&
     run.head_branch === 'main' &&
     run.head_repository?.full_name === repository &&
     productionEvents.includes(run.event)
@@ -114,10 +115,13 @@ export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
   if (!isProductionRun(run)) return none('Not a production run');
   if (!['failure', 'cancelled'].includes(run.conclusion))
     return none(`Run concluded ${run.conclusion}`);
-  const real = jobs.filter(
-    (job) =>
-      job.conclusion === 'failure' && !isAggregate(job) && !isSupersededDeploy(job)
-  );
+  // Strict by construction: only outcomes with a known benign meaning are
+  // tolerated; any other conclusion (failure, timed_out, neutral, unfinished)
+  // is treated as genuine and blocks recovery.
+  const benign = (job) =>
+    ['success', 'skipped', 'cancelled'].includes(job.conclusion) ||
+    (job.conclusion === 'failure' && (isAggregate(job) || isSupersededDeploy(job)));
+  const real = jobs.filter((job) => !benign(job));
   if (real.length)
     return none(`Genuine failure: ${real.map((job) => job.name).join(', ')}`);
   const cancelled = jobs.filter((job) => job.conclusion === 'cancelled');
@@ -129,6 +133,9 @@ export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
       )
     );
   const superseded = jobs.some(isSupersededDeploy);
+  // One unexplained cancellation (a person, a concurrency rule) vetoes recovery.
+  if (cancelled.length > 0 && !timedOut)
+    return none('Cancellation without deadline evidence (manual stop)');
   if (!timedOut && !superseded)
     return none('No infrastructure cause (manual cancellation or unknown)');
   if (timedOut && run.head_sha === mainSha) {

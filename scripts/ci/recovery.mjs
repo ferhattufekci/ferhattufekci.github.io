@@ -26,6 +26,12 @@ export async function recover({ runId, attempt, api, mainSha, act, observeOnly =
     `${base}/actions/workflows/pages.yml/runs?branch=main&head_sha=${mainSha}&per_page=100`
   );
   const plan = planRecovery({ run, jobs, annotations, mainSha, tipRuns });
+  if (plan.action === 'rerun') {
+    // `gh run rerun` targets the newest attempt; never act on a stale decision.
+    const latest = await api(`${base}/actions/runs/${runId}`);
+    if (String(latest.run_attempt) !== String(attempt))
+      return { action: 'none', reason: 'Run was rerun meanwhile', performed: false };
+  }
   const performed = plan.action !== 'none' && !observeOnly;
   if (performed) await act(plan.action);
   return { ...plan, performed };
