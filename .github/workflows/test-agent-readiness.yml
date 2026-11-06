@@ -177,7 +177,10 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: pw-${{ runner.os }}-${{ runner.arch }}-ubuntu24-node22-${{ hashFiles('package-lock.json') }}
+      - name: Bound apt network stalls
+        run: bash scripts/ci/bound-apt-network.sh
       - name: Install Chromium dependencies
+        timeout-minutes: 5
         run: npx playwright install --with-deps chromium
       - name: Test assigned browser shard
         run: npm run test:browser -- --shard="$CI_SHARD/2"
@@ -222,7 +225,10 @@ jobs:
           path: work/site
       - *a1
       - *a2
+      - name: Bound apt network stalls
+        run: bash scripts/ci/bound-apt-network.sh
       - name: Install keyboard test browsers
+        timeout-minutes: 5
         run: npx playwright install --with-deps firefox webkit
       - name: Test keyboard behavior in Firefox and WebKit
         run: npx playwright test --config=playwright.keyboard.config.mjs
