@@ -17,8 +17,8 @@ export async function recover({ runId, attempt, api, mainSha, act, observeOnly =
   );
   const jobs = pages.flatMap((page) => page.jobs);
   const annotations = {};
-  // Only cancelled jobs can carry deadline evidence.
-  for (const job of jobs.filter((item) => item.conclusion === 'cancelled'))
+  // Only cancelled jobs (job deadline) and failed jobs (step deadline) can carry evidence.
+  for (const job of jobs.filter((item) => ['cancelled', 'failure'].includes(item.conclusion)))
     annotations[job.id] = (
       await api('--paginate', '--slurp', `${base}/check-runs/${job.id}/annotations?per_page=100`)
     ).flat();

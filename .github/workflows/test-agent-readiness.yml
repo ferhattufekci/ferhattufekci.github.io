@@ -180,6 +180,7 @@ jobs:
       - name: Bound apt network stalls
         run: bash scripts/ci/bound-apt-network.sh
       - name: Install Chromium dependencies
+        timeout-minutes: 5
         run: npx playwright install --with-deps chromium
       - name: Test assigned browser shard
         run: npm run test:browser -- --shard="$CI_SHARD/2"
@@ -227,6 +228,7 @@ jobs:
       - name: Bound apt network stalls
         run: bash scripts/ci/bound-apt-network.sh
       - name: Install keyboard test browsers
+        timeout-minutes: 5
         run: npx playwright install --with-deps firefox webkit
       - name: Test keyboard behavior in Firefox and WebKit
         run: npx playwright test --config=playwright.keyboard.config.mjs

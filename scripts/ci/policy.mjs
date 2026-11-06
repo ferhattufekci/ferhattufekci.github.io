@@ -77,6 +77,10 @@ const productionWorkflow = {
 };
 const productionEvents = ['push', 'workflow_run', 'workflow_dispatch'];
 const timeoutAnnotation = /exceeded the maximum execution time/i;
+// A step with `timeout-minutes` fails its job with this message (job stays 'failure').
+const stepTimeoutAnnotation = /has timed out after \d+ minutes?/i;
+const hasNote = (annotations, job, pattern) =>
+  (annotations?.[job.id] || []).some((note) => pattern.test(note.message || ''));
 const supersededStep = 'Reject superseded release';
 // Downstream aggregators fail because an upstream job did; they carry no cause.
 const aggregateJobs = ['Merge Test Reports', 'Quality Gate'];
@@ -118,29 +122,30 @@ export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
   // Strict by construction: only outcomes with a known benign meaning are
   // tolerated; any other conclusion (failure, timed_out, neutral, unfinished)
   // is treated as genuine and blocks recovery.
+  const stepTimedOut = (job) =>
+    job.conclusion === 'failure' && hasNote(annotations, job, stepTimeoutAnnotation);
   const benign = (job) =>
     ['success', 'skipped', 'cancelled'].includes(job.conclusion) ||
-    (job.conclusion === 'failure' && (isAggregate(job) || isSupersededDeploy(job)));
+    (job.conclusion === 'failure' &&
+      (isAggregate(job) || isSupersededDeploy(job) || stepTimedOut(job)));
   const real = jobs.filter((job) => !benign(job));
   if (real.length)
     return none(`Genuine failure: ${real.map((job) => job.name).join(', ')}`);
   const cancelled = jobs.filter((job) => job.conclusion === 'cancelled');
+  const deadlineEvidence = cancelled.every((job) =>
+    hasNote(annotations, job, timeoutAnnotation)
+  );
   const timedOut =
-    cancelled.length > 0 &&
-    cancelled.every((job) =>
-      (annotations?.[job.id] || []).some((note) =>
-        timeoutAnnotation.test(note.message || '')
-      )
-    );
+    deadlineEvidence && (cancelled.length > 0 || jobs.some(stepTimedOut));
   const superseded = jobs.some(isSupersededDeploy);
   // One unexplained cancellation (a person, a concurrency rule) vetoes recovery.
-  if (cancelled.length > 0 && !timedOut)
+  if (!deadlineEvidence)
     return none('Cancellation without deadline evidence (manual stop)');
   if (!timedOut && !superseded)
     return none('No infrastructure cause (manual cancellation or unknown)');
   if (timedOut && run.head_sha === mainSha) {
     return run.run_attempt === 1
-      ? { action: 'rerun', reason: 'Job deadline exceeded on the newest commit' }
+      ? { action: 'rerun', reason: 'Job or step deadline exceeded on the newest commit' }
       : none('Already retried once');
   }
   if (run.head_sha === mainSha)

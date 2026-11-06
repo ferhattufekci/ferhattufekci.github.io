@@ -16,6 +16,10 @@ test('R-CI-APT-01: every browser installation with system dependencies is preced
       installs++;
       const bound = job.indexOf('bash scripts/ci/bound-apt-network.sh');
       assert.ok(bound >= 0 && bound < install, `${file}: ${job.split('\n')[0]} installs browsers before bounding apt`);
+      // Fail fast: healthy installs finish within 108 s (median 12-37 s), so five
+      // minutes is generous and cuts a 50 minute mirror stall to five.
+      const step = job.slice(job.lastIndexOf('- name:', install), install);
+      assert.match(step, /timeout-minutes: 5\n/, `${file}: installation step needs its own deadline`);
     }
   }
   assert.equal(installs, 3, 'Chromium in browser-tests and verify-production, Firefox/WebKit in keyboard-tests');

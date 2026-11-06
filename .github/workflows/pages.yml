@@ -120,6 +120,7 @@ jobs:
       - name: Bound apt network stalls
         run: bash scripts/ci/bound-apt-network.sh
       - name: Install Chromium dependencies
+        timeout-minutes: 5
         run: npx playwright install --with-deps chromium
       - name: Test published browser flows
         run: npm run test:production -- "$DEPLOYMENT_URL"

@@ -168,7 +168,7 @@ test('R-CI-RECOVER-13: a deployed release whose verification hit its deadline is
     'none'
   );
 });
-test('R-CI-RECOVER-14: the API-reading path asks for annotations only on cancelled jobs, pages jobs, and performs exactly one action', async () => {
+test('R-CI-RECOVER-14: the API-reading path asks for annotations only on cancelled or failed jobs, pages jobs, and performs exactly one action', async () => {
   const { recover } = await import('../ci/recovery.mjs');
   const { run, jobs, annotations } = clone(fixture.timeout);
   const calls = [], acts = [];
@@ -185,8 +185,9 @@ test('R-CI-RECOVER-14: the API-reading path asks for annotations only on cancell
   assert.deepEqual(acts, ['rerun']);
   assert.deepEqual(
     calls.filter((c) => c.includes('annotations')).map((c) => c.match(/check-runs\/(\d+)/)[1]).sort(),
-    ['127298757947', '127298854348']
+    jobs.filter((job) => ['cancelled', 'failure'].includes(job.conclusion)).map((job) => String(job.id)).sort()
   );
+  assert.ok(jobs.some((job) => job.conclusion === 'cancelled'), 'fixture must contain cancelled jobs');
   assert.ok(calls.some((c) => c.startsWith('--paginate --slurp ')), 'jobs must be paged');
   assert.ok(calls.some((c) => c.includes(`head_sha=${tip}`)));
   // A decision of none performs nothing.
@@ -266,4 +267,29 @@ test('R-CI-RECOVER-20: workflow_run production runs are keyed on the data commit
   const { run } = timeout();
   assert.equal(run.event, 'workflow_run');
   assert.match(run.head_sha, /^02dc911/);
+});
+
+// Synthetic: GitHub's message for a step with `timeout-minutes` (first real
+// observation is pending); the job shape is taken from real run 42043003964.
+const stepTimeoutNote = [{ message: "The action 'Install keyboard test browsers' has timed out after 5 minutes." }];
+test('R-CI-RECOVER-21: a step deadline in an install step is retried once on the newest commit', () => {
+  const { run, jobs } = timeout();
+  const keyboard = jobs.find((job) => job.name.endsWith('Cross-browser Keyboard Tests'));
+  keyboard.conclusion = 'failure';
+  jobs.find((job) => job.name.endsWith('Browser Tests (2/2)')).conclusion = 'success';
+  const annotations = { [keyboard.id]: stepTimeoutNote };
+  assert.equal(planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] }).action, 'rerun');
+  run.run_attempt = 2;
+  assert.equal(planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] }).action, 'none');
+});
+test('R-CI-RECOVER-22: a failed job without step-deadline evidence stays a genuine failure', () => {
+  const { run, jobs } = timeout();
+  const keyboard = jobs.find((job) => job.name.endsWith('Cross-browser Keyboard Tests'));
+  keyboard.conclusion = 'failure';
+  jobs.find((job) => job.name.endsWith('Browser Tests (2/2)')).conclusion = 'success';
+  for (const annotations of [{}, { [keyboard.id]: [{ message: 'Process completed with exit code 1.' }] }]) {
+    const plan = planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] });
+    assert.equal(plan.action, 'none');
+    assert.match(plan.reason, /Genuine failure/);
+  }
 });
