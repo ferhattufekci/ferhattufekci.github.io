@@ -231,5 +231,111 @@
         "steps": []
       }
     ]
+  },
+  "verifyTimeout": {
+    "run": {
+      "id": 42108859656,
+      "name": "Portfolio CI/CD",
+      "path": ".github/workflows/pages.yml",
+      "head_branch": "main",
+      "head_repository": {
+        "full_name": "ferhattufekci/ferhattufekci.github.io"
+      },
+      "head_sha": "8f31418c9b7c35f605a7eec96f3b3ec8db6a008c",
+      "event": "push",
+      "run_attempt": 1,
+      "conclusion": "cancelled"
+    },
+    "jobs": [
+      {
+        "id": 127530791782,
+        "name": "Resolve Source",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127530866141,
+        "name": "Run Quality Checks / Build Site",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127530866144,
+        "name": "Run Quality Checks / Static Checks",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127530866175,
+        "name": "Run Quality Checks / Unit Tests",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127530998682,
+        "name": "Run Quality Checks / Verify Artifact",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127530998835,
+        "name": "Run Quality Checks / Cross-browser Keyboard Tests",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127531099987,
+        "name": "Run Quality Checks / Browser Tests (1/2)",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127531100006,
+        "name": "Run Quality Checks / Browser Tests (2/2)",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127548649726,
+        "name": "Run Quality Checks / Merge Test Reports",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127549179864,
+        "name": "Run Quality Checks / Quality Gate",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127549242762,
+        "name": "Deploy GitHub Pages",
+        "conclusion": "success",
+        "steps": []
+      },
+      {
+        "id": 127549943768,
+        "name": "Verify Production",
+        "conclusion": "cancelled",
+        "steps": [
+          {
+            "name": "Install Chromium dependencies",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    ],
+    "annotations": {
+      "127549943768": [
+        {
+          "annotation_level": "failure",
+          "message": "The job has exceeded the maximum execution time of 10m0s"
+        },
+        {
+          "annotation_level": "failure",
+          "message": "The operation was canceled."
+        }
+      ]
+    }
   }
 }

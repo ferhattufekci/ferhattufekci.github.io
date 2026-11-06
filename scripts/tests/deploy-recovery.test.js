@@ -145,3 +145,17 @@ test('R-CI-RECOVER-12: the recovery workflow is a least-privilege, main-only fol
   assert.match(text, /persist-credentials: false/);
   assert.match(text, /commands\.mjs recover "\$RUN_ID" "\$RUN_ATTEMPT"/);
 });
+test('R-CI-RECOVER-13: a deployed release whose verification hit its deadline is retried on the newest commit and left alone once main moved on', () => {
+  // Real run 42108859656: Deploy succeeded, Verify Production exceeded 10 minutes.
+  const { run, jobs, annotations } = clone(fixture.verifyTimeout);
+  assert.equal(jobs.find((job) => job.name === 'Deploy GitHub Pages').conclusion, 'success');
+  assert.equal(
+    planRecovery({ run, jobs, annotations, mainSha: run.head_sha, tipRuns: [] }).action,
+    'rerun'
+  );
+  const moved = { ...run, id: 2, head_sha: hex('d'), event: 'workflow_run', conclusion: null };
+  assert.equal(
+    planRecovery({ run, jobs, annotations, mainSha: moved.head_sha, tipRuns: [moved] }).action,
+    'none'
+  );
+});
