@@ -1,5 +1,6 @@
 import { test, expect, expectSection, navigateToSection } from './fixtures.mjs';
 import { mockCatalog, repo, starred } from './data/catalog.mjs';
+import { withFocusState } from './helpers/focus-diagnostics.mjs';
 
 const blogGroups = {
   all: 'category_all', systems: 'category_system_engineering',
@@ -40,10 +41,12 @@ async function expectSelection(page, section, category) {
 
 async function selectLanguage(page, language) {
   await press(page.locator(`#blog-lang-toggle [data-lang-filter="${language}"]`));
-  await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveCount(1);
-  await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveAttribute('data-lang-filter', language);
-  await expect(page.locator('#blog-lang-toggle .active')).toHaveCount(1);
-  await expect(page.locator('#blog-lang-toggle .active')).toHaveAttribute('data-lang-filter', language);
+  await withFocusState(page, async () => {
+    await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveCount(1);
+    await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveAttribute('data-lang-filter', language);
+    await expect(page.locator('#blog-lang-toggle .active')).toHaveCount(1);
+    await expect(page.locator('#blog-lang-toggle .active')).toHaveAttribute('data-lang-filter', language);
+  });
 }
 
 async function openCatalog(page, section, overrides) {
