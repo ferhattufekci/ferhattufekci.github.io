@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { test, expect, expectSection } from './fixtures.mjs';
 import { mockCatalog, starred } from './data/catalog.mjs';
+import { withFocusState } from './helpers/focus-diagnostics.mjs';
 
 // Reach controls by the user's sequential navigation, never by element.focus().
 async function tabTo(page, target, reverse) {
@@ -13,7 +14,7 @@ async function tabTo(page, target, reverse) {
   throw new Error(`Unreachable by ${reverse ? 'Shift+Tab' : 'Tab'}: ${target}`);
 }
 async function visibleFocus(target) {
-  await expect(target).toBeFocused();
+  await withFocusState(target.page(), () => expect(target).toBeFocused());
   await expect(target).toBeInViewport();
   // A single native card anchor owns focus; its Read action paints the ring.
   // Audit that visible descendant, retaining the same minimum ring threshold.
