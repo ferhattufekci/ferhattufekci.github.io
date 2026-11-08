@@ -42,7 +42,7 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ### D-4 Playwright container imajı ve apt sınırı
 - **Öncelik:** P2. **Durum:** ölçüm planı hazır (APT-MIRROR-OPTIONS bölüm 5); uygulanmadı; üretim pipeline'ı değişmedi.
 - **Kanıt:** gerçek CI verisi [G] (275 adım: medyan 14 sn, p99 541 sn, yavaş %3,3, kümeli); yavaşlık `azure.archive.ubuntu.com` paket indirmesinde (29 kB/s vs 18,7 MB/s) [G]; imaj belgeleri [B]; S5'in süre/tutarlılık etkisi [?].
-- **Bulgu D4-F1:** betikteki apt sınırı (20 sn/3 deneme) etkin değil; 8/8 jobda etkin 15 sn/1 deneme [G]; kaynak bilinmiyor [?]; `R-CI-APT-01/02` etkin değeri doğrulamıyor.
+- **Bulgu D4-F1:** betikteki apt sınırı (20 sn/3 deneme) etkin değil; 8/8 jobda etkin 15 sn/1 deneme [G]; **kaynak bulundu:** runner'daki `zz-retries` (Retries 1, Timeout 15) `99-ci-network`'ü sıralamada geçiyor [G, PR #40 tanı çıktısı; apt okuma sırası B]; dosyanın imajdan mı runner hazırlığından mı geldiği [?]. Yavaş vakada etkin 15 sn zaten vardı ve 10 dk'lık akışı kesmedi [G]: idle tipi sınır toplam süreyi bağlamaz → düzeltme sayı değil toplam süre sınırı/kaynak değişimi olmalı. `R-CI-APT-01/02` etkin değeri doğrulamıyor.
 - **Bağımlılık:** sahibin ölçüm planı ve eşik onayı; mikro-benchmark için geçici depo.
 - **Risk:** kuyruk iyileşmesi nadir olayları ölçmeyi gerektirir (≥14 gün, eşli kollar); S5 medyanı büyük olasılıkla daha yavaş.
 - **Kabul:** APT-MIRROR-OPTIONS bölüm 5 ölçütleri ve önceden kayıtlı sonuç yorumlama; somut avantaj gösterilmeden mimari değişiklik önerilmez.
