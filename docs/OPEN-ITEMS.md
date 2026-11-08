@@ -8,14 +8,6 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 
 ## 1. Karar/onay bekliyor
 
-### PR-38 Bu belgelerin `main`'e birleştirilmesi
-- **Öncelik:** P1. **Durum:** PR açık; son doğrulanan baş `3250a97` (CI yeşil, `mergeable=clean`); sonraki belge commit'leri bu PR'a eklenir ve CI yeniden doğrulanır.
-- **Kanıt:** [G] uzak dal = yerel HEAD; birleştirme simülasyonu çakışmasız ve birleşen ağaç `main`'den yalnızca belge dosyalarıyla ayrılıyor; PR dosyalarının hiçbiri public site envanterinde değil; `pages-package.test.js` `docs/`'un pakete girmediğini doğrular [T]. `main` bu arada yalnızca bot veri commit'leriyle ilerledi.
-- **Bağımlılık:** sahibin açık onayı; güncel baş için yeşil CI; uçuşta production koşusu yok.
-- **Risk:** merge standart push koşusunu ve yayını başlatır; site dosyaları aynı kalır, altbilgideki build numarası değişir.
-- **Kabul:** merge sonrası push koşusu yeşil, `test:production` yeşil, site içeriği/davranışı/güvenlik yapılandırması aynı.
-- **Sonraki adım:** onayı bekle. **Karar:** sahip.
-
 ### D-1 GITHUB_TOKEN rerun/dispatch → `workflow_run` probe deneyi (P-1 ayrı depo)
 - **Öncelik:** P1. **Durum:** plan hazır ([D1-PROBE-PLAN.md](D1-PROBE-PLAN.md)); uygulanmadı.
 - **Kanıt:** Q1/Q2/Q3/Q4/Q5/Q6 **[?]**; yalnızca kullanıcı rerun'ı için dolaylı gözlem [G].
@@ -84,16 +76,20 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ## 2. Araştırılıyor / kanıt bekliyor
 
 ### RF R-FILTER-04 ve R-KEYBOARD-08 kök neden
-- **Öncelik:** P1 (olay tetikli). **Durum:** yeni başarısızlık yok; değişiklik yapılmadı; kök neden kanıtsız.
-- **Kanıt:** yerelde 140 tekrar yeniden üretmedi [G]; özgün artifact erişilemiyor; diagnostics yerinde [K].
+- **Öncelik:** P1 (olay tetikli). **Durum:** **yeni başarısızlık var (2026-11-08)**; kod/assertion değişmedi; kök neden kanıtsız.
+- **Olay:** `main` push koşusu 42457503796 (merge 9955860), Browser Tests (2/2), `small-mobile-dark`, `categories.spec.mjs:132` R-FILTER-04; 710 geçti / 1 kaldı (tek hata). Hata `selectLanguage(page,'all')` içinde (spec satır 145, `navigateToSection(blog)` sonrası): `#blog-lang-toggle [aria-pressed="true"]` beklenen `all`, gelen `en`, 7 sn boyunca değişmedi (18 deneme). Focus diagnostics: `activeElement=h2.section-title`, `currentPages=[blog]`, `inertPages=[about-me,resume,projects,contact]`, `menuExpanded=false`, `hash=#blog` [G]. Sonraki koşu (9eeb9d3) yeşil: aralıklı [G].
+- **Gözlem:** odak, `all` düğmesinde değil başlıktaydı; yani Space tuşu düğmeye ulaşmadı ya da odak sonradan başlığa taşındı. Uygulamada odağı başlığa taşıyan yol `onEndAnimation` (js/pages-switcher.js:279) [K]. **Bu bir hipotezdir [?]**: geçişin tamamlanması ile testin `focus()+Space` çağrısı arasında yarış. Kanıtlanmadı; `expectSection` yalnızca `.pt-page-current` kimliğini bekler, odağı beklemez.
+- **Yeniden üretme:** önceden yerelde 140 tekrar; bu kez CPU yükü (2 çekirdek meşgul + 2 işçi) altında 60 tekrar `small-mobile-dark`: **60/60 geçti** [G]. Yani yerelde üretilemedi; hipotez doğrulanmadı da çürütülmedi.
+- **Kanıt erişimi:** trace/video/error-context artifact'ı (browser-report-2, id 13608781765) bu ortamdan indirilemedi: ağ politikası `productionresultssa19.blob.core.windows.net` CONNECT isteğine 403 verdi. Sahip bu ana bilgisayarı (örn. `*.blob.core.windows.net`) izin listesine eklerse trace incelenebilir. Artifact süresi dolmadan (varsayılan 90 gün) elle de indirilebilir.
 - **Risk:** aralıklı hata; **geçmek çözüm değildir**; retry ile gizlenmez; assertion gevşetilmez.
 - **Kabul:** kanıtlı kök neden (altyapı / zamanlama yarışı / uygulama) — diagnostics, trace, video ve browser logları birlikte.
-- **Sonraki adım:** bir sonraki CI hatasında bu kanıtları birlikte incele. **Karar:** yok.
+- **Sonraki adım:** trace erişimi sağlanınca (veya sonraki hatada) `press` anındaki odak ve sayfa geçişi zamanlamasını trace'ten oku; kod değişikliği ancak kanıtla. **Karar:** ağ izni sahibe ait.
 
 ### C1 `act()` argüman testleri
-- **Öncelik:** P1 (D-3 önkoşulu). **Durum:** tasarım hazır (RECOVERY-ACTIVATION bölüm 8); test yazılmadı.
-- **Kabul:** C1-01..10; sahte `PATH` ile gerçek GitHub çağrısı yok; her test <5 sn; 30 tekrarda flaky yok; mutasyonlar yakalanıyor.
-- **Karar:** test yazım onayı (sahip).
+- **Öncelik:** P1 (D-3 önkoşulu). **Durum:** uygulandı; PR CI doğrulaması bekliyor. F-C1-1 ve F-C1-2 düzeltildi (RECOVERY-ACTIVATION bölüm 8).
+- **Kanıt:** `scripts/tests/recovery-act.test.js` 12 test, gerçek alt süreç, sahte `PATH`, 7 mutasyon yakalanıyor; yerel tekrar sonuçları PR açıklamasında [T/G].
+- **Kabul:** sahte `PATH` ile gerçek GitHub çağrısı yok; her test <5 sn; 30 tekrarda flaky yok; mutasyonlar yakalanıyor. CI yeşil olunca "tamamlandı ve doğrulandı".
+- **Karar:** yok (sahip otonom çalışma talimatı verdi).
 
 ### C3 Recovery hatalarının sessiz kalması
 - **Öncelik:** P2. **Durum:** recovery hatası koşuyu kırmızı yapar [K]; bildirim davranışı doğrulanmadı [?]; izleme rutini yok.
@@ -123,5 +119,5 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 
 - Production doğrulaması yeşil: `main` ucu için `Portfolio CI/CD` koşusu başarılı (deploy + verify-production; en son gözlenen `51522a7`, koşu `42449002399`).
 - jQuery 3.6.0 yükseltmesi yayında ve üretim doğrulaması yeşil.
-- Üç belgenin ve bu kaydın CI'ı **PR üzerinde** yeşil; bu, üretimde doğrulama anlamına gelmez (yalnızca belge).
+- PR #38 (belgeler) 12/12 yeşil CI ile birleştirildi (squash 9955860). Birleşme sonrası `main` push koşusu 42457503796 **kırmızı** bitti (yalnızca R-FILTER-04, yukarıya bakın; dağıtım atlandı); sonraki main koşusu (9eeb9d3) yeşil ve yayın güncel [G]. Belge PR'ı site dosyalarını değiştirmedi.
 - Belge düzeyinde doğrulananlar: `workflow_run` zincir sınırı (üç seviye), yeniden çalıştırmada `requested` olayının oluşmaması, meta CSP kısıtları, AdSense'in yalnızca nonce'u belgelemesi, Playwright imaj/önbellek yönergeleri [B]; inline script bağımlılıkları (ayrıştırıcıyla) [K].

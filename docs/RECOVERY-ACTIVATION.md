@@ -59,7 +59,7 @@ Eksikler (DevOps/ISTQB incelemesi):
 
 | # | Eksik | Neden önemli | Kapatma yolu |
 | --- | --- | --- | --- |
-| C1 | `commands.mjs` içindeki `act()` argümanları (`gh run rerun <id> --failed`, `gh workflow run pages.yml --ref main --repo …`) hiçbir testte doğrulanmıyor; R-CI-RECOVER-14 enjekte edilmiş `act` kullanır | Yanlış argüman ilk gerçek olayda ortaya çıkar | Sahte `gh` ile argv sözleşme testi (üretim kodu değişmez, yalnızca test) |
+| C1 | `commands.mjs` içindeki `act()` argümanları (`gh run rerun <id> --failed`, `gh workflow run pages.yml --ref main --repo …`) başlangıçta hiçbir testte doğrulanmıyordu (R-CI-RECOVER-14 enjekte edilmiş `act` kullanır); `recovery-act.test.js` ile kapatıldı | Yanlış argüman ilk gerçek olayda ortaya çıkar | Sahte `gh` ile argv sözleşme testi (üretim kodu değişmez, yalnızca test) |
 | C2 | Yeniden çalıştırmanın tamamlandığında `workflow_run` ürettiği GITHUB_TOKEN için bilinmiyor | AC-3 | D-1 |
 | C3 | Recovery koşusu hata verirse bildirim yok (sessiz) | Kurtarma kaybı fark edilmez | Haftalık salt okunur kontrol (bölüm 5 komutları) veya sahibin onayıyla bildirim |
 | C4 | Dispatch yarışı | Mükerrer pipeline | D-2 |
@@ -156,7 +156,7 @@ Gerçekleşme koşulları: (1) M için hiçbir (atlanmamış) koşu yok; (2) ≥
 
 **Kabul kriterleri:** T-D2-01..10 yeşil ve mutasyon kontrolü kırılıyor; mevcut R-CI-RECOVER-01..22 değişmeden yeşil; fark incelemesinde karar tablosu değişmemiş (yalnızca eklenen koruma); yeni bağımlılık yok; recovery kapalıyken üretim davranışı değişmez; artık risk (S4/S5) belgede açıkça yazılı.
 
-## 8. C1: `act()` test kapsamı — test tasarımı (test/kod yazılmadı)
+## 8. C1: `act()` test kapsamı — tasarım, uygulama ve doğrulama
 
 **Mevcut durum [K]:** `act` `commands.mjs` içinde `recover` dalının **yerel** kapanışıdır; dışa aktarılmaz, bu yüzden R-CI-RECOVER-14 enjekte edilmiş sahte `act` ile çalışır ve gerçek argümanlar hiç doğrulanmaz. Üretim argümanları: `run rerun <id> --failed --repo ferhattufekci/ferhattufekci.github.io` ve `workflow run pages.yml --ref main --repo ferhattufekci/ferhattufekci.github.io`.
 
@@ -169,20 +169,22 @@ Gerçekleşme koşulları: (1) M için hiçbir (atlanmamış) koşu yok; (2) ≥
 | C1-03 | Geçersiz argüman: boş, `abc`, `-1`, `1;id`, `--repo=x`, `4204 3003`, çok uzun | `assert` ile reddedilir; **hiçbir** `gh run/workflow` çağrısı yok; seçenek enjeksiyonu mümkün değil |
 | C1-04 | Eksik parametre: argümansız; yalnızca runId | Aynı |
 | C1-05 | Beklenmeyen değer: `attempt` `0`, `01`, `2.5`; ortam değişkeni `RECOVERY_ACT` = `TRUE`, `1`, `yes`, boş | `RECOVERY_ACT` yalnızca birebir `true` ise eyler; diğerleri observe (karakterizasyon) |
-| C1-06 | Başarısız eylem: sahte `gh run rerun` çıkış 1 | Süreç sıfırdan farklı çıkar; yeniden deneme yok; döngü yok; mevcut davranış: karar özeti/günlüğü yazılmaz (bulgu F-C1-2) |
+| C1-06 | Başarısız eylem: sahte `gh run rerun` çıkış 1 | Süreç sıfırdan farklı çıkar; yeniden deneme yok; döngü yok; F-C1-2 düzeltmesiyle: karar özeti ve `performed=failed` yazılır |
 | C1-07 | Tekrarlanan çağrı (rerun): ikinci çalıştırmada sahte `gh api runs/<id>` farklı `run_attempt` döner | `Run was rerun meanwhile`, ikinci `gh run rerun` yok |
 | C1-08 | Tekrarlanan çağrı (dispatch): ikinci çalıştırmada sahte `tipRuns` kapsayan koşu içerir | `none`; ikinci `gh workflow run` yok |
 | C1-09 | Observe modunda (`RECOVERY_ACT` ayarsız) her karar | `gh run rerun`/`gh workflow run` **hiç** çağrılmaz; günlükte `mode=observe performed=false` |
 | C1-10 | Mutasyon: `--failed` bayrağını/`--ref main`'i/`--repo`'yu kaldır veya sırayı değiştir | İlgili test kırılır |
 
-**Bulgular (kod incelemesi; düzeltme için onay gerekir, şimdi değiştirilmedi):**
+**Uygulama durumu (C1 PR'ı; CI sonucu PR'da izlenir):** `scripts/tests/recovery-act.test.js` bu tasarımı gerçek alt süreçlerle uygular (`node scripts/ci/commands.mjs recover …`, `PATH` yalnızca sahte `gh`/`git` dizini + `node`). Eşleme: C1-01/02 → `R-CI-RECOVER-C1-02/03`; C1-03/04 → `-07`; C1-05/09 → `-01`; C1-06 → `-04`; C1-07/08 → `-09/-03`; C1-10 → `-11` (7 mutasyon: bilinmeyen eylem→dispatch, kayıp karar, yeşil adım, `performed=true` yalanı, observe yok sayma, gevşek `RECOVERY_ACT`, `--failed` düşürme). Ek: `-00` (sahte araçların gerçekten kullanıldığı), `-05/-06` (bilinmeyen eylem), `-08` (bozuk main SHA), `-10` (gerçek hata dokunulmaz). **Sınırlama [?]:** sahte `gh` yalnızca bu deponun kodunun GitHub'dan *ne istediğini* kanıtlar; GitHub'ın `rerun`/`dispatch`'e *nasıl tepki verdiği* D-1'in konusudur.
 
-- **F-C1-1** `act`, `action === 'rerun' ? … : <dispatch>` biçiminde yazılmıştır: `rerun` dışındaki **her** değer dispatch üretir. `planRecovery` yalnızca üç değer döndürdüğü ve `recover` `none`'da `act` çağırmadığı için bugün erişilemez; ama bir ileri değişiklikte yazım hatası sessizce dispatch'e dönüşür. Öneri: açık dallar ve bilinmeyen eylemde istisna (defense-in-depth).
-- **F-C1-2** `act()` istisna fırlatırsa karar özeti ve `recovery=… performed=…` satırı yazılmadan süreç düşer: kırmızı koşu görünür ama **neden** eylem denendiği günlükte yok. Öneri: eylemi try/catch ile sar, `performed=failed` olarak kaydet ve özete yaz, sonra hata ile çık.
+**Bulgular (kod incelemesi; F-C1-1 ve F-C1-2 bu PR'da düzeltildi, ayrı hata olarak ele alındı):**
+
+- **F-C1-1** `act`, `action === 'rerun' ? … : <dispatch>` biçiminde yazılmıştır: `rerun` dışındaki **her** değer dispatch üretir. `planRecovery` yalnızca üç değer döndürdüğü ve `recover` `none`'da `act` çağırmadığı için bugün erişilemez; ama bir ileri değişiklikte yazım hatası sessizce dispatch'e dönüşür. **Düzeltme:** `actionArgv()` (recovery.mjs) yalnızca `rerun` ve `dispatch` bilir; diğer her değer (`none`, boş, büyük/küçük harf farkı…) `Unknown recovery action` ile reddedilir; run id ondalık değilse reddedilir.
+- **F-C1-2** `act()` istisna fırlatırsa karar özeti ve `recovery=… performed=…` satırı yazılmadan süreç düşer: kırmızı koşu görünür ama **neden** eylem denendiği günlükte yok. **Düzeltme:** `recover()` eylem hatasını yakalar ve `{…plan, performed:false, failed:true, error}` döner; komut `performed=failed error="…"` satırını ve özetteki `Error:` satırını yazar, sonra çıkış kodu 1 ile biter (adım kırmızı). Eylem yeniden denenmez.
 
 **Hata durumunda recovery davranışı ve "sessiz" başarısızlık değerlendirmesi:** eylem hatası recovery koşusunu kırmızı yapar (görünür), yeniden denemez ve döngü üretmez **[K]**. Bildirim davranışı (kime e-posta gittiği) `workflow_run` ile başlayan koşular için doğrulanmadı **[?]**. Bu yüzden C3 (haftalık salt okunur kontrol) etkinleştirme koşuludur.
 
-**Kabul kriterleri:** C1-01..10 deterministik; her test <5 sn; hiçbir test ağa çıkmaz (sahte PATH kanıtı); testler birbirinden bağımsız (ayrı geçici dizinler); 30 ardışık yerel tekrarda sıfır başarısızlık; mutasyonlar yakalanıyor; üretim kodu değişmedi (F-C1 bulguları ayrı onayla). C1 testleri ancak onaydan sonra yazılır.
+**Kabul kriterleri:** C1-01..10 deterministik; her test <5 sn; hiçbir test ağa çıkmaz (sahte PATH kanıtı); testler birbirinden bağımsız (ayrı geçici dizinler); 30 ardışık yerel tekrarda sıfır başarısızlık; mutasyonlar yakalanıyor; testler gerçek kodu doğrular. **Değişen üretim davranışı:** yalnızca tanımsız eylem yolu ve eylem-hatası kaydı; `PORTFOLIO_RECOVERY_ACT` kapalı kalır, gözlem modu ve karar mantığı (`planRecovery`) değişmedi.
 
 ## 9. D-3 etkinleştirme koşulları (sahibin kararı) ve karar/araştırma ayrımı
 
@@ -193,11 +195,11 @@ Sahibin belirlediği koşulların **tamamı** sağlanmadan recovery etkinleştir
 | 1 | D-1 deneyleri başarıyla tamamlandı | Planlandı, uygulanmadı |
 | 2 | GITHUB_TOKEN davranışı kanıtlandı (Q1-Q6, "karışık" kanıt sayılmaz) | Kanıtlanmadı |
 | 3 | D-2 değerlendirildi ve gerekli kontroller tamamlandı | Değerlendirildi (analiz), uygulanmadı |
-| 4 | C1: `act()` argüman testleri hazırlandı ve doğrulandı | Tasarlandı, yazılmadı |
+| 4 | C1: `act()` argüman testleri hazırlandı ve doğrulandı | Yazıldı; PR CI'ı ve 30 tekrar sonucu PR'da (bkz. OPEN-ITEMS C1) |
 | 5 | Recovery hatalarının sessiz kalması değerlendirildi | Kısmen: görünür (kırmızı koşu), bildirim doğrulanmadı, C3 rutini yok |
 | 6 | Sonsuz döngü ve mükerrer dispatch riskleri kabul edilebilir | Döngü: sınırlı (analiz); mükerrer: artık risk S4/S5 belgeli, kabul sahibin kararı |
 
 Bunlar sağlansa bile etkinleştirme için ayrıca sahibin açık onayı gerekir. Önceki "Etkinleştirme koşulları" (bölüm 4) bu tabloyla birlikte okunmalıdır.
 
-- **Karar/onay gerektiren:** D-1 uygulama onayı (U1-U5), D-2 uygulama onayı (D-1 sonrası), C1 test yazımı ve F-C1 düzeltmeleri, D-3.
+- **Karar/onay gerektiren:** D-1 uygulama onayı (U1-U5), D-2 uygulama onayı (D-1 sonrası), D-3 (C1 tamamlandı, bkz. bölüm 8).
 - **Teknik araştırma gerektiren:** görünürlük gecikmesi L, bildirim davranışı, `actions: write` yeterliliği (hepsi D-1/D-3 gözlemiyle).
