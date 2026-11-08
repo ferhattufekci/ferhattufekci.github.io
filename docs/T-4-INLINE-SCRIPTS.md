@@ -88,7 +88,28 @@ Her aşamanın kabul kriteri: aynı davranış; ilgili allowlist küçüldü; me
 - **D-7a (düşük risk, değer sınırlı):** reklamsız dört sayfada (`about`, `contact`, `privacy`, `404`) meta CSP pilotu: tek inline blok (tema başlatma) için tek hash, geri kalan `'self'`. Önce yerel test sunucusunda **başlık olarak** (yeni bağımlılık yok) tüm rota yürüyüşünde `securitypolicyviolation` olayı sayılır; sonra üretimde meta olarak. Bu güvenlik politikası değişikliğidir → onay gerekir.
 - **D-7b (ana sayfa):** önce Aşama A (externalization) CSP'den bağımsız kazanımlarla (önbellek, lint, test) uygulanır. Ana sayfa CSP'si yalnızca sahibin kararıyla: (i) CSP'siz kal, (ii) başlık verebilen ön katman (CDN/edge) ile nonce (barındırma değişikliği), (iii) hash + hash'li yükleyici (reklam yükleme düzenini değiştirir, AdSense uyumu doğrulanmamış). Varsayılan öneri (i).
 
-## 5. A0 koruma testleri planı (tasarım; test/kod yazılmadı)
+## 5. A0 koruma testleri (plan ve uygulama)
+
+**Uygulama durumu (A0 PR'ı):** testler yazıldı ve mevcut kodda yeşil; üretim kodu (`index.html`, scriptler) değişmedi. Dosyalar: `scripts/tests/inline-script-contract.test.js` (A0-01/02/05, statik, 4 test, ayrıca kendi mutasyon kontrolü) ve `tests/browser/inline-script-contract.spec.mjs` (A0-03/04/06/07/08/09/10 + `showMoreStarred`, 21 test). Eşleme ve bulgular:
+
+| Plan | Test (dosya: başlık) | Not |
+|---|---|---|
+| A0-01 | statik: "executable inline script blocks are a known, shrinking set" | 8 blok, her biri tek bir işaretçiyle eşleşir; sayı yalnızca azalabilir |
+| A0-02 | statik: "inline event attributes…" | 5 öznitelik (4 `onclick`, 1 `onload`); `<script>`/`<style>` içindeki metin sayılmaz |
+| A0-03 | tarayıcı: global sözleşme (2 test) | 7 global + `dataLayer` + `PortfolioContentPanels.reset`; markup'taki `onclick`'ler çözülür |
+| A0-04 | tarayıcı: ölçüm başlatma (2 test) | `dataLayer[0]=['js',Date]`, `[1]=['config','G-Z00CDE35NT']`; `gtag` `arguments` nesnesi iter; tag isteği sandbox'ta reddedilir (gerçek ölçüm yok) |
+| A0-05 | statik: sıra sözleşmesi | `orderViolations()` + 7 mutasyonlu doğrulama |
+| A0-06 | tarayıcı: `fmtDT`, `relTime` (sınır değerleri), `renderSyncBadge` (görünür çıktı, geçersiz girdi, dokunma/Escape, sayfa zamanlayıcısı) | `Date.now` yalnızca senkron çağrı süresince sabitlenir; zamanlayıcı testi `page.clock` ile |
+| A0-07 | tarayıcı: `reblog` (yeniden çizim, idempotans, seçimi korur) ve `showMoreStarred` (20'şer sayfa, kontrol gizlenir, tekrar yok, odak) | `showMoreStarred` için kullanıcı yolu (düğme) ve global ayrı sınanır |
+| A0-08 | tarayıcı: dil düğmesi durumu | aynı/geçersiz seçimde **0 DOM mutasyonu** (MutationObserver) |
+| A0-09 | tarayıcı: `DOMContentLoaded` dinleyici sırası + jQuery ready gözlemi | **Plan düzeltmesi:** jQuery 3 ready geri çağrıları asenkron çalışır (`load` sonrasına düşebilir); ilk tasarım (ready anında istekleri gözlemek) bir mutasyonda zaman zaman sağ çıktı (1/5). Kesin gerçek `DOMContentLoaded` dinleyici sırasıdır: iki `inline:boot` jQuery'nin kendi dinleyicisinden önce çalışır (mutasyon 6/6 yakalandı) |
+| A0-10 | tarayıcı: erken tıklama | **Bulgu (bugünkü davranış, değiştirilmedi):** jQuery yüklenirken seçilen dil uygulanır, ardından `ReferenceError: PortfolioContentPanels is not defined` fırlar; düzeltilirse bu test bilinçli olarak güncellenir |
+
+**Mutasyon kontrolü (üretim kodunda enjekte, yerelde, `desktop-light`):** `relTime` 24 sa eşiği, `fmtDT` saat dilimi, rozetin `tabindex`'i, `setBlogLang` erken dönüşü, `gtag` sırası, `reblog` dışa aktarımı, `showMoreStarred` yeniden adlandırma, `relTime` negatif fark, sayfa boyutu 21, `starredShown` ilerlememesi, kontrolün gizlenmemesi, odağın geri verilmemesi, Blog `boot`'unun `load`'a ertelenmesi (A0-09 yeniden tasarımı sonrası): **hepsi yakalandı.**
+
+**Tekrar kararlılığı (yerel, Chromium, `desktop-light` + `small-mobile-dark`):** 21 tarayıcı testi × 30 tekrar × 2 proje = **1260/1260 geçti** (21,1 dk, 2 işçi); statik testler 4/4. Not: önceki 20× denemede 1 hata çıktı, ancak assertion hatası değil `browserContext.close ENOENT` idi: aynı Playwright çıktı dizinini kullanan eşzamanlı ikinci bir koşuyu ben başlatmıştım (yerel altyapı hatası); bu sayım temiz, tek koşuyla yapıldı. Gerçek tarayıcı/üretim doğrulaması (AdSense dolumu dâhil) kapsam dışıdır.
+
+### 5.1 Özgün plan (tasarım)
 
 **Amaç ve kural:** hiçbir script taşınmadan **önce** mevcut davranış testlerle güvence altına alınır. A0 tamamlanmadan ve doğrulanmadan A1+ başlamaz. A0 testleri mevcut kodda **yeşil** olmalı (karakterizasyon), mevcut assertion'ları değiştirmez; üretim kodu değişmez. Test sözleşmesi: `window.setBlogLang` ve `window.showMoreStarred` mevcut testlerce doğrudan çağrılır **[T]** ve korunur.
 

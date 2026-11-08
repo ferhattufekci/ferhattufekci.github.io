@@ -62,10 +62,11 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 - **Sonraki adım:** A0 test yazım onayı. **Karar:** sahip.
 
 ### A0 T-4 koruma testleri
-- **Öncelik:** P2 (D-6'nın önkoşulu). **Durum:** plan ve boşluk analizi hazır (T-4 bölüm 5); test yazılmadı.
+- **Öncelik:** P2 (D-6'nın önkoşulu). **Durum:** testler yazıldı, mevcut kodda yeşil, mutasyonlar yakalanıyor (T-4 bölüm 5); PR CI doğrulaması bekliyor. Üretim kodu değişmedi.
 - **Kanıt:** boşluklar `grep` ile kanıtlı [G]: `reblog`, `fmtDT/relTime/renderSyncBadge`, `gtag/dataLayer`, olay sırası, script sırası, inline sayısı için test yok.
 - **Kabul:** A0-01..09 yeşil, mutasyonları yakalar, ≥30 ardışık yerel koşuda flaky yok, mevcut assertion'lar değişmedi.
-- **Sonraki adım:** yazım onayı. **Karar:** sahip (yeni test kodu).
+- **Bulgu A0-F1 [G]:** jQuery yüklenirken (parser bekliyorken) seçilen dil uygulanır, sonra `PortfolioContentPanels is not defined` fırlatılır (`js/page-content-panels.js` geç yüklenir). Gerçek kullanıcı etkisi: yavaş ağda erken dokunuş konsolda hata + panel sıfırlama atlanır. Düzeltme taşıma sırasında (A-aşamaları) bilinçli davranış farkı olarak ele alınır; şimdi değiştirilmedi.
+- **Sonraki adım:** PR CI yeşili sonrası birleştirme (sahip onayı: yayın tetikler); sonra A1+ planlama. **Karar:** birleştirme onayı sahibe ait.
 
 ### D-7a Reklamsız dört sayfada meta CSP pilotu
 - **Öncelik:** P3. **Durum:** yalnızca öneri; ayrı aşama. **Kanıt:** reklamsız ve tek 533 B inline blok [G]; meta CSP kısıtları [B].
