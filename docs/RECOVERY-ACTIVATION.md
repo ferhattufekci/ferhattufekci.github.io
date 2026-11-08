@@ -31,7 +31,7 @@ Job'ı olmayan iptal gerçekten var **[G]**: `main` üzerinde iptal edilen eski 
 | **GITHUB_TOKEN ile `workflow_dispatch`** için `completed` ve zincir derinliği | Dispatch'in koşu oluşturduğu [B]; o koşunun tamamlanmasının `workflow_run` üretip üretmediği ve "üç seviye" sayacına nasıl girdiği belgede yok. | **[?]** |
 | `repository_dispatch` | Recovery kullanmıyor ve `contents: read` ile çağıramaz (bu uç nokta yazma izni ister; belge bu oturumda yeniden getirilmedi). Ek yüzey oluşturmaması için kullanılmayacak. | [K], izin ayrıntısı [?] |
 
-**Sonuç:** Kullanıcı token'ıyla yeniden çalıştırmanın `completed` ürettiğine dair güçlü dolaylı kanıt var. GITHUB_TOKEN ile başlatılan rerun/dispatch için davranış **DOĞRULANAMADI**. Sistem iki olasılıkta da güvenli tasarlandı (bölüm 3); belirsizlik güvenlik riski değil, "ikinci deneme sınıflandırılır mı" sorusudur. Belirsizliği recovery'yi açmadan kapatma planı: bölüm 6.
+**Sonuç:** Kullanıcı token'ıyla yeniden çalıştırmanın `completed` ürettiğine dair güçlü dolaylı kanıt var. GITHUB_TOKEN ile başlatılan rerun/dispatch için davranış **DOĞRULANAMADI**. Sistem iki olasılıkta da güvenli tasarlandı (bölüm 3); belirsizlik güvenlik riski değil, "ikinci deneme sınıflandırılır mı" sorusudur. Belirsizliği recovery'yi açmadan kapatma planı: bölüm 6 ve [D1-PROBE-PLAN.md](D1-PROBE-PLAN.md).
 
 ## 3. Döngü, mükerrer çalışma, yarış ve kaynak analizi
 
@@ -48,7 +48,7 @@ Kısaltma: R = tetikleyen başarısız koşu, M = o an `main` ucu.
 **Mükerrer çalışma ve yarış:**
 
 - Aynı R için iki recovery koşusu: concurrency grubu koşu başınadır (`portfolio-recovery-<run id>`, `cancel-in-progress: false`) ve eylemden önce son deneme yeniden okunur; fark varsa eylem yapılmaz (R-CI-RECOVER-19) **[T]**.
-- **Açık nokta (D-2 konusu):** *farklı* iki başarısız koşu aynı anda "M kapsanmıyor" görürse iki dispatch üretebilir (kontrol-sonra-eylem yarışı). Ayrıntı ve seçenekler: bölüm 7. Gerçek zamanlama yarışı yerel testle birebir üretilemez **[?]**; enjekte edilmiş sahte API ile iki koşunun araya girmesi simüle edilebilir (R-CI-RECOVER-23 önerisi, henüz yok).
+- **Açık nokta (D-2 konusu):** *farklı* iki başarısız koşu aynı anda "M kapsanmıyor" görürse iki dispatch üretebilir (kontrol-sonra-eylem yarışı). Ayrıntı: bölüm 7. Gerçek zamanlama yarışı yerel testle birebir üretilemez **[?]**; enjekte edilmiş sahte API ile iki koşunun araya girmesi simüle edilebilir (T-D2-08/09 önerisi, henüz yok).
 - Bir koşu `rerun` çağrıldığında hâlâ çalışıyorsa GitHub'ın bunu reddedip reddetmediği doğrulanmadı **[?]**; reddederse recovery koşusu hata verir, döngü oluşmaz, kurtarma kaybolur.
 
 **Güvenlik** **[K]**: `contents: read` + `actions: write`; varsayılan dal kodu çalışır (PR kodu yok); yalnızca aynı depo ve `head_branch == main`; `RUN_ID`/`RUN_ATTEMPT` betiğe enterpolasyonla değil ortam değişkeniyle geçer; elle dispatch asla eylem yapmaz. `actions: write`'ın `gh run rerun`/`gh workflow run` için yeterliliği ilk gerçek eylemde gözlenecek **[?]**. Depo düzeyi "Workflow permissions" ayarı bu oturumda proxy yüzünden okunamadı **[?]**.
@@ -97,67 +97,107 @@ gh api "$R/actions/workflows/recover-release.yml/runs?per_page=50" --jq '.workfl
 gh run view <recover-run-id> --log | grep -E 'recovery=.* mode='
 ```
 
-## 6. D-1: GITHUB_TOKEN ile başlatılan rerun/dispatch davranışının probe deneyi (PLAN, uygulanmadı)
+## 6. D-1: probe deneyi (PLAN; kullanıcı kararı: P-1 ayrı depo)
 
-**Amaç:** recovery'yi açmadan şu soruları kesinleştirmek: (Q1) GITHUB_TOKEN ile `gh run rerun` ile başlatılan 2. denemenin tamamlanması `workflow_run` üretir mi ve payload'ta `run_attempt` kaç? (Q2) GITHUB_TOKEN ile `gh workflow run` ile başlatılan koşunun tamamlanması `workflow_run` üretir mi ve zincir sayacına nasıl girer?
+Sahibin kararı: testler üretim deposundan bağımsız, geçici ayrı bir depoda yapılacak (P-1). Uygulanabilir son plan, yapılandırma, iki workflow'un tasarımı, E0-E5 matrisi, minimum izinler, gözlem komutları, tekrarlanabilirlik, raporlama ve temizlik: **[D1-PROBE-PLAN.md](D1-PROBE-PLAN.md)**. Uygulama için sahibin ayrıca açık onayı bekleniyor; bu depoda yeni workflow oluşturulmaz.
 
-**Tasarım (iki seçenek):**
+## 7. D-2: dispatch öncesi kapsam yeniden okuma (H1) — teknik değerlendirme (uygulanmadı)
 
-- **P-1 (önerilen): geçici ayrı depo.** Bu davranış depoya özgü değil platform özelliğidir; boş bir test deposunda aynı iki workflow ile ölçülür. Portfolio deposunda hiçbir şey değişmez, `main`'e push yok, deploy tetiklenmez. Gereksinim: sahibin boş bir depo oluşturması veya oluşturmamı onaylaması (token'ımın depo oluşturma yetkisi doğrulanmadı **[?]**). Fark riski: depo/organizasyon düzeyindeki Actions ayarları farklı olabilir; sonuç tarihli ve ayar notuyla kaydedilir.
-- **P-2: bu depoda iki geçici workflow.** `workflow_run` yalnızca varsayılan daldaki dosyayla çalıştığı için dosyaların `main`'e girmesi gerekir. Maliyet: ekleme ve silme için iki `main` birleştirmesi = iki standart Portfolio CI/CD push koşusu ve iki yayın (site dosyaları aynı, altbilgideki build numarası değişir). Yalnızca P-1 mümkün değilse.
+Sahibin tercihi H1: dispatch'ten hemen önce kapsam listesini yeniden oku ve önceki kontrolle karşılaştır. D-1 doğrulanmadan uygulanmaz.
 
-**Dosyalar (hiçbiri bu aşamada oluşturulmadı):**
+**Yarışın oluşumu (kod gerçeği [K]):** `recover()` sırasıyla koşu, job'lar, annotation'lar ve **en son** `tipRuns` (M için `pages.yml` koşuları) okur, planı hesaplar, `dispatch` ise `act()` çağırır; `dispatch` yolunda "yeniden oku" korumasının benzeri yoktur (stale guard yalnızca `rerun` içindir).
 
-- `probe-a.yml`, `name: Probe A`: yalnızca `on: workflow_dispatch` (girdi `generation`, varsayılan `1`), `permissions: {}`, tek job (`timeout-minutes: 2`) ve `run-name: Probe A gen ${{ inputs.generation || 1 }}`. Başarılı biter. Checkout, secret, artifact, Pages izni yok.
-- `probe-b.yml`, `name: Probe B`: yalnızca `on: workflow_run: workflows: ["Probe A"], types: [completed]`, `permissions: actions: write`, `timeout-minutes: 2`, `concurrency` grubu. Her çalışmada `workflow_run.id`, `.run_attempt`, `.event`, `.conclusion`, `.display_title`, `github.actor`, `github.triggering_actor`, `github.event.action` değerlerini step summary'ye yazar. **Yalnızca** `workflow_run.run_attempt == 1` **ve** `display_title` "gen 1" ise iki eylem yapar: `gh run rerun <id>` (Q1) ve `gh workflow run probe-a.yml -f generation=2` (Q2). Diğer durumlarda yalnızca günlük yazar.
-
-**İzolasyon kanıtı (üretim ve recovery etkilenmez):**
-
-- Probe'lar yalnızca elle `workflow_dispatch` ile başlar; `push`, `pull_request`, `schedule` tetikleyicisi yok, depo etkinliği onları başlatamaz.
-- Probe B `workflows: ["Probe A"]` ile süzer; `recover-release.yml` yalnızca `["Portfolio CI/CD"]` ile süzer, `pages.yml`'e dokunulmaz. Yani Probe koşuları recovery'yi veya production pipeline'ı tetikleyemez.
-- Repo değişkeni, secret, Pages/deployment izni kullanılmaz; `PORTFOLIO_RECOVERY_ACT` okunmaz ve yazılmaz.
-- Sert tavan: B yalnızca `attempt == 1` ve `gen 1` iken eylem yapar → en çok 6 koşu (A gen1, B, A gen1 attempt 2, A gen2, ve varsa ikisi için B koşuları). Zaman aşımı 2 dakika. Acil durdurma: `gh workflow disable`.
-
-**Deney matrisi (her biri N=3 kez, zaman damgalarıyla kaydedilir):**
-
-| Deney | Eylem | Gözlem | Doğrulanan |
+| t | Recover-1 (R1 için) | Recover-2 (R2 için) | GitHub |
 | --- | --- | --- | --- |
-| E0 kontrol | Elle `gh workflow run probe-a.yml` (kullanıcı token'ı) | B tam 1 kez çalışır | Harness doğru; `completed` temel davranışı |
-| E1 | B, GITHUB_TOKEN ile A'yı yeniden çalıştırır | A 2. deneme bitince B tekrar çalışıyor mu; `run_attempt` kaç | Q1 |
-| E2 | B, GITHUB_TOKEN ile A gen 2'yi dispatch eder | A gen 2 oluşuyor mu (belge: evet); bitince B çalışıyor mu | Q2 ve zincir sayacı |
-| E3 kontrol | Kullanıcı `gh run rerun` ile A'yı yeniden çalıştırır | B `run_attempt=2` ile çalışıyor mu | Kullanıcı rerun kontrolü (mevcut dolaylı gözlemin doğrudan karşılığı) |
+| t0 | `tipRuns(M)` = ∅ → `dispatch` | | M için koşu yok |
+| t0+δ | | `tipRuns(M)` = ∅ → `dispatch` | |
+| t1 | `gh workflow run` → D1 oluşur | | D1 listede **henüz görünmeyebilir** (görünürlük gecikmesi L) |
+| t1+ε | | `gh workflow run` → D2 oluşur | M için iki koşu |
 
-**Sonuç değerlendirme:**
+Gerçekleşme koşulları: (1) M için hiçbir (atlanmamış) koşu yok; (2) ≥2 recovery koşusu aynı anda `dispatch` kararına varıyor (ör. art arda "superseded" olan eski koşular); (3) ikincinin okuması birincinin D1'inin listede görünmesinden önce. Normalde M'nin kendi push koşusu vardır (kapsanır); bu yüzden nadirdir. Kaynak: `portfolio-production` concurrency'sinde bekleyen koşuların değiştirilmesi bu tür toplu "superseded" başarısızlıklarını mümkün kılar **[G]** (job'ı olmayan iptaller gözlendi, bölüm 1).
 
-| Sonuç | Anlamı | Karar |
+**H1 ne zaman riski azaltır:**
+
+| Senaryo | H1 olmadan | H1 ile |
 | --- | --- | --- |
-| E1 evet, `run_attempt=2` | Recovery 2. denemede `none (Already retried once)` yolunu üretimde de görür | AC-3 önceden karşılanır |
-| E1 hayır | 2. deneme hiç sınıflandırılmaz; döngü yok, kurtarma bir kez | Belgelenir, D-3'te kabul edilen davranış |
-| E2 evet | Dispatch edilen koşu da sınıflandırılır; zincir sayacı not edilir | AC güncellenir |
-| E2 hayır | Dispatch edilen koşu süre aşımına uğrarsa otomatik 2. rerun olmaz | Belgelenir, elle müdahale |
-| Herhangi bir beklenmeyen çoğalma (B beklenenden fazla, 2'den fazla deneme) | Tasarım varsayımı yanlış | Dosyalar silinir, recovery kapalı kalır, kök neden analizi |
+| S1 Recovery-2'nin ilk okumasından sonra, dispatch'inden önce M için bir koşu **göründü** (ör. başka biri dispatch etti, geç gelen push koşusu) | İkinci mükerrer dispatch | Yeniden okuma kapsamı görür → `none` |
+| S2 İlk okuma ile dispatch arasında uzun süre geçti (yavaş `gh` başlatma, API gecikmesi) | Pencere uzun | Pencere milisaniyelere iner |
+| S3 Okumalar arasında `main` ilerledi | Eski M için dispatch (`--ref main` yeni ucu dispatch eder, kapsam eski M'ye göre değerlendirilmişti) | M yeniden okunur; değiştiyse `none` (yeni uç kendi push koşusuna sahiptir) |
+| S4 İki recovery tam eşzamanlı (aynı saniye) ve L içinde | Mükerrer | **H1 çözmez**: ikisi de D1'i görmeden dispatch eder |
+| S5 Bir koşunun recovery'si eylem yaparken diğerinin okuması, D1'in görünürlük gecikmesi L içinde | Mükerrer | **H1 çözmez** (L penceresi aynen kalır) |
 
-Tekrarlanabilirlik: N=3 gecikme/tek seferlik etkileri eler; davranış bir platform özelliği olduğundan sonuç tarihle kaydedilir ve bir sonraki recovery etkinleştirmeden önce özet olarak yeniden kontrol edilir.
+**Eşzamanlı başarısızlık senaryoları:** (a) aynı M için N eski koşu aynı anda başarısız: ilk dispatch'ten sonra görünürlük gecikmesi L boyunca diğerleri de dispatch edebilir (en kötü N dispatch, `portfolio-production` bunları seriler; ikincisi ve sonrası bekleyen koşuyu değiştirir, yani gerçekte en çok bir bekleyen + bir çalışan kalır **[K]**, bu değiştirmenin cancelled/jobsuz olduğu bölüm 1'de gözlendi **[G]**); (b) M'nin push koşusu ile recovery aynı anda: push koşusu listede görünürse H1 yakalar; görünmezse mükerrer olabilir; (c) D1 kendi süre aşımında başarısız olurken yeni bir eski koşu recovery'si: D1 kapsar (atlanmamış) → `none`.
 
-**Gerekli izinler:** P-1'de boş depoda workflow dosyası yazma yetkisi; P-2'de `.github/workflows` yazma ve `main` birleştirme onayı. Probe B'nin `actions: write` izni yalnızca probe deposunda/koşusunda geçerlidir. **Temizlik:** P-1'de depoyu silmek (sahibin kararı); P-2'de iki dosyayı silen PR + `gh workflow list` ile doğrulama; isteğe bağlı `gh run delete` ile probe koşu geçmişi.
+**Artık risk:** görünürlük gecikmesi L (bilinmiyor **[?]**) ve gerçek eşzamanlılık (S4/S5). Sonuç: aynı SHA için ek bir pipeline koşusu. Etkisi bütünlük/güvenlik değil maliyettir: ikinci koşu aynı artifact'ı idempotent yayınlar, `Reject superseded release` yalnızca M ilerlediyse reddeder **[K]**. Kabul edilebilir seviye önerisi: M başına ≤2 dispatch koşusu (AC-4'ü buna göre güncel tut) ve gözlemlenince H2 değerlendirmesi (job düzeyinde ortak concurrency + dispatch sonrası görünürlük bekleme; bekleyen koşu değişimi nedeniyle kurtarma kaybı riski var).
 
-**Onay gerekir:** yeni workflow dosyası oluşturulmadı ve oluşturulmayacak.
+**H1'in yeni açık oluşturmadığının değerlendirmesi:**
 
-## 7. D-2: dispatch öncesi kapsam yeniden okuma ve yarış analizi (ANALİZ, uygulanmadı)
+1. **Tek yönlü güvenlik (monotonluk):** H1 yalnızca `dispatch` kararını `none`'a çevirebilir; `none`'ı eyleme çeviremez. Yeni döngü/eylem yolu açamaz.
+2. **Fail-closed:** yeniden okuma API hatası verirse eylem yapılmaz (istisna fırlar, recovery koşusu kırmızı olur); "okuyamadım, yine de dispatch et" yolu olmamalı.
+3. **SHA doğrulaması:** `planRecovery` zaten `assert.match(mainSha, /^[a-f0-9]{40}$/)` ile boş/bozuk SHA'yı reddeder **[K][T]**; yeniden okunan M de aynı doğrulamadan geçmelidir (boş `ls-remote` çıktısı boş SHA → reddedilir).
+4. **Tek tanım:** kapsam koşulu (`head_sha === M`, production koşusu, `skipped` değil) iki yerde ayrı yazılmamalı; ortak fonksiyon kullanılmalı (DRY), yoksa iki okuma farklı karar verebilir.
+5. **Sayfalama:** her iki okuma da `per_page=100` ile aynı sorguyu kullanır; M için 100'den fazla koşu bu repoda gerçekçi değil ama davranış aynı kalmalı.
+6. **Kural dışı etki:** +1 API çağrısı (hız sınırı etkisi ihmal edilebilir); `rerun` yolu değişmez.
 
-**Yarış:** `planRecovery` kapsam listesini t0'da okur, `gh workflow run` t1'de çalışır, yeni koşu API listesinde t2'de görünür (saniyeler). İki recovery koşusu aynı anda M'yi "kapsanmıyor" görürse ikisi dispatch eder. Gerçekleşme koşulu: ≥2 başarısız koşunun saniyeler içinde tamamlanması **ve** M için hiç koşunun olmaması. Normalde M'nin kendi push koşusu vardır (kapsanır), dolayısıyla nadirdir; ancak bekleyen koşuların art arda değiştirilmesi (concurrency) bu pencereyi gerçekçi kılar.
+**Test senaryoları (enjekte edilmiş sahte API; gerçek GitHub yok; henüz yazılmadı):**
 
-**Etki:** Aynı SHA için iki koşu; `portfolio-production` grubu bunları sıraya koyar (biri bekler); ikincisi aynı artifact'ı yayınlar, "Reject superseded release" adımı yalnızca M ilerlediyse reddeder. Maliyet 1 ek pipeline, güvenlik/bütünlük etkisi yok **[K]**; etkisi gerçek üretimde gözlenmedi **[?]**.
+| ID | Senaryo | Beklenen |
+| --- | --- | --- |
+| T-D2-01 | 1. okuma ∅, 2. okuma M'yi kapsayan koşu içerir | `none`, `act` çağrılmadı |
+| T-D2-02 | 1. ve 2. okuma ∅ | `dispatch`, `act` tam 1 kez |
+| T-D2-03 | 2. okumada yalnızca `skipped` koşu | `dispatch` (skipped kapsamaz, R-CI-RECOVER-15 ile tutarlı) |
+| T-D2-04 | Arada M değişti | `none`, `act` yok |
+| T-D2-05 | 2. okuma API hatası | İstisna, `act` yok (fail-closed) |
+| T-D2-06 | `observeOnly` | `performed=false`; karar değişmez |
+| T-D2-07 | `rerun` yolu | Ek okuma yok; davranış R-CI-RECOVER-19 gibi |
+| T-D2-08 | Ortak sahte GitHub durumu, iki recovery ardışık (görünürlük gecikmesi 0) | Toplam 1 dispatch |
+| T-D2-09 | Aynısı, görünürlük gecikmesi > pencere | **Bilinen sınır**: 2 dispatch olabilir; "bilinen sınır" olarak adlandırılan karakterizasyon testi, doğru davranış gibi sunulmaz |
+| T-D2-10 | Mutasyon: 2. okumayı kaldır | T-D2-01 kırılır (test gerçekten koruyor) |
 
-| Seçenek | Ne yapar | Artı | Eksi |
-| --- | --- | --- | --- |
-| H1: dispatch'ten hemen önce `tipRuns`'ı yeniden oku | Pencereyi t1-t0'dan milisaniyelere çeker | Küçük kod + test, davranış değiştirmez | Kontrol-sonra-eylem; yarışı tamamen kapatmaz |
-| H2: dispatch işlemini job düzeyinde ortak bir concurrency grubuna al (`cancel-in-progress: false`) + dispatch sonrası koşunun listede görünmesini bekle | Dispatch kararlarını seri hale getirir | Yarışı pratikte kapatır | Gruptaki bekleyen koşu yenisiyle değiştirilebilir (güvenli ama kurtarmayı kaybeder); `rerun` yolunu da serileştirir; daha karmaşık |
-| H3: kabul et (artık risk) | Hiçbir şey yapma | Basit | 1 ek pipeline ihtimali sürer |
+**Kabul kriterleri:** T-D2-01..10 yeşil ve mutasyon kontrolü kırılıyor; mevcut R-CI-RECOVER-01..22 değişmeden yeşil; fark incelemesinde karar tablosu değişmemiş (yalnızca eklenen koruma); yeni bağımlılık yok; recovery kapalıyken üretim davranışı değişmez; artık risk (S4/S5) belgede açıkça yazılı.
 
-**Öneri:** H1 + H3 (artık riski belgeli kabul). H2 yalnızca gerçek mükerrer dispatch gözlenirse. Test planı: enjekte edilmiş sahte API ile (a) yeniden okuma kapsamı görürse dispatch yok, (b) iki eşzamanlı karar kuru koşuda en çok bir dispatch (H1 ile pencere içi araya girme simülasyonu), (c) mevcut R-CI-RECOVER-01..22 değişmeden geçer. **Sıra:** D-1 sonuçlanmadan D-2 uygulanmaz.
+## 8. C1: `act()` test kapsamı — test tasarımı (test/kod yazılmadı)
 
-## 8. Karar ve araştırma ayrımı
+**Mevcut durum [K]:** `act` `commands.mjs` içinde `recover` dalının **yerel** kapanışıdır; dışa aktarılmaz, bu yüzden R-CI-RECOVER-14 enjekte edilmiş sahte `act` ile çalışır ve gerçek argümanlar hiç doğrulanmaz. Üretim argümanları: `run rerun <id> --failed --repo ferhattufekci/ferhattufekci.github.io` ve `workflow run pages.yml --ref main --repo ferhattufekci/ferhattufekci.github.io`.
 
-- **Karar/onay bekleyen:** D-1 tasarım seçimi (P-1 / P-2) ve yürütme onayı; D-2 seçeneği; D-3 etkinleştirme (D-1, D-2, C1 sonrası).
-- **Teknik araştırma gerektiren (karar gerektirmeyen):** C1 argv sözleşme testi (yalnızca test eklemek), C3 izleme rutini, dispatch yarışı için sahte API simülasyon testi taslağı.
+**Yaklaşım (kod değişikliği gerekmez, gerçek GitHub işlemi yok):** `node scripts/ci/commands.mjs recover <runId> <attempt>` komutunu alt süreç olarak çalıştır; `PATH`'in başına geçici dizindeki sahte `gh` ve `git` çalıştırılabilirlerini koy. Sahte `git ls-remote` sabit SHA döner; sahte `gh api …` mevcut fixture'lardan (`deploy-recovery-runs.json`) yanıt verir; sahte `gh run rerun` / `gh workflow run` argümanlarını bir günlük dosyasına yazar ve yapılandırılabilir çıkış koduyla biter. `GITHUB_STEP_SUMMARY` geçici dosyadır. Sahte dizin dışında gerçek `gh` çağrılırsa test başarısız olur (PATH yalnızca sahte dizin + `node`). Böylece üretim kodu değişmeden `act()` ve karar günlüğü sözleşmesi doğrulanır.
+
+| ID | Senaryo (kullanıcı listesi) | Beklenen |
+| --- | --- | --- |
+| C1-01 | Başarılı `rerun` (`RECOVERY_ACT=true`, `timeout` fixture'ı) | Argv **tam** olarak `run rerun <id> --failed --repo <repo>`; çıkış 0; günlükte `performed=true` |
+| C1-02 | Başarılı `dispatch` (`superseded` fixture'ı, M kapsanmıyor) | Argv tam olarak `workflow run pages.yml --ref main --repo <repo>` |
+| C1-03 | Geçersiz argüman: boş, `abc`, `-1`, `1;id`, `--repo=x`, `4204 3003`, çok uzun | `assert` ile reddedilir; **hiçbir** `gh run/workflow` çağrısı yok; seçenek enjeksiyonu mümkün değil |
+| C1-04 | Eksik parametre: argümansız; yalnızca runId | Aynı |
+| C1-05 | Beklenmeyen değer: `attempt` `0`, `01`, `2.5`; ortam değişkeni `RECOVERY_ACT` = `TRUE`, `1`, `yes`, boş | `RECOVERY_ACT` yalnızca birebir `true` ise eyler; diğerleri observe (karakterizasyon) |
+| C1-06 | Başarısız eylem: sahte `gh run rerun` çıkış 1 | Süreç sıfırdan farklı çıkar; yeniden deneme yok; döngü yok; mevcut davranış: karar özeti/günlüğü yazılmaz (bulgu F-C1-2) |
+| C1-07 | Tekrarlanan çağrı (rerun): ikinci çalıştırmada sahte `gh api runs/<id>` farklı `run_attempt` döner | `Run was rerun meanwhile`, ikinci `gh run rerun` yok |
+| C1-08 | Tekrarlanan çağrı (dispatch): ikinci çalıştırmada sahte `tipRuns` kapsayan koşu içerir | `none`; ikinci `gh workflow run` yok |
+| C1-09 | Observe modunda (`RECOVERY_ACT` ayarsız) her karar | `gh run rerun`/`gh workflow run` **hiç** çağrılmaz; günlükte `mode=observe performed=false` |
+| C1-10 | Mutasyon: `--failed` bayrağını/`--ref main`'i/`--repo`'yu kaldır veya sırayı değiştir | İlgili test kırılır |
+
+**Bulgular (kod incelemesi; düzeltme için onay gerekir, şimdi değiştirilmedi):**
+
+- **F-C1-1** `act`, `action === 'rerun' ? … : <dispatch>` biçiminde yazılmıştır: `rerun` dışındaki **her** değer dispatch üretir. `planRecovery` yalnızca üç değer döndürdüğü ve `recover` `none`'da `act` çağırmadığı için bugün erişilemez; ama bir ileri değişiklikte yazım hatası sessizce dispatch'e dönüşür. Öneri: açık dallar ve bilinmeyen eylemde istisna (defense-in-depth).
+- **F-C1-2** `act()` istisna fırlatırsa karar özeti ve `recovery=… performed=…` satırı yazılmadan süreç düşer: kırmızı koşu görünür ama **neden** eylem denendiği günlükte yok. Öneri: eylemi try/catch ile sar, `performed=failed` olarak kaydet ve özete yaz, sonra hata ile çık.
+
+**Hata durumunda recovery davranışı ve "sessiz" başarısızlık değerlendirmesi:** eylem hatası recovery koşusunu kırmızı yapar (görünür), yeniden denemez ve döngü üretmez **[K]**. Bildirim davranışı (kime e-posta gittiği) `workflow_run` ile başlayan koşular için doğrulanmadı **[?]**. Bu yüzden C3 (haftalık salt okunur kontrol) etkinleştirme koşuludur.
+
+**Kabul kriterleri:** C1-01..10 deterministik; her test <5 sn; hiçbir test ağa çıkmaz (sahte PATH kanıtı); testler birbirinden bağımsız (ayrı geçici dizinler); 30 ardışık yerel tekrarda sıfır başarısızlık; mutasyonlar yakalanıyor; üretim kodu değişmedi (F-C1 bulguları ayrı onayla). C1 testleri ancak onaydan sonra yazılır.
+
+## 9. D-3 etkinleştirme koşulları (sahibin kararı) ve karar/araştırma ayrımı
+
+Sahibin belirlediği koşulların **tamamı** sağlanmadan recovery etkinleştirilmez:
+
+| # | Koşul | Durum |
+| --- | --- | --- |
+| 1 | D-1 deneyleri başarıyla tamamlandı | Planlandı, uygulanmadı |
+| 2 | GITHUB_TOKEN davranışı kanıtlandı (Q1-Q6, "karışık" kanıt sayılmaz) | Kanıtlanmadı |
+| 3 | D-2 değerlendirildi ve gerekli kontroller tamamlandı | Değerlendirildi (analiz), uygulanmadı |
+| 4 | C1: `act()` argüman testleri hazırlandı ve doğrulandı | Tasarlandı, yazılmadı |
+| 5 | Recovery hatalarının sessiz kalması değerlendirildi | Kısmen: görünür (kırmızı koşu), bildirim doğrulanmadı, C3 rutini yok |
+| 6 | Sonsuz döngü ve mükerrer dispatch riskleri kabul edilebilir | Döngü: sınırlı (analiz); mükerrer: artık risk S4/S5 belgeli, kabul sahibin kararı |
+
+Bunlar sağlansa bile etkinleştirme için ayrıca sahibin açık onayı gerekir. Önceki "Etkinleştirme koşulları" (bölüm 4) bu tabloyla birlikte okunmalıdır.
+
+- **Karar/onay gerektiren:** D-1 uygulama onayı (U1-U5), D-2 uygulama onayı (D-1 sonrası), C1 test yazımı ve F-C1 düzeltmeleri, D-3.
+- **Teknik araştırma gerektiren:** görünürlük gecikmesi L, bildirim davranışı, `actions: write` yeterliliği (hepsi D-1/D-3 gözlemiyle).
