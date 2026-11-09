@@ -9,7 +9,7 @@ const jobs = (text) =>
 test('R-CI-APT-01: every browser installation with system dependencies is preceded by the apt stall bound in the same job', async () => {
   let installs = 0;
   for (const file of workflows) {
-    const text = await readFile(new URL(`../../.github/workflows/${file}`, import.meta.url), 'utf8');
+    const text = (await readFile(new URL(`../../.github/workflows/${file}`, import.meta.url), 'utf8')).replace(/\r\n/g, '\n');
     for (const job of jobs(text)) {
       const install = job.search(/playwright install --with-deps/);
       if (install < 0) continue;
