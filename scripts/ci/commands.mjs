@@ -15,7 +15,7 @@ import {
   repository,
   validateCoverage
 } from './policy.mjs';
-import { actionArgv, recover } from './recovery.mjs';
+import { actionArgv, recover, requireRunArgs } from './recovery.mjs';
 
 const [command, ...args] = process.argv.slice(2);
 async function output(name, value) {
@@ -56,9 +56,11 @@ else if (command === 'current') {
 } else if (command === 'recover') {
   const gh = (...parts) =>
     JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
-  const mainSha = execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], {
-    encoding: 'utf8'
-  }).split(/\s/)[0];
+  requireRunArgs(args[0], args[1]);
+  // Not `git ls-remote origin`: this job checks out with persist-credentials: false,
+  // so git has no credentials and fails on a private repository (observed in
+  // production, runs 42598657824 and 42599442136). The API call uses GH_TOKEN.
+  const mainSha = gh(`repos/${repository}/git/ref/heads/main`).object?.sha ?? '';
   const act = (action) => {
     const [runId] = args;
     execFileSync('gh', actionArgv(action, runId), { stdio: 'inherit' });

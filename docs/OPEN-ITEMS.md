@@ -85,6 +85,11 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 - **Kabul:** kanıtlı kök neden (altyapı / zamanlama yarışı / uygulama) — diagnostics, trace, video ve browser logları birlikte.
 - **Sonraki adım:** trace erişimi sağlanınca (veya sonraki hatada) `press` anındaki odak ve sayfa geçişi zamanlamasını trace'ten oku; kod değişikliği ancak kanıtla. **Karar:** ağ izni sahibe ait.
 
+### REPO-VIS Deponun görünürlüğü özel (private) olarak görünüyor
+- **Öncelik:** P1. **Durum:** **insan kararı bekliyor.** 2026-11-09 ~10:08 UTC'den beri `repos/ferhattufekci/ferhattufekci.github.io` `private: true` dönüyor [G]; 8 Kasım'da recover işi anonim `git ls-remote` ile çalışıyordu, yani depo o zaman herkese açıktı [K]. Kimin/ne zaman değiştirdiği bu oturumdan doğrulanamadı [?].
+- **Etkiler:** (1) recover işi git kimlik bilgisi olmadan düşüyordu (düzeltildi, bkz. F-C1-3); (2) ücretsiz planda özel depoda GitHub Pages ve Actions dakikaları kısıtlıdır: bu pipeline koşu başına onlarca dakikalık iş üretir, kota ve yayın etkisi **doğrulanmadı** [?]; (3) bu bir iş görüşmesi referans projesi, herkese açık olması beklenir (varsayım, sahibin kararı); (4) probe deposu planı ve genel envanter açısından özel depo farklı davranır.
+- **Karar:** sahibe ait (yanlışlıkla mı bilinçli mi). Bu oturum görünürlüğü değiştirmez.
+
 ### C1 `act()` argüman testleri
 - **Öncelik:** P1 (D-3 önkoşulu). **Durum:** uygulandı; PR CI doğrulaması bekliyor. F-C1-1 ve F-C1-2 düzeltildi (RECOVERY-ACTIVATION bölüm 8).
 - **Kanıt:** `scripts/tests/recovery-act.test.js` 12 test, gerçek alt süreç, sahte `PATH`, 7 mutasyon yakalanıyor; yerel tekrar sonuçları PR açıklamasında [T/G].

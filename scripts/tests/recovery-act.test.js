@@ -42,6 +42,7 @@ if (argv[0] === 'api') {
   if (url.includes('/annotations')) out = [(sc.annotations || {})[url.match(/check-runs\\/(\\d+)/)[1]] || []];
   else if (url.includes('/jobs?')) out = [{ jobs: sc.jobs }];
   else if (url.includes('/workflows/pages.yml/runs')) out = { workflow_runs: sc.tipRuns || [] };
+  else if (url.endsWith('/git/ref/heads/main')) out = { ref: 'refs/heads/main', object: { type: 'commit', sha: process.env.FAKE_MAIN_SHA } };
   else if (/\\/attempts\\/\\d+$/.test(url)) out = sc.run;
   else if (/\\/actions\\/runs\\/\\d+$/.test(url)) out = { ...sc.run, run_attempt: sc.latestAttempt ?? sc.run.run_attempt };
   else { console.error('fake gh: unexpected api call ' + url); process.exit(2); }
@@ -55,8 +56,9 @@ const FAKE_GIT = `#!/usr/bin/env node
 const fs = require('fs');
 const argv = process.argv.slice(2);
 fs.appendFileSync(process.env.FAKE_LOG, JSON.stringify({ tool: 'git', argv }) + '\\n');
-if (argv.join(' ') === 'ls-remote origin refs/heads/main') console.log(process.env.FAKE_MAIN_SHA + '\\trefs/heads/main');
-else { console.error('fake git: unexpected command ' + argv.join(' ')); process.exit(2); }
+// The recovery job has no git credentials: any git network call fails exactly as it does there.
+console.error("fatal: could not read Username for 'https://github.com': No such device or address");
+process.exit(128);
 `;
 
 const sandboxes = [];
@@ -112,7 +114,7 @@ const supersededScenario = (extra = {}) => ({ ...clone(fixture.superseded), tipR
 const RERUN = ['run', 'rerun', '42043003964', '--failed', '--repo', REPO];
 const DISPATCH = ['workflow', 'run', 'pages.yml', '--ref', 'main', '--repo', REPO];
 
-test('R-CI-RECOVER-C1-00: the shims stand in for gh/git and nothing else is reachable', () => {
+test('R-CI-RECOVER-C1-00: the shims stand in for gh/git, nothing else is reachable, and git is never needed', () => {
   const { bin } = sandbox();
   const lookup = (name) =>
     spawnSync('/bin/sh', ['-c', `command -v ${name}`], { encoding: 'utf8', env: { PATH: bin } }).stdout.trim();
@@ -120,7 +122,8 @@ test('R-CI-RECOVER-C1-00: the shims stand in for gh/git and nothing else is reac
   assert.equal(lookup('git'), join(bin, 'git'));
   const run = recoverCommand({ scenario: timeoutScenario() });
   assert.equal(run.status, 0, run.stderr);
-  assert.deepEqual(run.calls[0], { tool: 'git', argv: ['ls-remote', 'origin', 'refs/heads/main'] });
+  assert.deepEqual(run.calls[0], { tool: 'gh', argv: ['api', `repos/${REPO}/git/ref/heads/main`] });
+  assert.deepEqual(run.calls.filter((c) => c.tool === 'git'), [], 'the recovery job has no git credentials: git must not be used');
   assert.ok(run.apiCalls.length >= 3, 'the command must read through the shim');
 });
 
@@ -296,6 +299,11 @@ const unknownActionCheck = async (dir) => {
   const { actionArgv } = await import(pathToFileURL(join(dir, 'recovery.mjs')).href);
   assert.throws(() => actionArgv('bogus', '1'), /Unknown recovery action/);
 };
+const badArgsCheck = (dir) => {
+  const run = recoverCommand({ args: ['abc', '1'], scenario: timeoutScenario(), env: { RECOVERY_ACT: 'true' }, dir });
+  assert.notEqual(run.status, 0);
+  assert.deepEqual(run.apiCalls, []);
+};
 const exactArgvCheck = (dir) => {
   const run = recoverCommand({ scenario: timeoutScenario(), env: { RECOVERY_ACT: 'true' }, dir });
   assert.deepEqual(run.actions.map((c) => c.argv), [RERUN]);
@@ -306,6 +314,7 @@ test('R-CI-RECOVER-C1-11: the checks pass on the real code and fail on injected 
   observeCheck(ciDir);
   await unknownActionCheck(ciDir);
   exactArgvCheck(ciDir);
+  badArgsCheck(ciDir);
 
   const mutants = [
     ['unknown action falls back to dispatch',
@@ -328,6 +337,13 @@ test('R-CI-RECOVER-C1-11: the checks pass on the real code and fail on injected 
     ['any non-empty RECOVERY_ACT enables acting',
       mutant('commands.mjs', "process.env.RECOVERY_ACT !== 'true'", '!process.env.RECOVERY_ACT'),
       observeCheck],
+    ['main sha read through git again (no credentials in the job)',
+      mutant('commands.mjs', "gh(`repos/${repository}/git/ref/heads/main`).object?.sha ?? ''",
+        "execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], { encoding: 'utf8' }).split(/\\s/)[0]"),
+      exactArgvCheck],
+    ['arguments validated only after GitHub was contacted',
+      mutant('commands.mjs', 'requireRunArgs(args[0], args[1]);', ''),
+      badArgsCheck],
     ['rerun drops --failed',
       mutant('recovery.mjs', "'rerun', runId, '--failed'", "'rerun', runId"),
       exactArgvCheck]

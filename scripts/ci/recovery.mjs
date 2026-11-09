@@ -3,6 +3,12 @@ import { planRecovery, repository } from './policy.mjs';
 
 // The only two commands recovery may ever run. Anything else is a programming
 // error and must stop here, never fall through to a default action.
+// Validate the inputs before anything is read from GitHub.
+export function requireRunArgs(runId, attempt) {
+  assert.match(runId || '', /^\d+$/, 'Run id must be decimal');
+  assert.match(attempt || '', /^\d+$/, 'Run attempt must be decimal');
+}
+
 export function actionArgv(action, runId, repo = repository) {
   assert.match(runId || '', /^\d+$/, 'Run id must be decimal');
   if (action === 'rerun') return ['run', 'rerun', runId, '--failed', '--repo', repo];
