@@ -41,3 +41,32 @@ BA, developer, QA and DevOps reviewed these examples and seams before comparison
 Required: independent immutable reference, same fixtures, narrow identity normalization, real negative
 control, original assertions preserved and explicit Not Run limits. These are delegated AI role reviews,
 not human approval. Results and commit/PR/run/artifact/live linkage: `docs/PORTFOLIO-DELIVERY.md`.
+
+## Production preservation continuation, 2026-11-09
+
+The owner selected the published source `e6fd8f9` as the visual and functional
+reference and authorized conflict resolution without releasing the newer subtitle
+animation or unrelated visual changes. Main `01e7a93` contains those changes plus
+valid catalog synchronization. The resolution restores the published subtitle
+markup and three stylesheets through a forward change. The original commits remain
+in history. The scrollbar proposal remains available in `64a00b5` for separate
+review of engines, scroll owners, and input modes.
+
+The five conflicting HTML files were regenerated from that visual source, preserving
+main's current catalog. Asset hashes reflect the actual LF source bytes. The test
+mutation in `not-found-shell.test.js` is restored to the published plain subtitle.
+The stylesheet and markup comparisons exclude no additional content.
+
+The 52-file contract was checked against an independent worktree at `e6fd8f9`
+with main's unchanged `data/` payload and the existing generators. Only the
+`index.html` digest changes from the earlier reference, because the catalog
+refresh removes the now-private portfolio repository from static Projects SEO
+content. The candidate matched every independently derived file digest. The
+contract records the published reference and catalog SHAs, and the normalization
+rules are unchanged.
+
+Local validation of the reconciled source passed the six focus cases on desktop
+light and small-mobile dark. Twelve controlled Chromium screenshot pairs at
+1440×900 and 390×844, both themes, About Me/Blog/Projects, matched the published
+source with the same catalog fixture. This is a subset of the matrix above.
+Production remains at `e6fd8f9`; hosted validation is required before merging.

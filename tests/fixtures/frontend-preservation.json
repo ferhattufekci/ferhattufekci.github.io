@@ -1,5 +1,5 @@
 {
-  "referenceSource": "995586066b031e1475ff71dcae3d9ca4ee3e829f",
+  "referenceSource": "e6fd8f9fc2c1b09b1259ff23829fcdcb40e174f1",
   "runId": "42457503796",
   "attempt": "1",
   "artifactId": "13608077225",
@@ -54,8 +54,10 @@
     "images/og-card.jpg": "04bf2e69c604e77b66158718cef72b7555083610b9fbecc54d3193f2fed9d875",
     "images/photo.jpg": "29a3ab63f1b31db80f1a77a9cbc22e2301742e5c600fcf56fcaa447cccb9f7ca",
     "images/sp_photo.jpg": "0d508db4f2bcf61ca49410356f8211851cd6919fc71acc0fdd5947121485f97e",
-    "index.html": "6e8b40cf76fc598266ffd383335574e15873537ad021bbf4953d1252c9f79e8e",
+    "index.html": "c06f1483e924cd6cd7371687c704f9680082be6b51274149c2ae64f5772d08a3",
     "privacy/index.html": "4389760f33c792cdb696ed79c4b95f9508dfc50a0f4b0c7decb715c6fe2361ee",
     "yandex_76fab459d2c4e004.html": "442d1fbf33c6b6b48cbecef1b71ca4d29f64eda6707cbd3ffafffcb82fc2e43f"
-  }
+  },
+  "catalogSource": "01e7a935eac6085a3a8af3e84918b29454bf2655",
+  "referenceDerivation": "Published source regenerated independently with the unchanged main catalog. Only index.html digest changes for the removed now-private Projects SEO listing."
 }
