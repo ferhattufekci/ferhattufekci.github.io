@@ -64,9 +64,19 @@ test('R-CI-02: all jobs check out the resolved SHA and deploy the one tested art
   }
   assert.match(
     pages.jobs['deploy-pages'].if,
-    /github.event_name != 'pull_request'/
+    /github\.event_name == 'workflow_dispatch'/
   );
   assert.match(pages.jobs['deploy-pages'].if, /refs\/heads\/main/);
+  assert.match(pages.jobs['deploy-pages'].if, /needs\.resolve-source\.outputs\.publish == 'true'/);
+  assert.equal(pages.on.workflow_dispatch.inputs.release_sha.required, false);
+  assert.equal(pages.on.workflow_dispatch.inputs.release_sha.type, 'string');
+  assert.equal(pages.jobs['quality-checks'].with['source-sha'], '${{ needs.resolve-source.outputs.sha }}');
+  assert.deepEqual(pages.jobs['deploy-pages'].needs, ['resolve-source', 'quality-checks']);
+  assert.doesNotMatch(pages.jobs['deploy-pages'].if, /always\(\)/);
+  assert.deepEqual(pages.permissions, { contents: 'read' });
+  assert.deepEqual(pages.jobs['deploy-pages'].permissions, {
+    contents: 'read', pages: 'write', 'id-token': 'write'
+  });
   assert.deepEqual(pages.jobs['verify-production'].needs, [
     'resolve-source',
     'quality-checks',

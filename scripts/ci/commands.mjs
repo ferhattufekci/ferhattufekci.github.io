@@ -23,6 +23,27 @@ async function output(name, value) {
     await appendFile(process.env.GITHUB_OUTPUT, `${name}=${value}\n`);
   console.log(`${name}=${value}`);
 }
+async function readMainRef() {
+  const token = process.env.GH_TOKEN;
+  if (!token) throw new Error('GH_TOKEN is required to read the private main ref');
+  const api = process.env.GITHUB_API_URL || 'https://api.github.com';
+  let response;
+  try {
+    response = await fetch(`${api}/repos/${repository}/git/ref/heads/main`, {
+      headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}` },
+      redirect: 'error',
+      signal: AbortSignal.timeout(10_000)
+    });
+  } catch {
+    throw new Error('GitHub main ref request failed');
+  }
+  if (!response.ok) throw new Error(`GitHub main ref request failed (HTTP ${response.status})`);
+  const result = await response.json().catch(() => null);
+  const sha = result?.object?.sha;
+  if (typeof sha !== 'string' || !/^[a-f0-9]{40}$/.test(sha))
+    throw new Error('GitHub returned an invalid main ref');
+  return sha;
+}
 if (command === 'resolve') {
   const event = JSON.parse(
     await readFile(process.env.GITHUB_EVENT_PATH, 'utf8')
@@ -31,9 +52,7 @@ if (command === 'resolve') {
   if (process.env.GITHUB_EVENT_NAME === 'workflow_run') {
     // Check all trust fields before contacting a moving branch or executing its code.
     resolveSource('workflow_run', event, '', '', '0'.repeat(40));
-    main = execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], {
-      encoding: 'utf8'
-    }).split(/\s/)[0];
+    main = await readMainRef();
   }
   const source = resolveSource(
     process.env.GITHUB_EVENT_NAME,
@@ -47,12 +66,11 @@ if (command === 'resolve') {
 } else if (command === 'gate')
   requireQuality(JSON.parse(process.env.CHECK_RESULTS));
 else if (command === 'current') {
-  const actual = execFileSync(
-    'git',
-    ['ls-remote', 'origin', 'refs/heads/main'],
-    { encoding: 'utf8' }
-  ).split(/\s/)[0];
-  requireCurrentSource(args[0], actual);
+  const [selected] = args;
+  requireCurrentSource(selected, await readMainRef());
+  console.log(`Verified production release SHA: ${selected}`);
+  if (process.env.GITHUB_STEP_SUMMARY)
+    await appendFile(process.env.GITHUB_STEP_SUMMARY, `## Production release\n\nSelected source: \`${selected}\`\n`);
 } else if (command === 'recover') {
   const gh = (...parts) =>
     JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));

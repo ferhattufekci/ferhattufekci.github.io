@@ -48,12 +48,13 @@ export function resolveSource(eventName, event, ref, sha, mainSha) {
       'Unexpected trigger'
     );
   assert.match(sha, /^[a-f0-9]{40}$/, 'Invalid source SHA');
-  return {
-    sha,
-    publish:
-      eventName !== 'pull_request' &&
-      (eventName === 'workflow_run' || ref === 'refs/heads/main')
-  };
+  const selected = eventName === 'workflow_dispatch' ? event.inputs?.release_sha : undefined;
+  if (selected === undefined || selected === '') return { sha, publish: false };
+  assert.match(selected, /^[a-f0-9]{40}$/, 'Release SHA must be a full commit ID');
+  assert.equal(ref, 'refs/heads/main', 'Release dispatch must target main');
+  // For a main dispatch, GitHub sets this SHA to the main tip when the run starts.
+  assert.equal(sha, selected, 'Selected release SHA must match the dispatch commit on main');
+  return { sha: selected, publish: true };
 }
 export function requireQuality(needs) {
   for (const job of requiredChecks)
