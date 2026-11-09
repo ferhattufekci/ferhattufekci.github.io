@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import {
-  chmodSync,
   cpSync,
   mkdirSync,
   mkdtempSync,
@@ -16,8 +15,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 // C1 (docs/RECOVERY-ACTIVATION.md §8): real subprocess tests of the recovery
 // command. `node scripts/ci/commands.mjs recover` runs for real; only the two
-// programs it shells out to (gh, git) are replaced by shims placed first on
-// PATH. The shims answer with the response shapes that R-CI-RECOVER-14 and the
+// programs it shells out to (gh, git) are replaced at the child-process boundary.
+// The shims answer with the response shapes that R-CI-RECOVER-14 and the
 // recorded Actions runs established (single object for a run, array of pages for
 // --paginate --slurp). They prove what this repository's code asks GitHub to do,
 // not how GitHub reacts: rerun/dispatch semantics are the subject of D-1.
@@ -29,8 +28,7 @@ const REPO = 'ferhattufekci/ferhattufekci.github.io';
 const TIP = fixture.timeout.run.head_sha;
 const OTHER_TIP = 'a'.repeat(40);
 
-const FAKE_GH = `#!/usr/bin/env node
-const fs = require('fs');
+const FAKE_GH = `const fs = require('fs');
 const argv = process.argv.slice(2);
 fs.appendFileSync(process.env.FAKE_LOG, JSON.stringify({ tool: 'gh', argv }) + '\\n');
 const sc = JSON.parse(fs.readFileSync(process.env.FAKE_SCENARIO, 'utf8'));
@@ -52,13 +50,22 @@ if (argv[0] === 'api') {
   console.log('fake gh: accepted');
 } else { console.error('fake gh: unexpected command ' + argv.join(' ')); process.exit(2); }
 `;
-const FAKE_GIT = `#!/usr/bin/env node
-const fs = require('fs');
+const FAKE_GIT = `const fs = require('fs');
 const argv = process.argv.slice(2);
 fs.appendFileSync(process.env.FAKE_LOG, JSON.stringify({ tool: 'git', argv }) + '\\n');
 // The recovery job has no git credentials: any git network call fails exactly as it does there.
 console.error("fatal: could not read Username for 'https://github.com': No such device or address");
 process.exit(128);
+`;
+const EXTERNAL_COMMANDS = `const childProcess = require('node:child_process');
+const { syncBuiltinESMExports } = require('node:module');
+const { join } = require('node:path');
+const exec = childProcess.execFileSync;
+childProcess.execFileSync = (file, args, options) => {
+  if (file !== 'gh' && file !== 'git') throw new Error('Unexpected external command: ' + file);
+  return exec(process.execPath, [join(__dirname, file + '.cjs'), ...args], options);
+};
+syncBuiltinESMExports();
 `;
 
 const sandboxes = [];
@@ -67,29 +74,29 @@ function sandbox() {
   sandboxes.push(dir);
   const bin = join(dir, 'bin');
   mkdirSync(bin);
-  for (const [name, body] of [['gh', FAKE_GH], ['git', FAKE_GIT]]) {
-    writeFileSync(join(bin, name), body);
-    chmodSync(join(bin, name), 0o755);
-  }
-  return { dir, bin };
+  writeFileSync(join(bin, 'gh.cjs'), FAKE_GH);
+  writeFileSync(join(bin, 'git.cjs'), FAKE_GIT);
+  const preload = join(bin, 'external-commands.cjs');
+  writeFileSync(preload, EXTERNAL_COMMANDS);
+  return { dir, preload };
 }
 test.after(() => sandboxes.forEach((dir) => rmSync(dir, { recursive: true, force: true })));
 
-// scenario: what GitHub "returns". The process runs with only the shim dir and
-// node's own dir on PATH, so a real gh/git can never be reached by accident.
+// The real recovery CLI calls only the two test subprocesses. This uses Node's
+// own executable so it works where Windows cannot execute POSIX shebangs.
 function recoverCommand({ args = ['42043003964', '1'], scenario, env = {}, dir = ciDir, mainSha = TIP } = {}) {
-  const { dir: root, bin } = sandbox();
+  const { dir: root, preload } = sandbox();
   const scenarioFile = join(root, 'scenario.json');
   const log = join(root, 'calls.jsonl');
   const summary = join(root, 'summary.md');
   writeFileSync(scenarioFile, JSON.stringify(scenario));
   writeFileSync(log, '');
   writeFileSync(summary, '');
-  const result = spawnSync(process.execPath, [join(dir, 'commands.mjs'), 'recover', ...args], {
+  const result = spawnSync(process.execPath, ['--require', preload, join(dir, 'commands.mjs'), 'recover', ...args], {
     encoding: 'utf8',
     timeout: 20000,
     env: {
-      PATH: `${bin}:${dirname(process.execPath)}`,
+      PATH: '',
       FAKE_SCENARIO: scenarioFile,
       FAKE_LOG: log,
       FAKE_MAIN_SHA: mainSha,
@@ -115,11 +122,12 @@ const RERUN = ['run', 'rerun', '42043003964', '--failed', '--repo', REPO];
 const DISPATCH = ['workflow', 'run', 'pages.yml', '--ref', 'main', '--repo', REPO];
 
 test('R-CI-RECOVER-C1-00: the shims stand in for gh/git, nothing else is reachable, and git is never needed', () => {
-  const { bin } = sandbox();
-  const lookup = (name) =>
-    spawnSync('/bin/sh', ['-c', `command -v ${name}`], { encoding: 'utf8', env: { PATH: bin } }).stdout.trim();
-  assert.equal(lookup('gh'), join(bin, 'gh'));
-  assert.equal(lookup('git'), join(bin, 'git'));
+  const { preload } = sandbox();
+  const blocked = spawnSync(process.execPath, [
+    '--require', preload, '-e', "require('node:child_process').execFileSync('unexpected')"
+  ], { encoding: 'utf8', env: { PATH: '' } });
+  assert.equal(blocked.status, 1);
+  assert.match(blocked.stderr, /Unexpected external command: unexpected/);
   const run = recoverCommand({ scenario: timeoutScenario() });
   assert.equal(run.status, 0, run.stderr);
   assert.deepEqual(run.calls[0], { tool: 'gh', argv: ['api', `repos/${REPO}/git/ref/heads/main`] });
