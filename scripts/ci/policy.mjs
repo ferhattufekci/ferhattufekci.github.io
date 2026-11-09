@@ -50,10 +50,11 @@ export function resolveSource(eventName, event, ref, sha, mainSha) {
   assert.match(sha, /^[a-f0-9]{40}$/, 'Invalid source SHA');
   const selected = eventName === 'workflow_dispatch' ? event.inputs?.release_sha : undefined;
   if (selected === undefined || selected === '') return { sha, publish: false };
-  assert.match(selected, /^[a-f0-9]{40}$/, 'Release SHA must be a full commit ID');
+  if (typeof selected !== 'string' || !/^[a-f0-9]{40}$/.test(selected))
+    throw new Error('Release SHA must be a full commit ID');
   assert.equal(ref, 'refs/heads/main', 'Release dispatch must target main');
   // For a main dispatch, GitHub sets this SHA to the main tip when the run starts.
-  assert.equal(sha, selected, 'Selected release SHA must match the dispatch commit on main');
+  if (sha !== selected) throw new Error('Selected release SHA must match the dispatch commit on main');
   return { sha: selected, publish: true };
 }
 export function requireQuality(needs) {
@@ -65,12 +66,9 @@ export function requireQuality(needs) {
     );
 }
 export function requireCurrentSource(expected, actual) {
-  assert.match(expected, /^[a-f0-9]{40}$/);
-  assert.equal(
-    actual,
-    expected,
-    'Superseded source: refusing to deploy an older run'
-  );
+  if (typeof expected !== 'string' || !/^[a-f0-9]{40}$/.test(expected))
+    throw new Error('Invalid expected release SHA');
+  if (actual !== expected) throw new Error('Superseded source: refusing to deploy an older run');
 }
 const productionWorkflow = {
   name: 'Portfolio CI/CD',
