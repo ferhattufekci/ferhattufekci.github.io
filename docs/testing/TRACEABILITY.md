@@ -4,8 +4,8 @@
 > [GKP.md](GKP.md). Do not edit by hand; `scripts/tests/traceability.test.js` fails when this file is stale.
 > Each CI build regenerates it with that build's browser results (job summary and `merged-browser-report`).
 
-**235 requirement ids carried by automated tests; 43 (18.3%) also have a manual procedure step.**
-**30 procedure cases; steps: Not Run 108.**
+**235 requirement ids carried by automated tests; 235 (100.0%) also have a manual procedure step.**
+**46 procedure cases; steps: Not Run 185.**
 
 A manual step result is recorded in GKP.md by the person who executes it; an automated pass never marks a manual step Pass.
 
@@ -15,239 +15,239 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | --- | --- | --- | --- |
 | R-404-01 | error-card.test.js, portfolio.spec.mjs | GKP-003 | Not Run 1 |
 | R-404-02 | error-card.test.js, portfolio.spec.mjs | GKP-002 | Not Run 2 |
-| R-A0-01 | inline-script-contract.test.js | **none** | — |
-| R-A0-02 | inline-script-contract.test.js | **none** | — |
-| R-A0-05 | inline-script-contract.test.js | **none** | — |
-| R-A0-05b | inline-script-contract.test.js | **none** | — |
+| R-A0-01 | inline-script-contract.test.js | GKP-046 | Not Run 1 |
+| R-A0-02 | inline-script-contract.test.js | GKP-046 | Not Run 1 |
+| R-A0-05 | inline-script-contract.test.js | GKP-046 | Not Run 1 |
+| R-A0-05b | inline-script-contract.test.js | GKP-046 | Not Run 1 |
 | R-A11Y-01 | portfolio.spec.mjs | GKP-025, GKP-028 | Not Run 4 |
-| R-A11Y-02 | accessibility-debt.test.js | **none** | — |
+| R-A11Y-02 | accessibility-debt.test.js | GKP-046 | Not Run 1 |
 | R-AD-01 | adsense.spec.mjs | GKP-030 | Not Run 1 |
 | R-AD-02 | adsense.test.js | GKP-030 | Not Run 1 |
 | R-AD-03 | adsense.spec.mjs | GKP-030 | Not Run 2 |
-| R-AD-EMPTY-01 | adsense.spec.mjs | **none** | — |
-| R-AD-SCROLL-01 | adsense.spec.mjs | **none** | — |
-| R-ARROW-01 | arrow-controls.spec.mjs | **none** | — |
-| R-ARROW-02 | arrow-controls.spec.mjs | **none** | — |
-| R-ARROW-03 | arrow-controls.spec.mjs | **none** | — |
-| R-ARROW-04 | arrow-hybrid.spec.mjs | **none** | — |
-| R-ASSET-01 | asset-versioning.test.js | **none** | — |
-| R-BLOG-SHARE-01 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-02 | blog-sharing.spec.mjs, blog-sharing.test.js | **none** | — |
-| R-BLOG-SHARE-03 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-04 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-05 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs, blog-sharing.test.js | **none** | — |
-| R-BLOG-SHARE-06 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-07 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-08 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-09 | blog-sharing-appearance.spec.mjs, blog-sharing-cache.spec.mjs, blog-sharing-feedback.spec.mjs, blog-sharing-layout.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-10 | blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-11 | blog-sharing.spec.mjs, blog-sharing.test.js | **none** | — |
-| R-BLOG-SHARE-12 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BLOG-SHARE-13 | blog-sharing.spec.mjs, blog-sharing.test.js | **none** | — |
-| R-BLOG-SHARE-14 | blog-sharing-cache.spec.mjs, blog-sharing.spec.mjs | **none** | — |
-| R-BUTTON-01 | button-states.spec.mjs | **none** | — |
-| R-BUTTON-02 | button-states.spec.mjs | **none** | — |
-| R-BUTTON-03 | button-states.spec.mjs | **none** | — |
-| R-BUTTON-04 | button-states.spec.mjs | **none** | — |
-| R-CI-01 | sync-workflows.test.js | **none** | — |
+| R-AD-EMPTY-01 | adsense.spec.mjs | GKP-043 | Not Run 1 |
+| R-AD-SCROLL-01 | adsense.spec.mjs | GKP-043 | Not Run 1 |
+| R-ARROW-01 | arrow-controls.spec.mjs | GKP-035 | Not Run 1 |
+| R-ARROW-02 | arrow-controls.spec.mjs | GKP-035 | Not Run 1 |
+| R-ARROW-03 | arrow-controls.spec.mjs | GKP-035 | Not Run 1 |
+| R-ARROW-04 | arrow-hybrid.spec.mjs | GKP-035 | Not Run 1 |
+| R-ASSET-01 | asset-versioning.test.js | GKP-046 | Not Run 1 |
+| R-BLOG-SHARE-01 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-031 | Not Run 2 |
+| R-BLOG-SHARE-02 | blog-sharing.spec.mjs, blog-sharing.test.js | GKP-032 | Not Run 1 |
+| R-BLOG-SHARE-03 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-032 | Not Run 1 |
+| R-BLOG-SHARE-04 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-032 | Not Run 1 |
+| R-BLOG-SHARE-05 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs, blog-sharing.test.js | GKP-033 | Not Run 2 |
+| R-BLOG-SHARE-06 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-033 | Not Run 1 |
+| R-BLOG-SHARE-07 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-032 | Not Run 1 |
+| R-BLOG-SHARE-08 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-031 | Not Run 2 |
+| R-BLOG-SHARE-09 | blog-sharing-appearance.spec.mjs, blog-sharing-cache.spec.mjs, blog-sharing-feedback.spec.mjs, blog-sharing-layout.spec.mjs, blog-sharing.spec.mjs | GKP-034 | Not Run 1 |
+| R-BLOG-SHARE-10 | blog-sharing.spec.mjs | GKP-034 | Not Run 1 |
+| R-BLOG-SHARE-11 | blog-sharing.spec.mjs, blog-sharing.test.js | GKP-032 | Not Run 2 |
+| R-BLOG-SHARE-12 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs | GKP-032 | Not Run 1 |
+| R-BLOG-SHARE-13 | blog-sharing.spec.mjs, blog-sharing.test.js | GKP-034 | Not Run 1 |
+| R-BLOG-SHARE-14 | blog-sharing-cache.spec.mjs, blog-sharing.spec.mjs | GKP-034 | Not Run 1 |
+| R-BUTTON-01 | button-states.spec.mjs | GKP-036 | Not Run 1 |
+| R-BUTTON-02 | button-states.spec.mjs | GKP-036 | Not Run 1 |
+| R-BUTTON-03 | button-states.spec.mjs | GKP-036 | Not Run 1 |
+| R-BUTTON-04 | button-states.spec.mjs | GKP-036 | Not Run 1 |
+| R-CI-01 | sync-workflows.test.js | GKP-046 | Not Run 1 |
 | R-CI-02 | first-principles.test.js | GKP-026 | Not Run 2 |
-| R-CI-APT-01 | apt-network-bounds.test.js | **none** | — |
-| R-CI-APT-02 | apt-network-bounds.test.js | **none** | — |
-| R-CI-RECOVER-01 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-02 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-03 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-04 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-05 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-06 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-07 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-08 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-09 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-10 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-11 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-12 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-13 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-14 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-15 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-16 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-17 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-18 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-19 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-20 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-21 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-22 | deploy-recovery.test.js | **none** | — |
-| R-CI-RECOVER-C1-00 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-01 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-02 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-03 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-04 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-05 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-06 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-07 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-08 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-09 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-10 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-11 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-12 | recovery-act.test.js | **none** | — |
-| R-CI-RECOVER-C1-13 | recovery-act.test.js | **none** | — |
-| R-CONTENT-01 | agent-documents.test.js | **none** | — |
-| R-CONTENT-02 | agent-documents.test.js | **none** | — |
+| R-CI-APT-01 | apt-network-bounds.test.js | GKP-046 | Not Run 1 |
+| R-CI-APT-02 | apt-network-bounds.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-01 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-02 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-03 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-04 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-05 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-06 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-07 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-08 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-09 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-10 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-11 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-12 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-13 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-14 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-15 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-16 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-17 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-18 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-19 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-20 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-21 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-22 | deploy-recovery.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-00 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-01 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-02 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-03 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-04 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-05 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-06 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-07 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-08 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-09 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-10 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-11 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-12 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CI-RECOVER-C1-13 | recovery-act.test.js | GKP-046 | Not Run 1 |
+| R-CONTENT-01 | agent-documents.test.js | GKP-045 | Not Run 1 |
+| R-CONTENT-02 | agent-documents.test.js | GKP-046 | Not Run 1 |
 | R-CONTENT-03 | portfolio.spec.mjs | GKP-015 | Not Run 3 |
-| R-DATA-COLOR-01 | data-contract.test.js | **none** | — |
-| R-DATA-NUM-01 | data-contract.test.js | **none** | — |
-| R-DATA-SYNC-01 | sync-fetchers.test.js | **none** | — |
-| R-DATA-SYNC-02 | data-snapshot.test.js | **none** | — |
-| R-DATA-SYNC-03 | data-snapshot.test.js | **none** | — |
-| R-DATA-SYNC-04 | data-snapshot.test.js | **none** | — |
-| R-DATA-SYNC-05 | data-snapshot.test.js | **none** | — |
-| R-DATA-URL-01 | data-contract.test.js | **none** | — |
-| R-DATA-URL-02 | data-contract.test.js | **none** | — |
-| R-DATA-URL-03 | sync-fetchers.test.js | **none** | — |
-| R-DATA-URL-04 | sync-fetchers.test.js | **none** | — |
+| R-DATA-COLOR-01 | data-contract.test.js | GKP-046 | Not Run 1 |
+| R-DATA-NUM-01 | data-contract.test.js | GKP-046 | Not Run 1 |
+| R-DATA-SYNC-01 | sync-fetchers.test.js | GKP-046 | Not Run 1 |
+| R-DATA-SYNC-02 | data-snapshot.test.js | GKP-046 | Not Run 1 |
+| R-DATA-SYNC-03 | data-snapshot.test.js | GKP-046 | Not Run 1 |
+| R-DATA-SYNC-04 | data-snapshot.test.js | GKP-046 | Not Run 1 |
+| R-DATA-SYNC-05 | data-snapshot.test.js | GKP-046 | Not Run 1 |
+| R-DATA-URL-01 | data-contract.test.js | GKP-046 | Not Run 1 |
+| R-DATA-URL-02 | data-contract.test.js | GKP-046 | Not Run 1 |
+| R-DATA-URL-03 | sync-fetchers.test.js | GKP-046 | Not Run 1 |
+| R-DATA-URL-04 | sync-fetchers.test.js | GKP-046 | Not Run 1 |
 | R-DEPLOY-01 | pages-package.test.js | GKP-026 | Not Run 2 |
-| R-DISCLOSURE-01 | resume-disclosure-labels.test.js | **none** | — |
-| R-DISCLOSURE-02 | resume-disclosure-labels.test.js | **none** | — |
-| R-DISCLOSURE-03 | resume-disclosures.spec.mjs | **none** | — |
-| R-DOC-01 | documentation-navigation.test.js | **none** | — |
-| R-DOC-02 | documentation-navigation.test.js | **none** | — |
-| R-DOC-03 | documentation-navigation.test.js | **none** | — |
-| R-DOC-RTM-01 | rtm.test.js | **none** | — |
-| R-DOC-RTM-02 | rtm.test.js | **none** | — |
-| R-DOC-RTM-03 | rtm.test.js | **none** | — |
-| R-DOC-TRACE-01 | traceability.test.js | **none** | — |
-| R-DOC-TRACE-02 | traceability.test.js | **none** | — |
-| R-DOC-TRACE-03 | traceability.test.js | **none** | — |
-| R-DOC-TRACE-04 | traceability.test.js | **none** | — |
-| R-DOC-TRACE-05 | traceability.test.js | **none** | — |
+| R-DISCLOSURE-01 | resume-disclosure-labels.test.js | GKP-046 | Not Run 1 |
+| R-DISCLOSURE-02 | resume-disclosure-labels.test.js | GKP-046 | Not Run 1 |
+| R-DISCLOSURE-03 | resume-disclosures.spec.mjs | GKP-041 | Not Run 1 |
+| R-DOC-01 | documentation-navigation.test.js | GKP-046 | Not Run 1 |
+| R-DOC-02 | documentation-navigation.test.js | GKP-046 | Not Run 1 |
+| R-DOC-03 | documentation-navigation.test.js | GKP-046 | Not Run 1 |
+| R-DOC-RTM-01 | rtm.test.js | GKP-046 | Not Run 1 |
+| R-DOC-RTM-02 | rtm.test.js | GKP-046 | Not Run 1 |
+| R-DOC-RTM-03 | rtm.test.js | GKP-046 | Not Run 1 |
+| R-DOC-TRACE-01 | traceability.test.js | GKP-046 | Not Run 1 |
+| R-DOC-TRACE-02 | traceability.test.js | GKP-046 | Not Run 1 |
+| R-DOC-TRACE-03 | traceability.test.js | GKP-046 | Not Run 1 |
+| R-DOC-TRACE-04 | traceability.test.js | GKP-046 | Not Run 1 |
+| R-DOC-TRACE-05 | traceability.test.js | GKP-046 | Not Run 1 |
 | R-EXTERNAL-01 | external-widget.spec.mjs | GKP-029 | Not Run 3 |
 | R-FILTER-01 | categories.spec.mjs | GKP-016 | Not Run 3 |
 | R-FILTER-02 | categories.spec.mjs | GKP-017 | Not Run 3 |
-| R-FILTER-03 | categories.spec.mjs | **none** | — |
-| R-FILTER-04 | categories.spec.mjs | **none** | — |
-| R-FILTER-05 | categories.spec.mjs | **none** | — |
-| R-FILTER-06 | categories.spec.mjs | **none** | — |
+| R-FILTER-03 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FILTER-04 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FILTER-05 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FILTER-06 | categories.spec.mjs | GKP-037 | Not Run 1 |
 | R-FILTER-07 | categories.spec.mjs | GKP-019 | Not Run 5 |
 | R-FILTER-08 | categories.spec.mjs | GKP-020 | Not Run 3 |
 | R-FILTER-09 | categories.spec.mjs | GKP-021 | Not Run 3 |
 | R-FILTER-10 | categories.spec.mjs | GKP-018 | Not Run 4 |
-| R-FILTER-11 | categories.spec.mjs | **none** | — |
-| R-FILTER-12 | categories.spec.mjs | **none** | — |
-| R-FILTER-13 | categories.spec.mjs | **none** | — |
-| R-FILTER-14 | categories.spec.mjs | **none** | — |
-| R-FIRST-01 | first-principles.test.js | **none** | — |
-| R-FIRST-02 | first-principles.test.js | **none** | — |
-| R-GKP-01 | manual-preview.test.js | **none** | — |
-| R-GKP-02 | manual-documentation.test.js | **none** | — |
-| R-GKP-03 | manual-documentation.test.js | **none** | — |
-| R-HOVER-04 | blog-sharing-keyboard.spec.mjs | **none** | — |
+| R-FILTER-11 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FILTER-12 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FILTER-13 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FILTER-14 | categories.spec.mjs | GKP-037 | Not Run 1 |
+| R-FIRST-01 | first-principles.test.js | GKP-046 | Not Run 1 |
+| R-FIRST-02 | first-principles.test.js | GKP-046 | Not Run 1 |
+| R-GKP-01 | manual-preview.test.js | GKP-046 | Not Run 1 |
+| R-GKP-02 | manual-documentation.test.js | GKP-046 | Not Run 1 |
+| R-GKP-03 | manual-documentation.test.js | GKP-046 | Not Run 1 |
+| R-HOVER-04 | blog-sharing-keyboard.spec.mjs | GKP-031 | Not Run 1 |
 | R-HTTP-01 | http-verification.test.js | GKP-003, GKP-024 | Not Run 4 |
-| R-HTTP-02 | http-verification.test.js | **none** | — |
-| R-HTTP-03 | http-verification.test.js | **none** | — |
-| R-HTTP-04 | http-verification.test.js | **none** | — |
-| R-HTTP-05 | http-verification.test.js | **none** | — |
-| R-HTTP-06 | http-verification.test.js | **none** | — |
-| R-HTTP-07 | http-verification.test.js | **none** | — |
+| R-HTTP-02 | http-verification.test.js | GKP-046 | Not Run 1 |
+| R-HTTP-03 | http-verification.test.js | GKP-046 | Not Run 1 |
+| R-HTTP-04 | http-verification.test.js | GKP-046 | Not Run 1 |
+| R-HTTP-05 | http-verification.test.js | GKP-046 | Not Run 1 |
+| R-HTTP-06 | http-verification.test.js | GKP-046 | Not Run 1 |
+| R-HTTP-07 | http-verification.test.js | GKP-045 | Not Run 1 |
 | R-ICON-01 | button-states.spec.mjs | GKP-007 | Not Run 4 |
 | R-ICON-02 | button-states.spec.mjs | GKP-007 | Not Run 2 |
-| R-ICON-03 | button-states.spec.mjs | **none** | — |
-| R-ICON-04 | button-states.spec.mjs | **none** | — |
-| R-KEYBOARD-01 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-02 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-03 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-04 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-05 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-06 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-07 | keyboard-accessibility.spec.mjs | **none** | — |
-| R-KEYBOARD-08 | keyboard-accessibility.spec.mjs | **none** | — |
+| R-ICON-03 | button-states.spec.mjs | GKP-036 | Not Run 1 |
+| R-ICON-04 | button-states.spec.mjs | GKP-036 | Not Run 1 |
+| R-KEYBOARD-01 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-02 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-03 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-04 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-05 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-06 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-07 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
+| R-KEYBOARD-08 | keyboard-accessibility.spec.mjs | GKP-038 | Not Run 1 |
 | R-LINK-01 | link-details.spec.mjs | GKP-022 | Not Run 3 |
 | R-LINK-02 | link-details.spec.mjs | GKP-022 | Not Run 2 |
 | R-LINK-03 | link-details.spec.mjs | GKP-011 | Not Run 2 |
-| R-MOTION-01 | page-transitions.spec.mjs | **none** | — |
-| R-MOTION-02 | page-transitions.spec.mjs | **none** | — |
-| R-MOTION-03 | page-transitions.spec.mjs | **none** | — |
-| R-MOTION-04 | page-transitions.spec.mjs | **none** | — |
-| R-MOTION-05 | page-transitions.spec.mjs | **none** | — |
-| R-MOTION-06 | motion-completion.test.js, page-transitions.spec.mjs | **none** | — |
-| R-MOTION-07 | page-transitions.spec.mjs | **none** | — |
-| R-NATIVE-RESULT-01 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-NATIVE-RESULT-02 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-NATIVE-RESULT-03 | blog-sharing-feedback.spec.mjs | **none** | — |
+| R-MOTION-01 | page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-MOTION-02 | page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-MOTION-03 | page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-MOTION-04 | page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-MOTION-05 | page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-MOTION-06 | motion-completion.test.js, page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-MOTION-07 | page-transitions.spec.mjs | GKP-039 | Not Run 1 |
+| R-NATIVE-RESULT-01 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
+| R-NATIVE-RESULT-02 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
+| R-NATIVE-RESULT-03 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
 | R-NAV-01 | portfolio.spec.mjs, route-policy.test.js | GKP-001 | Not Run 2 |
 | R-NAV-02 | portfolio.spec.mjs, route-policy.test.js | GKP-002 | Not Run 2 |
-| R-NAV-03 | route-policy.test.js | **none** | — |
+| R-NAV-03 | route-policy.test.js | GKP-046 | Not Run 1 |
 | R-NAV-04 | portfolio.spec.mjs | GKP-002, GKP-014, GKP-028 | Not Run 3 |
 | R-NAV-05 | portfolio.spec.mjs | GKP-027 | Not Run 3 |
-| R-NAV-06 | page-animations.test.js | **none** | — |
-| R-NAV-07 | portfolio.spec.mjs | **none** | — |
+| R-NAV-06 | page-animations.test.js | GKP-046 | Not Run 1 |
+| R-NAV-07 | portfolio.spec.mjs | GKP-039 | Not Run 1 |
 | R-NAV-08 | portfolio.spec.mjs | GKP-001 | Not Run 2 |
-| R-PANEL-01 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PANEL-02 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PANEL-03 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PANEL-04 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PANEL-05 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PANEL-06 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PANEL-07 | fixed-page-controls.spec.mjs | **none** | — |
-| R-PIPE-01 | pipeline.test.js | **none** | — |
-| R-PIPE-02 | pipeline.test.js | **none** | — |
-| R-PIPE-03 | pipeline.test.js | **none** | — |
-| R-PIPE-04 | pipeline.test.js | **none** | — |
-| R-PIPE-05 | pipeline.test.js | **none** | — |
-| R-PIPE-06 | pipeline.test.js | **none** | — |
-| R-PIPE-07 | ci-reporter.test.js | **none** | — |
-| R-PIPE-08 | ci-reports.test.js | **none** | — |
-| R-PIPE-09 | ci-reports.test.js | **none** | — |
-| R-PIPE-10 | ci-reports.test.js | **none** | — |
-| R-PIPE-11 | ci-reports.test.js | **none** | — |
-| R-PIPE-12 | ci-reports.test.js | **none** | — |
-| R-PIPE-13 | ci-report-flow.test.js | **none** | — |
-| R-PROGRESS-01 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-PROGRESS-02 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-PROGRESS-03 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-PROGRESS-04 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-PROGRESS-05 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-PROGRESS-06 | blog-sharing-feedback.spec.mjs | **none** | — |
-| R-RELEASE-01 | release-selection.test.js | **none** | — |
-| R-RELEASE-02 | release-selection.test.js | **none** | — |
-| R-RELEASE-03 | release-selection.test.js | **none** | — |
-| R-RELEASE-04 | release-selection.test.js | **none** | — |
+| R-PANEL-01 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PANEL-02 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PANEL-03 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PANEL-04 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PANEL-05 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PANEL-06 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PANEL-07 | fixed-page-controls.spec.mjs | GKP-040 | Not Run 1 |
+| R-PIPE-01 | pipeline.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-02 | pipeline.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-03 | pipeline.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-04 | pipeline.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-05 | pipeline.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-06 | pipeline.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-07 | ci-reporter.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-08 | ci-reports.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-09 | ci-reports.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-10 | ci-reports.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-11 | ci-reports.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-12 | ci-reports.test.js | GKP-046 | Not Run 1 |
+| R-PIPE-13 | ci-report-flow.test.js | GKP-046 | Not Run 1 |
+| R-PROGRESS-01 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
+| R-PROGRESS-02 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
+| R-PROGRESS-03 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 2 |
+| R-PROGRESS-04 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
+| R-PROGRESS-05 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 1 |
+| R-PROGRESS-06 | blog-sharing-feedback.spec.mjs | GKP-033 | Not Run 2 |
+| R-RELEASE-01 | release-selection.test.js | GKP-046 | Not Run 1 |
+| R-RELEASE-02 | release-selection.test.js | GKP-046 | Not Run 1 |
+| R-RELEASE-03 | release-selection.test.js | GKP-046 | Not Run 1 |
+| R-RELEASE-04 | release-selection.test.js | GKP-046 | Not Run 1 |
 | R-RESUME-01 | resume-disclosures.test.js | GKP-008, GKP-010 | Not Run 2 |
 | R-RESUME-02 | resume-disclosures.test.js | GKP-009 | Not Run 3 |
 | R-RESUME-03 | resume-disclosures.test.js | GKP-010 | Not Run 4 |
 | R-RESUME-04 | resume-disclosures.test.js | GKP-011 | Not Run 1 |
 | R-RESUME-05 | resume-disclosures.test.js | GKP-024 | Not Run 1 |
-| R-RESUME-06 | resume-disclosures.spec.mjs | **none** | — |
+| R-RESUME-06 | resume-disclosures.spec.mjs | GKP-041 | Not Run 1 |
 | R-RESUME-07 | resume-disclosures.spec.mjs | GKP-009 | Not Run 3 |
-| R-RESUME-08 | resume-disclosures.spec.mjs | **none** | — |
+| R-RESUME-08 | resume-disclosures.spec.mjs | GKP-041 | Not Run 1 |
 | R-RESUME-09 | resume-disclosures.spec.mjs | GKP-008, GKP-014 | Not Run 5 |
 | R-RESUME-10 | resume-disclosures.spec.mjs | GKP-013, GKP-028 | Not Run 5 |
 | R-RESUME-11 | resume-disclosures.test.js | GKP-008 | Not Run 1 |
-| R-RESUME-12 | resume-disclosures.spec.mjs | **none** | — |
+| R-RESUME-12 | resume-disclosures.spec.mjs | GKP-041 | Not Run 1 |
 | R-RESUME-13 | resume-disclosures.spec.mjs | GKP-012, GKP-028 | Not Run 4 |
 | R-RESUME-14 | resume-disclosures.spec.mjs | GKP-010 | Not Run 1 |
-| R-RESUME-15 | resume-disclosures.spec.mjs | **none** | — |
-| R-RESUME-NAV-01 | resume-navigation.spec.mjs | **none** | — |
-| R-RESUME-NAV-02 | resume-navigation.spec.mjs | **none** | — |
-| R-RESUME-NAV-03 | resume-navigation.spec.mjs | **none** | — |
-| R-RESUME-NAV-04 | resume-navigation.spec.mjs | **none** | — |
-| R-RESUME-NAV-05 | resume-navigation.spec.mjs | **none** | — |
-| R-RESUME-NAV-06 | resume-navigation.spec.mjs | **none** | — |
-| R-RESUME-NAV-07 | resume-navigation.spec.mjs | **none** | — |
-| R-SCROLLBAR-01 | scrollbar-parity.spec.mjs | **none** | — |
-| R-SCROLLBAR-02 | touch-scrollbar.spec.mjs | **none** | — |
-| R-SCROLLBAR-03 | touch-scrollbar.spec.mjs | **none** | — |
-| R-SHELL-01 | not-found-shell.test.js | **none** | — |
-| R-SHELL-02 | not-found-shell.test.js | **none** | — |
-| R-SHELL-03 | not-found-shell.test.js | **none** | — |
+| R-RESUME-15 | resume-disclosures.spec.mjs | GKP-041 | Not Run 1 |
+| R-RESUME-NAV-01 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-RESUME-NAV-02 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-RESUME-NAV-03 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-RESUME-NAV-04 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-RESUME-NAV-05 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-RESUME-NAV-06 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-RESUME-NAV-07 | resume-navigation.spec.mjs | GKP-042 | Not Run 1 |
+| R-SCROLLBAR-01 | scrollbar-parity.spec.mjs | GKP-043 | Not Run 1 |
+| R-SCROLLBAR-02 | touch-scrollbar.spec.mjs | GKP-043 | Not Run 1 |
+| R-SCROLLBAR-03 | touch-scrollbar.spec.mjs | GKP-043 | Not Run 1 |
+| R-SHELL-01 | not-found-shell.test.js | GKP-044 | Not Run 1 |
+| R-SHELL-02 | not-found-shell.test.js | GKP-046 | Not Run 1 |
+| R-SHELL-03 | not-found-shell.test.js | GKP-046 | Not Run 1 |
 | R-SHELL-04 | not-found-shell.spec.mjs | GKP-003 | Not Run 2 |
-| R-SHELL-05 | not-found-shell.spec.mjs | **none** | — |
-| R-THEME-01 | agent-documents.test.js, theme.test.js | **none** | — |
+| R-SHELL-05 | not-found-shell.spec.mjs | GKP-044 | Not Run 1 |
+| R-THEME-01 | agent-documents.test.js, theme.test.js | GKP-046 | Not Run 1 |
 | R-THEME-02 | portfolio.spec.mjs, theme.test.js | GKP-004 | Not Run 3 |
 | R-THEME-03 | theme.test.js | GKP-006 | Not Run 3 |
 | R-THEME-04 | portfolio.spec.mjs, theme.test.js | GKP-005 | Not Run 3 |
-| R-TRUST-01 | trust-navigation.test.js | **none** | — |
-| R-TRUST-02 | trust-navigation.test.js | **none** | — |
-| R-TRUST-03 | trust-navigation.test.js | **none** | — |
+| R-TRUST-01 | trust-navigation.test.js | GKP-044 | Not Run 1 |
+| R-TRUST-02 | trust-navigation.test.js | GKP-044 | Not Run 1 |
+| R-TRUST-03 | trust-navigation.test.js | GKP-045 | Not Run 1 |
 | R-TRUST-04 | trust-navigation.spec.mjs | GKP-023 | Not Run 4 |
-| R-TRUST-05 | trust-navigation.spec.mjs | **none** | — |
+| R-TRUST-05 | trust-navigation.spec.mjs | GKP-044 | Not Run 1 |
 
 ## Procedure case → requirements
 
@@ -283,6 +283,22 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | GKP-028 | Gerçek cihaz ve tarayıcı keşif kabulü | R-A11Y-01, R-NAV-04, R-RESUME-10, R-RESUME-13 | Not Run 3 |
 | GKP-029 | İsteğe bağlı randevu scripti hatası | R-EXTERNAL-01 | Not Run 3 |
 | GKP-030 | Reklam birimi sözleşmesi ve üretim gözlemi | R-AD-01, R-AD-02, R-AD-03 | Not Run 4 |
+| GKP-031 | Blog paylaş: klavye ve açılır menü semantiği | R-BLOG-SHARE-01, R-BLOG-SHARE-08, R-HOVER-04 | Not Run 3 |
+| GKP-032 | Blog paylaş: kopyalama, el ile URL ve tekil işlem | R-BLOG-SHARE-02, R-BLOG-SHARE-03, R-BLOG-SHARE-04, R-BLOG-SHARE-07, R-BLOG-SHARE-11, R-BLOG-SHARE-12 | Not Run 4 |
+| GKP-033 | Blog paylaş: cihazın yerel paylaşım penceresi | R-BLOG-SHARE-05, R-BLOG-SHARE-06, R-NATIVE-RESULT-01, R-NATIVE-RESULT-02, R-NATIVE-RESULT-03, R-PROGRESS-01, R-PROGRESS-02, R-PROGRESS-03, R-PROGRESS-04, R-PROGRESS-05, R-PROGRESS-06 | Not Run 3 |
+| GKP-034 | Blog paylaş: görünüm, kaydırma, JavaScript kapalı ve önbellek | R-BLOG-SHARE-09, R-BLOG-SHARE-10, R-BLOG-SHARE-13, R-BLOG-SHARE-14 | Not Run 4 |
+| GKP-035 | Sayfa okları: dokunma, fare ve klavye geri bildirimi | R-ARROW-01, R-ARROW-02, R-ARROW-03, R-ARROW-04 | Not Run 4 |
+| GKP-036 | Hata görünümü düğmeleri, menü ve tema kontrolleri | R-BUTTON-01, R-BUTTON-02, R-BUTTON-03, R-BUTTON-04, R-ICON-03, R-ICON-04 | Not Run 4 |
+| GKP-037 | Filtre sınır ve hata durumları | R-FILTER-03, R-FILTER-04, R-FILTER-05, R-FILTER-06, R-FILTER-11, R-FILTER-12, R-FILTER-13, R-FILTER-14 | Not Run 8 |
+| GKP-038 | Klavye erişilebilirliği | R-KEYBOARD-01, R-KEYBOARD-02, R-KEYBOARD-03, R-KEYBOARD-04, R-KEYBOARD-05, R-KEYBOARD-06, R-KEYBOARD-07, R-KEYBOARD-08 | Not Run 7 |
+| GKP-039 | Sayfa geçişleri ve hareket tercihleri | R-MOTION-01, R-MOTION-02, R-MOTION-03, R-MOTION-04, R-MOTION-05, R-MOTION-06, R-MOTION-07, R-NAV-07 | Not Run 6 |
+| GKP-040 | Sabit kontrol paneli ve içerik kaydırma | R-PANEL-01, R-PANEL-02, R-PANEL-03, R-PANEL-04, R-PANEL-05, R-PANEL-06, R-PANEL-07 | Not Run 7 |
+| GKP-041 | Resume içerik düzeni ve açılımlar | R-DISCLOSURE-03, R-RESUME-06, R-RESUME-08, R-RESUME-12, R-RESUME-15 | Not Run 5 |
+| GKP-042 | Resume bölüm gezinmesi | R-RESUME-NAV-01, R-RESUME-NAV-02, R-RESUME-NAV-03, R-RESUME-NAV-04, R-RESUME-NAV-05, R-RESUME-NAV-06, R-RESUME-NAV-07 | Not Run 7 |
+| GKP-043 | Scrollbar ve reklam alanının kaydırmaya etkisi | R-AD-EMPTY-01, R-AD-SCROLL-01, R-SCROLLBAR-01, R-SCROLLBAR-02, R-SCROLLBAR-03 | Not Run 4 |
+| GKP-044 | Statik 404 ve güven sayfası gezinmesi | R-SHELL-01, R-SHELL-05, R-TRUST-01, R-TRUST-02, R-TRUST-05 | Not Run 4 |
+| GKP-045 | Makine okunur içerik ve CV bağlantısı | R-CONTENT-01, R-HTTP-07, R-TRUST-03 | Not Run 2 |
+| GKP-046 | Otomasyon sözleşmelerinin kanıt incelemesi | R-A0-01, R-A0-02, R-A0-05, R-A0-05b, R-A11Y-02, R-ASSET-01, R-CI-01, R-CI-APT-01, R-CI-APT-02, R-CI-RECOVER-01, R-CI-RECOVER-02, R-CI-RECOVER-03, R-CI-RECOVER-04, R-CI-RECOVER-05, R-CI-RECOVER-06, R-CI-RECOVER-07, R-CI-RECOVER-08, R-CI-RECOVER-09, R-CI-RECOVER-10, R-CI-RECOVER-11, R-CI-RECOVER-12, R-CI-RECOVER-13, R-CI-RECOVER-14, R-CI-RECOVER-15, R-CI-RECOVER-16, R-CI-RECOVER-17, R-CI-RECOVER-18, R-CI-RECOVER-19, R-CI-RECOVER-20, R-CI-RECOVER-21, R-CI-RECOVER-22, R-CI-RECOVER-C1-00, R-CI-RECOVER-C1-01, R-CI-RECOVER-C1-02, R-CI-RECOVER-C1-03, R-CI-RECOVER-C1-04, R-CI-RECOVER-C1-05, R-CI-RECOVER-C1-06, R-CI-RECOVER-C1-07, R-CI-RECOVER-C1-08, R-CI-RECOVER-C1-09, R-CI-RECOVER-C1-10, R-CI-RECOVER-C1-11, R-CI-RECOVER-C1-12, R-CI-RECOVER-C1-13, R-CONTENT-02, R-DATA-COLOR-01, R-DATA-NUM-01, R-DATA-SYNC-01, R-DATA-SYNC-02, R-DATA-SYNC-03, R-DATA-SYNC-04, R-DATA-SYNC-05, R-DATA-URL-01, R-DATA-URL-02, R-DATA-URL-03, R-DATA-URL-04, R-DISCLOSURE-01, R-DISCLOSURE-02, R-DOC-01, R-DOC-02, R-DOC-03, R-DOC-RTM-01, R-DOC-RTM-02, R-DOC-RTM-03, R-DOC-TRACE-01, R-DOC-TRACE-02, R-DOC-TRACE-03, R-DOC-TRACE-04, R-DOC-TRACE-05, R-FIRST-01, R-FIRST-02, R-GKP-01, R-GKP-02, R-GKP-03, R-HTTP-02, R-HTTP-03, R-HTTP-04, R-HTTP-05, R-HTTP-06, R-NAV-03, R-NAV-06, R-PIPE-01, R-PIPE-02, R-PIPE-03, R-PIPE-04, R-PIPE-05, R-PIPE-06, R-PIPE-07, R-PIPE-08, R-PIPE-09, R-PIPE-10, R-PIPE-11, R-PIPE-12, R-PIPE-13, R-RELEASE-01, R-RELEASE-02, R-RELEASE-03, R-RELEASE-04, R-SHELL-02, R-SHELL-03, R-THEME-01 | Not Run 5 |
 
 ## Consistency
 
