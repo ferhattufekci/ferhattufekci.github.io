@@ -43,6 +43,18 @@ function respond(request, response, scenario) {
     body = scenario === 'empty-rss' ? '<rss><channel/></rss>' : rss;
     if (scenario === 'rss-http') status = 503;
     if (scenario === 'truncated-rss') body = rss.replace('</channel></rss>', '');
+    if (scenario === 'hostile-urls') body = rss.replace('</channel></rss>', `
+  <item><title>Hostile link</title><link>java	script:alert(1)</link>
+  <pubDate>Wed, 28 Oct 2026 00:00:00 GMT</pubDate><category>testing</category>
+  <description>${introduction}</description></item>
+  <item><title>Relative cover</title><link>https://medium.com/@ferhattufekci/article-dddddddddddd</link>
+  <pubDate>Wed, 28 Oct 2026 00:00:00 GMT</pubDate><category>requirements</category>
+  <description>${introduction}</description>
+  <content:encoded><![CDATA[<p>${introduction}</p><img src="//cdn.test/cover.png">]]></content:encoded></item>
+  <item><title>Hostile cover</title><link>https://medium.com/@ferhattufekci/article-eeeeeeeeeeee</link>
+  <pubDate>Wed, 28 Oct 2026 00:00:00 GMT</pubDate><category>requirements</category>
+  <description>${introduction}</description>
+  <media:thumbnail url="javascript:alert(2)"/></item></channel></rss>`);
   } else if (url.pathname.startsWith('/@ferhattufekci/')) {
     body = `<html><meta name="description" content="${introduction}"></html>`;
   } else if (url.pathname === '/graphql') {
@@ -59,6 +71,10 @@ function respond(request, response, scenario) {
       ? [repo('pinned-project', 1), repo('ferhattufekci'),
         ...Array.from({ length: 98 }, (_, i) => repo(`archived-${i}`, 0, { archived: true }))]
       : [repo('popular-project', 20, { description: 'Türkçe Java projesi' })];
+    if (scenario === 'hostile-urls' && page === '2') body.push(
+      repo('hostile-project', 50, { html_url: 'javascript:alert(1)' }),
+      repo('hostile-homepage', 10, { homepage: ' java\tscript:alert(2)' }),
+      repo('plain-homepage', 5, { homepage: 'https://example.test/docs' }));
     if (scenario === 'empty-repos') body = [];
     if (scenario === 'repos-invalid') body = {};
     if (scenario.startsWith('repos-http-')) status = Number(scenario.split('-').at(-1));
@@ -71,6 +87,7 @@ function respond(request, response, scenario) {
     if (scenario === 'languages-empty') body = {};
   } else if (url.pathname.endsWith('/starred')) {
     body = page === '1' ? Array.from({ length: 100 }, (_, i) => repo(`star-${i}`, i)) : [repo('star-last', 500)];
+    if (scenario === 'hostile-urls' && page === '2') body.push(repo('star-hostile', 900, { html_url: 'data:text/html,x' }));
     if (scenario === 'starred-http' && page === '2') status = 429;
     if (scenario === 'starred-invalid') body = {};
     if (scenario === 'starred-empty') body = [];
@@ -94,7 +111,7 @@ async function runFetcher(script, scenario = 'success', token = 'synthetic-test-
   });
   try {
     for (const file of ['package.json', 'scripts/package.json', 'scripts/fetch-medium.js',
-      'scripts/fetch-github.js', 'scripts/lib/data-snapshot.mjs', 'js/medium-language.js', 'js/medium-excerpt.js']) {
+      'scripts/fetch-github.js', 'scripts/lib/data-snapshot.mjs', 'scripts/lib/safe-url.mjs', 'js/medium-language.js', 'js/medium-excerpt.js']) {
       await mkdir(dirname(join(root, file)), { recursive: true });
       await cp(join(ROOT, file), join(root, file));
     }
@@ -158,6 +175,33 @@ test('R-DATA-SYNC-01: a Medium sync with no content change leaves every data fil
   // commit, and every commit started a full CI validation.
   assert.deepEqual(second.contents, first.contents);
   assert.match(second.output, /İçerik değişmedi/);
+});
+
+test('R-DATA-URL-03: Medium sync drops non-http(s) links and resolves or drops covers before anything is written', async () => {
+  const result = await runFetcher('fetch-medium', 'hostile-urls');
+  assert.equal(result.code, 0, result.output);
+  const all = JSON.parse(result.contents['medium-all.json']);
+  const titles = all.map(item => item.title);
+  assert.ok(!titles.includes('Hostile link'), 'an article whose link is a javascript: URL must not be published');
+  assert.ok(all.every(item => /^https?:\/\//.test(item.url)), JSON.stringify(all.map(item => item.url)));
+  const relative = all.find(item => item.title === 'Relative cover');
+  assert.equal(relative?.thumbnail, 'https://cdn.test/cover.png', 'a protocol-relative <img src> resolves against the article');
+  const hostile = all.find(item => item.title === 'Hostile cover');
+  assert.ok(hostile, 'the article itself is fine and stays');
+  assert.equal(hostile.thumbnail, null, 'only the javascript: cover is dropped');
+});
+
+test('R-DATA-URL-04: GitHub sync drops repositories whose html_url is not http(s) and nulls unsafe homepages', async () => {
+  const result = await runFetcher('fetch-github', 'hostile-urls');
+  assert.equal(result.code, 0, result.output);
+  const repos = JSON.parse(result.contents['github-repos.json']);
+  const names = repos.map(item => item.name);
+  assert.ok(!names.includes('hostile-project'), 'a repository rendered as a javascript: href must not be published');
+  assert.equal(repos.find(item => item.name === 'hostile-homepage')?.homepage, null);
+  assert.equal(repos.find(item => item.name === 'plain-homepage')?.homepage, 'https://example.test/docs');
+  const starred = JSON.parse(result.contents['github-starred.json']);
+  assert.ok(!starred.some(item => item.name === 'star-hostile'));
+  assert.ok([...repos, ...starred].every(item => /^https:\/\//.test(item.url)));
 });
 
 test('sync entry point: GitHub fetches REST/GraphQL, paginates, filters and sorts before writing', async () => {

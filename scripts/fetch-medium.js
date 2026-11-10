@@ -3,6 +3,7 @@ import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { writeSnapshot } from './lib/data-snapshot.mjs';
 import { SaxesParser } from 'saxes';
+import { safeUrl } from './lib/safe-url.mjs';
 import ArticleLanguage from '../js/medium-language.js';
 import ArticleExcerpt from '../js/medium-excerpt.js';
 
@@ -108,7 +109,9 @@ export function parseRSS(xml) {
     const content = encoded || description;
     const tags    = extractAll(item, 'category').map(cdata).map(t => t.toLowerCase());
 
-    if (!title || !url) continue;
+    // The feed is third party: a non-http(s) link would become a live `javascript:` href.
+    const link = safeUrl(url);
+    if (!title || !link) continue;
 
     const hexId = hexIdFromUrl(url);
     if (hexId && EXCLUDE.has(hexId)) {
@@ -120,7 +123,8 @@ export function parseRSS(xml) {
     const mediaThumbnail =
       extractAttr(item, 'media:thumbnail', 'url') ||
       extractAttr(item, 'media:content',   'url');
-    const thumbnail = mediaThumbnail || firstImage(content) || null;
+    // <img src> scraped from content may be relative or protocol-relative: resolve it against the article.
+    const thumbnail = safeUrl(mediaThumbnail || firstImage(content), { base: link }) || null;
     const excerpt = selectExcerpt({ description, content: encoded });
     const date      = pubDate ? new Date(pubDate).toISOString() : null;
 
@@ -134,7 +138,7 @@ export function parseRSS(xml) {
     console.log(`  ✅ [${category}][${lang}] ${title.slice(0, 55)}`);
     if (tags.length) console.log(`     tags: ${tags.slice(0, 5).join(', ')}`);
 
-    articles.push({ title, url, thumbnail, excerpt, date, category, lang });
+    articles.push({ title, url: link, thumbnail, excerpt, date, category, lang });
   }
 
   console.log(`\n📊 Dahil: ${articles.length} | Hariç: ${excluded}`);
