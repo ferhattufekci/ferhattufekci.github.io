@@ -101,7 +101,9 @@ honest sequence is: finish the inline-script extraction (A0 is merged, A1+ is pl
 in `docs/OPEN-ITEMS.md`.
 
 ### F-3 No dependency or secret scanning in CI
-There is no `npm audit` step, no Dependabot configuration and no secret scan [D]. Two
+There is no `npm audit` step and no secret scan in CI [D]. (Correction, 2026-11-11: `.github/dependabot.yml`
+does exist and opens weekly grouped npm and GitHub Actions update PRs, e.g. #45; `npm audit` on
+`47c36ef` reported 0 vulnerabilities [D].) Two
 different surfaces need to be kept apart here:
 - **Build-time:** 6 devDependencies in `package.json`. These never reach the browser.
   `npm audit`/Dependabot would cover them.
