@@ -15,6 +15,10 @@ const longCatalog = {
   'github-starred.json': starred(25)
 };
 
+// Measured as computed styles of the ::-webkit-scrollbar pseudo-elements, not as layout
+// width: the suite runs Chromium with --hide-scrollbars, where offsetWidth - clientWidth
+// reports the reserved gutter (the panels use scrollbar-gutter: stable) rather than the bar
+// a visitor sees. The computed style is what decides the rendered bar, flag or no flag.
 async function scrollbarOf(page, id) {
   await mockCatalog(page, longCatalog);
   await page.goto(`/#${id}`);
@@ -24,21 +28,34 @@ async function scrollbarOf(page, id) {
     const current = document.querySelector('.pt-page-current');
     const scrollers = [current, ...current.querySelectorAll('*')].filter(el =>
       /auto|scroll/.test(getComputedStyle(el).overflowY) && el.scrollHeight > el.clientHeight + 1);
-    return scrollers.map(el => ({ id: el.id, thickness: el.offsetWidth - el.clientWidth }));
+    return scrollers.map(el => {
+      const part = name => getComputedStyle(el, `::-webkit-scrollbar${name}`);
+      return {
+        id: el.id,
+        width: part('').width,
+        thumb: part('-thumb').backgroundColor,
+        radius: part('-thumb').borderRadius,
+        outline: part('-thumb').outlineStyle,
+        track: part('-track').backgroundColor
+      };
+    });
   });
 }
 
 for (const width of [1440, 495]) {
-  test(`R-SCROLLBAR-01 | every page uses the same scrollbar thickness at ${width}px`, async ({ page, browserName }, info) => {
-    test.skip(info.project.use.isMobile, 'Touch emulation uses overlay scrollbars that take no layout width.');
-    await page.setViewportSize({ width: width, height: 900 });
-    const found = {};
-    for (const id of PAGES) found[id] = await scrollbarOf(page, id);
-
-    for (const id of PAGES) expect(found[id], `${id} should have exactly one scroll owner`).toHaveLength(1);
-    const thickness = PAGES.map(id => found[id][0].thickness);
-    expect(new Set(thickness).size, `thickness per page: ${JSON.stringify(Object.fromEntries(PAGES.map((id, i) => [id, thickness[i]])))}`).toBe(1);
-    // Chromium draws the slim custom bar; the native bar with arrow buttons is 15px.
-    if (browserName === 'chromium') expect(thickness[0]).toBe(5);
-  });
+  for (const theme of ['light', 'dark']) {
+    test(`R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme`, async ({ page, browserName }, info) => {
+      test.skip(browserName !== 'chromium', '::-webkit-scrollbar is Chromium/WebKit-only; Firefox uses scrollbar-width.');
+      test.skip(info.project.use.isMobile, 'Touch emulation draws transient overlay bars; the narrow desktop window is the case covered here.');
+      await page.emulateMedia({ colorScheme: theme });
+      await page.setViewportSize({ width, height: 900 });
+      const found = {};
+      for (const id of PAGES) found[id] = await scrollbarOf(page, id);
+      for (const id of PAGES) expect(found[id], `${id} should have exactly one scroll owner`).toHaveLength(1);
+      const styles = Object.fromEntries(PAGES.map(id => [id, (({ id: _, ...style }) => style)(found[id][0])]));
+      // The native bar (15px, with arrow buttons) shows up as width "auto": no rule styled it.
+      for (const id of PAGES) expect(styles[id].width, `${id}: ${JSON.stringify(styles[id])}`).toBe('5px');
+      for (const id of PAGES.slice(1)) expect(styles[id], `${id} differs from about-me`).toEqual(styles['about-me']);
+    });
+  }
 }

@@ -86,6 +86,9 @@
   .js .page-content-panel::-webkit-scrollbar-thumb {
     background-color: var(--color-scrollbar-thumb-touch);
     border-radius: 3px;
+    /* A narrow desktop window matches the fine-pointer rule above too; without this
+       the panels kept its slategrey outline while About Me (dark-theme.css) drops it. */
+    outline: 0;
   }
   @supports not selector(::-webkit-scrollbar) {
     .js .page-content-panel {
