@@ -76,24 +76,6 @@
     }
   }
 }
-/* Touch / narrow viewports: the panel scrolls here too, but the rule above is gated
-   to fine pointers, so it fell back to a transient native overlay bar while .pt-page
-   (About Me) showed a persistent one. Use the same visible, themed thumb so every page
-   scrolls with one consistent indicator. */
-@media (max-width: 991px), (hover: none) and (pointer: coarse) {
-  .js .page-content-panel::-webkit-scrollbar { width: 5px; }
-  .js .page-content-panel::-webkit-scrollbar-track { background-color: transparent; }
-  .js .page-content-panel::-webkit-scrollbar-thumb {
-    background-color: var(--color-scrollbar-thumb-touch);
-    border-radius: 3px;
-  }
-  @supports not selector(::-webkit-scrollbar) {
-    .js .page-content-panel {
-      scrollbar-width: thin;
-      scrollbar-color: var(--color-scrollbar-thumb-touch) transparent;
-    }
-  }
-}
 /* Let the last heading reach the top even when its disclosure is closed.
    Keep the PDF in natural flow; unused space follows the final content. */
 .resume-ending { margin-top: 46px; }

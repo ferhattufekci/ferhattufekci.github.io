@@ -1,4 +1,5 @@
 :root {
+  --scrollbar-color-scheme: light;
   --color-bg:             #f5f5f5;
   --color-surface:        #ffffff;
   --color-surface-alt:    #fcfcfc;
@@ -31,7 +32,7 @@
   --filter-hover-bg:      rgba(255,255,255,0.7);
   --filter-active-shadow: 0 1px 4px rgba(0,0,0,0.12), 0 0 0 0.5px rgba(0,0,0,0.06);
   --color-scrollbar-thumb:#dedede;
-  --color-scrollbar-thumb-touch:#8f8f8f;
+  --color-scrollbar-thumb-touch:#6e7781;
   --color-blockquote:     #d8d8d8;
   --color-hp-mask:        rgba(10,10,10,0.45);
   --color-drawer-shadow:  rgba(0, 0, 0, 0.14);
@@ -43,6 +44,7 @@
 }
 
 [data-theme="dark"] {
+  --scrollbar-color-scheme: dark;
   --color-bg:             #0d1117;
   --color-surface:        #161b22;
   --color-surface-alt:    #1c2128;
@@ -75,7 +77,7 @@
   --filter-hover-bg:      rgba(255,255,255,0.07);
   --filter-active-shadow: 0 1px 4px rgba(0,0,0,0.25), 0 0 0 0.5px var(--color-border);
   --color-scrollbar-thumb:#30363d;
-  --color-scrollbar-thumb-touch:#6e7681;
+  --color-scrollbar-thumb-touch:#8b949e;
   --color-blockquote:     #30363d;
   --color-hp-mask:        rgba(0,0,0,0.6);
   --color-drawer-shadow:  rgba(0, 0, 0, 0.22);
@@ -424,6 +426,23 @@ body::-webkit-scrollbar-track,
   background-color: var(--color-surface);
 }
 
+/* Preserve the fine-pointer pseudo-element styling. A non-auto standard
+   color takes precedence over it in browsers that implement scrollbar-color. */
+@media not all and (any-hover: hover) and (any-pointer: fine) {
+  .page-content-panel {
+    color-scheme: var(--scrollbar-color-scheme);
+    scrollbar-color: var(--color-scrollbar-thumb-touch) transparent;
+  }
+  /* The page and header already have a custom bar at 991px and above. */
+  @media (max-width: 990.98px) {
+    .pt-page,
+    .header {
+      color-scheme: var(--scrollbar-color-scheme);
+      scrollbar-color: var(--color-scrollbar-thumb-touch) transparent;
+    }
+  }
+}
+
 .start-page .section-inner .mask {
   background: var(--color-hp-mask);
 }
@@ -464,44 +483,4 @@ h3.comment-reply-title:after {
 .mobile-theme-toggle {
   flex: 0 0 34px;
   margin: 0;
-}
-
-/* Scrollbar on narrow / touch viewports.
-   Root cause of the "scrollbar vanishes in light theme on mobile" bug: below 991px the
-   scroll owner is .pt-page (not body), and the desktop-only rules in main.css that give
-   it a width and a slategrey outline do not apply. Only the themed colours did, and
-   --color-scrollbar-thumb is #dedede on a #ffffff track (about 1.3:1), so the thumb
-   rendered but was invisible. The dark thumb (#30363d on #161b22) happened to remain
-   discernible. Touch gets its own thumb token that meets the 3:1 non-text contrast
-   minimum (WCAG 1.4.11) in both themes; desktop is untouched. */
-@media (max-width: 991px), (hover: none) and (pointer: coarse) {
-  body::-webkit-scrollbar,
-  .pt-page::-webkit-scrollbar,
-  .single-page-content::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-
-  body::-webkit-scrollbar-track,
-  .pt-page::-webkit-scrollbar-track,
-  .single-page-content::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-
-  body::-webkit-scrollbar-thumb,
-  .pt-page::-webkit-scrollbar-thumb,
-  .single-page-content::-webkit-scrollbar-thumb {
-    background-color: var(--color-scrollbar-thumb-touch);
-    border-radius: 3px;
-    outline: 0;
-  }
-
-  /* Firefox (no ::-webkit-scrollbar) uses the standard properties. */
-  @supports not selector(::-webkit-scrollbar) {
-    .pt-page,
-    .single-page-content {
-      scrollbar-width: thin;
-      scrollbar-color: var(--color-scrollbar-thumb-touch) transparent;
-    }
-  }
 }
