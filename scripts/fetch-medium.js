@@ -2,6 +2,7 @@ import { writeFileSync, readFileSync, mkdirSync } from 'fs';
 import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { SaxesParser } from 'saxes';
+import { safeUrl } from './lib/safe-url.mjs';
 import ArticleLanguage from '../js/medium-language.js';
 import ArticleExcerpt from '../js/medium-excerpt.js';
 
@@ -107,7 +108,8 @@ export function parseRSS(xml) {
     const content = encoded || description;
     const tags    = extractAll(item, 'category').map(cdata).map(t => t.toLowerCase());
 
-    if (!title || !url) continue;
+    // The feed is third party: a non-http(s) link would become a live `javascript:` href.
+    if (!title || !safeUrl(url)) continue;
 
     const hexId = hexIdFromUrl(url);
     if (hexId && EXCLUDE.has(hexId)) {
@@ -119,7 +121,7 @@ export function parseRSS(xml) {
     const mediaThumbnail =
       extractAttr(item, 'media:thumbnail', 'url') ||
       extractAttr(item, 'media:content',   'url');
-    const thumbnail = mediaThumbnail || firstImage(content) || null;
+    const thumbnail = safeUrl(mediaThumbnail || firstImage(content)) || null;
     const excerpt = selectExcerpt({ description, content: encoded });
     const date      = pubDate ? new Date(pubDate).toISOString() : null;
 

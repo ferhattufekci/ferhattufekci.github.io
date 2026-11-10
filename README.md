@@ -15,6 +15,10 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 - [Maintenance guide](#maintenance-guide): agent readiness, GitHub Pages deployment and verification.
 - [Test strategy](TEST-STRATEGY.md#test-strategy-en): test layers, BDD scenarios and the deployment quality gate.
 - [Test engineering audit](docs/testing/TEST-AUDIT.md) and [manual acceptance procedure (GKP)](docs/testing/GKP.md) (Turkish): evidence, traceability, repeatable test data and pending acceptance decisions.
+- [Engineering assessment](docs/ENGINEERING-ASSESSMENT.md): what this repository is, what it demonstrably does well, and the open findings with their evidence level.
+- [Architecture decision records](docs/architecture/adr/README.md): why the site stays static, why a release is pinned to one SHA, why recovery is observe-only.
+- [Requirements traceability matrix](docs/business-analysis/requirements-traceability-matrix.md): generated from the test titles, so it cannot drift from the suite.
+- [Threat model](docs/security/threat-model.md): trust boundaries, the controls that exist and the ones that do not.
 
 ### Tech Stack
 
@@ -259,6 +263,10 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 - [Bakım rehberi](#bakim-rehberi): ajan hazırlığı, GitHub Pages üzerinde yayınlama ve doğrulama.
 - [Test stratejisi](TEST-STRATEGY.md#test-strategy-tr): test katmanları, BDD senaryoları ve yayın kalite kapısı.
 - [Test mühendisliği denetimi](docs/testing/TEST-AUDIT.md) ve [manuel kabul prosedürü (GKP)](docs/testing/GKP.md): kanıtlar, izlenebilirlik, tekrarlanabilir veri ve açık kabul kararları.
+- [Mühendislik değerlendirmesi](docs/ENGINEERING-ASSESSMENT.md): deponun ne olduğu, kanıtlanabilir güçlü yanları ve açık bulgular (kanıt düzeyleriyle).
+- [Mimari karar kayıtları](docs/architecture/adr/README.md): sitenin neden statik kaldığı, yayının neden tek bir SHA'ya sabitlendiği, kurtarmanın neden yalnızca gözlem modunda olduğu.
+- [Gereksinim izlenebilirlik matrisi](docs/business-analysis/requirements-traceability-matrix.md): test başlıklarından üretilir, bu yüzden takımdan sapamaz.
+- [Tehdit modeli](docs/security/threat-model.md): güven sınırları, mevcut ve eksik kontroller.
 
 ### Teknoloji Yığını
 

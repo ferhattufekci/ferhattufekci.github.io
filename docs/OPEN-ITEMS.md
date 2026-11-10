@@ -122,6 +122,22 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ### GKP GKP/RTM v0.1 taslak kalemleri (T-6)
 - **Öncelik:** P3. **Durum:** taslak. **Kabul:** taslaktan çıkış kriteri tanımlı. **Karar:** planlı iş.
 
+### SEC-CSP Content-Security-Policy yok
+- **Öncelik:** P2. **Durum:** uygulanmadı, bilinçli. **Kanıt:** sayfada CSP başlığı/meta'sı yok [D].
+- **Neden ertelendi:** `index.html` hâlâ büyük satır içi `<script>` blokları ve satır içi olay öznitelikleri taşıyor. Anlamlı bir politika `'unsafe-inline'` gerektirirdi (koruma sağlamaz) ya da her blok için hash/nonce gerektirirdi; GitHub Pages özel başlık sunamadığı için bu `<meta>` ile yapılırdı ve her düzenlemede kırılırdı.
+- **Sıra:** satır içi script çıkarımı (A1+, `docs/T-4-INLINE-SCRIPTS.md`) bitince `'unsafe-inline'` gerektirmeyen CSP eklenir. **Karar:** sahip.
+
+### SEC-SCAN Bağımlılık ve secret taraması yok
+- **Öncelik:** P2. **Durum:** uygulanmadı. **Kanıt:** CI'da `npm audit` adımı, Dependabot yapılandırması veya secret taraması yok [D].
+- **Not:** 6 devDependency var, tarayıcıya giden üçüncü taraf paket yok (jQuery/Modernizr vendored). Etki alanı dar ama kontrol eksik. Pipeline'ı yukarı akış bir advisory'sinde kırabilecek bir kapı eklemek politika kararıdır. **Karar:** sahip.
+
+### QA-TYPES Tip denetimi yok
+- **Öncelik:** P3. **Durum:** uygulanmadı. **Kanıt:** TypeScript yok, `checkJs` yok [D].
+- **Not:** `tsc --checkJs` kapısı gerçek bir hata sınıfını ucuza yakalar ama yeni bir devDependency gerektirir; bu depoda "yeni bağımlılık ekleme" kuralı geçerli. **Karar:** sahip.
+
+### HYG Depo hijyeni
+- **Öncelik:** P3. **Durum:** uygulanmadı. **Kanıt:** README lisans koşullarını yazıyor ama `LICENSE` dosyası yok; `SECURITY.md` yok; `TEST-STRATEGY.md` kökte, diğer belgeler `docs/` altında [D].
+
 ## 3. Uygulandı, doğrulama bekliyor
 
 | ID | İş | Doğrulanması beklenen | Kanıt |
