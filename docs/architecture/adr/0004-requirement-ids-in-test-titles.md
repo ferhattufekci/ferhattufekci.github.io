@@ -1,5 +1,7 @@
 # ADR 0004 — Carry requirement ids in test titles and generate the matrix
 
+**🇬🇧 English | [🇹🇷 Türkçe](0004-requirement-ids-in-test-titles.tr.md)**
+
 **Status:** Accepted · **Date:** 2026-11-10 (recording a practice already in force)
 
 ## Context

@@ -1,5 +1,7 @@
 # ADR 0005 — Validate third-party URL schemes when data is generated
 
+**🇬🇧 English | [🇹🇷 Türkçe](0005-validate-urls-at-generation-time.tr.md)**
+
 **Status:** Accepted · **Date:** 2026-11-10
 
 ## Context

@@ -1,5 +1,7 @@
 # Engineering Assessment
 
+**🇬🇧 English | [🇹🇷 Türkçe](ENGINEERING-ASSESSMENT.tr.md)**
+
 **Scope:** the whole repository at `18004f4` (2026-11-10). **Method:** read the source, the
 workflows, the tests and the CI history; run what can be run here; measure rather than assume.
 Every claim carries its evidence level: **[D]** verified here, **[G]** observed in this
