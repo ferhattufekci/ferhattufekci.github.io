@@ -47,7 +47,7 @@ test('R-SHELL-02: generated HTML and Markdown share the same error copy and reco
 test('R-SHELL-03: changing the source shell is reflected in the next generated 404', async () => {
   await withProjectFixture(async root => {
     const source = await readFile(join(root, 'index.html'), 'utf8');
-    await writeFile(join(root, 'index.html'), source.replace('Software Crafter</div>', 'Shared shell regression probe</div>'));
+    await writeFile(join(root, 'index.html'), source.replace(/<span class="t-shimmer" data-text="Software Crafter">Software Crafter<\/span><\/div>/, 'Shared shell regression probe</div>'));
     execFileSync(process.execPath, ['scripts/build-agent-content.mjs'], { cwd: ROOT, env: { ...process.env, PORTFOLIO_ROOT: root }, stdio: 'pipe' });
     const { document } = parseHTML(await readFile(join(root, '404.html'), 'utf8'));
     assert.equal(document.querySelector('#site_header .site-subtitle').textContent, 'Shared shell regression probe');

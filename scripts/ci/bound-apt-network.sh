@@ -16,3 +16,10 @@ printf '%s\n' \
   sudo tee /etc/apt/apt.conf.d/99-ci-network >/dev/null
 echo "apt network bounds:"
 apt-config dump | grep -E '^Acquire::(http|https)::Timeout|^Acquire::Retries'
+# Diagnostic only, never fails the step: the effective values above have been
+# 15 s / 1 retry in every observed job although this script writes 20 s / 3, so
+# something else defines them. List every apt setting that mentions them.
+echo "apt configuration sources (diagnostic):"
+echo "APT_CONFIG=${APT_CONFIG:-unset}"
+ls -1 /etc/apt/apt.conf.d || true
+grep -rnE 'Timeout|Retries' /etc/apt/apt.conf /etc/apt/apt.conf.d 2>/dev/null || true

@@ -85,47 +85,6 @@
     "updatedAt": "2025-09-23T22:36:40Z"
   },
   {
-    "name": "ferhattufekci.github.io",
-    "description": "Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.",
-    "url": "https://github.com/ferhattufekci/ferhattufekci.github.io",
-    "homepage": "https://ferhattufekci.github.io/",
-    "language": "JavaScript",
-    "langColor": "#f1e05a",
-    "languages": [
-      {
-        "name": "JavaScript",
-        "color": "#f1e05a",
-        "percent": 53
-      },
-      {
-        "name": "HTML",
-        "color": "#e34c26",
-        "percent": 26
-      },
-      {
-        "name": "CSS",
-        "color": "#563d7c",
-        "percent": 21
-      }
-    ],
-    "stars": 0,
-    "forks": 0,
-    "topics": [
-      "css3",
-      "github-actions",
-      "html5",
-      "javascript",
-      "jquery",
-      "medium",
-      "portfolio",
-      "release-automation"
-    ],
-    "pinned": true,
-    "category": "software",
-    "lang": "en",
-    "updatedAt": "2026-11-02T04:57:40Z"
-  },
-  {
     "name": "java-champions",
     "description": "A list of Java Champions",
     "url": "https://github.com/ferhattufekci/java-champions",
@@ -233,7 +192,7 @@
     "pinned": true,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-10-07T06:16:59Z"
+    "updatedAt": "2026-11-08T17:02:49Z"
   },
   {
     "name": "turkcekaynaklar-com",

@@ -4,16 +4,16 @@ import { openBlog, controls, openedPanel, tabTo, visibleFocus, cleanProbe, setPl
 test.afterEach(async ({ page }) => cleanProbe(page));
 test.use({ reducedMotion: 'no-preference' });
 
-test('R-BLOG-SHARE-09 | Read and Share use the same action typography, text hover and stable targets', async ({ page }) => {
-  await openBlog(page, { platform: { native: 'absent' } });
-  const style = locator => locator.evaluate(el => {
-    const s = getComputedStyle(el);
-    return Object.fromEntries(['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'gap',
-      'textDecorationLine', 'textDecorationThickness', 'textUnderlineOffset', 'backgroundColor', 'borderTopWidth', 'cursor']
-      .map(key => [key, s[key]]));
-  });
-  const typography = ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'gap'];
-  for (const key of ['A', 'B']) {
+for (const key of ['A', 'B']) {
+  test(`R-BLOG-SHARE-09 | ${key} | Read and Share use the same action typography, text hover and stable targets`, async ({ page }) => {
+    await openBlog(page, { platform: { native: 'absent' } });
+    const style = locator => locator.evaluate(el => {
+      const s = getComputedStyle(el);
+      return Object.fromEntries(['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'gap',
+        'textDecorationLine', 'textDecorationThickness', 'textUnderlineOffset', 'backgroundColor', 'borderTopWidth', 'cursor']
+        .map(key => [key, s[key]]));
+    });
+    const typography = ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'gap'];
     await setPlatformMode(page, 'clipboard', 'resolve');
     const c = controls(page, key), read = c.card.locator('.blog-article-read');
     const reference = await style(read);
@@ -103,5 +103,5 @@ test('R-BLOG-SHARE-09 | Read and Share use the same action typography, text hove
     }
     await c.trigger.press('Escape');
     await expect(c.trigger).toHaveAttribute('aria-expanded', 'false');
-  }
-});
+  });
+}

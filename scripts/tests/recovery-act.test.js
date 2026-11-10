@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
+import { execFile, spawnSync } from 'node:child_process';
+import { createServer } from 'node:http';
+import { promisify } from 'node:util';
 import {
   cpSync,
   mkdirSync,
@@ -324,7 +326,7 @@ const exactArgvCheck = (dir) => {
   assert.deepEqual(run.actions.map((c) => c.argv), [RERUN]);
 };
 
-test('R-CI-RECOVER-C1-12: resolve (workflow_run) and current read main through the API, never through git', () => {
+test('R-CI-RECOVER-C1-12: resolve (workflow_run) and current read main through the API, never through git', async () => {
   // Production runs 42607611212 and 42645437976: `git ls-remote origin` failed in these jobs
   // (persist-credentials: false, private repository), so no data-commit release was published.
   const writerRun = {
@@ -332,28 +334,56 @@ test('R-CI-RECOVER-C1-12: resolve (workflow_run) and current read main through t
     head_repository: { full_name: REPO }, head_branch: 'main', conclusion: 'success', event: 'schedule', head_sha: OTHER_TIP
   };
   const event = { repository: { full_name: REPO }, workflow_run: writerRun };
-  const resolved = recoverCommand({
-    command: 'resolve', args: [], event,
-    env: { GITHUB_EVENT_NAME: 'workflow_run', GITHUB_REF: 'refs/heads/main', GITHUB_SHA: OTHER_TIP }
+  const requests = [];
+  const server = createServer((request, reply) => {
+    requests.push({ path: request.url, authorization: request.headers.authorization });
+    reply.writeHead(200, { 'Content-Type': 'application/json' });
+    reply.end(JSON.stringify({ object: { sha: TIP } }));
   });
-  assert.equal(resolved.status, 0, resolved.stderr);
-  assert.equal(resolved.output, `sha=${TIP}\npublish=true\n`, 'the release is the main tip read through the API, not the stale workflow_run head');
-  assert.deepEqual(resolved.calls, [{ tool: 'gh', argv: ['api', `repos/${REPO}/git/ref/heads/main`] }]);
-
-  const untrusted = recoverCommand({
-    command: 'resolve', args: [],
-    event: { ...event, workflow_run: { ...writerRun, head_branch: 'feature' } },
-    env: { GITHUB_EVENT_NAME: 'workflow_run' }
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
   });
-  assert.notEqual(untrusted.status, 0);
-  assert.deepEqual(untrusted.calls, [], 'trust fields are checked before anything is contacted');
+  try {
+    const { dir } = sandbox();
+    const eventPath = join(dir, 'event.json');
+    const outputPath = join(dir, 'output.txt');
+    const call = (command, args = [], payload = event, extra = {}) => {
+      writeFileSync(eventPath, JSON.stringify(payload));
+      writeFileSync(outputPath, '');
+      return promisify(execFile)(process.execPath, [join(ciDir, 'commands.mjs'), command, ...args], {
+        timeout: 5000,
+        env: {
+          ...process.env,
+          PATH: '',
+          GH_TOKEN: 'fixture-token',
+          GITHUB_API_URL: `http://127.0.0.1:${server.address().port}`,
+          GITHUB_EVENT_PATH: eventPath,
+          GITHUB_OUTPUT: outputPath,
+          GITHUB_EVENT_NAME: 'workflow_run',
+          GITHUB_REF: 'refs/heads/main',
+          GITHUB_SHA: OTHER_TIP,
+          ...extra
+        }
+      });
+    };
+    const expected = { path: `/repos/${REPO}/git/ref/heads/main`, authorization: 'Bearer fixture-token' };
+    const resolved = await call('resolve');
+    assert.equal(readFileSync(outputPath, 'utf8'), `sha=${TIP}\npublish=false\n`, 'automatic sync must validate the authenticated main tip without publishing');
+    assert.match(resolved.stdout, /^publish=false$/m);
+    assert.deepEqual(requests, [expected]);
 
-  const current = recoverCommand({ command: 'current', args: [TIP] });
-  assert.equal(current.status, 0, current.stderr);
-  assert.deepEqual(current.calls, [{ tool: 'gh', argv: ['api', `repos/${REPO}/git/ref/heads/main`] }]);
-  const superseded = recoverCommand({ command: 'current', args: [OTHER_TIP] });
-  assert.notEqual(superseded.status, 0);
-  assert.match(superseded.stderr, /Superseded source/);
+    await assert.rejects(call('resolve', [], { ...event, workflow_run: { ...writerRun, head_branch: 'feature' } }), /Unexpected source branch/);
+    assert.deepEqual(requests, [expected], 'trust fields are checked before contacting GitHub');
+
+    const current = await call('current', [TIP]);
+    assert.match(current.stdout, new RegExp(TIP));
+    assert.deepEqual(requests, [expected, expected]);
+    await assert.rejects(call('current', [OTHER_TIP]), /Superseded source/);
+    assert.deepEqual(requests, [expected, expected, expected]);
+  } finally {
+    await new Promise((resolve, reject) => server.close(error => error ? reject(error) : resolve()));
+  }
 });
 
 test('R-CI-RECOVER-C1-13: every workflow step that reads main through the API provides GH_TOKEN', () => {
@@ -362,7 +392,10 @@ test('R-CI-RECOVER-C1-13: every workflow step that reads main through the API pr
     const text = readFileSync(join(root, file), 'utf8');
     const step = text.split(/\n\s*- /).find((chunk) => chunk.includes(`commands.mjs ${command}`));
     assert.ok(step, `${file}: no step runs commands.mjs ${command}`);
-    assert.match(step, /GH_TOKEN: \$\{\{ github\.token \}\}/, `${file}: the ${command} step has no GH_TOKEN`);
+    const expectedToken = command === 'resolve'
+      ? /GH_TOKEN: \$\{\{ github\.event_name == 'workflow_run' && github\.token \|\| '' \}\}/
+      : /GH_TOKEN: \$\{\{ github\.token \}\}/;
+    assert.match(step, expectedToken, `${file}: the ${command} step has no correctly scoped GH_TOKEN`);
   }
 });
 
