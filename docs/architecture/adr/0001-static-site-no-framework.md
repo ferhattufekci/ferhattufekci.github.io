@@ -1,5 +1,7 @@
 # ADR 0001 — Keep a static, framework-free site
 
+**🇬🇧 English | [🇹🇷 Türkçe](0001-static-site-no-framework.tr.md)**
+
 **Status:** Accepted · **Date:** 2026-11-10 (recording a decision already in force)
 
 ## Context

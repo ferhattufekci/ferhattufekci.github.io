@@ -1,5 +1,7 @@
 # Threat Model
 
+**🇬🇧 English | [🇹🇷 Türkçe](threat-model.tr.md)**
+
 Scope: the published site, the generated data and the release pipeline. Evidence levels as in
 `docs/ENGINEERING-ASSESSMENT.md`.
 

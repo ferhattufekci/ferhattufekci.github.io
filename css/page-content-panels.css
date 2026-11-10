@@ -77,23 +77,19 @@
   }
 }
 /* Touch / narrow viewports: the panel scrolls here too, but the rule above is gated
-   to fine pointers, so it fell back to a transient native overlay bar while .pt-page
-   (About Me) showed a persistent one. Use the same visible, themed thumb so every page
-   scrolls with one consistent indicator. */
+   to fine pointers. Use the same desktop design as .pt-page (dark-theme.css) so every
+   page scrolls with one consistent indicator. */
 @media (max-width: 991px), (hover: none) and (pointer: coarse) {
   .js .page-content-panel::-webkit-scrollbar { width: 5px; }
-  .js .page-content-panel::-webkit-scrollbar-track { background-color: transparent; }
+  .js .page-content-panel::-webkit-scrollbar-track { background-color: var(--color-surface); }
   .js .page-content-panel::-webkit-scrollbar-thumb {
-    background-color: var(--color-scrollbar-thumb-touch);
-    border-radius: 3px;
-    /* A narrow desktop window matches the fine-pointer rule above too; without this
-       the panels kept its slategrey outline while About Me (dark-theme.css) drops it. */
-    outline: 0;
+    background-color: var(--color-scrollbar-thumb);
+    outline: 1px solid slategrey;
   }
   @supports not selector(::-webkit-scrollbar) {
     .js .page-content-panel {
       scrollbar-width: thin;
-      scrollbar-color: var(--color-scrollbar-thumb-touch) transparent;
+      scrollbar-color: slategrey var(--color-surface);
     }
   }
 }
