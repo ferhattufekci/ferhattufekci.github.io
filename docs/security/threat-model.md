@@ -24,6 +24,9 @@ scripts.
    generation time plus `scripts/tests/data-contract.test.js` on the committed data.
 2. **GitHub REST API → `data/github-*.json` → DOM.** Project cards are built as an HTML
    string and assigned with `innerHTML` [D]. Text fields are escaped by `escHtml` (`& < > "`).
+   The repository link is rendered as `href="${escHtml(r.url)}"`; escaping prevents breaking
+   out of the attribute but not a `javascript:` scheme, so `html_url` is now validated by
+   `safeUrl()` at generation time and a repository with an unsafe URL is not published.
    Three values are interpolated **unescaped**: `l.color`/`r.langColor` into
    `style="background:…"`, and `percent`/`stars`/`forks` as text. The colours come from a
    local `LANG_COLORS` map in `fetch-github.js`, never from the API [D], so they are not
@@ -44,13 +47,13 @@ scripts.
 
 | # | Risk | Status |
 |---|---|---|
-| T1 | Hostile URL scheme in feed data becomes an executing `href`/`src` | **Mitigated**: `safeUrl()` + data contract tests |
+| T1 | Hostile URL scheme in feed or API data becomes an executing `href`/`src` | **Mitigated**: `safeUrl()` at generation; behavioural tests R-DATA-URL-03/04 against a fake feed and API; data contract R-DATA-URL-01/02 |
 | T2 | Unescaped attribute interpolation in project cards | **Constrained**: values are local literals; invariant now asserted |
 | T3 | No CSP, so any injected script runs unconstrained | **Open** (F-2): blocked on inline-script extraction |
 | T4 | Compromised third-party action alters the release | **Mitigated**: all actions pinned to SHA |
 | T5 | Vulnerable devDependency | **Open** (F-3): no scanning configured |
 | T6 | Recovery automation acts on a stale or wrong run | **Mitigated by default**: observe-only; activation criteria in `docs/RECOVERY-ACTIVATION.md` |
-| T7 | Mixed content from `http://` project homepages | **Open, low**: 3 records carry `http` homepages [D]; browsers will warn or upgrade |
+| T7 | Mixed content from an `http://` cover image (`image.src`) on the https site | **Open, low**: `safeUrl()` allows `http:`; no `http` thumbnail exists in the data today [D]. (Three repositories have `http` homepages, but `homepage` is not rendered, and a plain link is navigation, not mixed content.) |
 
 ## What was deliberately not done
 

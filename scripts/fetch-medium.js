@@ -109,7 +109,8 @@ export function parseRSS(xml) {
     const tags    = extractAll(item, 'category').map(cdata).map(t => t.toLowerCase());
 
     // The feed is third party: a non-http(s) link would become a live `javascript:` href.
-    if (!title || !safeUrl(url)) continue;
+    const link = safeUrl(url);
+    if (!title || !link) continue;
 
     const hexId = hexIdFromUrl(url);
     if (hexId && EXCLUDE.has(hexId)) {
@@ -121,7 +122,8 @@ export function parseRSS(xml) {
     const mediaThumbnail =
       extractAttr(item, 'media:thumbnail', 'url') ||
       extractAttr(item, 'media:content',   'url');
-    const thumbnail = safeUrl(mediaThumbnail || firstImage(content)) || null;
+    // <img src> scraped from content may be relative or protocol-relative: resolve it against the article.
+    const thumbnail = safeUrl(mediaThumbnail || firstImage(content), { base: link }) || null;
     const excerpt = selectExcerpt({ description, content: encoded });
     const date      = pubDate ? new Date(pubDate).toISOString() : null;
 
@@ -135,7 +137,7 @@ export function parseRSS(xml) {
     console.log(`  ✅ [${category}][${lang}] ${title.slice(0, 55)}`);
     if (tags.length) console.log(`     tags: ${tags.slice(0, 5).join(', ')}`);
 
-    articles.push({ title, url, thumbnail, excerpt, date, category, lang });
+    articles.push({ title, url: link, thumbnail, excerpt, date, category, lang });
   }
 
   console.log(`\n📊 Dahil: ${articles.length} | Hariç: ${excluded}`);

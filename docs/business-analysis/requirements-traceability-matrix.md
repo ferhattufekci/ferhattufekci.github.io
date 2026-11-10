@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**211 requirement ids, 252 test titles, 41 areas.**
+**222 requirement ids, 265 test titles, 43 areas.**
 
 | Area | Ids |
 |---|---|
@@ -25,11 +25,11 @@
 | R-CONTENT | 3 |
 | R-DATA-COLOR | 1 |
 | R-DATA-NUM | 1 |
-| R-DATA-URL | 3 |
+| R-DATA-URL | 4 |
 | R-DEPLOY | 1 |
 | R-DISCLOSURE | 3 |
 | R-DOC | 3 |
-| R-DOC-RTM | 2 |
+| R-DOC-RTM | 3 |
 | R-EXTERNAL | 1 |
 | R-FILTER | 14 |
 | R-FIRST | 2 |
@@ -40,9 +40,11 @@
 | R-KEYBOARD | 8 |
 | R-LINK | 3 |
 | R-MOTION | 7 |
+| R-NATIVE-RESULT | 3 |
 | R-NAV | 8 |
 | R-PANEL | 7 |
 | R-PIPE | 13 |
+| R-PROGRESS | 6 |
 | R-RELEASE | 4 |
 | R-RESUME | 15 |
 | R-RESUME-NAV | 7 |
@@ -70,20 +72,20 @@
 | R-ARROW-03 | Press feedback is transient and releasing a canceled mouse press does not navigate | Browser (Playwright) | `tests/browser/arrow-controls.spec.mjs` |
 | R-ARROW-04 | Hybrid touch cancellation clears active feedback and a subsequent real mouse restores hover | Browser (Playwright) | `tests/browser/arrow-hybrid.spec.mjs` |
 | R-ASSET-01 | generation changes a cached stylesheet URL when its bytes change, preserves other assets and is idempotent | Unit/contract (node:test) | `scripts/tests/asset-versioning.test.js` |
-| R-BLOG-SHARE-01 | B01 \| Given article cards, when Share is used, then reading remains a separate native link | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-01 | K01 \| Keyboard activation, visible focus, Tab exit and Escape preserve native disclosure semantics | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
 | R-BLOG-SHARE-02 | B02.${path}.${key} \| The selected original literal URL reaches only the explicit platform path | Browser (Playwright), Unit/contract (node:test) | `tests/browser/blog-sharing.spec.mjs`<br>`scripts/tests/blog-sharing.test.js` |
-| R-BLOG-SHARE-03 | B03 \| Given a pending copy, then repeats cannot report success or start another write and failure can recover | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
-| R-BLOG-SHARE-04 | B04.${mode} \| Given unavailable clipboard, then a labelled manual URL appears without changing focus or selection | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
-| R-BLOG-SHARE-05 | B05.${name} \| Capabilities choose direct native or a single Copy fallback without UA guessing | Browser (Playwright), Unit/contract (node:test) | `tests/browser/blog-sharing.spec.mjs`<br>`scripts/tests/blog-sharing.test.js` |
-| R-BLOG-SHARE-06 | B06.${outcome} \| Given a rejected native share, then feedback is honest, clipboard untouched and explicit retry works | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
-| R-BLOG-SHARE-07 | B07.native \| A pending native share blocks a second call and never queues another card | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
-| R-BLOG-SHARE-08 | B08 \| Given an open disclosure, then Tab exit keeps it open and Escape or outside activation closes it with the prescribed focus | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
-| R-BLOG-SHARE-09 | ${key} \| Read and Share use the same action typography, text hover and stable targets | Browser (Playwright) | `tests/browser/blog-sharing-appearance.spec.mjs`<br>`tests/browser/blog-sharing-feedback.spec.mjs`<br>`tests/browser/blog-sharing-layout.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-03 | K02.copy.${outcome} \| Cross-card writes are single-flight, never queued and require a new B activation | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-04 | K02.fallback.${moveFocus ? 'moved-focus' : 'copy-focus'} \| A late rejection does not move focus or selection and the manual URL is reachable by Tab | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-05 | K03.${outcome} \| Enter/Space share under activation, preserve the native lock and allow explicit recovery without clipboard side effects | Browser (Playwright), Unit/contract (node:test) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs`<br>`scripts/tests/blog-sharing.test.js` |
+| R-BLOG-SHARE-06 | K03.${outcome} \| Enter/Space share under activation, preserve the native lock and allow explicit recovery without clipboard side effects | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-07 | K02.copy.${outcome} \| Cross-card writes are single-flight, never queued and require a new B activation | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-08 | K01 \| Keyboard activation, visible focus, Tab exit and Escape preserve native disclosure semantics | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-09 | ${key} \| Read and Share use the same action typography, text hover and stable targets | Browser (Playwright) | `tests/browser/blog-sharing-appearance.spec.mjs`<br>`tests/browser/blog-sharing-cache.spec.mjs`<br>`tests/browser/blog-sharing-feedback.spec.mjs`<br>`tests/browser/blog-sharing-layout.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
 | R-BLOG-SHARE-10 | B10.scroll \| Given long content, then opening and closing Share retains route/history and does not reset the content panel | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
 | R-BLOG-SHARE-11 | B11.${key} \| Given a resolved card language, then copy/manual and native feedback use its exact approved labels | Browser (Playwright), Unit/contract (node:test) | `tests/browser/blog-sharing.spec.mjs`<br>`scripts/tests/blog-sharing.test.js` |
-| R-BLOG-SHARE-12 | K04.reopen.${kind}.${outcome} \| Same-node reopen invalidates old UI ownership without releasing the pending API lock | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-12 | K02.copy.${outcome} \| Cross-card writes are single-flight, never queued and require a new B activation | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
 | R-BLOG-SHARE-13 | B13 \| Given JavaScript disabled, then existing static article links remain usable and no dead Share action is shown | Browser (Playwright), Unit/contract (node:test) | `tests/browser/blog-sharing.spec.mjs`<br>`scripts/tests/blog-sharing.test.js` |
-| R-BLOG-SHARE-14 | B14 \| Given initial catalog loading and sharing, then no per-article query or new third-party request is sent | Browser (Playwright) | `tests/browser/blog-sharing.spec.mjs` |
+| R-BLOG-SHARE-14 | Returning visitor with cached pre-sharing CSS gets current card styles and stable native progress | Browser (Playwright) | `tests/browser/blog-sharing-cache.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
 | R-BUTTON-01 | Error actions leave hover, retain keyboard focus and use theme colors when pressed | Browser (Playwright) | `tests/browser/button-states.spec.mjs` |
 | R-BUTTON-02 | Error titles and links use the portfolio wording and preserve recovery semantics | Browser (Playwright) | `tests/browser/button-states.spec.mjs` |
 | R-BUTTON-03 | Hamburger mouse focus returns to normal while keyboard focus remains visible | Browser (Playwright) | `tests/browser/button-states.spec.mjs` |
@@ -135,7 +137,8 @@
 | R-DATA-NUM-01 | counts rendered into markup without escaping are finite integers | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-URL-01 | every URL in the generated data uses http(s), so no href or src can execute | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-URL-02 | safeUrl rejects the schemes a browser would execute, including obfuscated ones | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
-| R-DATA-URL-03 | the generators validate at the trust boundary, not only in the committed data | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
+| R-DATA-URL-03 | Medium sync drops non-http(s) links and resolves or drops covers before anything is written | Unit/contract (node:test) | `scripts/tests/sync-fetchers.test.js` |
+| R-DATA-URL-04 | GitHub sync drops repositories whose html_url is not http(s) and nulls unsafe homepages | Unit/contract (node:test) | `scripts/tests/sync-fetchers.test.js` |
 | R-DEPLOY-01 | deployment artifact contains exactly public assets without repository or test internals | Unit/contract (node:test) | `scripts/tests/pages-package.test.js` |
 | R-DISCLOSURE-01 | ${total} records and ${shown} preview entries produce ${extra} additional records | Unit/contract (node:test) | `scripts/tests/resume-disclosure-labels.test.js` |
 | R-DISCLOSURE-02 | adding/removing a semantic record updates only the additional count | Unit/contract (node:test) | `scripts/tests/resume-disclosure-labels.test.js` |
@@ -145,6 +148,7 @@
 | R-DOC-03 | both strategy translations preserve risk coverage and executable commands | Unit/contract (node:test) | `scripts/tests/documentation-navigation.test.js` |
 | R-DOC-RTM-01 | the traceability matrix is generated from the tests and not stale | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-02 | the extractor finds the titles it is built for and rejects malformed ids | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
+| R-DOC-RTM-03 | an independent scan of every test title finds no id the matrix is missing | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-EXTERNAL-01 | Given an unavailable scheduler script, then a first-time visitor can navigate without uncaught errors | Browser (Playwright) | `tests/browser/external-widget.spec.mjs` |
 | R-FILTER-01 | Given bilingual articles, when each category/language pair is chosen, then only matching newest-first cards appear | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
 | R-FILTER-02 | Given mixed pinned and ordinary repos, when all project categories are chosen, then each group and label is correct | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
@@ -195,6 +199,9 @@
 | R-MOTION-05 | TC-08: desktop keeps its configured animation while mobile uses the safe ordered slide | Browser (Playwright) | `tests/browser/page-transitions.spec.mjs` |
 | R-MOTION-06 | Selecting active routes preserves navigation and mobile drawer re-entry | Browser (Playwright), Unit/contract (node:test) | `tests/browser/page-transitions.spec.mjs`<br>`scripts/tests/motion-completion.test.js` |
 | R-MOTION-07 | Direct routes remain readable, focusable only when active, and recover after interruption | Browser (Playwright) | `tests/browser/page-transitions.spec.mjs` |
+| R-NATIVE-RESULT-01 | Native resolve removes pending UI without claiming delivery and only explicit retry starts again | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-NATIVE-RESULT-02 | Native resolve removes pending UI without claiming delivery and only explicit retry starts again | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-NATIVE-RESULT-03 | Native resolve removes pending UI without claiming delivery and only explicit retry starts again | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
 | R-NAV-01 | Given existing navigation, when each menu item is selected, then its section opens | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/route-policy.test.js` |
 | R-NAV-02 | Given malformed or unknown routes, when changed, then no blank section appears | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/route-policy.test.js` |
 | R-NAV-03 | only existing AJAX detail documents are accepted | Unit/contract (node:test) | `scripts/tests/route-policy.test.js` |
@@ -223,6 +230,12 @@
 | R-PIPE-11 | report workflow diagnoses skipped upstream, merges available failed-test blobs and uploads only existing reports | Unit/contract (node:test) | `scripts/tests/ci-reports.test.js` |
 | R-PIPE-12 | coverage summary exposes the failed upstream and missing shard evidence | Unit/contract (node:test) | `scripts/tests/ci-reports.test.js` |
 | R-PIPE-13 | real Playwright blobs merge successful and failed results while incomplete coverage and mandatory jobs block the gate | Unit/contract (node:test) | `scripts/tests/ci-report-flow.test.js` |
+| R-PROGRESS-01 | Native progress replaces the trailing glyph without changing the label, target, focus or live region | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-PROGRESS-02 | Native progress replaces the trailing glyph without changing the label, target, focus or live region | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-PROGRESS-03 | Native pending and repeated activation keep every card height unchanged without an automatic queue | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-PROGRESS-04 | Native progress replaces the trailing glyph without changing the label, target, focus or live region | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-PROGRESS-05 | Native progress replaces the trailing glyph without changing the label, target, focus or live region | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
+| R-PROGRESS-06 | Native pending and repeated activation keep every card height unchanged without an automatic queue | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
 | R-RELEASE-01 | a trusted writer authenticates to read main once and can only validate | Unit/contract (node:test) | `scripts/tests/release-selection.test.js` |
 | R-RELEASE-02 | main dispatch publishes only an exact, explicit main SHA | Unit/contract (node:test) | `scripts/tests/release-selection.test.js` |
 | R-RELEASE-03 | pre-deploy verifies the selected SHA, records it, and rejects a newer main tip | Unit/contract (node:test) | `scripts/tests/release-selection.test.js` |

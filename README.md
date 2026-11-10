@@ -17,7 +17,7 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 - [Test engineering audit](docs/testing/TEST-AUDIT.md) and [manual acceptance procedure (GKP)](docs/testing/GKP.md) (Turkish): evidence, traceability, repeatable test data and pending acceptance decisions.
 - [Engineering assessment](docs/ENGINEERING-ASSESSMENT.md): what this repository is, what it demonstrably does well, and the open findings with their evidence level.
 - [Architecture decision records](docs/architecture/adr/README.md): why the site stays static, why a release is pinned to one SHA, why recovery is observe-only.
-- [Requirements traceability matrix](docs/business-analysis/requirements-traceability-matrix.md): generated from the test titles, so it cannot drift from the suite.
+- [Requirements traceability matrix](docs/business-analysis/requirements-traceability-matrix.md): generated from the test titles; the build fails if it is stale or misses an id that a test carries.
 - [Threat model](docs/security/threat-model.md): trust boundaries, the controls that exist and the ones that do not.
 
 ### Tech Stack
@@ -265,7 +265,7 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 - [Test mühendisliği denetimi](docs/testing/TEST-AUDIT.md) ve [manuel kabul prosedürü (GKP)](docs/testing/GKP.md): kanıtlar, izlenebilirlik, tekrarlanabilir veri ve açık kabul kararları.
 - [Mühendislik değerlendirmesi](docs/ENGINEERING-ASSESSMENT.md): deponun ne olduğu, kanıtlanabilir güçlü yanları ve açık bulgular (kanıt düzeyleriyle).
 - [Mimari karar kayıtları](docs/architecture/adr/README.md): sitenin neden statik kaldığı, yayının neden tek bir SHA'ya sabitlendiği, kurtarmanın neden yalnızca gözlem modunda olduğu.
-- [Gereksinim izlenebilirlik matrisi](docs/business-analysis/requirements-traceability-matrix.md): test başlıklarından üretilir, bu yüzden takımdan sapamaz.
+- [Gereksinim izlenebilirlik matrisi](docs/business-analysis/requirements-traceability-matrix.md): test başlıklarından üretilir; bayatlarsa ya da bir testin taşıdığı kimliği atlarsa build kırılır.
 - [Tehdit modeli](docs/security/threat-model.md): güven sınırları, mevcut ve eksik kontroller.
 
 ### Teknoloji Yığını

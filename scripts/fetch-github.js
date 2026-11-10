@@ -156,11 +156,12 @@ async function fetchStarred() {
     if (batch.length < 100) break;
     page++;
   }
-  return repos.map(r => ({
+  // html_url reaches the page as an href; a repository whose URL is not http(s) is dropped.
+  return repos.filter(r => safeUrl(r.html_url)).map(r => ({
     name:        r.name,
     owner:       r.owner.login,
     description: r.description || '',
-    url:         r.html_url,
+    url:         safeUrl(r.html_url),
     homepage:    safeUrl(r.homepage),
     language:    r.language || null,
     langColor:   LANG_COLORS[r.language] || '#8b949e',
@@ -181,6 +182,7 @@ async function run() {
   for (const r of allRepos) {
     if (EXCLUDE.has(r.name))   continue;
     if (r.archived)            continue;  
+    if (!safeUrl(r.html_url))  continue;  // rendered as an href: http(s) only
 
     const topics  = r.topics || [];
     const cat     = detectCat(r.name, r.description, topics);
@@ -191,7 +193,7 @@ async function run() {
     const item = {
       name:        r.name,
       description: r.description || '',
-      url:         r.html_url,
+      url:         safeUrl(r.html_url),
       homepage:    safeUrl(r.homepage),
       language:    r.language || null,
       langColor:   LANG_COLORS[r.language] || '#8b949e',

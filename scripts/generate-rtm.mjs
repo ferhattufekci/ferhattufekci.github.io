@@ -9,8 +9,17 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(root, 'docs/business-analysis/requirements-traceability-matrix.md');
 const SOURCES = [['tests/browser', 'Browser (Playwright)'], ['scripts/tests', 'Unit/contract (node:test)']];
-// Titles read "R-AREA-NN | ..." (browser) or "R-AREA-NN: ..." (unit); a trailing letter marks a sub-check.
-const TITLE = /\b(?:test|it)(?:\.\w+)*\(\s*(['"`])(R-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+[a-z]?)\s*[|:]\s*(.+?)\1\s*,/g;
+// Titles read "R-AREA-NN | ..." (browser) or "R-AREA-NN: ..." (unit). A title can cover
+// several ids of one area, "R-AREA-01/02/04 | ...", and a trailing letter marks a sub-check.
+const ID_GROUP = 'R-[A-Z0-9]+(?:-[A-Z0-9]+)*-\\d+[a-z]?(?:/\\d+[a-z]?)*';
+const TITLE = new RegExp(`\\b(?:test|it)(?:\\.\\w+)*\\(\\s*(['"\`])(${ID_GROUP})\\s*[|:]\\s*(.+?)\\1\\s*,`, 'g');
+
+/** "R-PROGRESS-01/02/04" -> ["R-PROGRESS-01", "R-PROGRESS-02", "R-PROGRESS-04"] */
+export function expandIds(group) {
+  const [first, ...rest] = group.split('/');
+  const area = first.replace(/-\d+[a-z]?$/, '');
+  return [first, ...rest.map(number => `${area}-${number}`)];
+}
 
 export function collect() {
   const rows = [];
@@ -20,7 +29,10 @@ export function collect() {
     for (const file of readdirSync(abs).filter(f => /\.(?:spec\.mjs|test\.js)$/.test(f)).sort()) {
       const text = readFileSync(join(abs, file), 'utf8');
       for (const m of text.matchAll(TITLE)) {
-        rows.push({ id: m[2], area: m[2].replace(/-\d+[a-z]?$/, ''), behavior: m[3].replace(/\s+/g, ' ').trim(), layer, file: `${dir}/${file}` });
+        const behavior = m[3].replace(/\s+/g, ' ').trim();
+        for (const id of expandIds(m[2])) {
+          rows.push({ id, area: id.replace(/-\d+[a-z]?$/, ''), behavior, layer, file: `${dir}/${file}` });
+        }
       }
     }
   }
@@ -45,7 +57,7 @@ export function render(rows) {
     '> `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.',
     '> Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.',
     '',
-    `**${ids.length} requirement ids, ${rows.length} test titles, ${areas.size} areas.**`,
+    `**${ids.length} requirement ids, ${new Set(rows.map(r => r.file + ' :: ' + r.behavior)).size} test titles, ${areas.size} areas.**`,
     '',
     '| Area | Ids |', '|---|---|',
     ...[...areas].sort(([a], [b]) => a.localeCompare(b)).map(([a, n]) => `| ${a} | ${n} |`),

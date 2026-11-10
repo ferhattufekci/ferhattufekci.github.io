@@ -12,13 +12,22 @@
 // ignore tab/newline inside the scheme, so "java\tscript:x" and " javascript:x" are live
 // javascript URLs in a href. `new URL()` does the same normalisation, which is why parsing
 // is used here instead of a regular expression over the raw string.
+//
+// The function returns the *serialized* URL (`parsed.href`), never the raw input. The raw
+// string is what the browser would re-parse, and it can differ from what was checked: a
+// leading non-breaking space survives `String.prototype.trim()`-free browser parsing as a
+// relative path, and characters such as `"` or `<` are left unencoded. The serialized form
+// is exactly what was validated. What this guarantees is the *scheme*; it says nothing
+// about the origin, which is the caller's concern.
 
 const DEFAULT_PROTOCOLS = ['https:', 'http:'];
 
 /**
  * @param {unknown} value candidate URL from an untrusted feed or API
  * @param {{ protocols?: string[], base?: string }} [options]
- * @returns {string|null} the value unchanged when its scheme is allowed, otherwise null
+ * @param options.base resolves a relative input (e.g. an <img src> scraped from a feed
+ *   item) against the document it came from; the resolved absolute URL is returned
+ * @returns {string|null} the serialized absolute URL when its scheme is allowed, otherwise null
  */
 export function safeUrl(value, { protocols = DEFAULT_PROTOCOLS, base } = {}) {
   if (typeof value !== 'string') return null;
@@ -31,7 +40,7 @@ export function safeUrl(value, { protocols = DEFAULT_PROTOCOLS, base } = {}) {
     return null; // relative URL with no base, or not a URL at all
   }
   if (!protocols.includes(parsed.protocol)) return null;
-  return value;
+  return parsed.href;
 }
 
 /** True when `value` is safe to assign to href/src. */

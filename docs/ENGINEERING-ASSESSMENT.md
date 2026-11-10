@@ -32,22 +32,25 @@ documented record of open technical debt.
 | Build | `scripts/package-pages.mjs` produces the Pages artifact; `npm run build` chains generate → unit tests → package → artifact test [D] |
 | Unit / contract tests | 38 files under `scripts/tests/`, `node:test`, no framework [D] |
 | Browser tests | 24 specs under `tests/browser/`, Playwright, 6 device/theme projects, Chromium + Firefox + WebKit [D] |
-| Requirement ids | 211 distinct ids across 252 titled tests, 41 areas [D] |
+| Requirement ids | 222 distinct ids across 265 titled tests, 43 areas [D] |
 | Workflows | 5: `pages.yml` (4 jobs), `test-agent-readiness.yml` (reusable), 2 fetchers, `recover-release.yml` [D] |
-| Documentation | README (479 lines, EN+TR), `TEST-STRATEGY.md`, 8 files under `docs/` [D] |
+| Documentation | README (479 lines, EN+TR), `TEST-STRATEGY.md`, 9 files under `docs/` — counts before this change [D] |
 
 ## 3. Strengths found
 
 These are the things a reviewer should look at first; each is verifiable in the repository.
 
 1. **Requirement traceability is real, not decorative.** Every test title starts with an id
-   (`R-RESUME-06 | Given Resume, then ...`). 211 ids are in use [D]. The matrix at
+   (`R-RESUME-06 | Given Resume, then ...`). 222 ids are in use [D]. The matrix at
    `docs/business-analysis/requirements-traceability-matrix.md` is generated from the test
-   files by `scripts/generate-rtm.mjs`, and `scripts/tests/rtm.test.js` fails when it drifts,
-   so the document cannot quietly become fiction.
-2. **Supply chain of the pipeline is pinned.** All 8 third-party actions are pinned to a
+   files by `scripts/generate-rtm.mjs`. `scripts/tests/rtm.test.js` fails when the file is
+   stale *and* when an independent scan of every test title finds an id the generator missed —
+   the second check exists because the first version of the generator silently dropped
+   multi-id titles (`R-PROGRESS-01/02/04 | …`) and an independent review caught it.
+2. **Supply chain of the pipeline is pinned.** All 7 third-party actions are pinned to a
    commit SHA, not a tag [D]. Workflow permissions are least-privilege: `contents: read` at
-   file level, `contents: write` only on the two fetcher jobs [D].
+   file level, `contents: write` only on the two fetcher jobs, and `actions: write` — the
+   most powerful grant in the repository — only on the recovery job, which is observe-only [D].
 3. **Release integrity.** `pages.yml` resolves one immutable source SHA, tests that exact
    artifact, and the deploy job rejects a superseded release. The artifact bytes are verified
    again before production verification [D].
@@ -65,14 +68,25 @@ Ordered by consequence. "Fixed here" means in this change; the rest are recorded
 
 ### F-1 Unvalidated URL scheme at the third-party trust boundary — **fixed here**
 `index.html` assigns feed values directly to the DOM: `link.href = art.url` and
-`image.src = art.thumbnail` [D]. Those values came from the Medium RSS feed with no scheme
-check, so a `javascript:` link in the feed would have become an executing href. The feed is
-the author's own account, so exploitation was unlikely, but the boundary was unguarded.
-Fixed at generation time in `scripts/lib/safe-url.mjs`, applied in `fetch-medium.js`
-(`url`, `thumbnail`) and `fetch-github.js` (`homepage`), with
-`scripts/tests/data-contract.test.js` enforcing the invariant on the committed data and
-rejecting obfuscated schemes (`java\tscript:`, leading control characters, `data:`, `blob:`).
-Two mutations were planted and both were caught [D].
+`image.src = art.thumbnail` for articles, and `href="${escHtml(r.url)}"` for repositories [D].
+Those values came from the Medium RSS feed and the GitHub API with no scheme check, so a
+`javascript:` link would have become an executing href. Both sources are the author's own
+accounts, so exploitation was unlikely, but the boundary was unguarded.
+
+Fixed at generation time in `scripts/lib/safe-url.mjs`, which parses with `new URL()` and
+returns the *serialized* URL rather than the raw input, so what was validated is exactly what
+is written. Applied to every value that is rendered: Medium `url` (article dropped) and
+`thumbnail` (resolved against the article, so protocol-relative `<img src>` covers keep
+working; dropped if unsafe), GitHub `html_url` (repository dropped) and `homepage` (nulled;
+not currently rendered).
+
+Verified by behaviour, not by reading the source: `R-DATA-URL-03/04` in
+`scripts/tests/sync-fetchers.test.js` run the real fetch entry points against a local fake
+Medium/GitHub server serving hostile URLs and assert what is written to `data/`.
+`R-DATA-URL-01/02` in `scripts/tests/data-contract.test.js` check the committed data and the
+helper against obfuscated schemes (`java\tscript:`, leading control characters, `data:`,
+`blob:`). An earlier version of this change had a source-grepping test instead; an
+independent review showed it passed with the guards removed, and it was replaced.
 
 ### F-2 No Content-Security-Policy — **not fixed, deliberately**
 The site ships no CSP [D]. A CSP is the control that would have made F-1 unexploitable in
@@ -85,10 +99,19 @@ honest sequence is: finish the inline-script extraction (A0 is merged, A1+ is pl
 in `docs/OPEN-ITEMS.md`.
 
 ### F-3 No dependency or secret scanning in CI
-There is no `npm audit` step, no Dependabot configuration and no secret scan [D]. The blast
-radius is small (6 devDependencies, no runtime dependencies shipped to the browser except
-vendored jQuery/Modernizr) but the control is missing. Recommended, not added here, because
-adding a gate that can fail on an upstream advisory is a pipeline-policy decision.
+There is no `npm audit` step, no Dependabot configuration and no secret scan [D]. Two
+different surfaces need to be kept apart here:
+- **Build-time:** 6 devDependencies in `package.json`. These never reach the browser.
+  `npm audit`/Dependabot would cover them.
+- **Runtime in the browser:** vendored libraries (`js/jquery-3.6.0.min.js`, Modernizr,
+  `imagesloaded`, `jquery.shuffle`, `owl.carousel`) and remotely loaded scripts — Google
+  AdSense, Google Tag Manager and Calendly (`index.html`) [D]. None of these is in
+  `package.json`, so `npm audit` would **not** see them. The remote scripts are not
+  versioned by this repository at all; only a CSP (F-2) and Subresource Integrity, where the
+  provider allows it, constrain them.
+
+The runtime surface is the larger one. Recommended, not added here: a scanning gate that can
+fail on an upstream advisory is a pipeline-policy decision.
 
 ### F-4 `index.html` concentrates behaviour that belongs in modules
 Roughly a quarter of the file is inline script: blog rendering, project rendering, language
@@ -140,3 +163,12 @@ documentation is under `docs/`. Low severity, listed for completeness.
 3. Continue the inline-script extraction (F-4), then add a CSP that needs no `'unsafe-inline'` (F-2).
 4. Add dependency scanning (F-3) and a type-check gate (F-5), each as its own decision.
 5. Hygiene: `LICENSE`, `SECURITY.md`, move `TEST-STRATEGY.md` under `docs/testing/` (F-8).
+
+## 7. How this assessment was checked
+
+An independent review of the change that introduced this document found 19 defects in it,
+including four blockers: a test that passed with the guards removed, a generator that dropped
+9 requirement ids, a traceability claim that was therefore false, and a wrong statement about
+which third-party code reaches the browser. All were fixed before merge; the corrections are
+visible in the PR history. The review is mentioned here because it is the evidence that the
+claims above were tested against the code rather than written from memory.

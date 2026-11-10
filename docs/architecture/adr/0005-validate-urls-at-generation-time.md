@@ -14,6 +14,13 @@ Validate at the generator — the trust boundary — in one shared helper
 `scripts/tests/data-contract.test.js`. Parse with `new URL()` rather than matching the raw
 string, because browsers strip leading control characters and ignore tab/newline inside a
 scheme, so `" java\tscript:x"` is a live javascript URL that a naive regular expression misses.
+Return the serialized URL (`parsed.href`), not the raw input: the raw string is what the
+browser would re-parse, and it can differ from what was checked. Resolve scraped relative
+covers against the article URL instead of dropping them.
+
+Verify by running the real fetch entry points against a local fake feed and API that serve
+hostile URLs (`R-DATA-URL-03/04`), not by inspecting the generator source: a source-grepping
+test was tried first and an independent review showed it passed with the guards removed.
 
 ## Consequences
 - **Good:** one rule in one place, and the repository's own data is the artifact under
