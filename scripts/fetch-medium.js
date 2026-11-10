@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync, mkdirSync } from 'fs';
 import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+import { writeSnapshot } from './lib/data-snapshot.mjs';
 import { SaxesParser } from 'saxes';
 import { safeUrl } from './lib/safe-url.mjs';
 import ArticleLanguage from '../js/medium-language.js';
@@ -191,22 +192,24 @@ async function run() {
     if (buckets[category]) buckets[category].push({ ...rest, lang });
   }
 
+  const files = {};
   for (const [cat, fn] of Object.entries({ systems: 'medium-systems.json', test: 'medium-test.json', software: 'medium-software.json' })) {
     buckets[cat].sort((a, b) => new Date(b.date||0) - new Date(a.date||0));
-    writeFileSync(join(DATA_DIR, fn), JSON.stringify(buckets[cat], null, 2), 'utf-8');
+    files[fn] = buckets[cat];
     console.log(`💾 ${fn}: ${buckets[cat].length} yazı`);
   }
 
   const allForBrowser = all.map(({ ...a }) => a);
   allForBrowser.sort((a, b) => new Date(b.date||0) - new Date(a.date||0));
-  writeFileSync(join(DATA_DIR, 'medium-all.json'), JSON.stringify(allForBrowser, null, 2), 'utf-8');
+  files['medium-all.json'] = allForBrowser;
 
-  const meta = {
-    lastUpdated: new Date().toISOString(),
-    counts: { systems: buckets.systems.length, test: buckets.test.length, software: buckets.software.length, total: all.length }
-  };
-  writeFileSync(join(DATA_DIR, 'meta.json'), JSON.stringify(meta, null, 2), 'utf-8');
-  console.log('\n✅ Tamamlandı:', meta.counts);
+  const counts = { systems: buckets.systems.length, test: buckets.test.length, software: buckets.software.length, total: all.length };
+  const { changed } = writeSnapshot(DATA_DIR, files, 'meta.json', () => ({ lastUpdated: new Date().toISOString(), counts }));
+  if (!changed.length) {
+    console.log('\n✅ İçerik değişmedi; veri dosyalarına dokunulmadı (commit ve CI tetiklenmez).', counts);
+    return;
+  }
+  console.log('\n✅ Tamamlandı:', counts, 'değişen:', changed.join(', '));
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

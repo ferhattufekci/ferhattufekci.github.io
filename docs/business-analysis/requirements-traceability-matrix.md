@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**223 requirement ids, 266 test titles, 44 areas.**
+**228 requirement ids, 271 test titles, 45 areas.**
 
 | Area | Ids |
 |---|---|
@@ -25,6 +25,7 @@
 | R-CONTENT | 3 |
 | R-DATA-COLOR | 1 |
 | R-DATA-NUM | 1 |
+| R-DATA-SYNC | 5 |
 | R-DATA-URL | 4 |
 | R-DEPLOY | 1 |
 | R-DISCLOSURE | 3 |
@@ -136,6 +137,11 @@
 | R-CONTENT-03 | Given JavaScript disabled, when browsing, then profile and trust content remain readable | Browser (Playwright) | `tests/browser/portfolio.spec.mjs` |
 | R-DATA-COLOR-01 | language colours are hex literals, because they are interpolated into a style attribute unescaped | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-NUM-01 | counts rendered into markup without escaping are finite integers | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
+| R-DATA-SYNC-01 | a Medium sync with no content change leaves every data file byte-identical, so nothing is committed | Unit/contract (node:test) | `scripts/tests/sync-fetchers.test.js` |
+| R-DATA-SYNC-02 | the first sync writes every content file and the meta file | Unit/contract (node:test) | `scripts/tests/data-snapshot.test.js` |
+| R-DATA-SYNC-03 | an unchanged sync writes nothing, so the timestamp does not move and git sees no diff | Unit/contract (node:test) | `scripts/tests/data-snapshot.test.js` |
+| R-DATA-SYNC-04 | a real change rewrites only the changed file and refreshes the meta file | Unit/contract (node:test) | `scripts/tests/data-snapshot.test.js` |
+| R-DATA-SYNC-05 | a missing or unreadable file counts as changed, never as equal | Unit/contract (node:test) | `scripts/tests/data-snapshot.test.js` |
 | R-DATA-URL-01 | every URL in the generated data uses http(s), so no href or src can execute | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-URL-02 | safeUrl rejects the schemes a browser would execute, including obfuscated ones | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-URL-03 | Medium sync drops non-http(s) links and resolves or drops covers before anything is written | Unit/contract (node:test) | `scripts/tests/sync-fetchers.test.js` |

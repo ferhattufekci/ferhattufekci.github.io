@@ -100,7 +100,7 @@ function respond(request, response, scenario) {
   response.end(typeof body === 'string' ? body : JSON.stringify(body));
 }
 
-async function runFetcher(script, scenario = 'success', token = 'synthetic-test-token') {
+async function runFetcher(script, scenario = 'success', token = 'synthetic-test-token', seed = null) {
   const workspace = resolve(ROOT, 'work');
   await mkdir(workspace, { recursive: true });
   const root = await mkdtemp(join(workspace, 'sync-test-'));
@@ -111,12 +111,12 @@ async function runFetcher(script, scenario = 'success', token = 'synthetic-test-
   });
   try {
     for (const file of ['package.json', 'scripts/package.json', 'scripts/fetch-medium.js',
-      'scripts/fetch-github.js', 'scripts/lib/safe-url.mjs', 'js/medium-language.js', 'js/medium-excerpt.js']) {
+      'scripts/fetch-github.js', 'scripts/lib/data-snapshot.mjs', 'scripts/lib/safe-url.mjs', 'js/medium-language.js', 'js/medium-excerpt.js']) {
       await mkdir(dirname(join(root, file)), { recursive: true });
       await cp(join(ROOT, file), join(root, file));
     }
     await mkdir(join(root, 'data'));
-    const previous = Object.fromEntries(files.map(file => [file, JSON.stringify({ previous: file })]));
+    const previous = seed ?? Object.fromEntries(files.map(file => [file, JSON.stringify({ previous: file })]));
     await Promise.all(files.map(file => writeFile(join(root, 'data', file), previous[file])));
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     let code = 0;
@@ -164,6 +164,17 @@ test('sync entry point: Medium uses native fetch, loads local CJS helpers and pr
   }
   assert.deepEqual(JSON.parse(result.contents['meta.json']).counts, { systems: 1, test: 1, software: 1, total: 3 });
   assert.equal(result.requests.length, 2, 'RSS and public preview both use the real HTTP stack');
+});
+
+test('R-DATA-SYNC-01: a Medium sync with no content change leaves every data file byte-identical, so nothing is committed', async () => {
+  const first = await runFetcher('fetch-medium');
+  assert.equal(first.code, 0, first.output);
+  const second = await runFetcher('fetch-medium', 'success', 'synthetic-test-token', first.contents);
+  assert.equal(second.code, 0, second.output);
+  // meta.json included: before this change its lastUpdated moved on every run, which made a
+  // commit, and every commit started a full CI validation.
+  assert.deepEqual(second.contents, first.contents);
+  assert.match(second.output, /İçerik değişmedi/);
 });
 
 test('R-DATA-URL-03: Medium sync drops non-http(s) links and resolves or drops covers before anything is written', async () => {
