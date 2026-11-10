@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**230 requirement ids, 272 test titles, 45 areas.**
+**235 requirement ids, 277 test titles, 46 areas.**
 
 | Area | Ids |
 |---|---|
@@ -23,6 +23,7 @@
 | R-CI-RECOVER | 22 |
 | R-CI-RECOVER-C1 | 14 |
 | R-CONTENT | 3 |
+| R-COV | 5 |
 | R-DATA-COLOR | 1 |
 | R-DATA-NUM | 1 |
 | R-DATA-SYNC | 5 |
@@ -135,6 +136,11 @@
 | R-CONTENT-01 | Markdown resolves links, preserves facts and excludes executable scaffolding | Unit/contract (node:test) | `scripts/tests/agent-documents.test.js` |
 | R-CONTENT-02 | authored trust content is escaped before rendering | Unit/contract (node:test) | `scripts/tests/agent-documents.test.js` |
 | R-CONTENT-03 | Given JavaScript disabled, when browsing, then profile and trust content remain readable | Browser (Playwright) | `tests/browser/portfolio.spec.mjs` |
+| R-COV-01 | lcov records are read per file with normalized paths | Unit/contract (node:test) | `scripts/tests/coverage-gate.test.js` |
+| R-COV-02 | test files never count, and an application file no unit test loads counts as 0% instead of disappearing | Unit/contract (node:test) | `scripts/tests/coverage-gate.test.js` |
+| R-COV-03 | the gate fails below the committed baseline and passes at or above it | Unit/contract (node:test) | `scripts/tests/coverage-gate.test.js` |
+| R-COV-04 | application files are the first-party scripts, not vendored libraries or tests | Unit/contract (node:test) | `scripts/tests/coverage-gate.test.js` |
+| R-COV-05 | the committed baseline is a percentage the gate can enforce | Unit/contract (node:test) | `scripts/tests/coverage-gate.test.js` |
 | R-DATA-COLOR-01 | language colours are hex literals, because they are interpolated into a style attribute unescaped | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-NUM-01 | counts rendered into markup without escaping are finite integers | Unit/contract (node:test) | `scripts/tests/data-contract.test.js` |
 | R-DATA-SYNC-01 | a Medium sync with no content change leaves every data file byte-identical, so nothing is committed | Unit/contract (node:test) | `scripts/tests/sync-fetchers.test.js` |
