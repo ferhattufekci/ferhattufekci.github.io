@@ -123,12 +123,13 @@ test('R-CI-RECOVER-11: the main SHA must be a full commit id', () => {
   );
 });
 test('R-CI-RECOVER-12: the recovery workflow is a least-privilege, main-only follower of the production run', async () => {
-  const text = await readFile(
+  const text = (await readFile(
     new URL('../../.github/workflows/recover-release.yml', import.meta.url),
     'utf8'
-  );
+  )).replace(/\r\n/g, '\n');
   const triggers = text.slice(text.indexOf('\non:'), text.indexOf('\npermissions:'));
   assert.match(triggers, /workflow_run:\s+workflows:\s+- Portfolio CI\/CD\s+types:\s+- completed/);
+  assert.match(triggers, /branches:\s+- main/, 'PR completions must not create skipped recovery runs');
   assert.doesNotMatch(triggers, /pull_request|push:|schedule:/);
   assert.match(triggers, /workflow_dispatch:/);
   assert.match(text, /^permissions:\n  contents: read$/m);
