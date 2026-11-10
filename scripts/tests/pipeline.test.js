@@ -34,7 +34,7 @@ const event = {
     head_sha: other
   }
 };
-test('R-PIPE-01: PR and branch CI never publish; successful trusted writers resolve the actual data commit once', () => {
+test('R-PIPE-01: automatic CI never publishes; successful trusted writers resolve the actual data commit once', () => {
   assert.deepEqual(
     resolveSource('pull_request', event, 'refs/pull/1/merge', sha),
     { sha, publish: false }
@@ -46,11 +46,15 @@ test('R-PIPE-01: PR and branch CI never publish; successful trusted writers reso
   );
   assert.equal(
     resolveSource('push', event, 'refs/heads/main', sha).publish,
-    true
+    false
+  );
+  assert.equal(
+    resolveSource('workflow_dispatch', event, 'refs/heads/main', sha).publish,
+    false
   );
   assert.deepEqual(resolveSource('workflow_run', event, '', other, sha), {
     sha,
-    publish: true
+    publish: false
   });
   for (const mutation of [
     (e) => (e.workflow_run.head_repository.full_name = 'attacker/fork'),
