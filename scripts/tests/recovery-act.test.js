@@ -84,7 +84,7 @@ test.after(() => sandboxes.forEach((dir) => rmSync(dir, { recursive: true, force
 
 // The real recovery CLI calls only the two test subprocesses. This uses Node's
 // own executable so it works where Windows cannot execute POSIX shebangs.
-function recoverCommand({ args = ['42043003964', '1'], scenario, env = {}, dir = ciDir, mainSha = TIP } = {}) {
+function recoverCommand({ command = 'recover', args = ['42043003964', '1'], scenario = {}, env = {}, dir = ciDir, mainSha = TIP, event } = {}) {
   const { dir: root, preload } = sandbox();
   const scenarioFile = join(root, 'scenario.json');
   const log = join(root, 'calls.jsonl');
@@ -92,7 +92,11 @@ function recoverCommand({ args = ['42043003964', '1'], scenario, env = {}, dir =
   writeFileSync(scenarioFile, JSON.stringify(scenario));
   writeFileSync(log, '');
   writeFileSync(summary, '');
-  const result = spawnSync(process.execPath, ['--require', preload, join(dir, 'commands.mjs'), 'recover', ...args], {
+  const eventFile = join(root, 'event.json');
+  const output = join(root, 'output.txt');
+  writeFileSync(output, '');
+  if (event) writeFileSync(eventFile, JSON.stringify(event));
+  const result = spawnSync(process.execPath, ['--require', preload, join(dir, 'commands.mjs'), command, ...args], {
     encoding: 'utf8',
     timeout: 20000,
     env: {
@@ -101,6 +105,8 @@ function recoverCommand({ args = ['42043003964', '1'], scenario, env = {}, dir =
       FAKE_LOG: log,
       FAKE_MAIN_SHA: mainSha,
       GITHUB_STEP_SUMMARY: summary,
+      GITHUB_OUTPUT: output,
+      ...(event ? { GITHUB_EVENT_PATH: eventFile } : {}),
       ...env
     }
   });
@@ -111,6 +117,7 @@ function recoverCommand({ args = ['42043003964', '1'], scenario, env = {}, dir =
     stderr: result.stderr,
     calls,
     summary: readFileSync(summary, 'utf8'),
+    output: readFileSync(output, 'utf8'),
     actions: calls.filter((c) => c.tool === 'gh' && c.argv[0] !== 'api'),
     apiCalls: calls.filter((c) => c.tool === 'gh' && c.argv[0] === 'api')
   };
@@ -316,6 +323,48 @@ const exactArgvCheck = (dir) => {
   const run = recoverCommand({ scenario: timeoutScenario(), env: { RECOVERY_ACT: 'true' }, dir });
   assert.deepEqual(run.actions.map((c) => c.argv), [RERUN]);
 };
+
+test('R-CI-RECOVER-C1-12: resolve (workflow_run) and current read main through the API, never through git', () => {
+  // Production runs 42607611212 and 42645437976: `git ls-remote origin` failed in these jobs
+  // (persist-credentials: false, private repository), so no data-commit release was published.
+  const writerRun = {
+    name: 'Fetch Medium Articles', path: '.github/workflows/fetch-medium.yml',
+    head_repository: { full_name: REPO }, head_branch: 'main', conclusion: 'success', event: 'schedule', head_sha: OTHER_TIP
+  };
+  const event = { repository: { full_name: REPO }, workflow_run: writerRun };
+  const resolved = recoverCommand({
+    command: 'resolve', args: [], event,
+    env: { GITHUB_EVENT_NAME: 'workflow_run', GITHUB_REF: 'refs/heads/main', GITHUB_SHA: OTHER_TIP }
+  });
+  assert.equal(resolved.status, 0, resolved.stderr);
+  assert.equal(resolved.output, `sha=${TIP}\npublish=true\n`, 'the release is the main tip read through the API, not the stale workflow_run head');
+  assert.deepEqual(resolved.calls, [{ tool: 'gh', argv: ['api', `repos/${REPO}/git/ref/heads/main`] }]);
+
+  const untrusted = recoverCommand({
+    command: 'resolve', args: [],
+    event: { ...event, workflow_run: { ...writerRun, head_branch: 'feature' } },
+    env: { GITHUB_EVENT_NAME: 'workflow_run' }
+  });
+  assert.notEqual(untrusted.status, 0);
+  assert.deepEqual(untrusted.calls, [], 'trust fields are checked before anything is contacted');
+
+  const current = recoverCommand({ command: 'current', args: [TIP] });
+  assert.equal(current.status, 0, current.stderr);
+  assert.deepEqual(current.calls, [{ tool: 'gh', argv: ['api', `repos/${REPO}/git/ref/heads/main`] }]);
+  const superseded = recoverCommand({ command: 'current', args: [OTHER_TIP] });
+  assert.notEqual(superseded.status, 0);
+  assert.match(superseded.stderr, /Superseded source/);
+});
+
+test('R-CI-RECOVER-C1-13: every workflow step that reads main through the API provides GH_TOKEN', () => {
+  const root = join(here, '..', '..', '.github', 'workflows');
+  for (const [file, command] of [['pages.yml', 'resolve'], ['pages.yml', 'current'], ['recover-release.yml', 'recover']]) {
+    const text = readFileSync(join(root, file), 'utf8');
+    const step = text.split(/\n\s*- /).find((chunk) => chunk.includes(`commands.mjs ${command}`));
+    assert.ok(step, `${file}: no step runs commands.mjs ${command}`);
+    assert.match(step, /GH_TOKEN: \$\{\{ github\.token \}\}/, `${file}: the ${command} step has no GH_TOKEN`);
+  }
+});
 
 test('R-CI-RECOVER-C1-11: the checks pass on the real code and fail on injected defects', async () => {
   await failedActionCheck(ciDir);

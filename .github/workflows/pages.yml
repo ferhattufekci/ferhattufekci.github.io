@@ -33,6 +33,8 @@ jobs:
           persist-credentials: false
       - name: Resolve immutable source
         id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: node scripts/ci/commands.mjs resolve
   quality-checks:
     name: Run Quality Checks
@@ -66,6 +68,7 @@ jobs:
       - name: Reject superseded release
         env:
           SOURCE_SHA: ${{ needs.resolve-source.outputs.sha }}
+          GH_TOKEN: ${{ github.token }}
         run: node scripts/ci/commands.mjs current "$SOURCE_SHA"
       - name: Deploy tested Pages artifact
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

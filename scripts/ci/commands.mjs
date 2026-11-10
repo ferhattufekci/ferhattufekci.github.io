@@ -18,6 +18,13 @@ import {
 import { actionArgv, recover, requireRunArgs } from './recovery.mjs';
 
 const [command, ...args] = process.argv.slice(2);
+// Jobs check out with persist-credentials: false, so git has no credentials there and
+// `git ls-remote origin` fails on a private repository (production runs 42598657824,
+// 42607611212, 42645437976). The API call authenticates with GH_TOKEN instead.
+const gh = (...parts) =>
+  JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
+const readMainSha = () =>
+  gh(`repos/${repository}/git/ref/heads/main`).object?.sha ?? '';
 async function output(name, value) {
   if (process.env.GITHUB_OUTPUT)
     await appendFile(process.env.GITHUB_OUTPUT, `${name}=${value}\n`);
@@ -31,9 +38,7 @@ if (command === 'resolve') {
   if (process.env.GITHUB_EVENT_NAME === 'workflow_run') {
     // Check all trust fields before contacting a moving branch or executing its code.
     resolveSource('workflow_run', event, '', '', '0'.repeat(40));
-    main = execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], {
-      encoding: 'utf8'
-    }).split(/\s/)[0];
+    main = readMainSha();
   }
   const source = resolveSource(
     process.env.GITHUB_EVENT_NAME,
@@ -47,20 +52,10 @@ if (command === 'resolve') {
 } else if (command === 'gate')
   requireQuality(JSON.parse(process.env.CHECK_RESULTS));
 else if (command === 'current') {
-  const actual = execFileSync(
-    'git',
-    ['ls-remote', 'origin', 'refs/heads/main'],
-    { encoding: 'utf8' }
-  ).split(/\s/)[0];
-  requireCurrentSource(args[0], actual);
+  requireCurrentSource(args[0], readMainSha());
 } else if (command === 'recover') {
-  const gh = (...parts) =>
-    JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
   requireRunArgs(args[0], args[1]);
-  // Not `git ls-remote origin`: this job checks out with persist-credentials: false,
-  // so git has no credentials and fails on a private repository (observed in
-  // production, runs 42598657824 and 42599442136). The API call uses GH_TOKEN.
-  const mainSha = gh(`repos/${repository}/git/ref/heads/main`).object?.sha ?? '';
+  const mainSha = readMainSha();
   const act = (action) => {
     const [runId] = args;
     execFileSync('gh', actionArgv(action, runId), { stdio: 'inherit' });

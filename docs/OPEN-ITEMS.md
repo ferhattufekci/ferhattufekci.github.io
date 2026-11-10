@@ -85,14 +85,20 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 - **Kabul:** kanıtlı kök neden (altyapı / zamanlama yarışı / uygulama) — diagnostics, trace, video ve browser logları birlikte.
 - **Sonraki adım:** trace erişimi sağlanınca (veya sonraki hatada) `press` anındaki odak ve sayfa geçişi zamanlamasını trace'ten oku; kod değişikliği ancak kanıtla. **Karar:** ağ izni sahibe ait.
 
+### RK-01 R-KEYBOARD-01 WebKit/Firefox kararsızlığı (yeni, 2026-11-09/10)
+- **Öncelik:** P1. **Durum:** kök neden kanıtsız; assertion değişmedi.
+- **Gözlem [G]:** `keyboard-tests`, `keyboard-accessibility.spec.mjs:43` R-KEYBOARD-01, iki bağımsız PR'da aynı saatte düştü: `ci/recovery-act-hardening` (koşu 42650501491) ve `ci/exact-sha-release-gate` (42650805811, webkit-1440-light, "Visible focus ring on … Blog"). Deneme 1: webkit light+dark ("GitHub" ikonu); deneme 2: tarayıcı kurulumu 5 dk zaman aşımı (apt/D-4); deneme 3: webkit light ("Schedule a job interview"), webkit dark ("About") ve firefox light/dark `page.goto` 120 sn zaman aşımı. Düşen öğe her seferinde farklı; 590/594 geçti.
+- **Çıkarım:** test, PR #39'un değişikliğinden (yalnızca test dosyası ve CI betikleri) bağımsız; iki farklı branch'te oluştu. Neden henüz bilinmiyor: odak halkasının ölçüldüğü an ile boyama zamanlaması (WebKit) ve yavaş `goto` (Firefox) olası ama **kanıtsız [?]**. Retry ile gizlenmeyecek.
+- **Sonraki adım:** hata artifact'ındaki trace (`browser-report`/keyboard sonuçları) incelenmeli; ağ izni gerekir (bkz. RF). Sonra odak halkası ölçümünün `getComputedStyle` + boyama beklemesiyle yarışı test edilir.
+
 ### REPO-VIS Deponun görünürlüğü özel (private) olarak görünüyor
 - **Öncelik:** P1. **Durum:** **insan kararı bekliyor.** 2026-11-09 ~10:08 UTC'den beri `repos/ferhattufekci/ferhattufekci.github.io` `private: true` dönüyor [G]; 8 Kasım'da recover işi anonim `git ls-remote` ile çalışıyordu, yani depo o zaman herkese açıktı [K]. Kimin/ne zaman değiştirdiği bu oturumdan doğrulanamadı [?].
-- **Etkiler:** (1) recover işi git kimlik bilgisi olmadan düşüyordu (düzeltildi, bkz. F-C1-3); (2) ücretsiz planda özel depoda GitHub Pages ve Actions dakikaları kısıtlıdır: bu pipeline koşu başına onlarca dakikalık iş üretir, kota ve yayın etkisi **doğrulanmadı** [?]; (3) bu bir iş görüşmesi referans projesi, herkese açık olması beklenir (varsayım, sahibin kararı); (4) probe deposu planı ve genel envanter açısından özel depo farklı davranır.
+- **Etkiler:** (1) recover, `Resolve Source` (workflow_run) ve `Reject superseded release` adımları git kimlik bilgisi olmadan düşüyordu: veri commit'leri yayınlanmadı (42607611212, 42645437976) ve Recover Release düştü (42734721526). Düzeltme #39'da, bkz. F-C1-3; (2) ücretsiz planda özel depoda GitHub Pages ve Actions dakikaları kısıtlıdır: bu pipeline koşu başına onlarca dakikalık iş üretir, kota ve yayın etkisi **doğrulanmadı** [?]; (3) bu bir iş görüşmesi referans projesi, herkese açık olması beklenir (varsayım, sahibin kararı); (4) probe deposu planı ve genel envanter açısından özel depo farklı davranır.
 - **Karar:** sahibe ait (yanlışlıkla mı bilinçli mi). Bu oturum görünürlüğü değiştirmez.
 
 ### C1 `act()` argüman testleri
 - **Öncelik:** P1 (D-3 önkoşulu). **Durum:** uygulandı; PR CI doğrulaması bekliyor. F-C1-1 ve F-C1-2 düzeltildi (RECOVERY-ACTIVATION bölüm 8).
-- **Kanıt:** `scripts/tests/recovery-act.test.js` 12 test, gerçek alt süreç, sahte `PATH`, 7 mutasyon yakalanıyor; yerel tekrar sonuçları PR açıklamasında [T/G].
+- **Kanıt:** `scripts/tests/recovery-act.test.js` 14 test, gerçek alt süreç, sahte `PATH`, mutasyonlar (resolve/current dahil) yakalanıyor; yerel tekrar sonuçları PR açıklamasında [T/G].
 - **Kabul:** sahte `PATH` ile gerçek GitHub çağrısı yok; her test <5 sn; 30 tekrarda flaky yok; mutasyonlar yakalanıyor. CI yeşil olunca "tamamlandı ve doğrulandı".
 - **Karar:** yok (sahip otonom çalışma talimatı verdi).
 
