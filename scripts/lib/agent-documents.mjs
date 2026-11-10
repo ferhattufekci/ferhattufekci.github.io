@@ -104,6 +104,7 @@ ${body}
     </footer>
   </main>
   <script src="/js/theme.js"></script>
+  <script src="/js/touch-scrollbar.js"></script>
 </body>
 </html>\n`;
 }
