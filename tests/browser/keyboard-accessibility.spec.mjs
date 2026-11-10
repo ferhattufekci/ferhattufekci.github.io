@@ -40,11 +40,11 @@ async function ready(page, path) {
   await expect(page.locator('.preloader')).toHaveCount(0);
 }
 
-test('R-KEYBOARD-01 | Every page has a visible sequential focus order, working skip link and no hidden-page tab stops', async ({ page }, info) => {
-  test.setTimeout(120000);
-  await mockCatalog(page);
-  const evidence = [];
-  for (const path of ['/', '/#resume', '/#blog', '/#projects', '/#contact', '/about/', '/contact/', '/privacy/', '/404.html']) {
+for (const path of ['/', '/#resume', '/#blog', '/#projects', '/#contact', '/about/', '/contact/', '/privacy/', '/404.html']) {
+  test(`R-KEYBOARD-01 | ${path} | Every page has a visible sequential focus order, working skip link and no hidden-page tab stops`, async ({ page }, info) => {
+    test.setTimeout(120000);
+    await mockCatalog(page);
+    const evidence = [];
     await ready(page, path);
     const skip = page.getByRole('link', { name: 'Skip to content', exact: true });
     await tabTo(page, skip);
@@ -81,9 +81,9 @@ test('R-KEYBOARD-01 | Every page has a visible sequential focus order, working s
     if (path === '/404.html' || path.includes('#') || path === '/') expect(page.url()).toBe(before);
     expect(await page.evaluate(() => document.activeElement.closest('#main') !== null)).toBe(true);
     evidence.push({ path, order });
-  }
-  await info.attach('keyboard-page-orders', { body: Buffer.from(JSON.stringify(evidence, null, 2)), contentType: 'application/json' });
-});
+    await info.attach('keyboard-page-orders', { body: Buffer.from(JSON.stringify(evidence, null, 2)), contentType: 'application/json' });
+  });
+}
 
 test('R-KEYBOARD-02 | Menu, theme and route history have predictable focus under both motion preferences and enlarged text', async ({ page }, info) => {
   test.setTimeout(90000);

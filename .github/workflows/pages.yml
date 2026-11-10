@@ -4,7 +4,12 @@ on:
     branches:
       - main
   pull_request: {}
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      release_sha:
+        description: Exact main commit SHA to publish (leave blank to validate only)
+        type: string
+        required: false
   workflow_run:
     workflows:
       - Fetch Medium Articles
@@ -33,6 +38,8 @@ jobs:
           persist-credentials: false
       - name: Resolve immutable source
         id: source
+        env:
+          GH_TOKEN: ${{ github.event_name == 'workflow_run' && github.token || '' }}
         run: node scripts/ci/commands.mjs resolve
   quality-checks:
     name: Run Quality Checks
@@ -47,7 +54,7 @@ jobs:
     needs:
       - resolve-source
       - quality-checks
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.resolve-source.outputs.publish == 'true'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.resolve-source.outputs.publish == 'true'
     permissions:
       contents: read
       pages: write
@@ -65,6 +72,7 @@ jobs:
           persist-credentials: false
       - name: Reject superseded release
         env:
+          GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ needs.resolve-source.outputs.sha }}
         run: node scripts/ci/commands.mjs current "$SOURCE_SHA"
       - name: Deploy tested Pages artifact

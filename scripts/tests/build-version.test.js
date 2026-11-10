@@ -177,7 +177,7 @@ test('R-BUILD-B07 | AC03/04/05/12 | Workflow keeps resolved-source and exact-art
       head_repository: { full_name: repository }, head_branch: 'main', conclusion: 'success', event: 'schedule', head_sha: 'b'.repeat(40)
     }
   }, '', 'b'.repeat(40), sha);
-  assert.deepEqual(source, { sha, publish: true });
+  assert.deepEqual(source, { sha, publish: false });
 });
 
 test('R-BUILD-B08 | AC08 | Generated reading content excludes build chrome', () => {
