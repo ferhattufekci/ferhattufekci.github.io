@@ -44,9 +44,7 @@ async function scrollbarOf(page, id) {
 
 for (const width of [1440, 495]) {
   for (const theme of ['light', 'dark']) {
-    test(`R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme`, async ({ page, browserName }, info) => {
-      test.skip(browserName !== 'chromium', '::-webkit-scrollbar is Chromium/WebKit-only; Firefox uses scrollbar-width.');
-      test.skip(info.project.use.isMobile, 'Touch emulation draws transient overlay bars; the narrow desktop window is the case covered here.');
+    test(`R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: theme });
       await page.setViewportSize({ width, height: 900 });
       const found = {};
