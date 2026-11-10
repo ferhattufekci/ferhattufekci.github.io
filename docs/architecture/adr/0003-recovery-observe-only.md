@@ -1,5 +1,7 @@
 # ADR 0003 — Keep CI failure recovery observe-only
 
+**🇬🇧 English | [🇹🇷 Türkçe](0003-recovery-observe-only.tr.md)**
+
 **Status:** Accepted · **Date:** 2026-11-10
 
 ## Context

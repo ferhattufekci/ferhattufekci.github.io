@@ -1,5 +1,7 @@
 # Portfolio CI/CD
 
+**🇬🇧 English | [🇹🇷 Türkçe](CI-CD.tr.md)**
+
 ## Static build identity
 
 The footer shows `Build <runNumber>.<buildAttempt>` and links to the producing

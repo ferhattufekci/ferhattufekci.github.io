@@ -1,5 +1,7 @@
 # ADR 0002 — Deploy only the exact SHA that was tested
 
+**🇬🇧 English | [🇹🇷 Türkçe](0002-exact-sha-release-gate.tr.md)**
+
 **Status:** Accepted · **Date:** 2026-11-10 (recording a decision already in force)
 
 ## Context
