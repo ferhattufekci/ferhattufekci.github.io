@@ -1,5 +1,7 @@
 # Architecture Decision Records
 
+**🇬🇧 English | [🇹🇷 Türkçe](README.tr.md)**
+
 Each record states a decision that was actually taken in this repository, the context that
 forced it, and what it costs. A record is written when a choice is not obvious from the code.
 
