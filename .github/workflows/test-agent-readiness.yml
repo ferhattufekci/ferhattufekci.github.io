@@ -205,7 +205,14 @@ jobs:
     # run 42043003964 reached the 35-minute deadline. Include setup,
     # build-label coverage, arrows and reports with about 1.5x headroom,
     # without changing test timeouts or retries.
-    timeout-minutes: 50
+    # Update 2026-11-10: the suite is 658 cases and the same specs ran about
+    # 1.8x slower per test than on 2026-11-08 (adsense 1.4 s -> 2.6 s, starred
+    # ads 2.7 s -> 5.1 s; run 42489390320 took 29 minutes, run 42796215632 was
+    # cancelled at 621/658 after 49). The page is not slower in Chromium (same
+    # specs, production e6fd8f9 vs main, 1.9 min each), so hosted-runner
+    # variance is the working explanation [?]. 75 minutes keeps ~1.3x over a
+    # full run at the slow rate while the cause stays under observation.
+    timeout-minutes: 75
     needs: build-site
     env:
       PORTFOLIO_TEST_ROOT: .pages-site
