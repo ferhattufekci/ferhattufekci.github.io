@@ -335,8 +335,37 @@ textarea.form-control:focus {
   margin-bottom: 30px;
 }
 
+/* Rotating profile titles: every title shares one grid cell, so the block
+   takes the tallest title's height and nothing is offset horizontally.
+   Only opacity changes, which cannot overflow or overlap at any width. */
 .text-rotation {
-  display: block;
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.text-rotation > .item {
+  grid-area: 1 / 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+}
+
+.text-rotation > .item.is-active,
+.text-rotation:not(.is-ready) > .item:first-child {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease 0.2s, visibility 0s linear 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-rotation > .item,
+  .text-rotation > .item.is-active {
+    transition: none;
+  }
 }
 
 .center {

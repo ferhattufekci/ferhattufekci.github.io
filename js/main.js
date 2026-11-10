@@ -70,17 +70,35 @@
         },
       });
 
-    $(".text-rotation").owlCarousel({
-      loop: true,
-      dots: false,
-      nav: false,
-      margin: 0,
-      items: 1,
-      autoplay: true,
-      autoplayHoverPause: false,
-      autoplayTimeout: 1500,
-      animateOut: "fadeOut",
-      animateIn: "fadeIn",
+    // Rotating profile titles. Owl Carousel's fade mode positioned the
+    // outgoing slide with a pixel offset that went stale when the mobile
+    // viewport resized, so neighbouring titles overlapped or peeked in.
+    // Crossfading stacked items (see .text-rotation in main.css) avoids that.
+    $(".text-rotation").each(function () {
+      var root = this;
+      var items = $(root).children(".item").get();
+      var reduceMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var index = 0;
+
+      function show(next) {
+        items.forEach(function (item, i) {
+          var active = i === next;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-hidden", active ? "false" : "true");
+        });
+        index = next;
+      }
+
+      show(0);
+      root.classList.add("is-ready");
+      if (items.length < 2 || reduceMotion) return;
+
+      window.setInterval(function () {
+        if (document.hidden) return;
+        show((index + 1) % items.length);
+      }, 1500);
     });
 
     $(".form-control")
