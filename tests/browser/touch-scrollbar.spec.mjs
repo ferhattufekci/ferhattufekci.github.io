@@ -48,8 +48,15 @@ const measure = page => page.evaluate(() => {
 const hex = rgb => '#' + rgb.match(/\d+/g).slice(0, 3).map(n => Number(n).toString(16).padStart(2, '0')).join('');
 
 test.describe('touch scrollbar', () => {
-  test('R-SCROLLBAR-02 | overlay-scrollbar touch devices draw the desktop scrollbar on every page', async ({ page }, testInfo) => {
-    test.skip(!testInfo.project.use.isMobile, 'touch devices only');
+  // One test per project, never skipped: the CI coverage gate rejects skipped tests.
+  test('R-SCROLLBAR-02/03 | overlay-scrollbar touch devices draw the desktop scrollbar on every page; fine pointers keep the native one only', async ({ page }, testInfo) => {
+    if (!testInfo.project.use.isMobile) {
+      await open(page, 'about-me');
+      const state = await measure(page);
+      expect(state.active).toBe(false);
+      expect(state.bar).toBeNull();
+      return;
+    }
     for (const id of PAGES) {
       await open(page, id);
       const rest = await measure(page);
@@ -81,11 +88,4 @@ test.describe('touch scrollbar', () => {
     }
   });
 
-  test('R-SCROLLBAR-03 | desktop keeps the native styled scrollbar and draws no second one', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.use.isMobile, 'fine pointers only');
-    await open(page, 'about-me');
-    const state = await measure(page);
-    expect(state.active).toBe(false);
-    expect(state.bar).toBeNull();
-  });
 });
