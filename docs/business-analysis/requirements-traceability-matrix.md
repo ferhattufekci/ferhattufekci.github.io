@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**228 requirement ids, 271 test titles, 45 areas.**
+**230 requirement ids, 273 test titles, 45 areas.**
 
 | Area | Ids |
 |---|---|
@@ -49,7 +49,7 @@
 | R-RELEASE | 4 |
 | R-RESUME | 15 |
 | R-RESUME-NAV | 7 |
-| R-SCROLLBAR | 1 |
+| R-SCROLLBAR | 3 |
 | R-SHELL | 5 |
 | R-THEME | 4 |
 | R-TRUST | 5 |
@@ -270,6 +270,8 @@
 | R-RESUME-NAV-06 | Given responsive themes, then navigation shares Blog styling, has no page overflow, exposes its last item and passes new accessibility checks | Browser (Playwright) | `tests/browser/resume-navigation.spec.mjs` |
 | R-RESUME-NAV-07 | Given short final content, when Certifications is chosen with disclosures closed or open, then its heading starts at the panel top at every viewport height | Browser (Playwright) | `tests/browser/resume-navigation.spec.mjs` |
 | R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme | Browser (Playwright) | `tests/browser/scrollbar-parity.spec.mjs` |
+| R-SCROLLBAR-02 | overlay-scrollbar touch devices draw the desktop scrollbar on every page | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
+| R-SCROLLBAR-03 | desktop keeps the native styled scrollbar and draws no second one | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
 | R-SHELL-01 | static 404 keeps the portfolio shell and absolute nested-path navigation without the SPA runtime | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
 | R-SHELL-02 | generated HTML and Markdown share the same error copy and recovery meaning | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
 | R-SHELL-03 | changing the source shell is reflected in the next generated 404 | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
