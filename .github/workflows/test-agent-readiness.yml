@@ -134,7 +134,12 @@ jobs:
     # and reached the former 25-minute deadline in run 42043003964, which
     # cancelled the job and blocked the release. Keep about 1.6x headroom for
     # runner variance without changing test timeouts or retries.
-    timeout-minutes: 40
+    # Update 2026-11-10: after the inline-script contract tests (#41) the suite
+    # is 801 tests per shard report and the shards are unbalanced: in run
+    # 42796215632 shard 2 finished in 30 minutes while shard 1 was cancelled by
+    # the 40-minute deadline at test 767 of 801 (the codex rerun's slowest shard
+    # took 38 minutes). 1.6x of that slowest shard is 60 minutes.
+    timeout-minutes: 60
     needs:
       - build-site
       - static-checks
@@ -200,7 +205,14 @@ jobs:
     # run 42043003964 reached the 35-minute deadline. Include setup,
     # build-label coverage, arrows and reports with about 1.5x headroom,
     # without changing test timeouts or retries.
-    timeout-minutes: 50
+    # Update 2026-11-10: the suite is 658 cases and the same specs ran about
+    # 1.8x slower per test than on 2026-11-08 (adsense 1.4 s -> 2.6 s, starred
+    # ads 2.7 s -> 5.1 s; run 42489390320 took 29 minutes, run 42796215632 was
+    # cancelled at 621/658 after 49). The page is not slower in Chromium (same
+    # specs, production e6fd8f9 vs main, 1.9 min each), so hosted-runner
+    # variance is the working explanation [?]. 75 minutes keeps ~1.3x over a
+    # full run at the slow rate while the cause stays under observation.
+    timeout-minutes: 75
     needs: build-site
     env:
       PORTFOLIO_TEST_ROOT: .pages-site
