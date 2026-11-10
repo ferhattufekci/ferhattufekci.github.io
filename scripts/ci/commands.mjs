@@ -15,9 +15,16 @@ import {
   repository,
   validateCoverage
 } from './policy.mjs';
-import { recover } from './recovery.mjs';
+import { actionArgv, recover, requireRunArgs } from './recovery.mjs';
 
 const [command, ...args] = process.argv.slice(2);
+// Jobs check out with persist-credentials: false, so git has no credentials there and
+// `git ls-remote origin` fails on a private repository (production runs 42598657824,
+// 42607611212, 42645437976). The API call authenticates with GH_TOKEN instead.
+const gh = (...parts) =>
+  JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
+const readMainSha = () =>
+  gh(`repos/${repository}/git/ref/heads/main`).object?.sha ?? '';
 async function output(name, value) {
   if (process.env.GITHUB_OUTPUT)
     await appendFile(process.env.GITHUB_OUTPUT, `${name}=${value}\n`);
@@ -72,31 +79,25 @@ else if (command === 'current') {
   if (process.env.GITHUB_STEP_SUMMARY)
     await appendFile(process.env.GITHUB_STEP_SUMMARY, `## Production release\n\nSelected source: \`${selected}\`\n`);
 } else if (command === 'recover') {
-  const gh = (...parts) =>
-    JSON.parse(execFileSync('gh', ['api', ...parts], { encoding: 'utf8' }));
-  const mainSha = execFileSync('git', ['ls-remote', 'origin', 'refs/heads/main'], {
-    encoding: 'utf8'
-  }).split(/\s/)[0];
+  requireRunArgs(args[0], args[1]);
+  const mainSha = readMainSha();
   const act = (action) => {
     const [runId] = args;
-    execFileSync(
-      'gh',
-      action === 'rerun'
-        ? ['run', 'rerun', runId, '--failed', '--repo', repository]
-        : ['workflow', 'run', 'pages.yml', '--ref', 'main', '--repo', repository],
-      { stdio: 'inherit' }
-    );
+    execFileSync('gh', actionArgv(action, runId), { stdio: 'inherit' });
   };
   // Acting is opt-in (repository variable); everything else only reports.
   const observeOnly = process.env.RECOVERY_ACT !== 'true';
   const plan = await recover({ runId: args[0], attempt: args[1], api: gh, mainSha, act, observeOnly });
-  const line = `recovery=${plan.action} mode=${observeOnly ? 'observe' : 'act'} performed=${plan.performed} (${plan.reason})`;
+  const performed = plan.failed ? 'failed' : plan.performed;
+  const line = `recovery=${plan.action} mode=${observeOnly ? 'observe' : 'act'} performed=${performed} (${plan.reason})${plan.failed ? ` error=${JSON.stringify(plan.error)}` : ''}`;
   console.log(line);
   if (process.env.GITHUB_STEP_SUMMARY)
     await appendFile(
       process.env.GITHUB_STEP_SUMMARY,
-      `## Release recovery\n\nRun \`${args[0]}\` attempt \`${args[1]}\` against main \`${mainSha}\`.\n\n- Decision: **${plan.action}**\n- Mode: ${observeOnly ? 'observe only (no action taken)' : 'act'}\n- Performed: ${plan.performed}\n- Reason: ${plan.reason}\n`
+      `## Release recovery\n\nRun \`${args[0]}\` attempt \`${args[1]}\` against main \`${mainSha}\`.\n\n- Decision: **${plan.action}**\n- Mode: ${observeOnly ? 'observe only (no action taken)' : 'act'}\n- Performed: ${performed}\n- Reason: ${plan.reason}\n${plan.failed ? `- Error: ${plan.error}\n` : ''}`
     );
+  // A failed action stays visible as a failed step, after the record was written.
+  if (plan.failed) process.exitCode = 1;
 } else if (command === 'artifact') {
   const { verifyMetadata } = await import('./build-metadata.mjs');
   const metadata = await verifyMetadata(

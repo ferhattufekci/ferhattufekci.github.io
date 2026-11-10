@@ -8,14 +8,6 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 
 ## 1. Karar/onay bekliyor
 
-### PR-38 Bu belgelerin `main`'e birleştirilmesi
-- **Öncelik:** P1. **Durum:** PR açık; son doğrulanan baş `3250a97` (CI yeşil, `mergeable=clean`); sonraki belge commit'leri bu PR'a eklenir ve CI yeniden doğrulanır.
-- **Kanıt:** [G] uzak dal = yerel HEAD; birleştirme simülasyonu çakışmasız ve birleşen ağaç `main`'den yalnızca belge dosyalarıyla ayrılıyor; PR dosyalarının hiçbiri public site envanterinde değil; `pages-package.test.js` `docs/`'un pakete girmediğini doğrular [T]. `main` bu arada yalnızca bot veri commit'leriyle ilerledi.
-- **Bağımlılık:** sahibin açık onayı; güncel baş için yeşil CI; uçuşta production koşusu yok.
-- **Risk:** merge standart push koşusunu ve yayını başlatır; site dosyaları aynı kalır, altbilgideki build numarası değişir.
-- **Kabul:** merge sonrası push koşusu yeşil, `test:production` yeşil, site içeriği/davranışı/güvenlik yapılandırması aynı.
-- **Sonraki adım:** onayı bekle. **Karar:** sahip.
-
 ### D-1 GITHUB_TOKEN rerun/dispatch → `workflow_run` probe deneyi (P-1 ayrı depo)
 - **Öncelik:** P1. **Durum:** plan hazır ([D1-PROBE-PLAN.md](D1-PROBE-PLAN.md)); uygulanmadı.
 - **Kanıt:** Q1/Q2/Q3/Q4/Q5/Q6 **[?]**; yalnızca kullanıcı rerun'ı için dolaylı gözlem [G].
@@ -85,16 +77,34 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ## 2. Araştırılıyor / kanıt bekliyor
 
 ### RF R-FILTER-04 ve R-KEYBOARD-08 kök neden
-- **Öncelik:** P1 (olay tetikli). **Durum:** yeni başarısızlık yok; değişiklik yapılmadı; kök neden kanıtsız.
-- **Kanıt:** yerelde 140 tekrar yeniden üretmedi [G]; özgün artifact erişilemiyor; diagnostics yerinde [K].
+- **Öncelik:** P1 (olay tetikli). **Durum:** **yeni başarısızlık var (2026-11-08)**; kod/assertion değişmedi; kök neden kanıtsız.
+- **Olay:** `main` push koşusu 42457503796 (merge 9955860), Browser Tests (2/2), `small-mobile-dark`, `categories.spec.mjs:132` R-FILTER-04; 710 geçti / 1 kaldı (tek hata). Hata `selectLanguage(page,'all')` içinde (spec satır 145, `navigateToSection(blog)` sonrası): `#blog-lang-toggle [aria-pressed="true"]` beklenen `all`, gelen `en`, 7 sn boyunca değişmedi (18 deneme). Focus diagnostics: `activeElement=h2.section-title`, `currentPages=[blog]`, `inertPages=[about-me,resume,projects,contact]`, `menuExpanded=false`, `hash=#blog` [G]. Sonraki koşu (9eeb9d3) yeşil: aralıklı [G].
+- **Gözlem:** odak, `all` düğmesinde değil başlıktaydı; yani Space tuşu düğmeye ulaşmadı ya da odak sonradan başlığa taşındı. Uygulamada odağı başlığa taşıyan yol `onEndAnimation` (js/pages-switcher.js:279) [K]. **Bu bir hipotezdir [?]**: geçişin tamamlanması ile testin `focus()+Space` çağrısı arasında yarış. Kanıtlanmadı; `expectSection` yalnızca `.pt-page-current` kimliğini bekler, odağı beklemez.
+- **Yeniden üretme:** önceden yerelde 140 tekrar; bu kez CPU yükü (2 çekirdek meşgul + 2 işçi) altında 60 tekrar `small-mobile-dark`: **60/60 geçti** [G]. Yani yerelde üretilemedi; hipotez doğrulanmadı da çürütülmedi.
+- **Kanıt erişimi:** trace/video/error-context artifact'ı (browser-report-2, id 13608781765) bu ortamdan indirilemedi: ağ politikası `productionresultssa19.blob.core.windows.net` CONNECT isteğine 403 verdi. Sahip bu ana bilgisayarı (örn. `*.blob.core.windows.net`) izin listesine eklerse trace incelenebilir. Artifact süresi dolmadan (varsayılan 90 gün) elle de indirilebilir.
 - **Risk:** aralıklı hata; **geçmek çözüm değildir**; retry ile gizlenmez; assertion gevşetilmez.
 - **Kabul:** kanıtlı kök neden (altyapı / zamanlama yarışı / uygulama) — diagnostics, trace, video ve browser logları birlikte.
-- **Sonraki adım:** bir sonraki CI hatasında bu kanıtları birlikte incele. **Karar:** yok.
+- **Sonraki adım:** trace erişimi sağlanınca (veya sonraki hatada) `press` anındaki odak ve sayfa geçişi zamanlamasını trace'ten oku; kod değişikliği ancak kanıtla. **Karar:** ağ izni sahibe ait.
+
+### RK-01 R-KEYBOARD-01 WebKit/Firefox kararsızlığı (yeni, 2026-11-09/10)
+- **Öncelik:** P1. **Durum:** kök neden kanıtsız; assertion değişmedi.
+- **Gözlem [G]:** `keyboard-tests`, `keyboard-accessibility.spec.mjs:43` R-KEYBOARD-01, iki bağımsız PR'da aynı saatte düştü: `ci/recovery-act-hardening` (koşu 42650501491) ve `ci/exact-sha-release-gate` (42650805811, webkit-1440-light, "Visible focus ring on … Blog"). Deneme 1: webkit light+dark ("GitHub" ikonu); deneme 2: tarayıcı kurulumu 5 dk zaman aşımı (apt/D-4); deneme 3: webkit light ("Schedule a job interview"), webkit dark ("About") ve firefox light/dark `page.goto` 120 sn zaman aşımı. Düşen öğe her seferinde farklı; 590/594 geçti.
+- **Çıkarım:** test, PR #39'un değişikliğinden (yalnızca test dosyası ve CI betikleri) bağımsız; iki farklı branch'te oluştu. Neden henüz bilinmiyor: odak halkasının ölçüldüğü an ile boyama zamanlaması (WebKit) ve yavaş `goto` (Firefox) olası ama **kanıtsız [?]**. Retry ile gizlenmeyecek.
+- **Sonraki koşular (42775764822) [G]:** deneme 1: R-KEYBOARD-01 webkit light/dark + firefox `goto` bütçe zaman aşımı; deneme 2: Browser Tests (1/2) R-BLOG-SHARE-09 (30 sn test zaman aşımı) ve R-KEYBOARD-08 (`desktop-dark`: başlığa odak doğrulandıktan sonra ilk Tab dil düğmeleri yerine `button.blog-category-filter` üzerine gitti; `Focus diagnostics` ile), klavye işi ise testlere hiç ulaşmadı: `Install keyboard test browsers` 5 dk sınırına takıldı (~107 apt paketi, mirror yavaş; iki pakette 15 sn `Ign:`; etkin ayarlar Timeout 15 / Retries 1). Bu üçüncü sınıf D-4 shape 2 ("yavaş ama akıyor") örneğidir.
+- **Yerel deney (Chromium, `desktop-dark`, 2 çekirdek) [G]:** R-KEYBOARD-08 yüksek CPU yükü altında (4 meşgul işlem + 3 worker) 10 koşuda 9 başarısız (6× 90 sn zaman aşımı, 3× odak halkası anketi); orta yükte (1 meşgul işlem + 2 worker) 10/10 geçti. CI'daki "Tab düğmeleri atladı" imzası yerelde **üretilemedi** [?]. Testlerin CPU açlığına duyarlı olduğu kanıtlandı; CI'daki odak atlamasının nedeni değil.
+- **0e6469a [G]:** author ve committer Ferhat TÜFEKÇİ (GitHub: ferhattufekci); GitHub "Unverified" nedeni `unsigned` (imza yok), yazarlık sorunu yok. Yazarlık veya imza değiştirilmedi.
+- **Sonraki adım:** `browser-report-1` içindeki `keyboard-accessibility-R-K-41798-…-desktop-dark` klasörü (video, error-context, trace) ve keyboard-browser-report incelenmeli. Sonra odak halkası ölçümünün boyama beklemesiyle yarışı test edilir.
+
+### REPO-VIS Deponun görünürlüğü özel (private) olarak görünüyor
+- **Öncelik:** P1. **Durum:** **insan kararı bekliyor.** 2026-11-09 ~10:08 UTC'den beri `repos/ferhattufekci/ferhattufekci.github.io` `private: true` dönüyor [G]; 8 Kasım'da recover işi anonim `git ls-remote` ile çalışıyordu, yani depo o zaman herkese açıktı [K]. Kimin/ne zaman değiştirdiği bu oturumdan doğrulanamadı [?].
+- **Etkiler:** (1) recover, `Resolve Source` (workflow_run) ve `Reject superseded release` adımları git kimlik bilgisi olmadan düşüyordu: veri commit'leri yayınlanmadı (42607611212, 42645437976) ve Recover Release düştü (42734721526). Düzeltme #39'da, bkz. F-C1-3; (2) ücretsiz planda özel depoda GitHub Pages ve Actions dakikaları kısıtlıdır: bu pipeline koşu başına onlarca dakikalık iş üretir, kota ve yayın etkisi **doğrulanmadı** [?]; (3) bu bir iş görüşmesi referans projesi, herkese açık olması beklenir (varsayım, sahibin kararı); (4) probe deposu planı ve genel envanter açısından özel depo farklı davranır.
+- **Karar:** sahibe ait (yanlışlıkla mı bilinçli mi). Bu oturum görünürlüğü değiştirmez.
 
 ### C1 `act()` argüman testleri
-- **Öncelik:** P1 (D-3 önkoşulu). **Durum:** tasarım hazır (RECOVERY-ACTIVATION bölüm 8); test yazılmadı.
-- **Kabul:** C1-01..10; sahte `PATH` ile gerçek GitHub çağrısı yok; her test <5 sn; 30 tekrarda flaky yok; mutasyonlar yakalanıyor.
-- **Karar:** test yazım onayı (sahip).
+- **Öncelik:** P1 (D-3 önkoşulu). **Durum:** uygulandı; PR CI doğrulaması bekliyor. F-C1-1 ve F-C1-2 düzeltildi (RECOVERY-ACTIVATION bölüm 8).
+- **Kanıt:** `scripts/tests/recovery-act.test.js` 14 test, gerçek alt süreç, sahte `PATH`, mutasyonlar (resolve/current dahil) yakalanıyor; yerel tekrar sonuçları PR açıklamasında [T/G].
+- **Kabul:** sahte `PATH` ile gerçek GitHub çağrısı yok; her test <5 sn; 30 tekrarda flaky yok; mutasyonlar yakalanıyor. CI yeşil olunca "tamamlandı ve doğrulandı".
+- **Karar:** yok (sahip otonom çalışma talimatı verdi).
 
 ### C3 Recovery hatalarının sessiz kalması
 - **Öncelik:** P2. **Durum:** recovery hatası koşuyu kırmızı yapar [K]; bildirim davranışı doğrulanmadı [?]; izleme rutini yok.
@@ -124,5 +134,5 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 
 - Production doğrulaması yeşil: `main` ucu için `Portfolio CI/CD` koşusu başarılı (deploy + verify-production; en son gözlenen `51522a7`, koşu `42449002399`).
 - jQuery 3.6.0 yükseltmesi yayında ve üretim doğrulaması yeşil.
-- Üç belgenin ve bu kaydın CI'ı **PR üzerinde** yeşil; bu, üretimde doğrulama anlamına gelmez (yalnızca belge).
+- PR #38 (belgeler) 12/12 yeşil CI ile birleştirildi (squash 9955860). Birleşme sonrası `main` push koşusu 42457503796 **kırmızı** bitti (yalnızca R-FILTER-04, yukarıya bakın; dağıtım atlandı); sonraki main koşusu (9eeb9d3) yeşil ve yayın güncel [G]. Belge PR'ı site dosyalarını değiştirmedi.
 - Belge düzeyinde doğrulananlar: `workflow_run` zincir sınırı (üç seviye), yeniden çalıştırmada `requested` olayının oluşmaması, meta CSP kısıtları, AdSense'in yalnızca nonce'u belgelemesi, Playwright imaj/önbellek yönergeleri [B]; inline script bağımlılıkları (ayrıştırıcıyla) [K].
