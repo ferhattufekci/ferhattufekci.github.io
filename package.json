@@ -18,6 +18,7 @@
     "test": "node --test",
     "verify": "node scripts/verify-agent-endpoints.mjs",
     "lint": "node scripts/ci/static-checks.mjs",
+    "traceability": "node scripts/generate-traceability.mjs",
     "test:production": "node scripts/ci/production-smoke.mjs"
   },
   "devDependencies": {

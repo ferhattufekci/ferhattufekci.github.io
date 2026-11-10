@@ -340,6 +340,11 @@ jobs:
       - name: Merge browser reports
         if: always() && steps.coverage.outputs.blobs != '' && steps.coverage.outputs.blobs != '0'
         run: npx playwright merge-reports --config=playwright.merge.config.mjs work/qa/all-blob-reports
+      - name: Build traceability report
+        if: always() && hashFiles('work/qa/merged-results.json') != ''
+        run: |
+          node scripts/generate-traceability.mjs --results work/qa/merged-results.json --out work/qa/traceability-report.md
+          cat work/qa/traceability-report.md >> "$GITHUB_STEP_SUMMARY"
       - name: Publish merged-browser-report
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always() && hashFiles('work/qa/merged-report/**', 'work/qa/merged-junit.xml', 'work/qa/merged-results.json') != ''
@@ -350,6 +355,7 @@ jobs:
             work/qa/merged-junit.xml
             work/qa/merged-results.json
             work/qa/coverage-summary.json
+            work/qa/traceability-report.md
           retention-days: 7
           if-no-files-found: error
       - name: Publish browser coverage diagnostics

@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**230 requirement ids, 272 test titles, 45 areas.**
+**235 requirement ids, 277 test titles, 46 areas.**
 
 | Area | Ids |
 |---|---|
@@ -31,6 +31,7 @@
 | R-DISCLOSURE | 3 |
 | R-DOC | 3 |
 | R-DOC-RTM | 3 |
+| R-DOC-TRACE | 5 |
 | R-EXTERNAL | 1 |
 | R-FILTER | 14 |
 | R-FIRST | 2 |
@@ -156,6 +157,11 @@
 | R-DOC-RTM-01 | the traceability matrix is generated from the tests and not stale | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-02 | the extractor finds the titles it is built for and rejects malformed ids | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-03 | an independent scan of every test title finds no id the matrix is missing | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
+| R-DOC-TRACE-01 | the committed traceability report is generated from the tests and the procedure, and not stale | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-02 | procedure steps map requirements to cases and cases to requirements, with step results | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-03 | an unrecognised step result is rejected instead of being counted | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-04 | build results aggregate every project run of a requirement, failures and flakiness first | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-05 | the real procedure parses and every case maps to at least one requirement | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
 | R-EXTERNAL-01 | Given an unavailable scheduler script, then a first-time visitor can navigate without uncaught errors | Browser (Playwright) | `tests/browser/external-widget.spec.mjs` |
 | R-FILTER-01 | Given bilingual articles, when each category/language pair is chosen, then only matching newest-first cards appear | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
 | R-FILTER-02 | Given mixed pinned and ordinary repos, when all project categories are chosen, then each group and label is correct | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
