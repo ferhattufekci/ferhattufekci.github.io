@@ -53,3 +53,15 @@ export async function withScrollState(page, area, point, check) {
     throw new Error(`${error.message}\nScroll diagnostics: ${JSON.stringify(state)}`, { cause: error });
   }
 }
+
+// Open item RP: in CI, headless Chromium sometimes drew no frame for over 6 s after a wheel.
+// Chromium applies wheel input at the start of a frame, so the main thread kept reading
+// scrollTop 0 although the product had nothing blocking the scroll. In the traces of PR #71
+// run 43025491970 (attempts 1 and 2) the first frame after the wheel was the failure
+// screenshot, 6.2 s later. A 1x1 screenshot makes the browser draw a frame before each
+// read, as a real display does on every vsync. The input is not repeated, and the caller's
+// assertion and timeout are unchanged.
+export async function renderedScrollTop(page, area) {
+  await page.screenshot({ clip: { x: 0, y: 0, width: 1, height: 1 }, caret: 'initial' });
+  return area.evaluate(el => el.scrollTop);
+}
