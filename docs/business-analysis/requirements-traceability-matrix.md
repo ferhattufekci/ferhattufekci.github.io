@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**235 requirement ids, 277 test titles, 46 areas.**
+**273 requirement ids, 315 test titles, 54 areas.**
 
 | Area | Ids |
 |---|---|
@@ -54,6 +54,14 @@
 | R-SHELL | 5 |
 | R-THEME | 4 |
 | R-TRUST | 5 |
+| R-UNIT-NOTFOUND | 2 |
+| R-UNIT-PANELS | 6 |
+| R-UNIT-PRELOADER | 3 |
+| R-UNIT-RESNAV | 8 |
+| R-UNIT-SHELL | 8 |
+| R-UNIT-STARRED | 3 |
+| R-UNIT-TITLE | 3 |
+| R-UNIT-TOUCHBAR | 5 |
 
 | Id | Verified behavior (as written in the test title) | Layer | Test file |
 |---|---|---|---|
@@ -292,3 +300,41 @@
 | R-TRUST-03 | navigation does not enter Markdown or alter generated public content and discovery files | Unit/contract (node:test) | `scripts/tests/trust-navigation.test.js` |
 | R-TRUST-04 | Trust headers offer one accessible return action while footer links retain discovery and current-page context | Browser (Playwright) | `tests/browser/trust-navigation.spec.mjs` |
 | R-TRUST-05 | The return action and theme control remain aligned, touch-sized and inside the viewport | Browser (Playwright) | `tests/browser/trust-navigation.spec.mjs` |
+| R-UNIT-NOTFOUND-01 | Given no recovery view, then ensure renders it once; an existing view is reused | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-NOTFOUND-02 | Given the recovery view, when activated, then it becomes current at the top, announces activation and focuses its title | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-PANELS-01 | Given a page, then its content panel is the scroll owner, or the page itself without one | Unit/contract (node:test) | `scripts/tests/content-panels.test.js` |
+| R-UNIT-PANELS-02 | Given the current page, when reset, then its panel returns to the top; hidden or inert pages are left alone | Unit/contract (node:test) | `scripts/tests/content-panels.test.js` |
+| R-UNIT-PANELS-03 | Given the focused panel, when Home, End, PageDown or PageUp is pressed, then it scrolls to the matching position | Unit/contract (node:test) | `scripts/tests/content-panels.test.js` |
+| R-UNIT-PANELS-04 | Given reduced motion, when paging, then the jump is instant | Unit/contract (node:test) | `scripts/tests/content-panels.test.js` |
+| R-UNIT-PANELS-05 | Given a modifier, another key, a descendant target or an inert page, then native keyboard behaviour is untouched | Unit/contract (node:test) | `scripts/tests/content-panels.test.js` |
+| R-UNIT-PANELS-06 | Given repeated initialisation, then one controller exists, and a final pagehide removes it | Unit/contract (node:test) | `scripts/tests/content-panels.test.js` |
+| R-UNIT-PRELOADER-01 | Given the page loads, then the preloader is marked loaded and removed after its fade | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-PRELOADER-02 | Given load never fires, then the 12 s fail-safe still removes it; a document already complete finishes at once | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-PRELOADER-03 | Given load and pageshow both fire, then finishing happens once; without a preloader nothing runs | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-RESNAV-01 | Given Resume is current, then All is the only selection and the panel starts at the top | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-02 | Given a destination, when clicked, then it is selected and the panel scrolls to it below the panel padding | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-03 | Given reduced motion, then the jump is instant; All always returns to the top and resets the bar | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-04 | Given keyboard activation, then focus moves to the target heading without scrolling the page | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-05 | Given a button outside the visible bar, when focused or chosen, then only the bar scrolls horizontally | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-06 | Given a page transition, then a request waits for it to settle and only the latest one runs | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-07 | Given another page or an inert Resume, then clicks and lifecycle events do nothing | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-RESNAV-08 | Given no Resume navigation, then init returns null; repeated init reuses the controller until pagehide | Unit/contract (node:test) | `scripts/tests/resume-navigation-unit.test.js` |
+| R-UNIT-SHELL-01 | Given the skip link, when used, then the current page heading takes focus without changing the URL | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-02 | Given a phone, then the drawer starts closed and hidden from assistive technology, and the header height is published | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-03 | Given the toggle, when clicked, then the drawer opens with matching state, label and icon, and a second click closes it | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-04 | Given an open drawer, then Escape, a navigation link and an outside click each close it | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-05 | Given keyboard opening, when the drawer motion finishes, then focus enters the first menu link | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-06 | Given a resize, then the drawer closes and a desktop width drops the drawer animation class | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-07 | Given closeMenu, then it closes the drawer and resolves after the closing motion | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-SHELL-08 | Given hybrid input on the page arrows, then the latest pointer type is recorded for styling | Unit/contract (node:test) | `scripts/tests/site-shell.test.js` |
+| R-UNIT-STARRED-01 | Given no verified ad configuration, then cards are appended in order with no ad and the grid is still registered | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-STARRED-02 | Given a verified configuration, then cards are grouped and a planned ad is placed after the planned card | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-STARRED-03 | Given a later batch, then its cards continue in the current group | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-TITLE-01 | Given the tab is hidden, then the title cycles through the away frames; when shown again, the original title returns | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-TITLE-02 | Given a Turkish browser, then the Turkish frames are used; an unsupported language falls back to English | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-TITLE-03 | Given the page loads already hidden, then the animation starts at once and repeated hides do not stack timers | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-TOUCHBAR-01 | Given a fine pointer or a classic styled scrollbar, then no bar is drawn and the native one is kept | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-02 | Given a coarse pointer with overlay scrollbars, then one decorative bar is drawn beside the scroll owner | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-03 | Given the owner scrolls, then the thumb keeps its proportional size and follows the position | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-04 | Given content that does not overflow, then the bar is hidden; a tiny ratio keeps a 24px thumb | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-05 | Given start is called again, then no second bar is created | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
