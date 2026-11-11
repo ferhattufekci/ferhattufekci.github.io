@@ -45,7 +45,7 @@ const measure = page => page.evaluate(() => {
     thumbColor: thumb && getComputedStyle(thumb).backgroundColor,
     // Longhands in a fixed order: engines serialise the outline shorthand differently.
     thumbOutline: thumb && (style => `${style.outlineColor} ${style.outlineStyle} ${style.outlineWidth}`)(getComputedStyle(thumb)),
-    tokens: { thumb: css.getPropertyValue('--color-scrollbar-thumb-touch').trim(), surface: css.getPropertyValue('--color-surface').trim() }
+    tokens: { thumb: css.getPropertyValue('--color-scrollbar-thumb').trim(), surface: css.getPropertyValue('--color-surface').trim() }
   };
 });
 
@@ -77,9 +77,11 @@ test.describe('touch scrollbar', () => {
       // Same design as the desktop bar: 5px, themed thumb, slategrey outline, surface track.
       expect(rest.bar.width, id).toBe(5);
       expect(hex(rest.thumbColor), id).toBe(rest.tokens.thumb.toLowerCase());
-      // On a phone the 5px bar must be noticeable: non-text contrast (WCAG 1.4.11) of the
-      // thumb against its track. The light desktop thumb (#dedede on #ffffff) is 1.35:1.
-      if (testInfo.project.use.colorScheme === 'light') expect(contrast(hex(rest.thumbColor), hex(rest.barTrack)), id).toBeGreaterThanOrEqual(3);
+      // One colour standard: the thumb is the desktop token in both themes (owner decision
+      // 2026-11-11). The light thumb (#dedede on #ffffff) is only 1.35:1, so the bar is
+      // noticeable through its outline: non-text contrast (WCAG 1.4.11) of the outline
+      // against the track, in both themes.
+      expect(contrast(hex(rest.thumbOutline), hex(rest.barTrack)), id).toBeGreaterThanOrEqual(3);
       expect(hex(rest.barTrack), id).toBe(rest.tokens.surface.toLowerCase());
       expect(rest.thumbOutline, id).toBe('rgb(112, 128, 144) solid 1px');
       // Beside the scroll owner: its right edge, its visible height.
@@ -120,6 +122,48 @@ test.describe('touch scrollbar', () => {
     expect(first, 'measured before the page scripts ran').not.toBeNull();
     expect(settled, 'the text keeps its width once the page has settled').toEqual(first);
     if (testInfo.project.use.isMobile) expect(settled.client, 'no native scrollbar gutter on a touch device').toBe(settled.offset);
+  });
+
+  test('R-SCROLLBAR-05 | Given page motion is enabled, when a page slides in on first load or on a page switch, then the drawn bar is never shown away from the settled scroll owner', async ({ page }, testInfo) => {
+    // The other tests run with reduced motion, which skips the slide; this one needs it.
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    // Record the bar in every frame from the first script on, together with whether a page is animating.
+    await page.addInitScript(() => {
+      window.__frames = [];
+      const tick = () => {
+        const bar = document.querySelector('.touch-scrollbar');
+        const moving = [...document.querySelectorAll('.pt-page-current')].some(el => el.getAnimations().some(a => a.playState === 'running'));
+        const box = bar && !bar.hidden ? bar.getBoundingClientRect() : null;
+        window.__frames.push({ moving, visible: !!box, left: box && box.left, right: box && box.right });
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    await mockCatalog(page, longCatalog);
+    await page.goto('/#about-me');
+    await expectSection(page, 'about-me');
+    await expect(page.locator('.preloader')).toHaveCount(0);
+    for (const id of ['resume', 'blog', 'about-me']) {
+      await page.evaluate(target => { location.hash = target; }, id);
+      await expectSection(page, id);
+      // Let the slide finish and the bar return before the next switch.
+      await expect.poll(() => page.evaluate(() => window.__frames.at(-1).moving)).toBe(false);
+      if (testInfo.project.use.isMobile) await expect.poll(() => page.evaluate(() => window.__frames.at(-1).visible), { message: id }).toBe(true);
+    }
+    const frames = await page.evaluate(() => window.__frames);
+    const width = page.viewportSize().width;
+    expect(frames.filter(frame => frame.moving).length, 'the pages did slide, so the check is not vacuous').toBeGreaterThan(5);
+    if (!testInfo.project.use.isMobile) {
+      expect(frames.some(frame => frame.visible), 'fine pointers never get the drawn bar').toBe(false);
+      return;
+    }
+    // Whenever the bar is visible it sits at the right edge of the viewport, where every
+    // settled scroll owner ends; it is never somewhere across the screen.
+    const stray = frames.filter(frame => frame.visible && Math.abs(frame.right - width) > 1);
+    expect(stray.slice(0, 5), `${stray.length} frames showed the bar away from the right edge`).toEqual([]);
+    // Once a slide is under way no bar is drawn (the first moving frame may still hold the settled bar).
+    const duringMotion = frames.filter((frame, index) => frame.moving && frames[index - 1]?.moving && frame.visible);
+    expect(duringMotion.length, 'bar frames drawn while a page was sliding').toBe(0);
   });
 
 });

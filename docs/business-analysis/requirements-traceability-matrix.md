@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**311 requirement ids, 359 test titles, 62 areas.**
+**313 requirement ids, 361 test titles, 62 areas.**
 
 | Area | Ids |
 |---|---|
@@ -56,7 +56,7 @@
 | R-RELEASE | 4 |
 | R-RESUME | 15 |
 | R-RESUME-NAV | 7 |
-| R-SCROLLBAR | 4 |
+| R-SCROLLBAR | 5 |
 | R-SHELL | 5 |
 | R-THEME | 4 |
 | R-TIP | 5 |
@@ -69,7 +69,7 @@
 | R-UNIT-STARRED | 3 |
 | R-UNIT-TIP | 6 |
 | R-UNIT-TITLE | 3 |
-| R-UNIT-TOUCHBAR | 6 |
+| R-UNIT-TOUCHBAR | 7 |
 
 | Id | Verified behavior (as written in the test title) | Layer | Test file |
 |---|---|---|---|
@@ -320,6 +320,7 @@
 | R-SCROLLBAR-02 | overlay-scrollbar touch devices draw the desktop scrollbar on every page; fine pointers keep the native one only | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
 | R-SCROLLBAR-03 | overlay-scrollbar touch devices draw the desktop scrollbar on every page; fine pointers keep the native one only | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
 | R-SCROLLBAR-04 | Given a touch device, then the native scrollbar takes no width from the first paint, so About Me text and photo never reflow | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
+| R-SCROLLBAR-05 | Given page motion is enabled, when a page slides in on first load or on a page switch, then the drawn bar is never shown away from the settled scroll owner | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
 | R-SHELL-01 | static 404 keeps the portfolio shell and absolute nested-path navigation without the SPA runtime | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
 | R-SHELL-02 | generated HTML and Markdown share the same error copy and recovery meaning | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
 | R-SHELL-03 | changing the source shell is reflected in the next generated 404 | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
@@ -384,3 +385,4 @@
 | R-UNIT-TOUCHBAR-04 | Given content that does not overflow, then the bar is hidden; a tiny ratio keeps a 24px thumb | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
 | R-UNIT-TOUCHBAR-05 | Given start is called again, then no second bar is created | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
 | R-UNIT-TOUCHBAR-06 | Given a coarse pointer where the browser would report a styled scrollbar gutter, then the bar is still drawn and nothing is measured | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-07 | Given a current page that is still animating, then no bar is drawn until the animation ends | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |

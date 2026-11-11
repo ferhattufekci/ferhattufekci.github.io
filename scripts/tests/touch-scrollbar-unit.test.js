@@ -81,3 +81,19 @@ test('R-UNIT-TOUCHBAR-05: Given start is called again, then no second bar is cre
   api.start(); api.update();
   assert.equal(document.querySelectorAll('.touch-scrollbar').length, 1);
 });
+
+// On a phone the bar followed the sliding page across the screen on first load and on page switches.
+test('R-UNIT-TOUCHBAR-07: Given a current page that is still animating, then no bar is drawn until the animation ends', () => {
+  const ctx = setup();
+  const { document, window, bar, api, flush } = ctx;
+  const current = document.querySelector('.pt-page-current');
+  let state = 'running';
+  current.getAnimations = () => [{ playState: state }];
+  api.update();
+  assert.equal(bar().hidden, true, 'hidden while the page slides');
+  state = 'finished';
+  document.dispatchEvent(new window.Event('animationend', { bubbles: true }));
+  flush();
+  assert.equal(bar().hidden, false, 'drawn again once the page has settled');
+  assert.equal(bar().style.left, '385px');
+});
