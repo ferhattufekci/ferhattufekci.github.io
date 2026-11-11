@@ -32,6 +32,7 @@ async function scrollbarOf(page, id) {
       const part = name => getComputedStyle(el, `::-webkit-scrollbar${name}`);
       return {
         id: el.id,
+        display: part('').display,
         width: part('').width,
         thumb: part('-thumb').backgroundColor,
         radius: part('-thumb').borderRadius,
@@ -44,13 +45,21 @@ async function scrollbarOf(page, id) {
 
 for (const width of [1440, 495]) {
   for (const theme of ['light', 'dark']) {
-    test(`R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme`, async ({ page }) => {
+    test(`R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme`, async ({ page }, testInfo) => {
       await page.emulateMedia({ colorScheme: theme });
       await page.setViewportSize({ width, height: 900 });
       const found = {};
       for (const id of PAGES) found[id] = await scrollbarOf(page, id);
       for (const id of PAGES) expect(found[id], `${id} should have exactly one scroll owner`).toHaveLength(1);
-      const styles = Object.fromEntries(PAGES.map(id => [id, (({ id: _, ...style }) => style)(found[id][0])]));
+      // display decides only whether a touch device hides the bar; the drawn style is compared without it.
+      const styles = Object.fromEntries(PAGES.map(id => [id, (({ id: _, display: __, ...style }) => style)(found[id][0])]));
+      const hidden = Object.fromEntries(PAGES.map(id => [id, found[id][0].display === 'none']));
+      // Touch devices hide the native bar on every page from the first paint and use the drawn
+      // bar instead (R-SCROLLBAR-02/03/04); a styled native bar there took layout width on an iPhone.
+      if (testInfo.project.use.hasTouch) {
+        for (const id of PAGES) expect(hidden[id], `${id}: ${JSON.stringify(found[id][0])}`).toBe(true);
+        return;
+      }
       // The native bar (15px, with arrow buttons) shows up as width "auto": no rule styled it.
       for (const id of PAGES) expect(styles[id].width, `${id}: ${JSON.stringify(styles[id])}`).toBe('5px');
       for (const id of PAGES.slice(1)) expect(styles[id], `${id} differs from about-me`).toEqual(styles['about-me']);

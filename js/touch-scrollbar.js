@@ -2,14 +2,16 @@
  *
  * Desktop browsers render the ::-webkit-scrollbar rules in main.css and
  * dark-theme.css: a 5px bar with a --color-scrollbar-thumb thumb, a slategrey
- * outline and a --color-surface track. Mobile browsers use overlay scrollbars
- * instead (iOS WebKit, Android Chrome) and ignore those rules, so the native
- * indicator shows only during a swipe and, in the light theme, is barely
- * visible against the white page. Colour rules alone cannot fix that.
+ * outline and a --color-surface track. On touch devices the native indicator
+ * is unreliable: Android Chrome shows an overlay only during a swipe, and an
+ * iPhone in-app browser rendered the styled rules as a space-taking bar whose
+ * light thumb was invisible and whose gutter later disappeared, reflowing the
+ * page. Colour rules alone cannot fix that.
  *
- * Where the browser draws no classic scrollbar (zero gutter) on a coarse
- * pointer, this script hides the native indicator and draws one element in the
- * same design beside the active scroll owner. It is decorative
+ * On a coarse pointer (the same media query that dark-theme.css uses to hide
+ * the native scrollbar before the first paint) this script draws one element
+ * in that design beside the active scroll owner. It does not measure or depend
+ * on the native scrollbar, so starting it never changes the layout. It is decorative
  * (aria-hidden, pointer-events: none): scrolling stays native, so touch,
  * keyboard and assistive technology behave exactly as before.
  */
@@ -26,17 +28,6 @@
 
   function coarsePointer() {
     return !!(window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches);
-  }
-
-  // A styled probe reports a 5px gutter wherever ::-webkit-scrollbar renders,
-  // and 0 where the browser only draws overlay scrollbars.
-  function overlayScrollbars() {
-    var probe = document.createElement("div");
-    probe.className = "touch-scrollbar-probe";
-    document.body.appendChild(probe);
-    var gutter = probe.offsetWidth - probe.clientWidth;
-    probe.parentNode.removeChild(probe);
-    return gutter === 0;
   }
 
   function scrolls(el) {
@@ -139,7 +130,7 @@
   }
 
   function init() {
-    if (coarsePointer() && overlayScrollbars()) start();
+    if (coarsePointer()) start();
   }
 
   window.touchScrollbar = { start: start, update: reset };
