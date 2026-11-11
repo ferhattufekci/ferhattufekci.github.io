@@ -296,6 +296,18 @@ canlı ortam hazırlığının ayrıca iki dakikalık bir süre sınırı vardı
 JS/JSON/YAML'ı ayrıştırır ve CI'da doğrulanmış actionlint ile ShellCheck çalıştırır. `npm ci`,
 commit edilmiş lockfile'ı zorunlu kılar.
 
+### Bağımlılık denetimi kapısı
+
+Static Checks, `npm ci` sonrasında `node scripts/ci/dependency-audit.mjs` çalıştırır; kalite workflow'unun her koşusunda (pull request, push, yayın dispatch'i ve veri senkronizasyonu) çalışır. `package-lock.json`'u `npm audit --json --package-lock-only` ile denetler; böylece üretim ve geliştirme paketlerinin ikisi de kapsanır. Sonuç job özetine yazılır. Çıkış kodları sonuçları ayırır:
+
+| Çıkış | Sonuç | Anlamı | Yapılacak |
+|---|---|---|---|
+| 0 | PASS | Geçerli rapor, high veya critical bulgu yok (moderate/low listelenir, engellemez) | Yok |
+| 1 | SECURITY FINDING | En az bir high veya critical advisory | Paketi ayrı bir PR'da yükselt (Dependabot veya elle). CI değişikliği içinde asla `npm audit fix --force` çalıştırma |
+| 2 | INFRASTRUCTURE ERROR | npm veya registry başarısız oldu, çıktı eksiksiz ve tutarlı bir rapor değil ya da canary tespit edilmedi | Registry erişilebilir olunca yeniden çalıştır. Bu bir güvenlik kararı da başarı da değildir |
+
+Advisory servisi boş bir nesneyle yanıt verdiğinde npm "0 vulnerabilities" yazar; bu, temiz bir ağaçtan ayırt edilemez. Bu yüzden kapı sabit bir canary lockfile'ı da denetler (`scripts/ci/audit-canary.json`, minimist 0.0.8; hiç kurulmaz, geçici klasöre yazılır) ve temiz sonucu yalnızca servis canary'nin bilinen critical advisory'sini (GHSA-xvch-5gv4-984h) bildirirse kabul eder. Kapı yayın dispatch'lerinde de çalıştığından açık bir high/critical advisory veya registry kesintisi, çözülene kadar yayını da durdurur. Kapsam sınırı: vendored tarayıcı kütüphaneleri ve uzaktan yüklenen betikler `package.json`'da olmadığı için denetim bunları görmez (`docs/OPEN-ITEMS.md`, SEC-SCAN).
+
 İki veri senkronizasyon workflow'u da depo kökünden kurulum yapar ve `package-lock.json`'a
 göre önbellekler. Veri çekiciler Node'un yerleşik `fetch` fonksiyonunu kullanır (projenin
 Node >=20 gereksinimiyle desteklenir), bu yüzden `scripts/` içinde ayrı bir HTTP paketine

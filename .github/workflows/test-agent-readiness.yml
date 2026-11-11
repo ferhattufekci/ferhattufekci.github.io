@@ -37,6 +37,10 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      # Exit 1 is a high/critical advisory; exit 2 means the audit result could not be
+      # trusted (registry, npm or canary failure). Both block; the summary says which.
+      - name: Audit locked dependencies
+        run: node scripts/ci/dependency-audit.mjs
       - name: Check source syntax
         run: npm run lint
       - name: Install verified actionlint
