@@ -23,13 +23,14 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 - [Requirements traceability matrix](docs/business-analysis/requirements-traceability-matrix.md): generated from the test titles; the build fails if it is stale or misses an id that a test carries.
 - [Requirement ↔ test procedure traceability](docs/testing/TRACEABILITY.md): both directions between requirement ids, automated tests and the manual procedure (GKP), with step results; regenerated with each build's results.
 - [Threat model](docs/security/threat-model.md): trust boundaries, the controls that exist and the ones that do not.
+- [Open items](docs/OPEN-ITEMS.md) (Turkish): known open problems and pending decisions, each with priority, evidence and acceptance criterion.
 
 ### Tech Stack
 
 - **HTML5 / CSS3 / JavaScript**, no framework or bundler
 - **jQuery + Shuffle.js + Owl Carousel** (filtering and carousels)
 - **Node.js** (content generation and tests only; nothing runs on a server)
-- **Playwright + `node:test`** (browser and unit tests)
+- **Playwright + `node:test`** (browser tests in Chromium, keyboard audit in Firefox and WebKit, unit and contract tests)
 - **GitHub Actions** (Medium and GitHub sync, quality gate, release)
 - **GitHub Pages** (static hosting)
 
@@ -47,7 +48,7 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 │   └── tests/            # Unit and contract tests (node:test)
 ├── tests/browser/        # Playwright browser tests
 ├── docs/                 # CI/CD, ADRs, assessment, threat model, testing documents
-├── .github/workflows/    # pages.yml (CI/CD), data fetchers, release recovery
+├── .github/workflows/    # pages.yml (CI/CD), test-agent-readiness.yml (quality checks), data fetchers, release recovery
 ├── llms.txt              # Plain-text index for LLM/AI answer engines
 └── FerhatTufekci_CV.pdf
 ```
@@ -61,6 +62,8 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 | Blog | Medium articles with language (EN/TR) and category filters |
 | Projects | GitHub repositories with category filters, pinned repos, and starred section |
 | Contact | Phone, email, Calendly interview scheduler, and links |
+
+On phones and tablets the site hides the browser's own scrollbar and draws a slim one beside the scrolling area (`js/touch-scrollbar.js`), because native scroll indicators differ between devices. Scrolling itself stays native. Desktop browsers keep their native scrollbar.
 
 ### Blog — Medium Auto-Sync
 
@@ -148,6 +151,17 @@ npm run verify -- --local --artifact --all --output=verification-local.json
 npm run verify -- https://ferhattufekci.github.io --all --output=verification-production.json
 ```
 
+Tests:
+
+```powershell
+npm test                   # unit and contract tests
+npm run lint               # syntax and structured-data checks
+npm run test:browser       # Playwright, Chromium (needs: npx playwright install chromium)
+npm run test:motion:webkit # WebKit touch profile (needs: npx playwright install webkit)
+```
+
+In CI the browser test jobs run in the official Playwright container image, pinned to the locked `@playwright/test` version, so they download no browsers or system packages at run time. When you upgrade Playwright, update the image tag and digest in `test-agent-readiness.yml` as described in the [CI/CD guide](docs/CI-CD.md); a contract test fails until they match.
+
 Details on platform limits, the shared 404 page, page transitions, Resume navigation, advertising units and verification are in the [detailed maintenance guide](docs/MAINTENANCE.md).
 
 ### Run Locally
@@ -190,13 +204,14 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 - [Gereksinim izlenebilirlik matrisi](docs/business-analysis/requirements-traceability-matrix.md) (İngilizce, test başlıklarından otomatik üretilir): bayatlarsa ya da bir testin taşıdığı kimliği atlarsa build kırılır.
 - [Gereksinim ↔ test prosedürü izlenebilirliği](docs/testing/TRACEABILITY.md) (İngilizce, otomatik üretilir): gereksinim kimlikleri, otomatik testler ve manuel prosedür (GKP) arasında iki yönlü eşleme ve adım sonuçları; her build'in sonuçlarıyla yeniden üretilir.
 - [Tehdit modeli](docs/security/threat-model.tr.md): güven sınırları, mevcut ve eksik kontroller.
+- [Açık maddeler](docs/OPEN-ITEMS.md): bilinen açık sorunlar ve bekleyen kararlar; her biri öncelik, kanıt ve kabul kriteriyle.
 
 ### Teknoloji Yığını
 
 - **HTML5 / CSS3 / JavaScript**, framework veya bundler yok
 - **jQuery + Shuffle.js + Owl Carousel** (filtreleme ve kaydırmalı listeler)
 - **Node.js** (yalnızca içerik üretimi ve testler; sunucuda hiçbir şey çalışmaz)
-- **Playwright + `node:test`** (tarayıcı ve birim testleri)
+- **Playwright + `node:test`** (Chromium'da tarayıcı testleri, Firefox ve WebKit'te klavye denetimi, birim ve sözleşme testleri)
 - **GitHub Actions** (Medium ve GitHub senkronizasyonu, kalite kapısı, yayın)
 - **GitHub Pages** (statik barındırma)
 
@@ -214,7 +229,7 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 │   └── tests/            # Birim ve sözleşme testleri (node:test)
 ├── tests/browser/        # Playwright tarayıcı testleri
 ├── docs/                 # CI/CD, ADR'ler, değerlendirme, tehdit modeli, test belgeleri
-├── .github/workflows/    # pages.yml (CI/CD), veri çekiciler, yayın kurtarma
+├── .github/workflows/    # pages.yml (CI/CD), test-agent-readiness.yml (kalite kontrolleri), veri çekiciler, yayın kurtarma
 ├── llms.txt              # LLM/yapay zekâ yanıt motorları için düz metin dizin
 └── FerhatTufekci_CV.pdf
 ```
@@ -230,6 +245,8 @@ Sitenin arayüzü İngilizcedir; sayfa adları sitede göründüğü gibi yazıl
 | Blog | Dil (EN/TR) ve kategori filtreli Medium makaleleri |
 | Projects | Kategori filtreli GitHub depoları, sabitlenmiş depolar ve yıldızlanan depolar |
 | Contact | Telefon, e-posta, Calendly mülakat planlayıcı ve bağlantılar |
+
+Telefon ve tabletlerde site, tarayıcının kendi kaydırma çubuğunu gizler ve kaydırılan alanın yanına ince bir çubuk çizer (`js/touch-scrollbar.js`); çünkü yerel kaydırma göstergeleri cihazdan cihaza değişir. Kaydırmanın kendisi yerel kalır. Masaüstü tarayıcılar kendi kaydırma çubuğunu kullanır.
 
 ### Blog — Medium Otomatik Senkronizasyonu
 
@@ -316,6 +333,17 @@ npm run build
 npm run verify -- --local --artifact --all --output=verification-local.json
 npm run verify -- https://ferhattufekci.github.io --all --output=verification-production.json
 ```
+
+Testler:
+
+```powershell
+npm test                   # birim ve sözleşme testleri
+npm run lint               # sözdizimi ve yapılandırılmış veri kontrolleri
+npm run test:browser       # Playwright, Chromium (gerekir: npx playwright install chromium)
+npm run test:motion:webkit # WebKit dokunmatik profil (gerekir: npx playwright install webkit)
+```
+
+CI'da tarayıcı test job'ları, kilitli `@playwright/test` sürümüne sabitlenmiş resmi Playwright container imajında çalışır; çalışma anında tarayıcı veya sistem paketi indirmez. Playwright'ı yükseltirken `test-agent-readiness.yml` içindeki imaj etiketini ve digest'i [CI/CD rehberinde](docs/CI-CD.tr.md) anlatıldığı gibi güncelleyin; eşleşene kadar bir sözleşme testi başarısız olur.
 
 Platform sınırları, ortak 404 sayfası, sayfa geçişleri, Resume gezinmesi, reklam birimleri ve doğrulama ayrıntıları [ayrıntılı bakım rehberindedir](docs/MAINTENANCE.tr.md).
 
