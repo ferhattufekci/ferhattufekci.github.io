@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**304 requirement ids, 346 test titles, 60 areas.**
+**305 requirement ids, 348 test titles, 60 areas.**
 
 | Area | Ids |
 |---|---|
@@ -33,7 +33,7 @@
 | R-DEPLOY | 1 |
 | R-DISCLOSURE | 3 |
 | R-DOC | 3 |
-| R-DOC-RTM | 3 |
+| R-DOC-RTM | 4 |
 | R-DOC-TRACE | 5 |
 | R-EXTERNAL | 1 |
 | R-FILTER | 14 |
@@ -188,6 +188,7 @@
 | R-DOC-RTM-01 | the traceability matrix is generated from the tests and not stale | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-02 | the extractor finds the titles it is built for and rejects malformed ids | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-03 | an independent scan of every test title finds no id the matrix is missing | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
+| R-DOC-RTM-04 | no test title builds its requirement id from a template placeholder | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-TRACE-01 | the committed traceability report is generated from the tests and the procedure, and not stale | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
 | R-DOC-TRACE-02 | procedure steps map requirements to cases and cases to requirements, with step results | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
 | R-DOC-TRACE-03 | an unrecognised step result is rejected instead of being counted | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
@@ -249,7 +250,7 @@
 | R-NATIVE-RESULT-01 | Native resolve removes pending UI without claiming delivery and only explicit retry starts again | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
 | R-NATIVE-RESULT-02 | Native resolve removes pending UI without claiming delivery and only explicit retry starts again | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
 | R-NATIVE-RESULT-03 | Native resolve removes pending UI without claiming delivery and only explicit retry starts again | Browser (Playwright) | `tests/browser/blog-sharing-feedback.spec.mjs` |
-| R-NAV-01 | Given existing navigation, when each menu item is selected, then its section opens | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/route-policy.test.js` |
+| R-NAV-01 | Given existing navigation, when each menu item is selected, then its section opens | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/route-policy.test.js`<br>`scripts/tests/rtm.test.js` |
 | R-NAV-02 | Given malformed or unknown routes, when changed, then no blank section appears | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/route-policy.test.js` |
 | R-NAV-03 | only existing AJAX detail documents are accepted | Unit/contract (node:test) | `scripts/tests/route-policy.test.js` |
 | R-NAV-04 | Given route history, when back and forward are used, then the correct view returns | Browser (Playwright) | `tests/browser/portfolio.spec.mjs` |
