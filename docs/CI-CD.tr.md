@@ -175,9 +175,17 @@ toplamak başarısız bir testi asla başarılıya çevirmez. Bash, `tee` üzeri
   senkronizasyonu koşuları yine iptalsiz, ayrı `portfolio-main-ci` grubunu paylaşır; böylece
   yayın artık main CI'ının arkasında beklemez (2026-11-11 öncesinde ikisi tek gruptaydı;
   dispatch `42866923910` bir push koşusunun arkasında 26 dakika bekledi, yayınların başlaması
-  için push koşuları elle iptal edildi). GitHub concurrency en fazla bir bekleyen koşu
-  tutar; yerine yenisi gelen bekleyen koşular değiştirilebilir. Deploy'dan hemen önce yapılan
-  güncel uzak main karşılaştırması eski koşuları reddeder. Önceki yayının doğrulaması
+  için push koşuları elle iptal edildi). GitHub concurrency her grupta bir çalışan ve en
+  fazla bir bekleyen koşu tutar: daha yeni bir koşu bekleyenin yerini alır (o başlamadan iptal
+  edilir), çalışan koşu ise asla iptal edilmez. 2026-11-11'deki zararsız bir probe tam olarak
+  bunu ölçtü (150 saniyelik job sonuna kadar çalıştı; bekleyen koşu, kuyruğa girdikten 12 saniye
+  sonra daha yenisi gelince iptal edildi; yeni koşu çalışanın bitişinden 2 saniye sonra başladı;
+  başka gruptaki job aynı anda çalıştı). `portfolio-main-ci`'da bu, bekleyen bir push koşusunun
+  daha yeni main ucunu test eden bir veri senkronizasyonu `workflow_run` koşusuyla
+  değiştirilebileceği anlamına gelir; örneğin `057647f` push koşusunun yerini aynı SHA'daki
+  `43031966255` koşusu aldı, yani main CI'sız kalmadı. Yayınlarda kuyruk stale kontrolünün
+  yerine geçmez: yayın SHA'sı dispatch anında main HEAD'e eşit olmalıdır ve deploy'dan hemen
+  önce yapılan güncel uzak main karşılaştırması eski koşuları reddeder. Önceki yayının doğrulaması
   sürerken daha yeni bir yayın deploy edilemez.
 - `recover-release.yml`, main üzerinde biten her **Portfolio CI/CD** koşusunu (aynı depo,
   `failure` veya `cancelled`) yalnızca `actions: write` ve `contents: read` izinleriyle takip
@@ -343,6 +351,15 @@ Odaklı regresyon kontrolleri için `node --test scripts/tests/sync-fetchers.tes
 fixture'ına yönlendirerek iki gerçek giriş noktasını başlatır; bağımlılık yükleme, sayfalama,
 filtreler, kimlik bilgileri, hata çıkışları ve üst kaynak hatalarında değişmeyen
 snapshot'ları kapsar.
+
+## Rapor ve kanıt saklama süreleri
+
+Pull request, push, veri senkronizasyonu ve doğrulama koşuları raporlarını 7 gün saklar: bunlar
+incelenen değişikliğin teşhis kayıtlarıdır. Yayın yapan bir koşu aynı kalite artifact'lerini ve
+deploy ettiği Pages artifact'ini 90 gün (depo üst sınırı) saklar; `production-verification`
+her zaman 90 gün saklanır. Böylece bir yayının baytları, kontrolleri ve canlı doğrulaması yayından
+sonra da incelenebilir. `pages.yml`, kalite workflow'una `evidence-retention-days` geçirir;
+R-CI-02 bunu denetler.
 
 ## Yerel komutlar
 
