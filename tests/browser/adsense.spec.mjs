@@ -2,6 +2,7 @@ import { test, expect, navigateToSection, expectSection } from './fixtures.mjs';
 import { adFixture, slot, calls, requested, respond, geometry, enterAdPage, layoutShifts } from './helpers/adsense.mjs';
 import { measureContrast } from './helpers/visual-metrics.mjs';
 import { articles, mockCatalog, starred } from './data/catalog.mjs';
+import { renderedScrollTop } from './helpers/focus-diagnostics.mjs';
 
 test('R-AD-EMPTY-01 | A provider-hidden empty iframe never becomes a filled creative or visible empty message', async ({ page }) => {
   await adFixture(page); await enterAdPage(page, 'blog'); await requested(page, 'blog');
@@ -59,7 +60,7 @@ for (const section of ['projects', 'blog']) {
       } else {
         await page.mouse.move(x, y); await page.mouse.wheel(0, 420);
       }
-      await expect.poll(() => panel.evaluate(el => el.scrollTop)).toBeGreaterThan(100);
+      await expect.poll(() => renderedScrollTop(page, panel)).toBeGreaterThan(100);
       expect(await controls.boundingBox()).toEqual(fixed);
       expect(await current.evaluate(el => [el.scrollTop, document.scrollingElement.scrollTop])).toEqual([0, 0]);
       await panel.press('End');

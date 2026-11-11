@@ -31,7 +31,7 @@ test('R-CI-KB-01: each keyboard engine runs in its own job, and together the job
 test('R-CI-KB-02: the WebKit-only touch arrows run once, installs match the leg, failures still block and reports stay per leg', () => {
   const arrows = job.steps.find(step => /playwright\.webkit\.config\.mjs/.test(step.run ?? ''));
   assert.equal(arrows.if, "matrix.browser == 'webkit'");
-  assert.equal(job.steps.find(step => step.name === 'Install keyboard test browsers').run, 'npx playwright install --with-deps "$KEYBOARD_BROWSER"');
+  assert.equal(job.steps.find(step => step.name === 'Check container browsers').run, 'node scripts/ci/check-container-browsers.mjs "$KEYBOARD_BROWSER"');
   for (const step of job.steps) assert.equal(step['continue-on-error'], undefined, step.name);
   const upload = job.steps.find(step => step.name === 'Publish keyboard browser reports');
   assert.equal(upload.with.name, 'keyboard-browser-report-${{ matrix.browser }}', 'unique artifact per leg; a shared name would collide');

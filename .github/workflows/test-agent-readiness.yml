@@ -144,6 +144,16 @@ jobs:
   browser-tests:
     name: Browser Tests (${{ matrix.shard }}/2)
     runs-on: ubuntu-24.04
+    # The official Playwright image already holds the browsers and their system
+    # packages for this exact Playwright version, so the job downloads nothing
+    # through apt. On 2026-11-11 the runners could not resolve
+    # azure.archive.ubuntu.com for hours and every browser job failed in its
+    # install step before any test ran (PR #77, run 43040117023, four attempts).
+    # The tag must equal the locked @playwright/test version and is pinned by
+    # digest; R-CI-PWC-01 checks both. Options follow the Playwright CI guide.
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
+      options: --user 1001 --init --ipc=host
     # Shards took 17-24 minutes in runs 41988673520, 42021093807, 42028696513
     # and reached the former 25-minute deadline in run 42043003964, which
     # cancelled the job and blocked the release. Keep about 1.6x headroom for
@@ -191,16 +201,8 @@ jobs:
       - &a2
         name: Verify artifact bytes
         run: node scripts/ci/commands.mjs artifact
-      - name: Restore browser cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ~/.cache/ms-playwright
-          key: pw-${{ runner.os }}-${{ runner.arch }}-ubuntu24-node22-${{ hashFiles('package-lock.json') }}
-      - name: Bound apt network stalls
-        run: bash scripts/ci/bound-apt-network.sh
-      - name: Install Chromium dependencies
-        timeout-minutes: 5
-        run: npx playwright install --with-deps chromium
+      - name: Check container browsers
+        run: node scripts/ci/check-container-browsers.mjs chromium
       - name: Test assigned browser shard
         run: npm run test:browser -- --shard="$CI_SHARD/2"
       - name: Publish browser-report-${{ matrix.shard }}
@@ -214,6 +216,9 @@ jobs:
   keyboard-tests:
     name: Cross-browser Keyboard Tests
     runs-on: ubuntu-24.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
+      options: --user 1001 --init --ipc=host
     # Run 41731506040 passed 530 engine cases in 25.8m, then the 30m job
     # deadline interrupted touch arrows. Later runs took 23-33 minutes and
     # run 42043003964 reached the 35-minute deadline. Include setup,
@@ -264,11 +269,8 @@ jobs:
           path: work/site
       - *a1
       - *a2
-      - name: Bound apt network stalls
-        run: bash scripts/ci/bound-apt-network.sh
-      - name: Install keyboard test browsers
-        timeout-minutes: 5
-        run: npx playwright install --with-deps "$KEYBOARD_BROWSER"
+      - name: Check container browsers
+        run: node scripts/ci/check-container-browsers.mjs "$KEYBOARD_BROWSER"
       - name: Test keyboard behavior in ${{ matrix.browser }}
         run: npx playwright test --config=playwright.keyboard.config.mjs --project="$KEYBOARD_BROWSER-*"
       - name: Test WebKit touch arrows
