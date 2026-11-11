@@ -163,9 +163,13 @@ toplamak başarısız bir testi asla başarılıya çevirmez. Bash, `tee` üzeri
   takip workflow'una ulaşıyor. Henüz gözlemlenmeyenler: workflow'un kendisinin `GITHUB_TOKEN`
   ile başlattığı bir yeniden çalıştırma veya dispatch, ve 3. ile 4. aşamalar. 3. aşama
   (değişken), daha fazla gerçek olay gözlemlenmesini ve depo sahibini bekliyor.
-- Tüm canlı ortam koşuları, iptali kapalı workflow düzeyindeki `portfolio-production`
-  grubunu paylaşır. Kilit kalite, yayın ve canlı doğrulamayı birlikte kapsar. Bu, main CI'ını
-  da yayını da bilinçli olarak sıraya sokar. GitHub concurrency en fazla bir bekleyen koşu
+- Yayın dispatch'leri (main üzerinde `workflow_dispatch`, deploy edebilen tek olay), iptali
+  kapalı workflow düzeyindeki `portfolio-production` grubunu paylaşır. Kilit bir yayının
+  kalite, deploy ve canlı doğrulamasını birlikte kapsar. Main üzerindeki push ve veri
+  senkronizasyonu koşuları yine iptalsiz, ayrı `portfolio-main-ci` grubunu paylaşır; böylece
+  yayın artık main CI'ının arkasında beklemez (2026-11-11 öncesinde ikisi tek gruptaydı;
+  dispatch `42866923910` bir push koşusunun arkasında 26 dakika bekledi, yayınların başlaması
+  için push koşuları elle iptal edildi). GitHub concurrency en fazla bir bekleyen koşu
   tutar; yerine yenisi gelen bekleyen koşular değiştirilebilir. Deploy'dan hemen önce yapılan
   güncel uzak main karşılaştırması eski koşuları reddeder. Önceki yayının doğrulaması
   sürerken daha yeni bir yayın deploy edilemez.
