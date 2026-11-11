@@ -273,13 +273,20 @@ var PageTransitions = (function ($) {
 
     function onEndAnimation($pageWrapper, $nextPage, $currentPage, moveFocus) {
         resetPage($nextPage, $currentPage);
-        if (moveFocus || navigationFocus === 'heading') {
+        // The incoming page is already interactive during its visual transition.
+        // Do not interrupt a newer keyboard choice (including a held Space key).
+        // A native fragment focus on the page itself still needs heading focus.
+        var focused = document.activeElement;
+        var preserveFocus = focused !== $nextPage[0] && $nextPage[0].contains(focused) &&
+            !focused.closest('[inert], [aria-hidden="true"]') && !focused.matches(':disabled') &&
+            focused.getClientRects().length > 0 && getComputedStyle(focused).visibility === 'visible';
+        if (!preserveFocus && (moveFocus || navigationFocus === 'heading')) {
             var heading = $nextPage.find('h1, h2').first();
             heading.attr('tabindex', '-1');
             if (heading.length) heading[0].focus({ preventScroll: true });
         }
         // Native fragment focusing must not discard a keyboard arrow's focus.
-        if (navigationFocus && navigationFocus !== 'heading') {
+        if (!preserveFocus && navigationFocus && navigationFocus !== 'heading') {
             navigationFocus.focus({ preventScroll: true });
         }
         navigationFocus = null;

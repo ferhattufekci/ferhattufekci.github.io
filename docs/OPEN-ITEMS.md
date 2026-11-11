@@ -77,6 +77,7 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ## 2. Araştırılıyor / kanıt bekliyor
 
 ### RF R-FILTER-04 ve R-KEYBOARD-08 kök neden
+- **Güncelleme (2026-11-11): kök neden bulundu, düzeltme PR #55'te [K].** PR #52 (yalnızca belge) koşusu 42903077612'de aynı hata `small-mobile-dark`/shard 2'de tekrarladı; teşhis çıktısı `activeElement: "h2.section-title"`, `currentPages: ["blog"]`, `menuExpanded: "false"`. Yukarıdaki hipotez, PR #42'den alınan kontrollü test `R-FOCUS-09/11` ile doğrulandı: animasyon tamamlanma geri çağrısı geciktirilince yeni sayfada klavyeyle yapılan seçim `onEndAnimation`'da başlığa geri alınıyor. `f6693f9` üzerinde düzeltmesiz tüm projelerde FAIL, düzeltmeyle 18/18 PASS. Kapanış koşulu: #55 merge edildikten sonra R-FILTER-04'ün CI'da tekrarlamaması.
 - **Öncelik:** P1 (olay tetikli). **Durum:** **yeni başarısızlık var (2026-11-08)**; kod/assertion değişmedi; kök neden kanıtsız.
 - **Olay:** `main` push koşusu 42457503796 (merge 9955860), Browser Tests (2/2), `small-mobile-dark`, `categories.spec.mjs:132` R-FILTER-04; 710 geçti / 1 kaldı (tek hata). Hata `selectLanguage(page,'all')` içinde (spec satır 145, `navigateToSection(blog)` sonrası): `#blog-lang-toggle [aria-pressed="true"]` beklenen `all`, gelen `en`, 7 sn boyunca değişmedi (18 deneme). Focus diagnostics: `activeElement=h2.section-title`, `currentPages=[blog]`, `inertPages=[about-me,resume,projects,contact]`, `menuExpanded=false`, `hash=#blog` [G]. Sonraki koşu (9eeb9d3) yeşil: aralıklı [G].
 - **Gözlem:** odak, `all` düğmesinde değil başlıktaydı; yani Space tuşu düğmeye ulaşmadı ya da odak sonradan başlığa taşındı. Uygulamada odağı başlığa taşıyan yol `onEndAnimation` (js/pages-switcher.js:279) [K]. **Bu bir hipotezdir [?]**: geçişin tamamlanması ile testin `focus()+Space` çağrısı arasında yarış. Kanıtlanmadı; `expectSection` yalnızca `.pt-page-current` kimliğini bekler, odağı beklemez.
@@ -85,6 +86,13 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 - **Risk:** aralıklı hata; **geçmek çözüm değildir**; retry ile gizlenmez; assertion gevşetilmez.
 - **Kabul:** kanıtlı kök neden (altyapı / zamanlama yarışı / uygulama) — diagnostics, trace, video ve browser logları birlikte.
 - **Sonraki adım:** trace erişimi sağlanınca (veya sonraki hatada) `press` anındaki odak ve sayfa geçişi zamanlamasını trace'ten oku; kod değişikliği ancak kanıtla. **Karar:** ağ izni sahibe ait.
+
+### RP R-PANEL-01 masaüstü tekerlek kaydırması (yeni, 2026-11-11)
+- **Öncelik:** P2. **Durum:** kök neden kanıtsız [?]; assertion değişmedi.
+- **Olay [G]:** PR #54 koşusu 42907518826 (yalnızca `.gitattributes`; Linux CI'da hiçbir dosyanın baytı değişmez), Browser Tests (1/2), `desktop-dark`, `fixed-page-controls.spec.mjs:62`; 812 geçti / 1 kaldı.
+- **Trace [G]:** hata döngünün ilk sayfasında, Resume'da: `goto` +70 ms, `mouseMove (808,757)` +2041 ms, `mouseWheel deltaY 420` +2086 ms; panel `scrollTop` 7 sn boyunca 0. Ekran kaydında 1,4 sn ile 8,5 sn arasında hiç kare değişmedi; yani kaydırma başlayıp geri alınmadı, hiç başlamadı. İmleç noktası normal içerik (Education) üzerindeydi.
+- **Kontrol edilen [K]:** uygulamada `wheel`/`touchmove` dinleyicisi veya kaydırmayı engelleyen `preventDefault` yok; `page-content-panels.js` yalnızca panelin kendisindeki Home/End/PageUp/PageDown tuşlarını yönetir.
+- **Sonraki adım:** sonraki olayda tekerlek anındaki `document.elementFromPoint`, panelin `overflow-y`/`scrollHeight` değerlerini teşhis çıktısına ekleyen bir yardımcı (R-FILTER-04'teki `withFocusState` gibi) ile ölç. Retry eklenmez.
 
 ### RK-01 R-KEYBOARD-01 WebKit/Firefox kararsızlığı (yeni, 2026-11-09/10)
 - **Öncelik:** P1. **Durum:** kök neden kanıtsız; assertion değişmedi.

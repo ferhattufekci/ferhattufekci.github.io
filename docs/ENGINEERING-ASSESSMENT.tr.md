@@ -109,7 +109,9 @@ A1+ `docs/T-4-INLINE-SCRIPTS.md` içinde planlandı), ardından `'unsafe-inline'
 bir CSP eklemek. `docs/OPEN-ITEMS.md` içinde takip edilir.
 
 ### F-3 CI'da bağımlılık veya gizli bilgi taraması yok
-`npm audit` adımı, Dependabot yapılandırması veya gizli bilgi taraması yoktur [D]. Burada iki
+CI'da `npm audit` adımı ve gizli bilgi taraması yoktur [D]. (Düzeltme, 2026-11-11: `.github/dependabot.yml`
+mevcuttur ve npm ile GitHub Actions için haftalık gruplanmış güncelleme PR'ları açar, örn. #45;
+`47c36ef` üzerinde `npm audit` 0 açık bildirdi [D].) Burada iki
 farklı yüzeyi ayrı tutmak gerekir:
 - **Build zamanı:** `package.json` içinde 6 devDependency. Bunlar tarayıcıya hiç ulaşmaz.
   `npm audit`/Dependabot bunları kapsar.
