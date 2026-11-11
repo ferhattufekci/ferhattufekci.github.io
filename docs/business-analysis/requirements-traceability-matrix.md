@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**313 requirement ids, 361 test titles, 62 areas.**
+**315 requirement ids, 363 test titles, 62 areas.**
 
 | Area | Ids |
 |---|---|
@@ -24,7 +24,7 @@
 | R-CI-APT | 2 |
 | R-CI-KB | 2 |
 | R-CI-PWC | 2 |
-| R-CI-RECOVER | 22 |
+| R-CI-RECOVER | 24 |
 | R-CI-RECOVER-C1 | 14 |
 | R-CONTENT | 3 |
 | R-COV | 5 |
@@ -151,6 +151,8 @@
 | R-CI-RECOVER-20 | workflow_run production runs are keyed on the data commit they were triggered at | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
 | R-CI-RECOVER-21 | a step deadline in an install step is retried once on the newest commit | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
 | R-CI-RECOVER-22 | a failed job without step-deadline evidence stays a genuine failure | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
+| R-CI-RECOVER-23 | an artifact service failure after retries is retried once on the newest commit | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
+| R-CI-RECOVER-24 | an artifact note next to another failure, or a permanent artifact error, stays genuine | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
 | R-CI-RECOVER-C1-00 | the shims stand in for gh/git, nothing else is reachable, and git is never needed | Unit/contract (node:test) | `scripts/tests/recovery-act.test.js` |
 | R-CI-RECOVER-C1-01 | observe mode reports the decision and runs no action | Unit/contract (node:test) | `scripts/tests/recovery-act.test.js` |
 | R-CI-RECOVER-C1-02 | act mode reruns a deadline-cancelled run with exactly the documented command | Unit/contract (node:test) | `scripts/tests/recovery-act.test.js` |
