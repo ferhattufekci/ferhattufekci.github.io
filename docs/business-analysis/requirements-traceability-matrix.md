@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**307 requirement ids, 354 test titles, 61 areas.**
+**309 requirement ids, 356 test titles, 61 areas.**
 
 | Area | Ids |
 |---|---|
@@ -55,7 +55,7 @@
 | R-RELEASE | 4 |
 | R-RESUME | 15 |
 | R-RESUME-NAV | 7 |
-| R-SCROLLBAR | 3 |
+| R-SCROLLBAR | 4 |
 | R-SHELL | 5 |
 | R-THEME | 4 |
 | R-TIP | 5 |
@@ -68,7 +68,7 @@
 | R-UNIT-STARRED | 3 |
 | R-UNIT-TIP | 6 |
 | R-UNIT-TITLE | 3 |
-| R-UNIT-TOUCHBAR | 5 |
+| R-UNIT-TOUCHBAR | 6 |
 
 | Id | Verified behavior (as written in the test title) | Layer | Test file |
 |---|---|---|---|
@@ -316,6 +316,7 @@
 | R-SCROLLBAR-01 | every page draws the same scrollbar at ${width}px in the ${theme} theme | Browser (Playwright) | `tests/browser/scrollbar-parity.spec.mjs` |
 | R-SCROLLBAR-02 | overlay-scrollbar touch devices draw the desktop scrollbar on every page; fine pointers keep the native one only | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
 | R-SCROLLBAR-03 | overlay-scrollbar touch devices draw the desktop scrollbar on every page; fine pointers keep the native one only | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
+| R-SCROLLBAR-04 | Given a touch device, then the native scrollbar takes no width from the first paint, so About Me text and photo never reflow | Browser (Playwright) | `tests/browser/touch-scrollbar.spec.mjs` |
 | R-SHELL-01 | static 404 keeps the portfolio shell and absolute nested-path navigation without the SPA runtime | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
 | R-SHELL-02 | generated HTML and Markdown share the same error copy and recovery meaning | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
 | R-SHELL-03 | changing the source shell is reflected in the next generated 404 | Unit/contract (node:test) | `scripts/tests/not-found-shell.test.js` |
@@ -374,8 +375,9 @@
 | R-UNIT-TITLE-01 | Given the tab is hidden, then the title cycles through the away frames; when shown again, the original title returns | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-TITLE-02 | Given a Turkish browser, then the Turkish frames are used; an unsupported language falls back to English | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-TITLE-03 | Given the page loads already hidden, then the animation starts at once and repeated hides do not stack timers | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
-| R-UNIT-TOUCHBAR-01 | Given a fine pointer or a classic styled scrollbar, then no bar is drawn and the native one is kept | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-01 | Given a fine pointer, then no bar is drawn and the native one is kept | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
 | R-UNIT-TOUCHBAR-02 | Given a coarse pointer with overlay scrollbars, then one decorative bar is drawn beside the scroll owner | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
 | R-UNIT-TOUCHBAR-03 | Given the owner scrolls, then the thumb keeps its proportional size and follows the position | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
 | R-UNIT-TOUCHBAR-04 | Given content that does not overflow, then the bar is hidden; a tiny ratio keeps a 24px thumb | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
 | R-UNIT-TOUCHBAR-05 | Given start is called again, then no second bar is created | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
+| R-UNIT-TOUCHBAR-06 | Given a coarse pointer where the browser would report a styled scrollbar gutter, then the bar is still drawn and nothing is measured | Unit/contract (node:test) | `scripts/tests/touch-scrollbar-unit.test.js` |
