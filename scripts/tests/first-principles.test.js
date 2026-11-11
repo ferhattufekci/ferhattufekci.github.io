@@ -94,7 +94,29 @@ test('R-CI-02: all jobs check out the resolved SHA and deploy the one tested art
     ).with['artifact-ids'],
     '${{ needs.quality-checks.outputs.artifact-id }}'
   );
-  assert.match(pages.concurrency.group, /portfolio-production/);
+  // Only a main dispatch can deploy, so only dispatches take the production lock; main
+  // push/data-sync CI has its own uncancelled group.
+  assert.ok(pages.concurrency.group.includes("github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && 'portfolio-production' || 'portfolio-main-ci')"));
+  assert.ok(pages.jobs['deploy-pages'].if.startsWith("github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' &&"));
+  // Evaluate the expressions for each trigger (Actions `&&`/`||` return operands, like JS).
+  const evaluate = (expression, github) => Function('github', 'format', `return ${expression.replace(/^\$\{\{\s*|\s*\}\}$/g, '').replaceAll('==', '===').replaceAll('!=', '!==')}`)(github, (f, ...a) => f.replace(/\{(\d)\}/g, (_, i) => a[i]));
+  const lock = github => [evaluate(pages.concurrency.group, github), evaluate(pages.concurrency['cancel-in-progress'], github)];
+  const main = 'refs/heads/main';
+  assert.deepEqual(lock({ event_name: 'workflow_dispatch', ref: main }), ['portfolio-production', false]);
+  assert.deepEqual(lock({ event_name: 'push', ref: main }), ['portfolio-main-ci', false]);
+  assert.deepEqual(lock({ event_name: 'workflow_run', ref: main }), ['portfolio-main-ci', false]);
+  assert.deepEqual(lock({ event_name: 'pull_request', ref: 'refs/pull/7/merge', event: { pull_request: { number: 7 } } }), ['portfolio-pr-7', true]);
+  assert.deepEqual(lock({ event_name: 'workflow_dispatch', ref: 'refs/heads/topic' }), ['portfolio-ci-refs/heads/topic', true]);
+  // Release evidence outlives the 7-day diagnostic window: a publishing run keeps every
+  // quality artifact for 90 days (the repository maximum), production verification always.
+  const retention = Function('needs', `return ${pages.jobs['quality-checks'].with['evidence-retention-days'].replace(/^\$\{\{\s*|\s*\}\}$/g, '').replaceAll('needs.resolve-source', "needs['resolve-source']").replaceAll('==', '===')}`);
+  assert.equal(retention({ 'resolve-source': { outputs: { publish: 'true' } } }), 90);
+  assert.equal(retention({ 'resolve-source': { outputs: { publish: 'false' } } }), 7);
+  const uploads = Object.values(quality.jobs).flatMap(job => job.steps ?? []).filter(step => step.uses?.startsWith('actions/upload-'));
+  assert.ok(uploads.length >= 8);
+  for (const step of uploads) assert.equal(step.with['retention-days'], '${{ inputs.evidence-retention-days }}', step.name);
+  assert.equal(quality.on.workflow_call.inputs['evidence-retention-days'].default, 7);
+  assert.equal(pages.jobs['verify-production'].steps.find(step => step.uses?.startsWith('actions/upload-artifact@')).with['retention-days'], 90);
   assert.match(
     pages.concurrency['cancel-in-progress'],
     /github\.ref != 'refs\/heads\/main'/

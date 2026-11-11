@@ -101,6 +101,14 @@ test('sync workflows regenerate and commit Markdown together with source data', 
     const workflow = await readFile(join(ROOT, '.github/workflows', file), 'utf8');
     assert.match(workflow, /run: npm ci/);
     assert.match(workflow, /run: npm run generate/);
-    assert.match(workflow, /git add [^\n]*index\.md[^\n]*llms\.txt[^\n]*sitemap\.xml/);
+    assert.match(workflow, /run: node scripts\/ci\/sync-pr\.mjs (medium|github)/);
   }
+  // The sync commit stages the generated Markdown together with the data, and the auto-merge
+  // scope accepts exactly those generated files.
+  const { PATHSPECS, allowed } = await import('../ci/sync-pr.mjs');
+  for (const file of ['index.md', 'llms.txt', 'sitemap.xml', 'index.html', '404.md']) {
+    assert.ok(PATHSPECS.includes(file), file);
+    assert.ok(allowed('medium', file) && allowed('github', file), file);
+  }
+  for (const dir of ['about', 'contact', 'privacy']) assert.ok(PATHSPECS.includes(dir) && allowed('medium', `${dir}/index.md`), dir);
 });

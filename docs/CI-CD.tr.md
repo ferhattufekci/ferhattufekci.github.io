@@ -114,11 +114,17 @@ toplamak başarısız bir testi asla başarılıya çevirmez. Bash, `tee` üzeri
 - Kurtarma amaçlı bir dispatch'in `release_sha`'sı yoktur; böylece daha yeni bir revizyonu
   yayın yetkisi vermeden doğrulayabilir. Açıkça seçilmiş bir yayının yeniden çalıştırılması
   orijinal SHA'sına bağlı kalır ve yine güncellik kontrolünden geçmelidir.
-- Zamanlanmış/manuel veri yazıcıları iptal etmeyen ortak bir `data-sync` grubunu, main/depo
-  korumalarını ve job kapsamlı contents yazma iznini paylaşır. Gereksiz yenileme/yayın
-  zincirlerini önlemek için push tetikleyicileri kaldırıldı. GITHUB_TOKEN commit'leri push
-  workflow'larını tetiklemez; başarılı bir yazıcının tamamlanması CI'ı `workflow_run` ile
-  tetikler.
+- Zamanlanmış/manuel veri yazıcıları iptal etmeyen ortak bir `data-sync` grubunu ve main/depo
+  korumalarını paylaşır. Job token'ları yalnızca okur. Main'e asla push etmezler:
+  `scripts/ci/sync-pr.mjs`, senkronizasyon GitHub App token'ıyla (yalnızca contents ve pull
+  requests yazma; ruleset bypass, administration veya workflows izni yok) her kaynak için
+  güncel main'den açılan `data-sync/<kaynak>-<koşu>` dalından bir pull request açar. Değişiklik
+  yoksa PR açılmaz. Aynı main üzerinde aynı veri varsa açık PR korunur; aksi hâlde tek bir
+  yeni PR açılır ve eskisi kapatılır, böylece bir kaynağın iki açık senkronizasyon PR'ı olmaz.
+  Kaynağın verisi ve ondan üretilen dosyalar dışında bir dosyaya dokunan üretim senkronizasyonu
+  başarısız kılar. Auto-merge yalnızca App'in kendi kapsam içi PR'ı için ve main, GitHub
+  Actions'tan gelen Quality Gate'i güncel dal koşuluyla zorunlu tuttuğu sürece etkinleşir;
+  merge'ün kendisi yine bu zorunlu kontrolden geçer. Kurulum ve durum: `docs/OPEN-ITEMS.md` GOV-1.
 - Çözümleyici; yazıcının ad/yol çiftini, kaynak depoyu, main dalını, schedule/manual
   olayını ve başarılı sonucu doğrular. `workflow_run.head_sha`, yazıcının sonraki veri
   commit'inden öncesine ait olduğundan o commit'in kimliği olarak kullanılmaz. Main, job
@@ -163,9 +169,13 @@ toplamak başarısız bir testi asla başarılıya çevirmez. Bash, `tee` üzeri
   takip workflow'una ulaşıyor. Henüz gözlemlenmeyenler: workflow'un kendisinin `GITHUB_TOKEN`
   ile başlattığı bir yeniden çalıştırma veya dispatch, ve 3. ile 4. aşamalar. 3. aşama
   (değişken), daha fazla gerçek olay gözlemlenmesini ve depo sahibini bekliyor.
-- Tüm canlı ortam koşuları, iptali kapalı workflow düzeyindeki `portfolio-production`
-  grubunu paylaşır. Kilit kalite, yayın ve canlı doğrulamayı birlikte kapsar. Bu, main CI'ını
-  da yayını da bilinçli olarak sıraya sokar. GitHub concurrency en fazla bir bekleyen koşu
+- Yayın dispatch'leri (main üzerinde `workflow_dispatch`, deploy edebilen tek olay), iptali
+  kapalı workflow düzeyindeki `portfolio-production` grubunu paylaşır. Kilit bir yayının
+  kalite, deploy ve canlı doğrulamasını birlikte kapsar. Main üzerindeki push ve veri
+  senkronizasyonu koşuları yine iptalsiz, ayrı `portfolio-main-ci` grubunu paylaşır; böylece
+  yayın artık main CI'ının arkasında beklemez (2026-11-11 öncesinde ikisi tek gruptaydı;
+  dispatch `42866923910` bir push koşusunun arkasında 26 dakika bekledi, yayınların başlaması
+  için push koşuları elle iptal edildi). GitHub concurrency en fazla bir bekleyen koşu
   tutar; yerine yenisi gelen bekleyen koşular değiştirilebilir. Deploy'dan hemen önce yapılan
   güncel uzak main karşılaştırması eski koşuları reddeder. Önceki yayının doğrulaması
   sürerken daha yeni bir yayın deploy edilemez.

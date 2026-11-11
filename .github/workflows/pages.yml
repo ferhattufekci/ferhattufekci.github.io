@@ -19,7 +19,11 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: ${{ github.event_name == 'pull_request' && format('portfolio-pr-{0}', github.event.pull_request.number) || (github.ref == 'refs/heads/main' && 'portfolio-production' || format('portfolio-ci-{0}', github.ref)) }}
+  # Only a main workflow_dispatch can deploy (deploy-pages `if`), so only dispatches share the
+  # production lock. Push and data-sync CI on main serialize in their own group: a release no
+  # longer waits behind main CI (dispatch 42866923910 waited 26 minutes behind push run
+  # 42865722785; runs 42915685632 and 42984475705 were cancelled by hand to let one start).
+  group: ${{ github.event_name == 'pull_request' && format('portfolio-pr-{0}', github.event.pull_request.number) || (github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && 'portfolio-production' || 'portfolio-main-ci') || format('portfolio-ci-{0}', github.ref)) }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' || github.ref != 'refs/heads/main' }}
 jobs:
   resolve-source:
@@ -47,6 +51,7 @@ jobs:
     uses: ./.github/workflows/test-agent-readiness.yml
     with:
       source-sha: ${{ needs.resolve-source.outputs.sha }}
+      evidence-retention-days: ${{ needs.resolve-source.outputs.publish == 'true' && 90 || 7 }}
   deploy-pages:
     name: Deploy GitHub Pages
     runs-on: ubuntu-24.04
@@ -138,7 +143,7 @@ jobs:
         with:
           name: production-verification
           path: work/qa/
-          retention-days: 7
+          retention-days: 90
           if-no-files-found: error
       - name: Summarize production result
         if: always()

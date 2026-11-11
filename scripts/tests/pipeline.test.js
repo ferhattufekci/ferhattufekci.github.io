@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import YAML from 'yaml';
 import {
@@ -74,6 +75,10 @@ test('R-PIPE-02: each required failed, cancelled, skipped or absent check blocks
     requiredChecks.map((key) => [key, { result: 'success' }])
   );
   requireQuality(needs);
+  assert.throws(() => requireQuality({ ...needs, 'new-job': { result: 'failure' } }), /needs differ/);
+  const gate = YAML.parse(readFileSync(new URL('../../.github/workflows/test-agent-readiness.yml', import.meta.url), 'utf8')).jobs['quality-gate'];
+  assert.equal(gate.if, 'always()');
+  assert.deepEqual([...gate.needs].sort(), [...requiredChecks].sort());
   for (const key of requiredChecks)
     for (const result of ['failure', 'cancelled', 'skipped', undefined]) {
       const fixture = structuredClone(needs);

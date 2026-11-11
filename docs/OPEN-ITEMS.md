@@ -74,6 +74,13 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ### BR-1 Birleşmiş uzak dalların silinmesi
 - **Öncelik:** P3. **Durum:** silinmedi. **Karar:** yalnızca sahibin ayrı izniyle; silmeden önce birleştirildiği doğrulanır.
 
+### GOV-1 Başarısız testlerin merge'i GitHub düzeyinde engellemesi (zorunlu Quality Gate)
+- **Öncelik:** P2. **Durum:** açık; akış kodu hazır, App kurulumu ve ruleset bekliyor. **Kanıt:** `Protect main` ruleset'i yalnızca `deletion` ve `non_fast_forward` taşır; zorunlu durum kontrolü yok [G]. Kırmızı bir PR'ın merge'ünü şu an yalnızca süreç engeller.
+- **Karar (sahip, 2026-11-11):** App'e Quality Gate bypass'ı verilmez; doğrudan push yok. Akış: zamanlanmış senkronizasyon → `data-sync/<kaynak>-<koşu>` dalı → PR → zorunlu Quality Gate → koşullar sağlanınca auto-merge (`scripts/ci/sync-pr.mjs`, R-CI-01). Önceki "App ile doğrudan push + bypass" önerisi geri çekildi.
+- **Sahip kurulumu (sohbette anahtar paylaşılmaz):** (1) Settings → Developer settings → GitHub Apps → New: webhook kapalı; Repository permissions yalnızca **Contents: Read and write**, **Pull requests: Read and write** (Metadata: Read zorunlu, otomatik); Actions, Workflows, Administration, Checks **No access**; "Only on this account". (2) App'i yalnızca bu depoya kur (Only select repositories). (3) Depo → Settings → Secrets and variables → Actions: secret `SYNC_APP_PRIVATE_KEY` (App'in .pem özel anahtarı), variable `SYNC_APP_CLIENT_ID` (App'in Client ID'si). (4) Settings → General → Pull Requests: **Allow auto-merge** açık. App ruleset bypass listesine **eklenmez**.
+- **Doğrulama sırası:** (a) bu akışın PR'ı merge edildikten sonra `Fetch Medium Articles` elle çalıştırılır; değişiklik varsa açılan PR'da `pull_request` CI'ının kendiliğinden başladığı ve Quality Gate'in PR head SHA'sını doğruladığı kontrol edilir; (b) ruleset'e `Run Quality Checks / Quality Gate` (integration_id 15368, GitHub Actions) zorunlu kontrol ve **Require branches to be up to date** eklenir, yeni bypass eklenmez; (c) kırmızı veya eksik kontrollü bir PR'ın merge edilemediği ve yeşil bir senkronizasyon PR'ının bypass olmadan birleştiği gösterilir. Bunlar tamamlanana kadar GOV-1 açık kalır.
+- **Kalan risk:** auto-merge etkinleştikten sonra yazma yetkili biri senkronizasyon dalına başka dosya push ederse merge yine Quality Gate'ten geçer ama kapsam kontrolü bir sonraki senkronizasyona kadar yeniden çalışmaz. Mevcut yönetici bypass'ı (RepositoryRole 5, always) sahibin kararıyla durur; yönetici merge'leri kuralı atlayabilir.
+
 ## 2. Araştırılıyor / kanıt bekliyor
 
 ### RF R-FILTER-04 ve R-KEYBOARD-08 kök neden
