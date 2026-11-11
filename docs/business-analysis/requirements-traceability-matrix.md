@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**293 requirement ids, 335 test titles, 59 areas.**
+**295 requirement ids, 337 test titles, 60 areas.**
 
 | Area | Ids |
 |---|---|
@@ -21,6 +21,7 @@
 | R-BUTTON | 4 |
 | R-CI | 2 |
 | R-CI-APT | 2 |
+| R-CI-KB | 2 |
 | R-CI-RECOVER | 22 |
 | R-CI-RECOVER-C1 | 14 |
 | R-CONTENT | 3 |
@@ -111,6 +112,8 @@
 | R-CI-02 | all jobs check out the resolved SHA and deploy the one tested artifact under a workflow-wide production lock | Unit/contract (node:test) | `scripts/tests/first-principles.test.js` |
 | R-CI-APT-01 | every browser installation with system dependencies is preceded by the apt stall bound in the same job | Unit/contract (node:test) | `scripts/tests/apt-network-bounds.test.js` |
 | R-CI-APT-02 | the bound is an idle timeout far below the default and far above a healthy download | Unit/contract (node:test) | `scripts/tests/apt-network-bounds.test.js` |
+| R-CI-KB-01 | each keyboard engine runs in its own job, and together the jobs run every keyboard project exactly once | Unit/contract (node:test) | `scripts/tests/keyboard-matrix.test.js` |
+| R-CI-KB-02 | the WebKit-only touch arrows run once, installs match the leg, failures still block and reports stay per leg | Unit/contract (node:test) | `scripts/tests/keyboard-matrix.test.js` |
 | R-CI-RECOVER-01 | deadline-cancelled jobs on the newest commit are rerun once | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
 | R-CI-RECOVER-02 | a run that was already retried is never retried again | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |
 | R-CI-RECOVER-03 | a genuine test failure is left visible | Unit/contract (node:test) | `scripts/tests/deploy-recovery.test.js` |

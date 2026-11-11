@@ -269,7 +269,12 @@ genel bir hızlanma iddiasına izin vermez.
 Tam Chromium takımı zorunlu olmaya devam eder. Klavye denetimi ayrıca Firefox ve WebKit'i
 masaüstü/mobil genişliklerde ve iki temada, bunun yanında WebKit dokunmatik ok matrisini
 şart koşar. **Cross-browser Keyboard Tests**, kalite kapısının açık bir bağımlılığıdır ve
-JSON sonuçlarını ve hata kanıtlarını saklar. Bu odaklı kontroller, denetim sırasında bulunan
+JSON sonuçlarını ve hata kanıtlarını saklar. Motor başına bir job olan iki job'lık bir matristir
+(`firefox`, `webkit`; `--project="<motor>-*"`, dokunmatik oklar WebKit job'ında) ve her job'ın
+kendi rapor artifact'i vardır (`keyboard-browser-report-<motor>`); herhangi biri başarısız olursa
+kapı başarısız olur. Tek job iken koşunun kritik yoluydu (25-32 dakika) ve her motor sürenin
+yaklaşık yarısını kullanıyordu; R-CI-KB-01 iki job'ın birlikte her klavye projesini tam bir kez
+çalıştırdığını denetler. Bu odaklı kontroller, denetim sırasında bulunan
 gerçek motor farklarını kapsar; mevcut her testin her motorda çalıştığı anlamına gelmez. Ek
 WebKit geçiş testleri `npm run test:motion:webkit` ile kullanılabilir. Kapsam, bilinen yerel
 Windows WebKit klavye ayarları ve manuel test sınırları için
