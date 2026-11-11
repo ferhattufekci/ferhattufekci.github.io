@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { browser, load } from './helpers/browser-dom.js';
 
-// layout: gutter is the probe's scrollbar width (5 = classic styled bar, 0 = overlay).
+// gutter: the native scrollbar width the browser would report (5 = styled bar with a gutter); the script must not depend on it.
 function setup({ coarse = true, gutter = 0, scrollHeight = 3000, clientHeight = 600 } = {}) {
   const dom = browser('<section class="pt-page pt-page-current" id="resume"><div class="page-content-panel"></div></section>', { coarse });
   const { document, window, win, layout } = dom;
@@ -26,13 +26,20 @@ function setup({ coarse = true, gutter = 0, scrollHeight = 3000, clientHeight = 
   return { ...dom, panel, bar, thumb, api: win.touchScrollbar, window };
 }
 
-test('R-UNIT-TOUCHBAR-01: Given a fine pointer or a classic styled scrollbar, then no bar is drawn and the native one is kept', () => {
-  for (const options of [{ coarse: false }, { coarse: true, gutter: 5 }]) {
-    const { document, bar } = setup(options);
-    assert.equal(bar(), null, JSON.stringify(options));
-    assert.equal(document.documentElement.classList.contains('has-touch-scrollbar'), false);
-    assert.equal(document.querySelector('.touch-scrollbar-probe'), null, 'the probe is removed after measuring');
-  }
+test('R-UNIT-TOUCHBAR-01: Given a fine pointer, then no bar is drawn and the native one is kept', () => {
+  const { document, bar } = setup({ coarse: false });
+  assert.equal(bar(), null);
+  assert.equal(document.documentElement.classList.contains('has-touch-scrollbar'), false);
+});
+
+// An iPhone in-app browser rendered the styled 5px scrollbar with a gutter; the old probe
+// read that as "classic bar present" and drew nothing, leaving an invisible light thumb.
+test('R-UNIT-TOUCHBAR-06: Given a coarse pointer where the browser would report a styled scrollbar gutter, then the bar is still drawn and nothing is measured', () => {
+  const { document, bar } = setup({ coarse: true, gutter: 5 });
+  assert.equal(document.documentElement.classList.contains('has-touch-scrollbar'), true);
+  assert.equal(document.querySelectorAll('.touch-scrollbar').length, 1);
+  assert.equal(bar().hidden, false);
+  assert.equal(document.querySelector('.touch-scrollbar-probe'), null, 'no probe element is created');
 });
 
 test('R-UNIT-TOUCHBAR-02: Given a coarse pointer with overlay scrollbars, then one decorative bar is drawn beside the scroll owner', () => {
