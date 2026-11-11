@@ -65,6 +65,8 @@ Standart makale beklenen sırası All/All için: **Systems EN, Testing TR, Softw
 
 ## GEREKSİNİMLER ve izlenebilirlik matrisi
 
+> **Kapsam:** otomasyonun taşıdığı her gereksinim kimliği aşağıda en az bir vakaya bağlıdır (GKP-031–GKP-046 satırları test başlıklarından türetilmiştir, "Derived / Pending Validation"). Adım sonuçlarının özeti ve her build'in otomasyon sonucu, bu belgenin adım tablolarından otomatik üretilen [TRACEABILITY.md](TRACEABILITY.md) raporundadır. GKP-046, kullanıcının doğrudan gözleyemediği sözleşmeler için build kanıtının statik incelemesidir; elle yeniden yürütme değildir.
+
 Depoda onaylı SRS/baseline gereksinim kataloğu yoktur. Aşağıdaki `R-*` kimlikleri mevcut otomasyon/risk kimlikleridir; **resmi kurumsal gereksinim numarası değildir**. Tanımlar uygulama ve önceki kullanıcı taleplerinden türetilmiştir: **Derived / Pending Validation**. `R-RESUME-02` içindeki 37 ders kararı kullanıcı tarafından doğrulanmıştır; tüm belgenin resmi kabulü yine TBD'dir. Yeni `R-NAV-08`, `R-RESUME-13`, `R-CI-02` de yerel risk/test kimlikleridir.
 
 Kapsam sütunundaki **Designed** yalnızca manuel tasarım bağlantısı olduğunu söyler; yürütme başarısı değildir. Listedeki risklerin tamamı aşağıda en az bir vakaya bağlıdır. Bu, ürünün bütün olası gereksinimlerinin yüzde yüz kapsandığı iddiası değildir.
@@ -114,6 +116,245 @@ Kapsam sütunundaki **Designed** yalnızca manuel tasarım bağlantısı olduğu
 | R-AD-01 | Her reklam birimi sayfanın kendi içeriği ve genişliği yerleştikten sonra yalnız bir kez istenir | S-8 | GKP-030 | adsense.spec.mjs AC-05/06, AC-05/13; yaşam döngüsü/zaman | Yüksek | Designed | Gerçek reklam sunucusu yanıtı test edilmez |
 | R-AD-02 | Blog (yazı içi) ve Projects (Multiplex) kodları hesaptaki birim türüyle eşleşir | S-8 | GKP-030 | adsense.test.js AC-13/15; sözleşme | Yüksek | Designed | Türün hesapla eşleşmesi hesap panelinden doğrulanır; depoda kanıtı yok |
 | R-AD-03 | Doldurulmayan veya engellenen reklam boş kabuk bırakmaz; içerik ve gezinme çalışır | S-8 | GKP-030 | adsense.spec.mjs AC-01/02/03, AC-08/14; negatif | Yüksek | Designed | Doldurma oranı ve gösterim kabul ölçütü değildir |
+| R-A0-01 | Hepsi `ok`. | Otomasyon | GKP-046 | inline-script-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-A0-02 | Hepsi `ok`. | Otomasyon | GKP-046 | inline-script-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-A0-05 | Hepsi `ok`. | Otomasyon | GKP-046 | inline-script-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-A0-05b | Hepsi `ok`. | Otomasyon | GKP-046 | inline-script-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-A11Y-02 | Hepsi `ok`. | Otomasyon | GKP-046 | accessibility-debt.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-AD-EMPTY-01 | Görünür boş mesaj veya dolu görünen boş kutu oluşmaz. | Otomasyon | GKP-043 | adsense.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-AD-SCROLL-01 | Panel kayar; kontrol şeridi sabit kalır; reklam doğal yüksekliğindedir. | Otomasyon | GKP-043 | adsense.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ARROW-01 | Dokunuş bitince iki ok da normal renge döner. | Otomasyon | GKP-035 | arrow-controls.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ARROW-02 | Hover çıkınca biter; klavye odağı görünür kalır; Enter/Space sayfayı değiştirir. | Otomasyon | GKP-035 | arrow-controls.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ARROW-03 | Basılı görünüm geçicidir; sayfa değişmez. | Otomasyon | GKP-035 | arrow-controls.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ARROW-04 | Aktif görünüm temizlenir; fare hover'ı yeniden çalışır. | Otomasyon | GKP-035 | arrow-hybrid.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ASSET-01 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | asset-versioning.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-01 | Odak görünür; menü her tuşla açılıp kapanır; `aria-expanded` durumu eşleşir. | Otomasyon | GKP-031 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-02 | Her seçenek kartın orijinal makale URL'sini yalnız kendi platform yoluna taşır. | Otomasyon | GKP-032 | blog-sharing.spec.mjs, blog-sharing.test.js; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-03 | B için kuyruğa alınmış kopyalama olmaz; B için yeni bir etkinleştirme gerekir; A'nın sonucu B'ye yazılmaz. | Otomasyon | GKP-032 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-04 | El ile kopyalanacak URL görünür ve Tab ile ulaşılır; odak ve seçim kendiliğinden yer değiştirmez. | Otomasyon | GKP-032 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-05 | Yeni işlem kuyruğa alınmaz; kilit sürer; pano yan etkisi oluşmaz. | Otomasyon | GKP-033 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs, blog-sharing.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-06 | Yeni işlem kuyruğa alınmaz; kilit sürer; pano yan etkisi oluşmaz. | Otomasyon | GKP-033 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-07 | B için kuyruğa alınmış kopyalama olmaz; B için yeni bir etkinleştirme gerekir; A'nın sonucu B'ye yazılmaz. | Otomasyon | GKP-032 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-08 | Odak görünür; menü her tuşla açılıp kapanır; `aria-expanded` durumu eşleşir. | Otomasyon | GKP-031 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-09 | Aynı yazı tipi/boyut; hover yalnız metni etkiler; hedef alanları kaymaz. | Otomasyon | GKP-034 | blog-sharing-appearance.spec.mjs, blog-sharing-cache.spec.mjs, blog-sharing-feedback.spec.mjs, blog-sharing-layout.spec.mjs, blog-sharing.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-10 | Panel konumu, hash ve tarayıcı geçmişi değişmez. | Otomasyon | GKP-034 | blog-sharing.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-11 | Pano makale URL'sini içerir; geri bildirim kartın dilindeki onaylı metni gösterir (TR kartta Türkçe). | Otomasyon | GKP-032 | blog-sharing.spec.mjs, blog-sharing.test.js; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-12 | B için kuyruğa alınmış kopyalama olmaz; B için yeni bir etkinleştirme gerekir; A'nın sonucu B'ye yazılmaz. | Otomasyon | GKP-032 | blog-sharing-keyboard.spec.mjs, blog-sharing.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-13 | Statik makale bağlantıları çalışır; işlevsiz bir Share eylemi görünmez. | Otomasyon | GKP-034 | blog-sharing.spec.mjs, blog-sharing.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BLOG-SHARE-14 | Kartlar güncel stillerle görünür; yerel paylaşım göstergesi sabit kalır. | Otomasyon | GKP-034 | blog-sharing-cache.spec.mjs, blog-sharing.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BUTTON-01 | Hover bırakılınca biter; klavye odağı görünür; basılı renk tema renklerini kullanır; About Me Resume CTA ile aynı görünür. | Otomasyon | GKP-036 | button-states.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BUTTON-02 | Portföy ifadeleri kullanılır; bağlantılar geçerli bölümlere götürür. | Otomasyon | GKP-036 | button-states.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BUTTON-03 | Fare tıklamasından sonra odak çerçevesi kalmaz; klavye odağı görünür. | Otomasyon | GKP-036 | button-states.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-BUTTON-04 | Hover bırakılınca biter; klavye odağı görünür; basılı renk tema renklerini kullanır; About Me Resume CTA ile aynı görünür. | Otomasyon | GKP-036 | button-states.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-CI-01 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | sync-workflows.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-APT-01 | Hepsi `ok`. | Otomasyon | GKP-046 | apt-network-bounds.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-APT-02 | Hepsi `ok`. | Otomasyon | GKP-046 | apt-network-bounds.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-01 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-02 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-03 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-04 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-05 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-06 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-07 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-08 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-09 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-10 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-11 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-12 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-13 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-14 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-15 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-16 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-17 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-18 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-19 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-20 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-21 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-22 | Hepsi `ok`. | Otomasyon | GKP-046 | deploy-recovery.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-00 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-01 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-02 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-03 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-04 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-05 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-06 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-07 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-08 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-09 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-10 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-11 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-12 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CI-RECOVER-C1-13 | Hepsi `ok`. | Otomasyon | GKP-046 | recovery-act.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-CONTENT-01 | Bağlantılar tam adresli; olgular HTML ile aynı; betik veya iskelet kod yok; gezinme metni Markdown'a girmez. | Otomasyon | GKP-045 | agent-documents.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-CONTENT-02 | Hepsi `ok`. | Otomasyon | GKP-046 | agent-documents.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-COLOR-01 | Hepsi `ok`. | Otomasyon | GKP-046 | data-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-NUM-01 | Hepsi `ok`. | Otomasyon | GKP-046 | data-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-SYNC-01 | Hepsi `ok`. | Otomasyon | GKP-046 | sync-fetchers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-SYNC-02 | Hepsi `ok`. | Otomasyon | GKP-046 | data-snapshot.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-SYNC-03 | Hepsi `ok`. | Otomasyon | GKP-046 | data-snapshot.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-SYNC-04 | Hepsi `ok`. | Otomasyon | GKP-046 | data-snapshot.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-SYNC-05 | Hepsi `ok`. | Otomasyon | GKP-046 | data-snapshot.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-URL-01 | Hepsi `ok`. | Otomasyon | GKP-046 | data-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-URL-02 | Hepsi `ok`. | Otomasyon | GKP-046 | data-contract.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-URL-03 | Hepsi `ok`. | Otomasyon | GKP-046 | sync-fetchers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DATA-URL-04 | Hepsi `ok`. | Otomasyon | GKP-046 | sync-fetchers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DISCLOSURE-01 | Hepsi `ok`. | Otomasyon | GKP-046 | resume-disclosure-labels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DISCLOSURE-02 | Hepsi `ok`. | Otomasyon | GKP-046 | resume-disclosure-labels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DISCLOSURE-03 | Her düğmenin sayısı doğru, adı benzersiz ve bağlamlıdır; klavye durumu yereldir. | Otomasyon | GKP-041 | resume-disclosures.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-DOC-01 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | documentation-navigation.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-02 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | documentation-navigation.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-03 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | documentation-navigation.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-RTM-01 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | rtm.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-RTM-02 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | rtm.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-RTM-03 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | rtm.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-TRACE-01 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | traceability.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-TRACE-02 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | traceability.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-TRACE-03 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | traceability.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-TRACE-04 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | traceability.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-DOC-TRACE-05 | Hepsi `ok`; raporda bilinmeyen kimlik yok. | Otomasyon | GKP-046 | traceability.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-FILTER-03 | Her sayfanın seçimi ve Starred ilerlemesi ayrı korunur. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-04 | Eski kartlar kaybolur, boş durum görünür; All ile makale döner; Projects seçimi değişmez. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-05 | Sabitlenmiş ve normal kartlar tekrarsız geri gelir. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-06 | Kart beyan edilen yedek kategoride görünür. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-11 | Her kategoride kullanılabilir, yerleşmiş bir boş durum görünür; sayfa kilitlenmez. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-12 | Her sayfada tek ve doğru seçim kalır. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-13 | Starred sayfalaması kullanılabilir kalır. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FILTER-14 | Bölüm etiketleri kapsayıcısının içinde kalır. | Otomasyon | GKP-037 | categories.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FIRST-01 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | first-principles.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-FIRST-02 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | first-principles.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-GKP-01 | Hepsi `ok`. | Otomasyon | GKP-046 | manual-preview.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-GKP-02 | Hepsi `ok`. | Otomasyon | GKP-046 | manual-documentation.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-GKP-03 | Hepsi `ok`. | Otomasyon | GKP-046 | manual-documentation.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-HOVER-04 | Makale bağlantısı ve Share iki ayrı Tab durağıdır; odak çerçevesi yalnız etiket metnini çevreler. | Otomasyon | GKP-031 | blog-sharing-keyboard.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-HTTP-02 | Hepsi `ok`. | Otomasyon | GKP-046 | http-verification.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-HTTP-03 | Hepsi `ok`. | Otomasyon | GKP-046 | http-verification.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-HTTP-04 | Hepsi `ok`. | Otomasyon | GKP-046 | http-verification.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-HTTP-05 | Hepsi `ok`. | Otomasyon | GKP-046 | http-verification.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-HTTP-06 | Hepsi `ok`. | Otomasyon | GKP-046 | http-verification.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-HTTP-07 | Bağlantı çalışır ve PDF açılır; kırık bağlantı mevcut PDF ile gizlenmez. | Otomasyon | GKP-045 | http-verification.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ICON-03 | Hover hareketi yalnız fareli cihazda ve hareket tercihine uygun; güven sayfalarında düğme hizalı ve klavyeyle kullanılır. | Otomasyon | GKP-036 | button-states.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-ICON-04 | Hover hareketi yalnız fareli cihazda ve hareket tercihine uygun; güven sayfalarında düğme hizalı ve klavyeyle kullanılır. | Otomasyon | GKP-036 | button-states.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-KEYBOARD-01 | Odak görünür ve sıralıdır; skip link içeriğe atlar; gizli sayfalarda Tab durağı yoktur. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-02 | Odak her işlemden sonra beklenen yerdedir. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-03 | Filtre odağı korunur; açılırlar yerel davranır; bilgi kapatılınca odak tetikleyiciye döner. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-04 | Show More kaybolduğunda odak kaybolmaz, anlamlı bir öğeye taşınır. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-05 | Odak görünür ve sıralıdır; skip link içeriğe atlar; gizli sayfalarda Tab durağı yoktur. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-06 | Her bağlantıda tüm kelimeleri ve dış bağlantı simgesini kapsayan tek bir odak kutusu vardır. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-07 | Hepsine ulaşılır; odak örtülmez. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-KEYBOARD-08 | Odak sayfanın kontrol şeridinden başlar; içerik önceki/sonraki oklarla biter. | Otomasyon | GKP-038 | keyboard-accessibility.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-01 | Kayma çekmece kapandıktan sonra, rota sırasına uygun yönde başlar ve temiz biter. | Otomasyon | GKP-039 | page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-02 | Kayma olmadan anında geçer; gezinme kilitlenmez. | Otomasyon | GKP-039 | page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-03 | Son istenen bölüm açılır; geçmiş tutarlıdır. | Otomasyon | GKP-039 | page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-04 | Ekranda iki sayfa kalmaz; gezinme çalışmaya devam eder. | Otomasyon | GKP-039 | page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-05 | Kayma çekmece kapandıktan sonra, rota sırasına uygun yönde başlar ve temiz biter. | Otomasyon | GKP-039 | page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-06 | Gezinme bozulmaz; çekmece yeniden açılabilir. | Otomasyon | GKP-039 | motion-completion.test.js, page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-MOTION-07 | Ekranda iki sayfa kalmaz; gezinme çalışmaya devam eder. | Otomasyon | GKP-039 | page-transitions.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-NATIVE-RESULT-01 | Tamamlanınca bekleme göstergesi kalkar ve "gönderildi" iddia edilmez; iptalde yalnız açık bir yeniden deneme yeni işlem başlatır. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-NATIVE-RESULT-02 | Tamamlanınca bekleme göstergesi kalkar ve "gönderildi" iddia edilmez; iptalde yalnız açık bir yeniden deneme yeni işlem başlatır. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-NATIVE-RESULT-03 | Tamamlanınca bekleme göstergesi kalkar ve "gönderildi" iddia edilmez; iptalde yalnız açık bir yeniden deneme yeni işlem başlatır. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-NAV-03 | Hepsi `ok`. | Otomasyon | GKP-046 | route-policy.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-NAV-06 | Hepsi `ok`. | Otomasyon | GKP-046 | page-animations.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-NAV-07 | Her gezinmede tek bir bölüm ve en fazla bir kurtarma görünümü olur. | Otomasyon | GKP-039 | portfolio.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-01 | Kontrol şeridi yerinde kalır; son içerik görünür hale gelir. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-02 | Yalnız içerik başa döner; odak ve yatay kaydırma korunur. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-03 | İçerik doğal kayar; kontroller, odak ve geçmiş kullanılabilir kalır. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-04 | Kontroller genel başlığın altında kalır; içerik alanı kullanılabilir kalır. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-05 | Durumlar kendi panelinde kalır; son filtre geçerli olur. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-06 | Ekran yüksekliği/taşma kısıtı kalkar; açılım durumu değişmez. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PANEL-07 | Başlık sabit, bölge adlandırılmış; bağlantılar korunur; dönüşte başa döner; yazdırma çalışır. | Otomasyon | GKP-040 | fixed-page-controls.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-PIPE-01 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | pipeline.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-02 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | pipeline.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-03 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | pipeline.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-04 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | pipeline.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-05 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | pipeline.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-06 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | pipeline.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-07 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-reporter.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-08 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-reports.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-09 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-reports.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-10 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-reports.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-11 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-reports.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-12 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-reports.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PIPE-13 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | ci-report-flow.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-PROGRESS-01 | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-PROGRESS-02 | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-PROGRESS-03 | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-PROGRESS-04 | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-PROGRESS-05 | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-PROGRESS-06 | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Otomasyon | GKP-033 | blog-sharing-feedback.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-RELEASE-01 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | release-selection.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-RELEASE-02 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | release-selection.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-RELEASE-03 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | release-selection.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-RELEASE-04 | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Otomasyon | GKP-046 | release-selection.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-RESUME-06 | Dokuz parça okuma sırasını korur; yalnız uzun kanıtlar kapalıdır. | Otomasyon | GKP-041 | resume-disclosures.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-08 | Tüm içerik sırasıyla görünür; diğer rollerin durumu değişmez. | Otomasyon | GKP-041 | resume-disclosures.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-12 | Akademik geçmiş "Since 2011" paragrafından önce ve aynı tipografide gelir. | Otomasyon | GKP-041 | resume-disclosures.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-15 | Masaüstünde ders bilgisiyle hizalı; küçük ekranlarda akış korunur. | Otomasyon | GKP-041 | resume-disclosures.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-01 | Yalnız All seçilidir; tüm içerik eksiksizdir; görünür yardımcı etiket yoktur. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-02 | Doğru bölüme kayar; URL ve geçmiş değişmez; hiçbir bölüm veya açılım gizlenmez. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-03 | Odaktaki öğe yatayda görünür olur, sayfa dikeyde kaymaz; Enter/Space hedefe odak taşır. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-04 | Yalnız Resume seçimi sıfırlanır; Blog/Projects seçimleri korunur. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-05 | Son istek geçerli olur ve korunur. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-06 | Blog stilini paylaşır; sayfa taşmaz; son öğeye ulaşılır. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-RESUME-NAV-07 | Başlık panelin en üstünden başlar. | Otomasyon | GKP-042 | resume-navigation.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-SCROLLBAR-01 | Tüm sayfalarda aynı ince bar ve renkler. | Otomasyon | GKP-043 | scrollbar-parity.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-SCROLLBAR-02 | Masaüstüyle aynı tasarımda tek bir bar görünür ve konumu kaydırmayı izler. | Otomasyon | GKP-043 | touch-scrollbar.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-SCROLLBAR-03 | Masaüstüyle aynı tasarımda tek bir bar görünür ve konumu kaydırmayı izler. | Otomasyon | GKP-043 | touch-scrollbar.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-SHELL-01 | Portföy kabuğu görünür; bağlantılar kökten çalışır. | Otomasyon | GKP-044 | not-found-shell.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-SHELL-02 | Hepsi `ok`. | Otomasyon | GKP-046 | not-found-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-SHELL-03 | Hepsi `ok`. | Otomasyon | GKP-046 | not-found-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-SHELL-05 | Sayfa okunur ve kurtarma bağlantıları çalışır. | Otomasyon | GKP-044 | not-found-shell.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-THEME-01 | Hepsi `ok`. | Otomasyon | GKP-046 | agent-documents.test.js, theme.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-TRUST-01 | Tek bir dönüş eylemi vardır; footer'da yalnız mevcut sayfa tıklanamaz işaretlidir; diğer hedefler çalışır. | Otomasyon | GKP-044 | trust-navigation.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-TRUST-02 | Tek bir dönüş eylemi vardır; footer'da yalnız mevcut sayfa tıklanamaz işaretlidir; diğer hedefler çalışır. | Otomasyon | GKP-044 | trust-navigation.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-TRUST-03 | Bağlantılar tam adresli; olgular HTML ile aynı; betik veya iskelet kod yok; gezinme metni Markdown'a girmez. | Otomasyon | GKP-045 | trust-navigation.test.js; manuel | Orta | Designed | Derived / Pending Validation |
+| R-TRUST-05 | İkisi hizalı, dokunmaya yeterli büyüklükte ve ekran içindedir. | Otomasyon | GKP-044 | trust-navigation.spec.mjs; manuel | Orta | Designed | Derived / Pending Validation |
+| R-COV-01 | Unit coverage raporu (lcov) dosya bazında, normalize yollarla okunur | Otomasyon | GKP-046 | coverage-gate.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-COV-02 | Test dosyaları sayılmaz; unit testin yüklemediği uygulama dosyası %0 sayılır | Otomasyon | GKP-046 | coverage-gate.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-COV-03 | Coverage, commit edilmiş tabanın altına düşünce build kırılır | Otomasyon | GKP-046 | coverage-gate.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-COV-04 | Uygulama dosyaları birinci taraf betiklerdir; vendored kütüphaneler ve testler hariçtir | Otomasyon | GKP-046 | coverage-gate.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-COV-05 | Commit edilmiş coverage tabanı kapının uygulayabileceği bir yüzdedir | Otomasyon | GKP-046 | coverage-gate.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-FOCUS-09 | Menüyle geçişte yeni sayfada yapılan klavye seçimi geçiş bitince korunur | Otomasyon | GKP-039 | navigation-focus.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FOCUS-10 | Dokunulmayan menü geçişinde odak bölüm başlığına ve ilk Tab durağına gider | Otomasyon | GKP-039 | navigation-focus.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-FOCUS-11 | Okla geçişte yeni sayfada yapılan klavye seçimi geçiş bitince korunur | Otomasyon | GKP-039 | navigation-focus.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-AD-WIDTH-01 | Blog reklamı görünüm daralınca kendi alanının içinde kalır; kaydırma ve Projects değişmez | Otomasyon | GKP-043 | adsense.spec.mjs; manuel | Yüksek | Designed | Derived / Pending Validation |
+| R-UNIT-NOTFOUND-01 | `js/not-found-view.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-NOTFOUND-02 | `js/not-found-view.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PANELS-01 | `js/page-content-panels.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | content-panels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PANELS-02 | `js/page-content-panels.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | content-panels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PANELS-03 | `js/page-content-panels.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | content-panels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PANELS-04 | `js/page-content-panels.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | content-panels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PANELS-05 | `js/page-content-panels.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | content-panels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PANELS-06 | `js/page-content-panels.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | content-panels.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PRELOADER-01 | `js/preloader.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PRELOADER-02 | `js/preloader.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-PRELOADER-03 | `js/preloader.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-01 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-02 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-03 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-04 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-05 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-06 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-07 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-RESNAV-08 | `js/resume-navigation.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | resume-navigation-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-01 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-02 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-03 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-04 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-05 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-06 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-07 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-SHELL-08 | `js/site-shell.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | site-shell.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-STARRED-01 | `js/starred-ads.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-STARRED-02 | `js/starred-ads.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-STARRED-03 | `js/starred-ads.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TITLE-01 | `js/tab-title.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TITLE-02 | `js/tab-title.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TITLE-03 | `js/tab-title.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | page-helpers.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TOUCHBAR-01 | `js/touch-scrollbar.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | touch-scrollbar-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TOUCHBAR-02 | `js/touch-scrollbar.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | touch-scrollbar-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TOUCHBAR-03 | `js/touch-scrollbar.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | touch-scrollbar-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TOUCHBAR-04 | `js/touch-scrollbar.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | touch-scrollbar-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
+| R-UNIT-TOUCHBAR-05 | `js/touch-scrollbar.js` birim davranışı (tarayıcı testinin birim düzeyindeki karşılığı) | Otomasyon | GKP-046 | touch-scrollbar-unit.test.js; kanıt incelemesi | Orta | Designed | Derived / Pending Validation |
 
 ## TEST DURUMLARI
 
@@ -436,6 +677,198 @@ Her vakanın adı, amacı, tekniği, önceliği ve otomasyon ilişkisi başlıkt
 | Reklam isteği | Zamanlama | 2 | `npm run preview` ile Blog ve Projects'e git; DevTools Network'te adsbygoogle isteklerini say. Kartlar yüklenirken ve sonrasında kaydet. | Her birim için kartlar görünür olana kadar istek yok; sonra tek istek ve kartların altında yer alır. | İstek sayısı ve sırası | Not Run | R-AD-01 | ÖK-2, ÖK-4 | Yerel önizleme | Yerel önizleme gerçek reklam sunucusu kanıtı değildir |
 | Engellenen reklam | Boş kabuk | 3 | DevTools Request Blocking ile `pagead2.googlesyndication.com` engelle; cache kapalı reload yap; Blog ve Projects'te filtre ve gezinmeyi kullan. | Boş reklam kutusu veya ayrılmış boşluk kalmaz; katalog, filtreler ve gezinme çalışır. | Görsel ve DOM | Not Run | R-AD-03 | ÖK-1, ÖK-2 | Engellenmiş sağlayıcı | Gerçek doldurmama yanıtı ayrıca gözlenir |
 | Üretim gözlemi | Doldurma durumu | 4 | Canlı sitede Blog ve Projects'i aç (reklama tıklama, sayfayı reklam için yenileme); birimlerin `data-ad-status` değerini yalnız oku ve kaydet. | `filled` veya `unfilled` olarak kaydedilir; `unfilled` ise boş kabuk yoktur. Dolmama hata sayılmaz. | Salt okunur gözlem | Not Run | R-AD-03 | ÖK-1 | Canlı site | Yeni birimlerin dolması zaman alabilir; hesap onay iletisi ve gizlilik ayarları hesap panelinden ayrıca denetlenir |
+
+### GKP-031 — Blog paylaş: klavye ve açılır menü semantiği
+
+**Amaç:** Share açılır menüsünün klavyeyle yerel disclosure davranışını koruması. **Tür:** Pozitif, erişilebilirlik. **Öncelik:** Yüksek. **Otomasyon:** blog-sharing-keyboard.spec.mjs (K01, K05).
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Share klavye | Açma/kapama | 1 | Blog'da bir kartın Share düğmesine Tab ile gel; Enter, sonra Space ile aç/kapat. | Odak görünür; menü her tuşla açılıp kapanır; `aria-expanded` durumu eşleşir. | Ekran kaydı | Not Run | R-BLOG-SHARE-01, R-BLOG-SHARE-08 | ÖK-1, ÖK-3 | TD-2 | JS açık |
+| Share klavye | Escape ve Tab çıkışı | 2 | Menü açıkken Escape'e bas; tekrar aç ve Tab ile menünün sonundan çık. | Escape menüyü kapatır ve odak Share'e döner; Tab menüden sırayla çıkar, odak kaybolmaz. | — | Not Run | R-BLOG-SHARE-01, R-BLOG-SHARE-08 | ÖK-1, ÖK-3 | TD-2 | — |
+| Ayrı sekme durakları | Makale ve Share | 3 | Bir kartta Tab ile makale bağlantısından Share'e geç. | Makale bağlantısı ve Share iki ayrı Tab durağıdır; odak çerçevesi yalnız etiket metnini çevreler. | — | Not Run | R-HOVER-04 | ÖK-1, ÖK-3 | TD-2 | — |
+
+### GKP-032 — Blog paylaş: kopyalama, el ile URL ve tekil işlem
+
+**Amaç:** kopyalama ve el ile URL yedeğinin doğru adresi, doğru dilde ve tek seferde vermesi. **Tür:** Pozitif, negatif, eşzamanlılık. **Öncelik:** Yüksek. **Otomasyon:** blog-sharing.spec.mjs, blog-sharing-keyboard.spec.mjs (K02).
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Platform yolu | Doğru URL | 1 | Bir kartta Share menüsündeki her platform seçeneğinin bağlantı adresini incele; tıklama. | Her seçenek kartın orijinal makale URL'sini yalnız kendi platform yoluna taşır. | Bağlantı adresini kopyala, açma | Not Run | R-BLOG-SHARE-02 | ÖK-1, ÖK-3 | TD-2 | Üçüncü taraf siteye gidilmez |
+| Kopyalama | Başarı geri bildirimi | 2 | Copy link'e bas; panoyu bir metin alanına yapıştır. | Pano makale URL'sini içerir; geri bildirim kartın dilindeki onaylı metni gösterir (TR kartta Türkçe). | — | Not Run | R-BLOG-SHARE-11 | ÖK-1, ÖK-3 | TD-2 | Tarayıcı pano izni verilmiş |
+| Kopyalama | Pano reddi | 3 | Pano iznini reddet (site ayarı) ve Copy link'e bas; Tab ile ilerle. | El ile kopyalanacak URL görünür ve Tab ile ulaşılır; odak ve seçim kendiliğinden yer değiştirmez. | — | Not Run | R-BLOG-SHARE-04, R-BLOG-SHARE-11 | ÖK-1, ÖK-3, ÖK-5 | TD-2 | — |
+| Tekil işlem | İki kart | 4 | A kartında Copy link'e bas, hemen B kartında Copy link'e bas. | B için kuyruğa alınmış kopyalama olmaz; B için yeni bir etkinleştirme gerekir; A'nın sonucu B'ye yazılmaz. | — | Not Run | R-BLOG-SHARE-03, R-BLOG-SHARE-07, R-BLOG-SHARE-12 | ÖK-1, ÖK-3 | TD-2 | Zamanlama elle sınırlıdır; otomasyon daha kesin |
+
+### GKP-033 — Blog paylaş: cihazın yerel paylaşım penceresi
+
+**Amaç:** yerel paylaşım (Web Share) sırasında ilerleme göstergesi, kilit ve sonuç davranışı. **Tür:** Pozitif, negatif, durum. **Öncelik:** Orta. **Otomasyon:** blog-sharing-feedback.spec.mjs, blog-sharing-keyboard.spec.mjs (K03).
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Yerel paylaşım | İlerleme | 1 | Web Share destekleyen tarayıcıda (ör. mobil Chrome/Safari) Share'e bas ve pencere açıkken kartlara bak. | Etiketin sonundaki simge ilerleme göstergesine döner; etiket, hedef, odak ve canlı bölge metni değişmez; kart yükseklikleri değişmez. | Ekran görüntüsü | Not Run | R-PROGRESS-01, R-PROGRESS-02, R-PROGRESS-03, R-PROGRESS-04, R-PROGRESS-05, R-PROGRESS-06 | ÖK-1 | TD-2 | Fiziksel cihaz gerekir |
+| Yerel paylaşım | Tekrar basma | 2 | Pencere açıkken Share'e tekrar bas (Enter/Space). | Yeni işlem kuyruğa alınmaz; kilit sürer; pano yan etkisi oluşmaz. | — | Not Run | R-BLOG-SHARE-05, R-BLOG-SHARE-06, R-PROGRESS-03, R-PROGRESS-06 | ÖK-1 | TD-2 | Fiziksel cihaz gerekir |
+| Yerel paylaşım | Tamamla ve iptal | 3 | Paylaşımı bir kez tamamla, bir kez iptal et. | Tamamlanınca bekleme göstergesi kalkar ve "gönderildi" iddia edilmez; iptalde yalnız açık bir yeniden deneme yeni işlem başlatır. | — | Not Run | R-NATIVE-RESULT-01, R-NATIVE-RESULT-02, R-NATIVE-RESULT-03, R-BLOG-SHARE-05 | ÖK-1 | TD-2 | Fiziksel cihaz gerekir |
+
+### GKP-034 — Blog paylaş: görünüm, kaydırma, JavaScript kapalı ve önbellek
+
+**Amaç:** Share eyleminin görsel tutarlılığı ve geri dönüş davranışları. **Tür:** Görsel, negatif, regresyon. **Öncelik:** Orta. **Otomasyon:** blog-sharing-appearance/layout/cache.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Görünüm | Read ve Share | 1 | Masaüstü ve mobilde iki temada bir kartın Read ve Share eylemlerini karşılaştır; fareyle üzerine gel. | Aynı yazı tipi/boyut; hover yalnız metni etkiler; hedef alanları kaymaz. | Ekran görüntüsü | Not Run | R-BLOG-SHARE-09 | ÖK-1, ÖK-3 | TD-2 | — |
+| Kaydırma | Uzun liste | 2 | Blog panelini aşağı kaydır, bir kartta Share'i aç ve kapat. | Panel konumu, hash ve tarayıcı geçmişi değişmez. | — | Not Run | R-BLOG-SHARE-10 | ÖK-1, ÖK-3 | TD-2 | — |
+| JS kapalı | Statik bağlantılar | 3 | JavaScript'i kapat, Blog içeriğine bak. | Statik makale bağlantıları çalışır; işlevsiz bir Share eylemi görünmez. | — | Not Run | R-BLOG-SHARE-13 | ÖK-1, ÖK-2 | — | — |
+| Önbellek | Eski CSS | 4 | Siteyi bir kez aç; yeni sürüm yayınlandıktan sonra önbelleği temizlemeden tekrar aç. | Kartlar güncel stillerle görünür; yerel paylaşım göstergesi sabit kalır. | Sürüm geçişinde yapılır | Not Run | R-BLOG-SHARE-14 | ÖK-1 | — | Yayın sonrası yürütülür |
+
+### GKP-035 — Sayfa okları: dokunma, fare ve klavye geri bildirimi
+
+**Amaç:** önceki/sonraki oklarının basılı görünümünün takılı kalmaması. **Tür:** Girdi cihazı, durum. **Öncelik:** Orta. **Otomasyon:** arrow-controls.spec.mjs, arrow-hybrid.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dokunma | Takılı renk | 1 | Dokunmatik cihazda iki oka birkaç kez dokun; tema değiştir; azaltılmış hareketi aç/kapat. | Dokunuş bitince iki ok da normal renge döner. | — | Not Run | R-ARROW-01 | ÖK-1 | — | Fiziksel dokunmatik cihaz tercih edilir |
+| Fare ve klavye | Hover ve etkinleştirme | 2 | Fareyle oka gel ve çık; sonra Tab ile oka gel, Enter ve Space ile etkinleştir. | Hover çıkınca biter; klavye odağı görünür kalır; Enter/Space sayfayı değiştirir. | — | Not Run | R-ARROW-02 | ÖK-1 | — | — |
+| İptal edilen basış | Gezinmeme | 3 | Ok üzerinde fareye bas, basılıyken imleci dışarı çıkar ve bırak. | Basılı görünüm geçicidir; sayfa değişmez. | — | Not Run | R-ARROW-03 | ÖK-1 | — | — |
+| Karma girdi | Dokunma sonra fare | 4 | Dokunmatik ve fareli cihazda oka dokunup iptal et, sonra fareyle üzerine gel. | Aktif görünüm temizlenir; fare hover'ı yeniden çalışır. | — | Not Run | R-ARROW-04 | ÖK-1 | — | Karma cihaz gerekir |
+
+### GKP-036 — Hata görünümü düğmeleri, menü ve tema kontrolleri
+
+**Amaç:** 404/hata eylemlerinin ve ikon düğmelerinin etkileşim durumları. **Tür:** Görsel, erişilebilirlik. **Öncelik:** Orta. **Otomasyon:** button-states.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Hata eylemleri | Durumlar | 1 | `/#resumes` aç; iki kurtarma eylemine fareyle gel, bas, Tab ile odaklan; iki temada tekrarla. | Hover bırakılınca biter; klavye odağı görünür; basılı renk tema renklerini kullanır; About Me Resume CTA ile aynı görünür. | — | Not Run | R-BUTTON-01, R-BUTTON-04 | ÖK-1, ÖK-2 | TD-7 | — |
+| Hata metni | Kurtarma | 2 | Hata başlığını ve bağlantılarını oku; bağlantılarla kurtar. | Portföy ifadeleri kullanılır; bağlantılar geçerli bölümlere götürür. | — | Not Run | R-BUTTON-02 | ÖK-1, ÖK-2 | TD-7 | — |
+| Hamburger | Odak | 3 | Mobilde menü düğmesine fareyle tıkla; sonra Tab ile odaklan. | Fare tıklamasından sonra odak çerçevesi kalmaz; klavye odağı görünür. | — | Not Run | R-BUTTON-03 | ÖK-1 | — | — |
+| İkon hareketi | Cihaz ve tercih | 4 | Tema düğmesinin üzerine fareyle gel; azaltılmış hareketi açıp tekrarla; About/Contact/Privacy'de tema düğmesini Tab ile kullan. | Hover hareketi yalnız fareli cihazda ve hareket tercihine uygun; güven sayfalarında düğme hizalı ve klavyeyle kullanılır. | — | Not Run | R-ICON-03, R-ICON-04 | ÖK-1, ÖK-2 | — | — |
+
+### GKP-037 — Filtre sınır ve hata durumları
+
+**Amaç:** Blog/Projects filtrelerinin boş, hatalı ve hızlı değişen verilerde doğru kalması. **Tür:** Negatif, sınır, eşzamanlılık. **Öncelik:** Yüksek. **Otomasyon:** categories.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Bağımsız seçim | Gezinme ve geçmiş | 1 | Blog'da kategori+dil, Projects'te kategori seç ve Starred'da Show More kullan; sayfalar arasında gez, geri/ileri kullan. | Her sayfanın seçimi ve Starred ilerlemesi ayrı korunur. | — | Not Run | R-FILTER-03 | ÖK-1, ÖK-3 | TD-2, TD-3 | — |
+| Boş kesişim | Kurtarma | 2 | Blog'da yalnız TR makalesi olan bir kategoride EN seç; Projects'e gidip dön; All dilini seç. | Eski kartlar kaybolur, boş durum görünür; All ile makale döner; Projects seçimi değişmez. | — | Not Run | R-FILTER-04 | ÖK-1, ÖK-3 | TD-2 | — |
+| Boş kategori | Projects | 3 | Projects'te deposu olmayan bir kategori seç, sonra All'a dön. | Sabitlenmiş ve normal kartlar tekrarsız geri gelir. | — | Not Run | R-FILTER-05 | ÖK-1, ÖK-3 | TD-2 | — |
+| Bilinmeyen kategori | Yedek | 4 | Kategorisi belirsiz bir depo verisiyle Software'i seç. | Kart beyan edilen yedek kategoride görünür. | — | Not Run | R-FILTER-06 | ÖK-1, ÖK-3 | TD-2 | — |
+| Veri yok | Tüm kaynaklar | 5 | Tüm kataloglar ve RSS erişilemezken her kategoriyi seç. | Her kategoride kullanılabilir, yerleşmiş bir boş durum görünür; sayfa kilitlenmez. | — | Not Run | R-FILTER-11 | ÖK-1, ÖK-3 | TD-4 | — |
+| Hızlı seçim | Son seçim | 6 | Filtre düğmelerine hızla art arda ve düğme içindeki metin/simgeye tıkla. | Her sayfada tek ve doğru seçim kalır. | — | Not Run | R-FILTER-12 | ÖK-1, ÖK-3 | TD-2 | — |
+| Yalnız Starred | Sayfalama | 7 | Sahip olunan depo yokken geçerli Starred verisiyle kategorileri değiştir. | Starred sayfalaması kullanılabilir kalır. | — | Not Run | R-FILTER-13 | ÖK-1, ÖK-3 | TD-3 | — |
+| Uzun etiket | Taşma | 8 | Her Projects filtresini seç; bölüm başlığını dar ekranda incele. | Bölüm etiketleri kapsayıcısının içinde kalır. | — | Not Run | R-FILTER-14 | ÖK-1, ÖK-3 | TD-2 | — |
+
+### GKP-038 — Klavye erişilebilirliği
+
+**Amaç:** tüm sayfaların yalnız klavyeyle kullanılabilmesi. **Tür:** Erişilebilirlik. **Öncelik:** Yüksek. **Otomasyon:** keyboard-accessibility.spec.mjs (Chromium, Firefox, WebKit).
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Odak sırası | Her sayfa | 1 | Her bölümde ve güven sayfalarında baştan Tab'la; ilk Tab'da skip link'i kullan. | Odak görünür ve sıralıdır; skip link içeriğe atlar; gizli sayfalarda Tab durağı yoktur. | — | Not Run | R-KEYBOARD-01, R-KEYBOARD-05 | ÖK-1, ÖK-2 | TD-7 | — |
+| Menü ve geçmiş | Öngörülebilir odak | 2 | Menüyü, tema düğmesini ve geri/ileri gezinmeyi klavyeyle kullan; azaltılmış hareketle ve %200 metin boyutuyla tekrarla. | Odak her işlemden sonra beklenen yerdedir. | — | Not Run | R-KEYBOARD-02 | ÖK-1 | — | — |
+| Filtre ve açılım | Odak korunur | 3 | Filtreleri, açılır içerikleri ve bilgi açıklamalarını klavyeyle aç/kapat. | Filtre odağı korunur; açılırlar yerel davranır; bilgi kapatılınca odak tetikleyiciye döner. | — | Not Run | R-KEYBOARD-03 | ÖK-1, ÖK-3 | TD-2 | — |
+| Starred son sayfa | Odak taşınır | 4 | Starred'da Show More'u klavyeyle son sayfaya kadar kullan. | Show More kaybolduğunda odak kaybolmaz, anlamlı bir öğeye taşınır. | — | Not Run | R-KEYBOARD-04 | ÖK-1, ÖK-3 | TD-3 | — |
+| Contact | Odak kutusu | 5 | Contact bağlantılarına Tab ile gel. | Her bağlantıda tüm kelimeleri ve dış bağlantı simgesini kapsayan tek bir odak kutusu vardır. | — | Not Run | R-KEYBOARD-06 | ÖK-1 | — | — |
+| %200 zoom | Erişim | 6 | Tarayıcıyı %200 yakınlaştır; menü, filtreler ve Contact bağlantılarını klavyeyle kullan. | Hepsine ulaşılır; odak örtülmez. | — | Not Run | R-KEYBOARD-07 | ÖK-1 | — | — |
+| Sayfa sınırları | Başlangıç ve son | 7 | Her sayfaya doğrudan ve menüyle gir; Tab ile içeriğin sonuna kadar ilerle. | Odak sayfanın kontrol şeridinden başlar; içerik önceki/sonraki oklarla biter. | — | Not Run | R-KEYBOARD-08 | ÖK-1 | TD-7 | — |
+
+### GKP-039 — Sayfa geçişleri ve hareket tercihleri
+
+**Amaç:** sayfa geçişlerinin yönü, kilitlenmemesi ve azaltılmış hareket desteği. **Tür:** Durum geçişi, negatif. **Öncelik:** Yüksek. **Otomasyon:** page-transitions.spec.mjs, portfolio.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Mobil geçiş | Çekmece sonrası | 1 | Mobilde menüden ileri ve geri bir bölüm seç. | Kayma çekmece kapandıktan sonra, rota sırasına uygun yönde başlar ve temiz biter. | Ekran kaydı | Not Run | R-MOTION-01, R-MOTION-05 | ÖK-1 | TD-7 | — |
+| Azaltılmış hareket | Kilit yok | 2 | İşletim sisteminde azaltılmış hareketi aç; bölümler arasında gez. | Kayma olmadan anında geçer; gezinme kilitlenmez. | — | Not Run | R-MOTION-02 | ÖK-1 | TD-7 | — |
+| Hızlı oklar | Son rota | 3 | Oklara hızla art arda bas; sonra geri/ileri kullan. | Son istenen bölüm açılır; geçmiş tutarlıdır. | — | Not Run | R-MOTION-03 | ÖK-1 | TD-7 | — |
+| Geçiş kesintisi | İki sayfa kalmaz | 4 | Geçiş sırasında sekmeyi arka plana al, sonra dön. | Ekranda iki sayfa kalmaz; gezinme çalışmaya devam eder. | — | Not Run | R-MOTION-04, R-MOTION-07 | ÖK-1 | TD-7 | Kesinti elle zamanlanır |
+| Aktif rota | Yeniden seçim | 5 | Mobilde açık olan bölümü menüden tekrar seç; menüyü yeniden aç. | Gezinme bozulmaz; çekmece yeniden açılabilir. | — | Not Run | R-MOTION-06 | ÖK-1 | — | — |
+| Tekrarlı başlatma | Tek denetleyici | 6 | Sayfayı birkaç kez yenile ve bölümler arasında gez. | Her gezinmede tek bir bölüm ve en fazla bir kurtarma görünümü olur. | — | Not Run | R-NAV-07 | ÖK-1 | TD-7 | — |
+| Geçiş sırasında klavye | Seçim korunur | 7 | Menü veya okla başka bölüme geç; kayma bitmeden yeni sayfadaki bir düğmeye Tab ile gel ve Space'i basılı tut, kayma bitince bırak. Sonra hiçbir şeye dokunmadan menüyle başka bölüme geç. | Basılı tutulan düğme etkinleşir ve odak onda kalır; dokunulmayan geçişte odak bölüm başlığına gider. | — | Not Run | R-FOCUS-09, R-FOCUS-10, R-FOCUS-11 | ÖK-1 | TD-7 | Zamanlama elle sınırlıdır; otomasyon tamamlanma anını kontrol eder |
+
+### GKP-040 — Sabit kontrol paneli ve içerik kaydırma
+
+**Amaç:** Resume, Blog, Projects ve Contact'ta kontrol şeridinin sabit, içeriğin tek panelde kayması. **Tür:** Düzen, girdi cihazı. **Öncelik:** Yüksek. **Otomasyon:** fixed-page-controls.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Kaydırma | Tekerlek ve dokunma | 1 | Her sayfada içeriği fare tekerleği ve dokunmayla sonuna kadar kaydır. | Kontrol şeridi yerinde kalır; son içerik görünür hale gelir. | — | Not Run | R-PANEL-01 | ÖK-1, ÖK-3 | TD-2 | — |
+| Filtre değişimi | Yalnız içerik sıfırlanır | 2 | Blog'u kaydır, filtre çubuğunu yatay kaydır, sonra gerçekten farklı bir kategori seç. | Yalnız içerik başa döner; odak ve yatay kaydırma korunur. | — | Not Run | R-PANEL-02 | ÖK-1, ÖK-3 | TD-2 | — |
+| Sayfalama tuşları | Odaklı bölge | 3 | İçerik bölgesine odaklan; PageDown, PageUp, Home, End kullan. | İçerik doğal kayar; kontroller, odak ve geçmiş kullanılabilir kalır. | — | Not Run | R-PANEL-03 | ÖK-1 | — | — |
+| Yeniden boyutlandırma | Kısa yatay ekran | 4 | Pencereyi boyutlandır, telefonu yatay çevir, masaüstünde %200 yakınlaştır. | Kontroller genel başlığın altında kalır; içerik alanı kullanılabilir kalır. | — | Not Run | R-PANEL-04 | ÖK-1 | — | — |
+| Boş ve gecikmeli | Panel içinde | 5 | Gecikmeli veriyle hızlı filtre seçimleri yap. | Durumlar kendi panelinde kalır; son filtre geçerli olur. | — | Not Run | R-PANEL-05 | ÖK-1, ÖK-3 | TD-5 | — |
+| Yazdırma | Kısıt kalkar | 6 | Her sayfada yazdırma önizlemesini aç. | Ekran yüksekliği/taşma kısıtı kalkar; açılım durumu değişmez. | — | Not Run | R-PANEL-06 | ÖK-1 | — | — |
+| Contact | Aynı düzen | 7 | Contact'ta kaydır, sayfalama tuşlarını kullan, başka sayfaya gidip dön, yazdır. | Başlık sabit, bölge adlandırılmış; bağlantılar korunur; dönüşte başa döner; yazdırma çalışır. | — | Not Run | R-PANEL-07 | ÖK-1 | — | — |
+
+### GKP-041 — Resume içerik düzeni ve açılımlar
+
+**Amaç:** Resume bölümlerinin okuma sırası ve açılır içeriklerin bağımsızlığı. **Tür:** İçerik, durum, erişilebilirlik. **Öncelik:** Yüksek. **Otomasyon:** resume-disclosures.spec.mjs, resume-disclosure-labels.test.js.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Okuma sırası | Dokuz parça | 1 | Resume'u baştan sona oku. | Dokuz parça okuma sırasını korur; yalnız uzun kanıtlar kapalıdır. | — | Not Run | R-RESUME-06 | ÖK-1, ÖK-2 | TD-1 | — |
+| Beş rol | Bağımsız açılım | 2 | Experience'ta bir rolün kanıtlarını ve araçlarını ayrı ayrı aç. | Tüm içerik sırasıyla görünür; diğer rollerin durumu değişmez. | — | Not Run | R-RESUME-08 | ÖK-1, ÖK-2 | TD-1 | — |
+| Summary | Tam metin | 3 | Summary'yi aç. | Akademik geçmiş "Since 2011" paragrafından önce ve aynı tipografide gelir. | — | Not Run | R-RESUME-12 | ÖK-1, ÖK-2 | TD-1 | — |
+| Kişilik değerlendirmesi | Hizalama | 4 | Masaüstünde ve dar ekranda Personality Assessment bölümünü incele. | Masaüstünde ders bilgisiyle hizalı; küçük ekranlarda akış korunur. | — | Not Run | R-RESUME-15 | ÖK-1, ÖK-2 | TD-1 | — |
+| Açılım düğmeleri | Erişilebilir ad | 5 | Ekran okuyucu veya erişilebilirlik ağacıyla her Show More düğmesini incele. | Her düğmenin sayısı doğru, adı benzersiz ve bağlamlıdır; klavye durumu yereldir. | — | Not Run | R-DISCLOSURE-03 | ÖK-1, ÖK-2 | TD-1 | Ekran okuyucu ayrı konfigürasyon ister |
+
+### GKP-042 — Resume bölüm gezinmesi
+
+**Amaç:** Resume gezinme çubuğunun içeriği filtrelemeden doğru hedefe götürmesi. **Tür:** Gezinme, durum, erişilebilirlik. **Öncelik:** Yüksek. **Otomasyon:** resume-navigation.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| İlk durum | Doğrudan giriş | 1 | `/#resume` aç ve sayfayı yenile. | Yalnız All seçilidir; tüm içerik eksiksizdir; görünür yardımcı etiket yoktur. | — | Not Run | R-RESUME-NAV-01 | ÖK-1, ÖK-2 | TD-1 | — |
+| Hedefler | On düğme | 2 | On düğmenin her birine bas. | Doğru bölüme kayar; URL ve geçmiş değişmez; hiçbir bölüm veya açılım gizlenmez. | — | Not Run | R-RESUME-NAV-02 | ÖK-1, ÖK-2 | TD-1 | — |
+| Klavye | Yatay görünürlük | 3 | Düğmeler arasında klavyeyle gez; Enter ve Space kullan. | Odaktaki öğe yatayda görünür olur, sayfa dikeyde kaymaz; Enter/Space hedefe odak taşır. | — | Not Run | R-RESUME-NAV-03 | ÖK-1, ÖK-2 | TD-1 | — |
+| Yeniden etkinleşme | Yalnız Resume sıfırlanır | 4 | Blog/Projects'te filtre seç; Resume'a dön, geri/ileri kullan. | Yalnız Resume seçimi sıfırlanır; Blog/Projects seçimleri korunur. | — | Not Run | R-RESUME-NAV-04 | ÖK-1, ÖK-3 | TD-2 | — |
+| Hızlı istek | Son istek | 5 | İki hareket tercihinde düğmelere hızla art arda bas. | Son istek geçerli olur ve korunur. | — | Not Run | R-RESUME-NAV-05 | ÖK-1, ÖK-2 | TD-1 | — |
+| Görünüm | Tema ve taşma | 6 | İki temada ve dar ekranda çubuğu incele. | Blog stilini paylaşır; sayfa taşmaz; son öğeye ulaşılır. | — | Not Run | R-RESUME-NAV-06 | ÖK-1, ÖK-2 | TD-1 | — |
+| Certifications | Panel üstü | 7 | Certifications'ı açılımlar kapalıyken ve açıkken farklı pencere yüksekliklerinde seç. | Başlık panelin en üstünden başlar. | — | Not Run | R-RESUME-NAV-07 | ÖK-1, ÖK-2 | TD-1 | — |
+
+### GKP-043 — Scrollbar ve reklam alanının kaydırmaya etkisi
+
+**Amaç:** tüm sayfalarda tek scrollbar standardı ve reklamların kaydırmayı bozmaması. **Tür:** Görsel, regresyon. **Öncelik:** Orta. **Otomasyon:** scrollbar-parity.spec.mjs, touch-scrollbar.spec.mjs, adsense.spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Scrollbar | Masaüstü | 1 | Masaüstünde ve dar pencerede iki temada dört sayfanın scrollbar'ını karşılaştır. | Tüm sayfalarda aynı ince bar ve renkler. | — | Not Run | R-SCROLLBAR-01 | ÖK-1, ÖK-2 | — | — |
+| Scrollbar | Telefon | 2 | Fiziksel iPhone ve Android telefonda iki temada dört sayfayı kaydır. | Masaüstüyle aynı tasarımda tek bir bar görünür ve konumu kaydırmayı izler. | Ekran görüntüsü | Not Run | R-SCROLLBAR-02, R-SCROLLBAR-03 | ÖK-1 | — | Fiziksel cihaz gerekir |
+| Reklam | Kaydırma | 3 | Canlı sitede Blog ve Projects'te reklam görünürken içeriği tekerlek ve dokunmayla kaydır. | Panel kayar; kontrol şeridi sabit kalır; reklam doğal yüksekliğindedir. | Reklama tıklama | Not Run | R-AD-SCROLL-01 | ÖK-1 | — | Gerçek dolum hesaba bağlıdır |
+| Reklam | Boş iframe | 4 | Reklam dolmadığında (veya engellendiğinde) reklam alanına bak. | Görünür boş mesaj veya dolu görünen boş kutu oluşmaz. | — | Not Run | R-AD-EMPTY-01 | ÖK-1, ÖK-4 | — | — |
+| Reklam | Daralma sonrası genişlik | 5 | Blog'u telefonda yatay açıp reklamı yükle, sonra dikeye çevir (veya masaüstünde pencereyi daralt). | Reklam Blog alanının içinde kalır; sağa kaymaz ve kırpılmaz; Projects reklamı değişmez. | Reklama tıklama | Not Run | R-AD-WIDTH-01 | ÖK-1 | — | Gerçek dolum hesaba bağlıdır |
+
+### GKP-044 — Statik 404 ve güven sayfası gezinmesi
+
+**Amaç:** gerçek 404'ün ve About/Contact/Privacy gezinmesinin JS olmadan da kullanılabilmesi. **Tür:** Negatif, gezinme. **Öncelik:** Orta. **Otomasyon:** not-found-shell.test.js/spec.mjs, trust-navigation.test.js/spec.mjs.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Statik 404 | İç içe yol | 1 | Olmayan iç içe bir yolu aç (yeni UUID); kenar çubuğu bağlantılarını kullan. | Portföy kabuğu görünür; bağlantılar kökten çalışır. | — | Not Run | R-SHELL-01 | ÖK-1, ÖK-2 | TD-7 | — |
+| Statik 404 | JS kapalı | 2 | JavaScript kapalıyken aynı yolu aç. | Sayfa okunur ve kurtarma bağlantıları çalışır. | — | Not Run | R-SHELL-05 | ÖK-1, ÖK-2 | TD-7 | — |
+| Güven sayfaları | Dönüş ve footer | 3 | About, Contact, Privacy'yi aç; footer'a ve üstteki dönüş eylemine bak. | Tek bir dönüş eylemi vardır; footer'da yalnız mevcut sayfa tıklanamaz işaretlidir; diğer hedefler çalışır. | — | Not Run | R-TRUST-01, R-TRUST-02 | ÖK-1, ÖK-2 | — | — |
+| Güven sayfaları | Dokunma hedefi | 4 | Telefonda dönüş eylemini ve tema düğmesini kullan. | İkisi hizalı, dokunmaya yeterli büyüklükte ve ekran içindedir. | — | Not Run | R-TRUST-05 | ÖK-1 | — | — |
+
+### GKP-045 — Makine okunur içerik ve CV bağlantısı
+
+**Amaç:** Markdown sürümlerinin doğruluğu ve CV indirme bağlantısının çalışması. **Tür:** İçerik, HTTP. **Öncelik:** Orta. **Otomasyon:** agent-documents.test.js, http-verification.test.js, trust-navigation.test.js.
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Markdown | İçerik | 1 | `/index.md`, `/about/index.md`, `/contact/index.md`, `/privacy/index.md` aç. | Bağlantılar tam adresli; olgular HTML ile aynı; betik veya iskelet kod yok; gezinme metni Markdown'a girmez. | — | Not Run | R-CONTENT-01, R-TRUST-03 | ÖK-2, ÖK-4 | — | — |
+| CV | İndirme bağlantısı | 2 | Resume'daki ve Markdown'daki CV bağlantısını aç. | Bağlantı çalışır ve PDF açılır; kırık bağlantı mevcut PDF ile gizlenmez. | — | Not Run | R-HTTP-07 | ÖK-2, ÖK-4 | — | — |
+
+### GKP-046 — Otomasyon sözleşmelerinin kanıt incelemesi
+
+**Amaç:** kullanıcının doğrudan gözleyemediği sözleşmeleri (CI, kurtarma, veri, belge üretimi) elle yeniden yürütmek yerine kabul edilen build'in kanıtını statik olarak incelemek. **Tür:** Statik inceleme. **Öncelik:** Orta. **Otomasyon:** ilgili birim/sözleşme testleri; kanıt, build'in `unit-report` TAP çıktısı ve [izlenebilirlik raporu](TRACEABILITY.md).
+
+| Test Durumu Adı | Test Durumu Açıklaması | Adım No | Test Adımı | Beklenen Test Sonuçları | Açıklama | Sonuç | Gereksinim No | Ön Koşul | Test Girdileri | Varsayımlar ve Kısıtlamalar |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Yayın kapısı | Kanıt | 1 | Kabul edilen build'in Portfolio CI/CD koşusunda `unit-report` TAP çıktısını aç; bu adımdaki kimlikleri ara. | Hepsi `ok`; atlanmış veya başarısız yok. Koşu bağlantısını ve SHA'yı kaydet. | Build SHA'sını yaz | Not Run | R-PIPE-01, R-PIPE-02, R-PIPE-03, R-PIPE-04, R-PIPE-05, R-PIPE-06, R-PIPE-07, R-PIPE-08, R-PIPE-09, R-PIPE-10, R-PIPE-11, R-PIPE-12, R-PIPE-13, R-RELEASE-01, R-RELEASE-02, R-RELEASE-03, R-RELEASE-04, R-FIRST-01, R-FIRST-02, R-CI-01, R-ASSET-01, R-COV-01, R-COV-02, R-COV-03, R-COV-04, R-COV-05 | — | Kabul edilen build | Elle yeniden yürütme gerekmez |
+| Kurtarma | Kanıt | 2 | Aynı TAP çıktısında bu adımdaki kurtarma kimliklerini ara. | Hepsi `ok`. | — | Not Run | R-CI-RECOVER-01, R-CI-RECOVER-02, R-CI-RECOVER-03, R-CI-RECOVER-04, R-CI-RECOVER-05, R-CI-RECOVER-06, R-CI-RECOVER-07, R-CI-RECOVER-08, R-CI-RECOVER-09, R-CI-RECOVER-10, R-CI-RECOVER-11, R-CI-RECOVER-12, R-CI-RECOVER-13, R-CI-RECOVER-14, R-CI-RECOVER-15, R-CI-RECOVER-16, R-CI-RECOVER-17, R-CI-RECOVER-18, R-CI-RECOVER-19, R-CI-RECOVER-20, R-CI-RECOVER-21, R-CI-RECOVER-22, R-CI-RECOVER-C1-00, R-CI-RECOVER-C1-01, R-CI-RECOVER-C1-02, R-CI-RECOVER-C1-03, R-CI-RECOVER-C1-04, R-CI-RECOVER-C1-05, R-CI-RECOVER-C1-06, R-CI-RECOVER-C1-07, R-CI-RECOVER-C1-08, R-CI-RECOVER-C1-09, R-CI-RECOVER-C1-10, R-CI-RECOVER-C1-11, R-CI-RECOVER-C1-12, R-CI-RECOVER-C1-13, R-CI-APT-01, R-CI-APT-02 | — | Kabul edilen build | — |
+| Veri sözleşmesi | Kanıt | 3 | Aynı TAP çıktısında veri ve URL güvenliği kimliklerini ara. | Hepsi `ok`. | — | Not Run | R-DATA-SYNC-01, R-DATA-SYNC-02, R-DATA-SYNC-03, R-DATA-SYNC-04, R-DATA-SYNC-05, R-DATA-URL-01, R-DATA-URL-02, R-DATA-URL-03, R-DATA-URL-04, R-DATA-COLOR-01, R-DATA-NUM-01, R-HTTP-02, R-HTTP-03, R-HTTP-04, R-HTTP-05, R-HTTP-06 | — | Kabul edilen build | — |
+| Üretilen içerik | Kanıt | 4 | Aynı TAP çıktısında üretici ve belge kimliklerini ara. | Hepsi `ok`. | — | Not Run | R-A0-01, R-A0-02, R-A0-05, R-A0-05b, R-SHELL-02, R-SHELL-03, R-THEME-01, R-NAV-03, R-NAV-06, R-CONTENT-02, R-DISCLOSURE-01, R-DISCLOSURE-02, R-A11Y-02, R-GKP-01, R-GKP-02, R-GKP-03 | — | Kabul edilen build | — |
+| Belge izlenebilirliği | Kanıt | 5 | Aynı TAP çıktısında belge kimliklerini ara; izlenebilirlik raporunun Consistency bölümünü oku. | Hepsi `ok`; raporda bilinmeyen kimlik yok. | — | Not Run | R-DOC-01, R-DOC-02, R-DOC-03, R-DOC-RTM-01, R-DOC-RTM-02, R-DOC-RTM-03, R-DOC-TRACE-01, R-DOC-TRACE-02, R-DOC-TRACE-03, R-DOC-TRACE-04, R-DOC-TRACE-05 | — | Kabul edilen build | — |
+| Tarayıcı modülleri | Kanıt | 6 | Aynı TAP çıktısında tarayıcı modülü birim testlerinin kimliklerini ara. | Hepsi `ok`. | — | Not Run | R-UNIT-NOTFOUND-01, R-UNIT-NOTFOUND-02, R-UNIT-PANELS-01, R-UNIT-PANELS-02, R-UNIT-PANELS-03, R-UNIT-PANELS-04, R-UNIT-PANELS-05, R-UNIT-PANELS-06, R-UNIT-PRELOADER-01, R-UNIT-PRELOADER-02, R-UNIT-PRELOADER-03, R-UNIT-RESNAV-01, R-UNIT-RESNAV-02, R-UNIT-RESNAV-03, R-UNIT-RESNAV-04, R-UNIT-RESNAV-05, R-UNIT-RESNAV-06, R-UNIT-RESNAV-07, R-UNIT-RESNAV-08, R-UNIT-SHELL-01, R-UNIT-SHELL-02, R-UNIT-SHELL-03, R-UNIT-SHELL-04, R-UNIT-SHELL-05, R-UNIT-SHELL-06, R-UNIT-SHELL-07, R-UNIT-SHELL-08, R-UNIT-STARRED-01, R-UNIT-STARRED-02, R-UNIT-STARRED-03, R-UNIT-TITLE-01, R-UNIT-TITLE-02, R-UNIT-TITLE-03, R-UNIT-TOUCHBAR-01, R-UNIT-TOUCHBAR-02, R-UNIT-TOUCHBAR-03, R-UNIT-TOUCHBAR-04, R-UNIT-TOUCHBAR-05 | — | Kabul edilen build | — |
 
 ## Yürütme kaydı ve açıklıklar
 

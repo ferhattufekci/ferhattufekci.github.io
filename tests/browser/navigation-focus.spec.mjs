@@ -39,8 +39,9 @@ async function completeNavigation(page) {
   }));
 }
 
-for (const [id, entry] of [['R-FOCUS-09', 'menu'], ['R-FOCUS-11', 'arrow']]) {
-test(`${id} | FOCUS-AC1/3 | A newer incoming-page keyboard choice survives ${entry} navigation completion`, async ({ page }) => {
+// Literal ids in the titles: the RTM and its independent scan read titles as written,
+// so an id built from a loop variable was invisible to traceability.
+async function keyboardChoiceSurvives(page, entry) {
   await beginGatedNavigation(page, entry);
   const all = page.locator('#blog-lang-toggle [data-lang-filter="all"]');
   await page.locator('#blog-lang-toggle [data-lang-filter="en"]').click();
@@ -53,8 +54,10 @@ test(`${id} | FOCUS-AC1/3 | A newer incoming-page keyboard choice survives ${ent
     selected: button.getAttribute('aria-pressed')
   }))).toEqual({ focused: true, selected: 'true' });
   await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveCount(1);
-});
 }
+
+test('R-FOCUS-09 | FOCUS-AC1/3 | A newer incoming-page keyboard choice survives menu navigation completion', ({ page }) => keyboardChoiceSurvives(page, 'menu'));
+test('R-FOCUS-11 | FOCUS-AC1/3 | A newer incoming-page keyboard choice survives arrow navigation completion', ({ page }) => keyboardChoiceSurvives(page, 'arrow'));
 
 test('R-FOCUS-10 | FOCUS-AC2 | Untouched menu navigation still establishes heading focus and the first Tab stop', async ({ page }) => {
   await beginGatedNavigation(page);

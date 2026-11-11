@@ -21,6 +21,7 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 - [Engineering assessment](docs/ENGINEERING-ASSESSMENT.md): what this repository is, what it demonstrably does well, and the open findings with their evidence level.
 - [Architecture decision records](docs/architecture/adr/README.md): why the site stays static, why a release is pinned to one SHA, why recovery is observe-only.
 - [Requirements traceability matrix](docs/business-analysis/requirements-traceability-matrix.md): generated from the test titles; the build fails if it is stale or misses an id that a test carries.
+- [Requirement ↔ test procedure traceability](docs/testing/TRACEABILITY.md): both directions between requirement ids, automated tests and the manual procedure (GKP), with step results; regenerated with each build's results.
 - [Threat model](docs/security/threat-model.md): trust boundaries, the controls that exist and the ones that do not.
 
 ### Tech Stack
@@ -187,6 +188,7 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 - [Mühendislik değerlendirmesi](docs/ENGINEERING-ASSESSMENT.tr.md): deponun ne olduğu, kanıtlanabilir güçlü yanları ve kanıt düzeyleriyle açık bulgular.
 - [Mimari karar kayıtları](docs/architecture/adr/README.tr.md): sitenin neden statik kaldığı, yayının neden tek bir SHA'ya sabitlendiği, kurtarmanın neden yalnızca gözlem modunda olduğu.
 - [Gereksinim izlenebilirlik matrisi](docs/business-analysis/requirements-traceability-matrix.md) (İngilizce, test başlıklarından otomatik üretilir): bayatlarsa ya da bir testin taşıdığı kimliği atlarsa build kırılır.
+- [Gereksinim ↔ test prosedürü izlenebilirliği](docs/testing/TRACEABILITY.md) (İngilizce, otomatik üretilir): gereksinim kimlikleri, otomatik testler ve manuel prosedür (GKP) arasında iki yönlü eşleme ve adım sonuçları; her build'in sonuçlarıyla yeniden üretilir.
 - [Tehdit modeli](docs/security/threat-model.tr.md): güven sınırları, mevcut ve eksik kontroller.
 
 ### Teknoloji Yığını
