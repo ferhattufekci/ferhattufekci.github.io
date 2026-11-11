@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**287 requirement ids, 329 test titles, 58 areas.**
+**293 requirement ids, 335 test titles, 59 areas.**
 
 | Area | Ids |
 |---|---|
@@ -56,6 +56,7 @@
 | R-SCROLLBAR | 3 |
 | R-SHELL | 5 |
 | R-THEME | 4 |
+| R-TIP | 5 |
 | R-TRUST | 5 |
 | R-UNIT-NOTFOUND | 2 |
 | R-UNIT-PANELS | 6 |
@@ -63,7 +64,7 @@
 | R-UNIT-RESNAV | 8 |
 | R-UNIT-SHELL | 8 |
 | R-UNIT-STARRED | 3 |
-| R-UNIT-TIP | 5 |
+| R-UNIT-TIP | 6 |
 | R-UNIT-TITLE | 3 |
 | R-UNIT-TOUCHBAR | 5 |
 
@@ -308,6 +309,11 @@
 | R-THEME-02 | Given corrupt stored preferences, when loading, then OS preference remains usable | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/theme.test.js` |
 | R-THEME-03 | blocked storage does not prevent the initial theme being applied | Unit/contract (node:test) | `scripts/tests/theme.test.js` |
 | R-THEME-04 | Given a theme preference, when toggled and reloaded, then the choice persists | Browser (Playwright), Unit/contract (node:test) | `tests/browser/portfolio.spec.mjs`<br>`scripts/tests/theme.test.js` |
+| R-TIP-01 | Given the Resume page, then no separate tooltip script is referenced or requested | Browser (Playwright) | `tests/browser/resume-info-tip.spec.mjs` |
+| R-TIP-02 | Given the tooltip file URL is blocked, when the info button is activated twice, then the tooltip opens with aria-expanded true and closes again | Browser (Playwright) | `tests/browser/resume-info-tip.spec.mjs` |
+| R-TIP-03 | Given the tooltip file URL is blocked and the tooltip open, then a click inside keeps it open, a click outside closes it, and Escape closes it | Browser (Playwright) | `tests/browser/resume-info-tip.spec.mjs` |
+| R-TIP-04 | Given the tooltip file URL is blocked, when closed by a click, then hover stays suppressed until the pointer leaves or the button loses focus | Browser (Playwright) | `tests/browser/resume-info-tip.spec.mjs` |
+| R-TIP-05 | Given the tooltip file URL is blocked, when the visitor leaves Resume and returns, then one activation still opens the tooltip once | Browser (Playwright) | `tests/browser/resume-info-tip.spec.mjs` |
 | R-TRUST-01 | document navigation provides one explicit return action and marks only the current footer page | Unit/contract (node:test) | `scripts/tests/trust-navigation.test.js` |
 | R-TRUST-02 | a standalone document without a current trust page keeps every footer destination navigable | Unit/contract (node:test) | `scripts/tests/trust-navigation.test.js` |
 | R-TRUST-03 | navigation does not enter Markdown or alter generated public content and discovery files | Unit/contract (node:test) | `scripts/tests/trust-navigation.test.js` |
@@ -343,6 +349,7 @@
 | R-UNIT-STARRED-01 | Given no verified ad configuration, then cards are appended in order with no ad and the grid is still registered | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-STARRED-02 | Given a verified configuration, then cards are grouped and a planned ad is placed after the planned card | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-STARRED-03 | Given a later batch, then its cards continue in the current group | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-TIP-00 | index.html has exactly one inline personality tooltip block and no tooltip script file | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
 | R-UNIT-TIP-01 | Given the closed tooltip, when its button is clicked, then it opens with aria-expanded true; a second click closes it | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
 | R-UNIT-TIP-02 | Given the open tooltip, then a click outside closes it and a click inside it keeps it open | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
 | R-UNIT-TIP-03 | Given the open tooltip, when Escape is pressed, then it closes; other keys do nothing | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |

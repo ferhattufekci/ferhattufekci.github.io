@@ -1,6 +1,6 @@
 # T-4: Satır içi script ve CSP geçiş planı (tasarım ve risk değerlendirmesi)
 
-Durum: **A0 ve A1 uygulandı** (A1: kişilik ipucu bloğu `js/resume-info-tip.js`'e taşındı; satır içi blok sınırı 8 → 7; `scripts/tests/resume-info-tip.test.js`). A2–A9 tasarım aşamasında. Önceki durum notu: **yalnızca tasarım.** `index.html` ve diğer sayfalardaki inline scriptlere dokunulmadı, CSP eklenmedi. Uygulama aşamaları ayrı onay ve ayrı PR gerektirir. Öncelik/kabul kriterleri: [OPEN-ITEMS.md](OPEN-ITEMS.md).
+Durum: **yalnızca tasarım.** A0 koruma testleri uygulandı; `index.html` ve diğer sayfalardaki inline scriptler yerinde, CSP eklenmedi. **A1 ertelendi (sahibin kararı, 2026-11-11):** CSP yaklaşımı/D-7 netleşene kadar A1 ertelendi. Taşıma CSP geçişine hazırlıktır; tek başına CSP koruması sağlamaz ve ek bir yükleme bağımlılığı getirir. Kişilik ipucu betiği satır içi kalır; davranışı `scripts/tests/resume-info-tip.test.js` (üretim bloğunu `index.html`'den çalıştırır) ve `tests/browser/resume-info-tip.spec.mjs` ile korunur. Uygulama aşamaları ayrı onay ve ayrı PR gerektirir. Öncelik/kabul kriterleri: [OPEN-ITEMS.md](OPEN-ITEMS.md).
 
 Tarih: 2026-11-07. Envanter `main` (`852ae17`) üzerinden sayıldı; bağımlılıklar ayrıştırıcı ile (acorn) çıkarıldı. Kanıt etiketleri: **[B]** belge, **[K]** kod/ayrıştırma, **[T]** mevcut test, **[?]** DOĞRULANAMADI.
 
@@ -52,7 +52,7 @@ Toplam çalıştırılabilir: 8 blok, ≈51,7 KB; 5 olay özniteliği (`onclick`
 **Aşamalar (her biri ayrı PR, ayrı onay; sırayla riskten küçüğe):**
 
 1. **A0 Koruma testleri (üretim kodu değişmez):** "çalıştırılabilir inline script allowlist'i" (şu an 8 bloğu bilinçli listeler, sayı yalnızca azalabilir), "inline olay özniteliği allowlist'i" (5), "script konum/sıra sözleşmesi" (yeni dosyaların jQuery sonrası/öncesi konumları), `setBlogLang`/`showMoreStarred` global varlığı testi.
-2. **A1** 3914 → `js/resume-info-tip.js` (bağımsız). **Uygulandı.**
+2. **A1** 3914 → `js/resume-info-tip.js` (bağımsız). **Ertelendi** (D-7 kararına bağlı; yukarıdaki durum notu). Yeniden ele alınırsa bu bölümün genel kabul kriterine ek olarak: yeni dosya `scripts/ci/verify-release.mjs` içindeki `criticalFiles` listesine eklenir, böylece yayın doğrulaması dosyanın canlıda olduğunu denetler; `R-TIP-01` dosyaya bağımlılığı bilinçli olarak kabul edecek biçimde güncellenir ve dosya engellendiğinde ne kaybedildiği (`R-TIP-02..05`) kararda açıkça yazılır; satır içi blok sınırı 8 → 7 ancak o zaman düşer.
 3. **A2** 3876 → dosya, jQuery'den sonra aynı konumda.
 4. **A3** 256 → dosya; `gtag/js` etiketinden **sonra**, aynı konumda (şu anki sıra korunur).
 5. **A4** 279 → dosya; blog/projects bloklarından önce.
