@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**307 requirement ids, 350 test titles, 61 areas.**
+**307 requirement ids, 354 test titles, 61 areas.**
 
 | Area | Ids |
 |---|---|
@@ -120,7 +120,7 @@
 | R-BUTTON-02 | Error titles and links use the portfolio wording and preserve recovery semantics | Browser (Playwright) | `tests/browser/button-states.spec.mjs` |
 | R-BUTTON-03 | Hamburger mouse focus returns to normal while keyboard focus remains visible | Browser (Playwright) | `tests/browser/button-states.spec.mjs` |
 | R-BUTTON-04 | Both 404 actions match the existing About Me Resume CTA in every interaction state | Browser (Playwright) | `tests/browser/button-states.spec.mjs` |
-| R-CI-01 | ${file} reports ${succeedsAt === 2 ? 'a successful retry' : 'exhausted retries'} truthfully | Unit/contract (node:test) | `scripts/tests/sync-workflows.test.js` |
+| R-CI-01 | sync workflows read with the job token and leave changes only through the App-token pull request step | Unit/contract (node:test) | `scripts/tests/sync-workflows.test.js` |
 | R-CI-02 | all jobs check out the resolved SHA and deploy the one tested artifact under a workflow-wide production lock | Unit/contract (node:test) | `scripts/tests/first-principles.test.js` |
 | R-CI-APT-01 | every browser installation with system dependencies is preceded by the apt stall bound in the same job | Unit/contract (node:test) | `scripts/tests/apt-network-bounds.test.js` |
 | R-CI-APT-02 | the bound is an idle timeout far below the default and far above a healthy download | Unit/contract (node:test) | `scripts/tests/apt-network-bounds.test.js` |

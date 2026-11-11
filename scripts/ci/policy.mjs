@@ -58,6 +58,13 @@ export function resolveSource(eventName, event, ref, sha, mainSha) {
   return { sha: selected, publish: true };
 }
 export function requireQuality(needs) {
+  // The gate's needs must be exactly the required checks: a job added to needs but not
+  // listed here would otherwise be waited for without its result being checked.
+  assert.deepEqual(
+    Object.keys(needs).sort(),
+    [...requiredChecks].sort(),
+    'Quality Gate needs differ from the required checks'
+  );
   for (const job of requiredChecks)
     assert.equal(
       needs[job]?.result,
