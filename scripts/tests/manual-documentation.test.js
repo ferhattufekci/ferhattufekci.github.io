@@ -3,10 +3,14 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { collect } from '../generate-rtm.mjs';
 
 const gkpPath = fileURLToPath(new URL('../../docs/testing/GKP.md', import.meta.url));
 const document = await readFile(gkpPath, 'utf8');
-const requirementIds = text => text.match(/R-[A-Z0-9]+-\d{2}/g) || [];
+// Multi-part ids (R-BLOG-SHARE-01, R-CI-RECOVER-C1-00, R-A0-05b) are requirements too; the
+// previous two-part pattern silently skipped them, so their steps were never validated.
+const ID = /R-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d{2}[a-z]?/;
+const requirementIds = text => text.match(new RegExp(ID.source, 'g')) || [];
 const rows = text => text.split('\n').filter(line => line.startsWith('|')).map(line =>
   line.split('|').slice(1, -1).map(cell => cell.trim()));
 const columns = ['Test Durumu Adı', 'Test Durumu Açıklaması', 'Adım No', 'Test Adımı',
@@ -14,7 +18,7 @@ const columns = ['Test Durumu Adı', 'Test Durumu Açıklaması', 'Adım No', 'T
 
 function validateGkp(text) {
   text = text.replace(/\r\n/g, '\n');
-  const matrix = rows(text).filter(row => /^R-[A-Z0-9]+-\d{2}$/.test(row[0]));
+  const matrix = rows(text).filter(row => new RegExp(`^${ID.source}$`).test(row[0]));
   assert.ok(matrix.length, 'RTM must contain requirements');
   const requirements = new Map(matrix.map(row => [row[0], row]));
   assert.equal(requirements.size, matrix.length, 'Duplicate RTM requirement');
@@ -96,7 +100,9 @@ test('R-GKP-03: all manual/audit document links resolve and RTM risk IDs exist i
       if (/\.(test\.js|spec\.mjs)$/.test(file)) automation += await readFile(join(directory, file), 'utf8');
     }
   }
-  for (const row of rows(document).filter(row => /^R-[A-Z0-9]+-\d{2}$/.test(row[0]))) {
-    assert.ok(automation.includes(row[0]), `RTM risk ID must trace to a real test: ${row[0]}`);
+  const carried = new Set(collect().map(entry => entry.id));
+  for (const row of rows(document).filter(row => new RegExp(`^${ID.source}$`).test(row[0]))) {
+    // Grouped titles ("R-NATIVE-RESULT-01/02/03 | ...") carry each id; read them as the RTM does.
+    assert.ok(automation.includes(row[0]) || carried.has(row[0]), `RTM risk ID must trace to a real test: ${row[0]}`);
   }
 });

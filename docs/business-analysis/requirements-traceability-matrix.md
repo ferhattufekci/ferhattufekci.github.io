@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**275 requirement ids, 317 test titles, 56 areas.**
+**282 requirement ids, 324 test titles, 57 areas.**
 
 | Area | Ids |
 |---|---|
@@ -33,10 +33,11 @@
 | R-DISCLOSURE | 3 |
 | R-DOC | 3 |
 | R-DOC-RTM | 3 |
+| R-DOC-TRACE | 5 |
 | R-EXTERNAL | 1 |
 | R-FILTER | 14 |
 | R-FIRST | 2 |
-| R-FOCUS | 1 |
+| R-FOCUS | 3 |
 | R-GKP | 3 |
 | R-HOVER | 1 |
 | R-HTTP | 7 |
@@ -173,6 +174,11 @@
 | R-DOC-RTM-01 | the traceability matrix is generated from the tests and not stale | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-02 | the extractor finds the titles it is built for and rejects malformed ids | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
 | R-DOC-RTM-03 | an independent scan of every test title finds no id the matrix is missing | Unit/contract (node:test) | `scripts/tests/rtm.test.js` |
+| R-DOC-TRACE-01 | the committed traceability report is generated from the tests and the procedure, and not stale | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-02 | procedure steps map requirements to cases and cases to requirements, with step results | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-03 | an unrecognised step result is rejected instead of being counted | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-04 | build results aggregate every project run of a requirement, failures and flakiness first | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
+| R-DOC-TRACE-05 | the real procedure parses and every case maps to at least one requirement | Unit/contract (node:test) | `scripts/tests/traceability.test.js` |
 | R-EXTERNAL-01 | Given an unavailable scheduler script, then a first-time visitor can navigate without uncaught errors | Browser (Playwright) | `tests/browser/external-widget.spec.mjs` |
 | R-FILTER-01 | Given bilingual articles, when each category/language pair is chosen, then only matching newest-first cards appear | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
 | R-FILTER-02 | Given mixed pinned and ordinary repos, when all project categories are chosen, then each group and label is correct | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
@@ -190,7 +196,9 @@
 | R-FILTER-14 | Given long category labels, when each project filter is selected, then section labels remain entirely within their container | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
 | R-FIRST-01 | independent unit/static gates block browser work while generation has one build owner | Unit/contract (node:test) | `scripts/tests/first-principles.test.js` |
 | R-FIRST-02 | generation reads isolated fixture inputs and preserves the working project | Unit/contract (node:test) | `scripts/tests/first-principles.test.js` |
+| R-FOCUS-09 | FOCUS-AC1/3 \| A newer incoming-page keyboard choice survives menu navigation completion | Browser (Playwright) | `tests/browser/navigation-focus.spec.mjs` |
 | R-FOCUS-10 | FOCUS-AC2 \| Untouched menu navigation still establishes heading focus and the first Tab stop | Browser (Playwright) | `tests/browser/navigation-focus.spec.mjs` |
+| R-FOCUS-11 | FOCUS-AC1/3 \| A newer incoming-page keyboard choice survives arrow navigation completion | Browser (Playwright) | `tests/browser/navigation-focus.spec.mjs` |
 | R-GKP-01 | manual fixture input rejects unknown or unsafe configurations | Unit/contract (node:test) | `scripts/tests/manual-preview.test.js` |
 | R-GKP-02 | manual cases have traceable requirements, eleven columns, complete steps and no invented execution | Unit/contract (node:test) | `scripts/tests/manual-documentation.test.js` |
 | R-GKP-03 | all manual/audit document links resolve and RTM risk IDs exist in real automated tests | Unit/contract (node:test) | `scripts/tests/manual-documentation.test.js` |
