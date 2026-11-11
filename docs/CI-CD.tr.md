@@ -485,14 +485,16 @@ container imajında çalışır (`mcr.microsoft.com/playwright:v1.65.0-noble`, d
 İmaj tarayıcıları ve sistem paketlerini içerir; bu job'lar apt ile hiçbir şey indirmez.
 `scripts/ci/check-container-browsers.mjs`, imaj ile kilitli Playwright sürümü uyuşmazsa job'ı
 erken başarısız kılar; `R-CI-PWC-01/02` etiketi, digest'i ve kurulum adımı kalmadığını
-denetler. **Verify Production** hâlâ Chromium'u apt ile kurar (aşağıdaki sınır ve beş
-dakikalık süreyle), çünkü pull request koşusu bu job'ı çalıştıramaz. `@playwright/test`
-yükseltildiğinde imaj etiketi aynı sürüme çekilir ve iki job'daki digest değiştirilir
+denetler. **Verify Production** (`pages.yml`) 2026-11-12'den beri aynı imajda çalışır; pull
+request koşusu bu job'ı çalıştıramadığı için ilk gerçek koşusu bir sonraki production
+dispatch'idir (o zamana kadar doğrulanmadı). `@playwright/test` yükseltildiğinde imaj etiketi
+aynı sürüme çekilir ve üç job'daki digest değiştirilir
 (`docker buildx imagetools inspect mcr.microsoft.com/playwright:v<sürüm>-noble` yazdırır);
 etiket eşleşene kadar `R-CI-PWC-01` başarısız olur. Dependabot bu imajı güncellemez.
 Kanıtlanmayan: imaj
-deposunun mirror'dan daha güvenilir olduğu. Aşağıdaki metin apt yolunu anlatır; bu yol artık
-yalnızca Verify Production için geçerlidir.
+deposunun mirror'dan daha güvenilir olduğu. Artık hiçbir job tarayıcıyı apt ile kurmuyor. Aşağıdaki
+metin apt yolunun ve önlemlerin (`bound-apt-network.sh`, beş dakikalık adım sınırı) kaydıdır;
+ileride eklenecek bir kurulum adımı bu önlemleri korumak zorundadır (`R-CI-APT-01`).
 
 `npx playwright install --with-deps`, sistem paketlerini her koşuda apt üzerinden indirir
 (Chromium için yaklaşık 21 MB, Firefox ve WebKit için 114 MB). Tamamlanan 130 kurulum adımında
