@@ -32,6 +32,7 @@ Actions history (a **Portfolio CI/CD** `workflow_dispatch` run whose Verify Prod
 | A recent release broke something | **Roll back by revert** (section 3) |
 | Verify Production failed but the site looks right | Rerun the failed jobs on the same SHA while it is still the head of `main`; see CI-CD.md "Production checks and failure handling" |
 | A data sync published bad Medium/GitHub content | Revert the data commit (section 3), or add the item to `EXCLUDE` in the fetcher and release |
+| Static Checks fails with a dependency audit result | Exit 1 (SECURITY): upgrade the package in its own PR; nothing live changes, the gate only stops new runs. Exit 2 (INFRASTRUCTURE): re-run when the registry is reachable; it is not a pass. See CI-CD.md "Dependency audit gate" |
 | A third-party service is down (AdSense, Calendly, Analytics, Google Fonts) | No action. These are optional and degrade without breaking the page (R-AD-03, R-EXTERNAL-01) |
 | Content must be taken down **now** (legal, security, personal data) | **Unpublish** (section 4), then fix and release |
 

@@ -34,6 +34,7 @@ sağlıklı yayınla karşılaştırın: Verify Production adımı geçmiş bir 
 | Yeni bir yayın bir şeyi bozdu | **Revert ile geri al** (bölüm 3) |
 | Verify Production başarısız ama site doğru görünüyor | SHA hâlâ `main`'in head'iyken aynı SHA üzerinde başarısız job'ları yeniden çalıştırın; CI-CD.tr.md "Canlı ortam kontrolleri ve hata yönetimi" |
 | Veri senkronizasyonu hatalı Medium/GitHub içeriği yayınladı | Veri commit'ini revert edin (bölüm 3) ya da öğeyi veri çekicideki `EXCLUDE` listesine ekleyip yayınlayın |
+| Static Checks bağımlılık denetimi sonucuyla başarısız oldu | Çıkış 1 (SECURITY): paketi ayrı bir PR'da yükseltin; canlı ortamda bir şey değişmez, kapı yalnızca yeni koşuları durdurur. Çıkış 2 (INFRASTRUCTURE): registry erişilebilir olunca yeniden çalıştırın; bu bir başarı değildir. CI-CD.tr.md "Bağımlılık denetimi kapısı" |
 | Bir üçüncü taraf servis çöktü (AdSense, Calendly, Analytics, Google Fonts) | İşlem gerekmez. Bunlar isteğe bağlıdır ve sayfayı bozmadan devre dışı kalır (R-AD-03, R-EXTERNAL-01) |
 | İçerik **hemen** kaldırılmalı (hukuki, güvenlik, kişisel veri) | **Yayından kaldırın** (bölüm 4), sonra düzeltip yayınlayın |
 

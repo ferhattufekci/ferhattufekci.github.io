@@ -140,7 +140,7 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 - **Sıra:** satır içi script çıkarımı (A1+, `docs/T-4-INLINE-SCRIPTS.md`) bitince `'unsafe-inline'` gerektirmeyen CSP eklenir. **Karar:** sahip.
 
 ### SEC-SCAN Bağımlılık ve secret taraması yok
-- **Öncelik:** P2. **Durum:** uygulanmadı. **Kanıt:** CI'da `npm audit` adımı, Dependabot yapılandırması veya secret taraması yok [D].
+- **Öncelik:** P2. **Durum:** kısmen uygulandı (2026-11-11). **Kanıt:** Static Checks'teki bağımlılık denetimi kapısı (`scripts/ci/dependency-audit.mjs`, R-AUDIT-01..11, GKP-047) lockfile'daki high/critical advisory'de ve denetim sonucu güvenilemediğinde başarısız olur; ilk gerçek koşuda (main `cdb7194`, 30 paket) bulgu 0. `.github/dependabot.yml` haftalık güncelleme PR'ları açar; Dependabot uyarıları depoda kapalıdır (API 403). Secret taraması ve çalışma zamanı betiklerinin taranması hâlâ yok.
 - **Not:** İki ayrı yüzey var. Build zamanı: 6 devDependency (tarayıcıya gitmez; `npm audit` bunları görür). Çalışma zamanı: vendored kütüphaneler (jQuery, Modernizr, imagesloaded, jquery.shuffle, owl.carousel) ve uzaktan yüklenen AdSense, Google Tag Manager, Calendly betikleri — `package.json`'da olmadıkları için `npm audit` bunları **görmez**. Büyük olan çalışma zamanı yüzeyidir; onu CSP (SEC-CSP) ve sağlayıcının izin verdiği yerde SRI sınırlar. Pipeline'ı yukarı akış bir advisory'sinde kırabilecek bir kapı eklemek politika kararıdır. **Karar:** sahip.
 
 ### QA-TYPES Tip denetimi yok

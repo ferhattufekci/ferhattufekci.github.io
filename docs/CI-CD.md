@@ -120,6 +120,18 @@ Project Node is 22; action runtime is independently Node 24. Actions are pinned 
 
 Default permission is contents read. Only deployment has Pages/OIDC write. Production reporting adds Actions read for timing evidence. Each job has a timeout; production readiness has a separate two-minute deadline. Static checks parse JS/JSON/YAML and run verified actionlint plus ShellCheck in CI. `npm ci` enforces the committed lockfile.
 
+### Dependency audit gate
+
+Static Checks runs `node scripts/ci/dependency-audit.mjs` after `npm ci`, on every run of the quality workflow (pull request, push, release dispatch and data-sync runs). It audits `package-lock.json` with `npm audit --json --package-lock-only`, so production and development packages are both covered, and reports in the job summary. Exit codes keep the outcomes apart:
+
+| Exit | Result | Meaning | Action |
+|---|---|---|---|
+| 0 | PASS | Valid report, no high or critical advisory (moderate/low are listed, not blocking) | None |
+| 1 | SECURITY FINDING | At least one high or critical advisory | Upgrade the package in its own PR (Dependabot or by hand). Never `npm audit fix --force` inside a CI change |
+| 2 | INFRASTRUCTURE ERROR | npm or the registry failed, the output was not a complete, self-consistent report, or the canary was not detected | Re-run when the registry is reachable. This is not a security verdict and not a pass |
+
+npm prints "0 vulnerabilities" when the advisory endpoint answers with an empty object, which is indistinguishable from a clean tree. The gate therefore also audits a fixed canary lockfile (`scripts/ci/audit-canary.json`, minimist 0.0.8, never installed, written to a temporary directory) and accepts a clean result only if the service reports that canary's known critical advisory GHSA-xvch-5gv4-984h. Because the gate runs for release dispatches too, an open high/critical advisory or a registry outage also blocks a release until resolved. Scope limit: vendored browser libraries and remotely loaded scripts are not in `package.json`, so the audit does not see them (see `docs/OPEN-ITEMS.md`, SEC-SCAN).
+
 Both data-sync workflows install from the repository root and cache against `package-lock.json`. The fetchers use Node's built-in `fetch` (supported by the project's Node >=20 requirement), so they need no separate HTTP package or install in `scripts/`. Keep `scripts/package.json`'s ESM boundary: the shared browser helpers in `js/` are also imported as CommonJS by the Medium fetcher.
 
 Medium validates the complete RSS XML with the existing locked `saxes` dependency before extracting articles, so a truncated response containing some complete items cannot replace a valid snapshot. Production browser smoke also compares Blog/Projects card counts with the published JSON datasets, rather than treating a hidden loading indicator as proof of loaded content.

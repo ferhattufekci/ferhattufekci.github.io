@@ -53,7 +53,7 @@ scripts.
 | T2 | Unescaped attribute interpolation in project cards | **Constrained**: values are local literals; invariant now asserted |
 | T3 | No CSP, so any injected script runs unconstrained | **Open** (F-2): blocked on inline-script extraction |
 | T4 | Compromised third-party action alters the release | **Mitigated**: all actions pinned to SHA |
-| T5 | Vulnerable devDependency | **Open** (F-3): no scanning configured |
+| T5 | Vulnerable devDependency | **Mitigated:** the dependency audit gate in Static Checks fails on a high/critical advisory in `package-lock.json` (docs/CI-CD.md, "Dependency audit gate"). Vendored and remote browser scripts remain outside it |
 | T6 | Recovery automation acts on a stale or wrong run | **Mitigated by default**: observe-only; activation criteria in `docs/RECOVERY-ACTIVATION.md` |
 | T7 | Mixed content from an `http://` cover image (`image.src`) on the https site | **Open, low**: `safeUrl()` allows `http:`; no `http` thumbnail exists in the data today [D]. (Three repositories have `http` homepages, but `homepage` is not rendered, and a plain link is navigation, not mixed content.) |
 
