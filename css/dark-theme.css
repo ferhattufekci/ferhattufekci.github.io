@@ -473,9 +473,10 @@ h3.comment-reply-title:after {
    main.css that size it and draw the slategrey outline do not apply. Give every narrow
    scroll owner the desktop design: a 5px bar, --color-scrollbar-thumb with a slategrey
    outline (which keeps the light #dedede thumb visible on a white page) and a
-   --color-surface track. Phones draw overlay scrollbars and ignore these rules;
-   js/touch-scrollbar.js draws the same design there. */
-@media (max-width: 991px), (hover: none) and (pointer: coarse) {
+   --color-surface track. Touch devices are left out: some phones (an iPhone in-app
+   browser) render these rules as a space-taking bar, so the page reflowed when it went
+   away and the light thumb was invisible there. They use the drawn bar below instead. */
+@media (max-width: 991px) and (hover: hover) and (pointer: fine) {
   body::-webkit-scrollbar,
   .pt-page::-webkit-scrollbar,
   .single-page-content::-webkit-scrollbar {
@@ -506,21 +507,8 @@ h3.comment-reply-title:after {
   }
 }
 
-/* Drawn scrollbar for overlay-scrollbar devices (js/touch-scrollbar.js). It repeats the
-   desktop bar above: same width, thumb, outline and track, in both themes. */
-.touch-scrollbar-probe {
-  position: absolute;
-  top: -100px;
-  width: 50px;
-  height: 50px;
-  overflow: scroll;
-  visibility: hidden;
-}
-
-.touch-scrollbar-probe::-webkit-scrollbar {
-  width: 5px;
-}
-
+/* Drawn scrollbar for touch devices (js/touch-scrollbar.js). It repeats the desktop bar
+   above: same width, thumb, outline and track, in both themes. */
 .touch-scrollbar {
   position: fixed;
   z-index: 999; /* above page content, below the mobile header (1002) and menu (1000+) */
@@ -540,18 +528,24 @@ h3.comment-reply-title:after {
   will-change: transform;
 }
 
-/* One indicator only: hide the native overlay one while the drawn bar is active. */
-.has-touch-scrollbar,
-.has-touch-scrollbar body,
-.has-touch-scrollbar .pt-page,
-.has-touch-scrollbar .single-page-content,
-.has-touch-scrollbar .page-content-panel {
-  scrollbar-width: none;
-}
+/* One indicator only, decided before the first paint: on a touch device with scripts
+   (.js is set in <head>) the native scrollbar is hidden and takes no width, and
+   js/touch-scrollbar.js draws the bar. The layout therefore never changes when the
+   script starts. Without scripts the native indicator stays. Same media query as the
+   script's coarsePointer(). */
+@media (hover: none) and (pointer: coarse) {
+  .js,
+  .js body,
+  .js .pt-page,
+  .js .single-page-content,
+  .js .page-content-panel {
+    scrollbar-width: none;
+  }
 
-.has-touch-scrollbar body::-webkit-scrollbar,
-.has-touch-scrollbar .pt-page::-webkit-scrollbar,
-.has-touch-scrollbar .single-page-content::-webkit-scrollbar,
-.has-touch-scrollbar .page-content-panel::-webkit-scrollbar {
-  display: none;
+  .js body::-webkit-scrollbar,
+  .js .pt-page::-webkit-scrollbar,
+  .js .single-page-content::-webkit-scrollbar,
+  .js .page-content-panel::-webkit-scrollbar {
+    display: none;
+  }
 }

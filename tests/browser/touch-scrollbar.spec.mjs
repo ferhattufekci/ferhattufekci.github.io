@@ -1,11 +1,14 @@
 import { test, expect, expectSection } from './fixtures.mjs';
 import { articles, mockCatalog, repo, starred } from './data/catalog.mjs';
 
-// Phones draw overlay scrollbars and ignore ::-webkit-scrollbar, so the light theme
-// showed no scrollbar at all while desktop shows the 5px themed bar. On overlay-scrollbar
-// touch devices js/touch-scrollbar.js draws the desktop design beside the scroll owner.
-// The mobile projects run with touch and Chromium's hidden scrollbars (zero gutter),
-// which is the overlay condition; the desktop project must keep the native bar only.
+// On touch devices js/touch-scrollbar.js draws the desktop design beside the scroll owner,
+// and CSS hides the native indicator from the first paint. Not every phone ignores
+// ::-webkit-scrollbar: an iPhone (LinkedIn in-app browser, Build 306.1) drew the styled 5px
+// bar as a space-taking scrollbar, so the old probe saw a gutter, no bar was drawn, and
+// About Me reflowed when that gutter went away. The mobile projects here run with
+// Chromium's hidden scrollbars; playwright.webkit.config.mjs runs this file in WebKit's
+// touch profile, which renders the styled bar with a gutter like that iPhone did.
+// The desktop project must keep the native bar only.
 const PAGES = ['about-me', 'resume', 'projects', 'blog'];
 const longArticles = category => Array.from({ length: 24 }, (_, i) => ({ ...articles[category][i % 2], title: `${category} article ${i}`, url: `https://medium.com/@fixture/${category}-${i}` }));
 const longCatalog = {
@@ -40,7 +43,8 @@ const measure = page => page.evaluate(() => {
     thumb: thumb && box(thumb),
     barTrack: bar && getComputedStyle(bar).backgroundColor,
     thumbColor: thumb && getComputedStyle(thumb).backgroundColor,
-    thumbOutline: thumb && getComputedStyle(thumb).outline,
+    // Longhands in a fixed order: engines serialise the outline shorthand differently.
+    thumbOutline: thumb && (style => `${style.outlineColor} ${style.outlineStyle} ${style.outlineWidth}`)(getComputedStyle(thumb)),
     tokens: { thumb: css.getPropertyValue('--color-scrollbar-thumb-touch').trim(), surface: css.getPropertyValue('--color-surface').trim() }
   };
 });
@@ -97,6 +101,25 @@ test.describe('touch scrollbar', () => {
       }, { message: id }).toBeLessThanOrEqual(1);
       await page.screenshot({ path: testInfo.outputPath(`${id}.png`) });
     }
+  });
+
+  test('R-SCROLLBAR-04 | Given a touch device, then the native scrollbar takes no width from the first paint, so About Me text and photo never reflow', async ({ page }, testInfo) => {
+    // Width of the About Me page and its first paragraph at DOMContentLoaded (before the
+    // scripts at the end of body have run) and again once the page has settled.
+    await page.addInitScript(() => {
+      const snap = () => {
+        const page = document.querySelector('#about-me'), text = page && page.querySelector('.hp-text-block p');
+        return page && text ? { client: page.clientWidth, offset: page.offsetWidth, text: text.getBoundingClientRect().width } : null;
+      };
+      document.addEventListener('DOMContentLoaded', () => { window.__firstLayout = snap(); }, { capture: true, once: true });
+      window.__layout = snap;
+    });
+    await open(page, 'about-me');
+    await page.waitForTimeout(1500);
+    const [first, settled] = await page.evaluate(() => [window.__firstLayout, window.__layout()]);
+    expect(first, 'measured before the page scripts ran').not.toBeNull();
+    expect(settled, 'the text keeps its width once the page has settled').toEqual(first);
+    if (testInfo.project.use.isMobile) expect(settled.client, 'no native scrollbar gutter on a touch device').toBe(settled.offset);
   });
 
 });
