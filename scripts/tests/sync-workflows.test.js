@@ -75,3 +75,25 @@ test('R-CI-01: Auto-merge is allowed only for the bot\'s own in-scope PR while m
     assert.ok(verdict.reasons.length > 0);
   }
 });
+
+test('R-CI-01: changed paths are read exactly, including the first modified path (run 43030306799 read "ata/github-meta.json")', async () => {
+  const { mkdtempSync, writeFileSync, mkdirSync, rmSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { tmpdir } = await import('node:os');
+  const { execFileSync } = await import('node:child_process');
+  const { changedPaths } = await import('../ci/sync-pr.mjs');
+  const dir = mkdtempSync(join(tmpdir(), 'sync-paths-'));
+  try {
+    const git = (...args) => execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', ...args], { cwd: dir });
+    git('init', '-q');
+    mkdirSync(join(dir, 'data'));
+    writeFileSync(join(dir, 'data', 'github-meta.json'), '{}\n');
+    writeFileSync(join(dir, 'index.md'), 'a\n');
+    git('add', '-A'); git('commit', '-q', '-m', 'base');
+    writeFileSync(join(dir, 'data', 'github-meta.json'), '{"x":1}\n'); // " M" is the first status line
+    mkdirSync(join(dir, 'about'));
+    writeFileSync(join(dir, 'about', 'index.md'), 'new\n');
+    assert.deepEqual(changedPaths(dir), ['about/index.md', 'data/github-meta.json']);
+    assert.ok(changedPaths(dir).every(path => allowed('github', path)));
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});

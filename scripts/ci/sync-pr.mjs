@@ -53,6 +53,14 @@ export function autoMergeAllowed({ source, pr, files, bot, repo, rules }) {
 
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 
+/** Every tracked change and untracked file in the work tree, as exact paths. NUL-separated
+ *  name lists rather than `git status` columns: trimming that output once dropped the first
+ *  letter of the first path ("ata/github-meta.json", run 43030306799). */
+export function changedPaths(cwd) {
+  const list = (...args) => execFileSync('git', args, { cwd, encoding: 'utf8' }).split('\0').filter(Boolean);
+  return [...new Set([...list('diff', '--name-only', '-z', 'HEAD'), ...list('ls-files', '--others', '--exclude-standard', '-z')])].sort();
+}
+
 async function main() {
   const source = process.argv[2];
   if (!SOURCES[source]) throw new Error(`unknown source ${source}`);
@@ -71,7 +79,7 @@ async function main() {
   };
 
   // Anything changed outside the pathspecs is caught too: plan() rejects it.
-  const changed = git('status', '--porcelain', '--untracked-files=all').split('\n').filter(Boolean).map(line => line.slice(3).replace(/^"|"$/g, ''));
+  const changed = changedPaths();
   const mainSha = git('rev-parse', 'HEAD');
   let tree = null;
   if (changed.length && changed.every(path => allowed(source, path))) {
