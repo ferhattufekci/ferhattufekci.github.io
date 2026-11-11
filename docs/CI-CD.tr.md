@@ -476,7 +476,10 @@ Referanslar: [Playwright sharding](https://playwright.dev/docs/test-sharding),
 **Güncelleme 2026-11-11 (üçüncü şekil, DNS hatası):** runner'lar saatlerce
 `azure.archive.ubuntu.com` adresini çözemedi. Main push koşusu `43033608440` ile
 `43034281844`, `43035186941` ve `43040117023` (dört deneme) pull request koşuları, hiçbir
-tarayıcı testi koşmadan kurulum adımında başarısız oldu; yeniden çalıştırma işe yaramadı.
+tarayıcı testi koşmadan kurulum adımında başarısız oldu; mirror 16:54 UTC civarında yeniden
+çözülene kadar yeniden çalıştırma işe yaramadı (#75, `43035186941` koşusu, deneme 3). 17:01
+UTC'de main push koşusu `43064099228`, Browser Tests 1/2'yi yine beş dakikalık kurulum sınırına
+kaybetti.
 Sahibin kararıyla **Browser Tests** ve **Cross-browser Keyboard Tests** artık resmi Playwright
 container imajında çalışır (`mcr.microsoft.com/playwright:v1.65.0-noble`, digest ile sabit).
 İmaj tarayıcıları ve sistem paketlerini içerir; bu job'lar apt ile hiçbir şey indirmez.
@@ -530,9 +533,10 @@ sorunun farklı bir kısmını kapsıyor:
   yoktur: "Re-run failed jobs" kullanın.
 
 Seçeneklerin karşılaştırması ve öneri: [APT-MIRROR-OPTIONS.md](APT-MIRROR-OPTIONS.md)
-(İngilizce). Her biri job mimarisini değiştirdiği veya ölçülmemiş bir davranışa dayandığı için
-uygulanmayan seçenekler: tarayıcı job'larını resmi Playwright container imajında çalıştırmak
-(apt indirmesi yok), apt'nin arşiv dizinini önbelleklemek veya ikinci bir mirror'a geçmek.
+(İngilizce). Container imajı seçeneği tarayıcı ve klavye job'larına uygulandı (yukarıdaki
+güncelleme). Her biri job mimarisini değiştirdiği veya ölçülmemiş bir davranışa dayandığı için
+hâlâ uygulanmayan seçenekler: apt'nin arşiv dizinini önbelleklemek veya ikinci bir mirror'a
+geçmek.
 `scripts/tests/apt-network-bounds.test.js`, her kurulum adımında sınırın ve süre sınırının
 olduğunu kontrol eder. Gözlemlenen: süre sınırlı ilk pull request koşusu (`42205318156`),
 Browser Tests 1/2'de tam beş dakika sonra
