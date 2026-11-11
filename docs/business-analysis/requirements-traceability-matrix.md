@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**293 requirement ids, 335 test titles, 59 areas.**
+**304 requirement ids, 346 test titles, 60 areas.**
 
 | Area | Ids |
 |---|---|
@@ -17,6 +17,7 @@
 | R-AD-WIDTH | 1 |
 | R-ARROW | 4 |
 | R-ASSET | 1 |
+| R-AUDIT | 11 |
 | R-BLOG-SHARE | 14 |
 | R-BUTTON | 4 |
 | R-CI | 2 |
@@ -89,6 +90,17 @@
 | R-ARROW-03 | Press feedback is transient and releasing a canceled mouse press does not navigate | Browser (Playwright) | `tests/browser/arrow-controls.spec.mjs` |
 | R-ARROW-04 | Hybrid touch cancellation clears active feedback and a subsequent real mouse restores hover | Browser (Playwright) | `tests/browser/arrow-hybrid.spec.mjs` |
 | R-ASSET-01 | generation changes a cached stylesheet URL when its bytes change, preserves other assets and is idempotent | Unit/contract (node:test) | `scripts/tests/asset-versioning.test.js` |
+| R-AUDIT-01 | Given the recorded clean report with a detected canary, then the verdict is PASS (exit 0) and the summary shows every severity count | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-02 | Given a high advisory, then the verdict is SECURITY (exit 1) naming the package and the advisory URL | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-03 | Given a critical advisory, or the recorded real lodash/minimist report, then the verdict is SECURITY with every blocking package listed | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-04 | Given only moderate and low advisories, then the verdict is PASS but each finding is still listed as not blocking | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-05 | Given a registry or npm failure (refused, DNS, 503, 429, ENOAUDIT), then the verdict is INFRASTRUCTURE (exit 2), never PASS | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-06 | Given empty, non-JSON or truncated output, then the verdict is INFRASTRUCTURE | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-07 | Given a report with missing metadata or counts inconsistent with its findings, then the verdict is INFRASTRUCTURE | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-08 | Given an audit of 0 dependencies while the lockfile lists packages, then the verdict is INFRASTRUCTURE | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-09 | The audit reads the committed lockfile and includes development dependencies | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-10 | Static Checks runs the audit after npm ci, cannot be bypassed, never fixes, and keeps read-only permissions | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
+| R-AUDIT-11 | Given an advisory service that answers 200 with no advisories, then the clean result is rejected because the canary was not detected | Unit/contract (node:test) | `scripts/tests/dependency-audit.test.js` |
 | R-BLOG-SHARE-01 | K01 \| Keyboard activation, visible focus, Tab exit and Escape preserve native disclosure semantics | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |
 | R-BLOG-SHARE-02 | B02.${path}.${key} \| The selected original literal URL reaches only the explicit platform path | Browser (Playwright), Unit/contract (node:test) | `tests/browser/blog-sharing.spec.mjs`<br>`scripts/tests/blog-sharing.test.js` |
 | R-BLOG-SHARE-03 | K02.copy.${outcome} \| Cross-card writes are single-flight, never queued and require a new B activation | Browser (Playwright) | `tests/browser/blog-sharing-keyboard.spec.mjs`<br>`tests/browser/blog-sharing.spec.mjs` |

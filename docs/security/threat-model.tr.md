@@ -55,7 +55,7 @@ AdSense'in kendi betikleriyle topladıkları dışında ziyaretçiler hakkında 
 | T2 | Proje kartlarında kaçışlanmamış nitelik yerleştirme | **Sınırlandı**: değerler yerel sabitlerdir; değişmez kural artık doğrulanıyor |
 | T3 | CSP olmadığı için enjekte edilen her betik kısıtsız çalışır | **Açık** (F-2): satır içi betiklerin ayrılmasını bekliyor |
 | T4 | Ele geçirilmiş bir üçüncü taraf action yayını değiştirir | **Azaltıldı**: tüm action'lar SHA ile sabitlendi |
-| T5 | Güvenlik açığı olan bir devDependency | **Açık** (F-3): tarama yapılandırılmamış |
+| T5 | Güvenlik açığı olan bir devDependency | **Azaltıldı:** Static Checks'teki bağımlılık denetimi kapısı `package-lock.json`'da high/critical advisory olduğunda başarısız olur (docs/CI-CD.tr.md, "Bağımlılık denetimi kapısı"). Vendored ve uzak tarayıcı betikleri kapsam dışında kalır |
 | T6 | Kurtarma otomasyonu eski veya yanlış bir koşuya göre işlem yapar | **Varsayılan olarak azaltıldı**: yalnızca gözlem; etkinleştirme ölçütleri `docs/RECOVERY-ACTIVATION.md` içinde |
 | T7 | https sitede `http://` kapak görselinden (`image.src`) karışık içerik | **Açık, düşük**: `safeUrl()` `http:`'ye izin verir; bugün veride `http` küçük görsel yoktur [D]. (Üç deponun ana sayfası `http`'dir, ama `homepage` görüntülenmez ve düz bir bağlantı karışık içerik değil, gezinmedir.) |
 
