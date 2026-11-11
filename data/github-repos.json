@@ -88,7 +88,7 @@
     "name": "java-champions",
     "description": "A list of Java Champions",
     "url": "https://github.com/ferhattufekci/java-champions",
-    "homepage": "https://javachampions.org",
+    "homepage": "https://javachampions.org/",
     "language": null,
     "langColor": "#8b949e",
     "languages": [
@@ -220,7 +220,7 @@
     "name": "axios",
     "description": "Promise based HTTP client for the browser and node.js",
     "url": "https://github.com/ferhattufekci/axios",
-    "homepage": "https://axios-http.com",
+    "homepage": "https://axios-http.com/",
     "language": null,
     "langColor": "#8b949e",
     "languages": [
@@ -289,7 +289,7 @@
     "name": "create-react-app",
     "description": "Set up a modern web app by running one command.",
     "url": "https://github.com/ferhattufekci/create-react-app",
-    "homepage": "https://create-react-app.dev",
+    "homepage": "https://create-react-app.dev/",
     "language": null,
     "langColor": "#8b949e",
     "languages": [
@@ -346,7 +346,7 @@
     "name": "dockerlabs",
     "description": "Materials of Docker  Github Course which includes  Beginners | Intermediate | Advanced Levels",
     "url": "https://github.com/ferhattufekci/dockerlabs",
-    "homepage": "https://dockerlabs.collabnix.com",
+    "homepage": "https://dockerlabs.collabnix.com/",
     "language": null,
     "langColor": "#8b949e",
     "languages": [
@@ -445,10 +445,56 @@
     "updatedAt": "2023-05-13T13:48:05Z"
   },
   {
+    "name": "ferhattufekci.github.io",
+    "description": "Personal portfolio. Medium articles & GitHub repos auto-synced via GitHub Actions. Blog with EN/TR filter. Projects with category filter & starred repos.",
+    "url": "https://github.com/ferhattufekci/ferhattufekci.github.io",
+    "homepage": "https://ferhattufekci.github.io/",
+    "language": "JavaScript",
+    "langColor": "#f1e05a",
+    "languages": [
+      {
+        "name": "JavaScript",
+        "color": "#f1e05a",
+        "percent": 68
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "percent": 17
+      },
+      {
+        "name": "CSS",
+        "color": "#563d7c",
+        "percent": 15
+      },
+      {
+        "name": "Shell",
+        "color": "#89e051",
+        "percent": 0
+      }
+    ],
+    "stars": 0,
+    "forks": 0,
+    "topics": [
+      "css3",
+      "github-actions",
+      "html5",
+      "javascript",
+      "jquery",
+      "medium",
+      "portfolio",
+      "release-automation"
+    ],
+    "pinned": false,
+    "category": "software",
+    "lang": "en",
+    "updatedAt": "2026-11-11T18:42:08Z"
+  },
+  {
     "name": "formik",
     "description": "Build forms in React, without the tears 😭 ",
     "url": "https://github.com/ferhattufekci/formik",
-    "homepage": "https://formik.org",
+    "homepage": "https://formik.org/",
     "language": null,
     "langColor": "#8b949e",
     "languages": [
@@ -651,7 +697,7 @@
     "name": "sonarqube",
     "description": "Continuous Inspection",
     "url": "https://github.com/ferhattufekci/sonarqube",
-    "homepage": "http://www.sonarqube.org",
+    "homepage": "http://www.sonarqube.org/",
     "language": null,
     "langColor": "#8b949e",
     "languages": [
