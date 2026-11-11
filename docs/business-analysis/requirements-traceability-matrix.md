@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**311 requirement ids, 358 test titles, 62 areas.**
+**311 requirement ids, 359 test titles, 62 areas.**
 
 | Area | Ids |
 |---|---|
