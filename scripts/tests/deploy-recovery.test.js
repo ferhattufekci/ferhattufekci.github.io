@@ -294,3 +294,41 @@ test('R-CI-RECOVER-22: a failed job without step-deadline evidence stays a genui
     assert.match(plan.reason, /Genuine failure/);
   }
 });
+
+// Real annotation text: release run 43092358748 attempt 1 (2026-11-11). The tests had passed; only
+// the report uploads of Browser Tests 1/2, 2/2 and a keyboard job failed, after the artifact
+// service answered with an HTML error page. Job names and ids come from run 42043003964.
+const artifactServiceNote = { message: `Failed to CreateArtifact: Failed to make request after 5 attempts: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` };
+const artifactCase = () => {
+  const { run, jobs } = timeout();
+  const failed = jobs.filter((job) => /Browser Tests \(\d\/2\)$|Cross-browser Keyboard Tests$/.test(job.name));
+  for (const job of failed) job.conclusion = 'failure';
+  const annotations = Object.fromEntries(failed.map((job) => [job.id, [artifactServiceNote]]));
+  return { run, jobs, failed, annotations };
+};
+test('R-CI-RECOVER-23: an artifact service failure after retries is retried once on the newest commit', () => {
+  const { run, jobs, annotations } = artifactCase();
+  const plan = planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] });
+  assert.equal(plan.action, 'rerun');
+  assert.match(plan.reason, /artifact service/i);
+  run.run_attempt = 2;
+  assert.equal(planRecovery({ run, jobs, annotations, mainSha: tip, tipRuns: [] }).action, 'none');
+});
+test('R-CI-RECOVER-24: an artifact note next to another failure, or a permanent artifact error, stays genuine', () => {
+  const permanent = [
+    { message: 'Failed to CreateArtifact: Artifact storage quota has been hit. Unable to upload any new artifacts.' },
+    { message: 'Failed to CreateArtifact: Received non-retryable error: Failed request: (409) Conflict: an artifact with this name already exists on the workflow run' }
+  ];
+  const { run, jobs, failed, annotations } = artifactCase();
+  const variants = [
+    { ...annotations, [failed[0].id]: [artifactServiceNote, { message: 'Process completed with exit code 1.' }] },
+    { ...annotations, [failed[0].id]: [permanent[0]] },
+    { ...annotations, [failed[0].id]: [permanent[1]] },
+    { ...annotations, [failed[0].id]: [] }
+  ];
+  for (const notes of variants) {
+    const plan = planRecovery({ run, jobs, annotations: notes, mainSha: tip, tipRuns: [] });
+    assert.equal(plan.action, 'none', JSON.stringify(notes[failed[0].id]));
+    assert.match(plan.reason, /Genuine failure/);
+  }
+});

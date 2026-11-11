@@ -85,8 +85,16 @@ const productionEvents = ['push', 'workflow_run', 'workflow_dispatch'];
 const timeoutAnnotation = /exceeded the maximum execution time/i;
 // A step with `timeout-minutes` fails its job with this message (job stays 'failure').
 const stepTimeoutAnnotation = /has timed out after \d+ minutes?/i;
+// The artifact client's message once its own retries of a transport or 5xx error are spent
+// (release run 43092358748: an HTML error page). Permanent errors (quota, name conflict) are
+// reported without "after N attempts" and stay genuine.
+const artifactServiceAnnotation = /^Failed to CreateArtifact: Failed to make request after \d+ attempts:/;
 const hasNote = (annotations, job, pattern) =>
   (annotations?.[job.id] || []).some((note) => pattern.test(note.message || ''));
+const onlyNotes = (annotations, job, pattern) => {
+  const notes = annotations?.[job.id] || [];
+  return notes.length > 0 && notes.every((note) => pattern.test(note?.message || ''));
+};
 const supersededStep = 'Reject superseded release';
 // Downstream aggregators fail because an upstream job did; they carry no cause.
 const aggregateJobs = ['Merge Test Reports', 'Quality Gate'];
@@ -130,10 +138,13 @@ export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
   // is treated as genuine and blocks recovery.
   const stepTimedOut = (job) =>
     job.conclusion === 'failure' && hasNote(annotations, job, stepTimeoutAnnotation);
+  // Every annotation of the job is the spent-retries artifact error, so nothing else failed in it.
+  const artifactFailed = (job) =>
+    job.conclusion === 'failure' && !isAggregate(job) && onlyNotes(annotations, job, artifactServiceAnnotation);
   const benign = (job) =>
     ['success', 'skipped', 'cancelled'].includes(job.conclusion) ||
     (job.conclusion === 'failure' &&
-      (isAggregate(job) || isSupersededDeploy(job) || stepTimedOut(job)));
+      (isAggregate(job) || isSupersededDeploy(job) || stepTimedOut(job) || artifactFailed(job)));
   const real = jobs.filter((job) => !benign(job));
   if (real.length)
     return none(`Genuine failure: ${real.map((job) => job.name).join(', ')}`);
@@ -143,16 +154,18 @@ export function planRecovery({ run, jobs, annotations, mainSha, tipRuns }) {
   );
   const timedOut =
     deadlineEvidence && (cancelled.length > 0 || jobs.some(stepTimedOut));
+  const artifactService = deadlineEvidence && jobs.some(artifactFailed);
   const superseded = jobs.some(isSupersededDeploy);
   // One unexplained cancellation (a person, a concurrency rule) vetoes recovery.
   if (!deadlineEvidence)
     return none('Cancellation without deadline evidence (manual stop)');
-  if (!timedOut && !superseded)
+  if (!timedOut && !artifactService && !superseded)
     return none('No infrastructure cause (manual cancellation or unknown)');
-  if (timedOut && run.head_sha === mainSha) {
-    return run.run_attempt === 1
-      ? { action: 'rerun', reason: 'Job or step deadline exceeded on the newest commit' }
-      : none('Already retried once');
+  if ((timedOut || artifactService) && run.head_sha === mainSha) {
+    const cause = timedOut
+      ? 'Job or step deadline exceeded on the newest commit'
+      : 'Artifact service failed after its retries on the newest commit';
+    return run.run_attempt === 1 ? { action: 'rerun', reason: cause } : none('Already retried once');
   }
   if (run.head_sha === mainSha)
     return none('Superseded rejection on the newest commit needs investigation');
