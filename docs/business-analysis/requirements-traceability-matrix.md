@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**282 requirement ids, 324 test titles, 57 areas.**
+**287 requirement ids, 329 test titles, 58 areas.**
 
 | Area | Ids |
 |---|---|
@@ -63,6 +63,7 @@
 | R-UNIT-RESNAV | 8 |
 | R-UNIT-SHELL | 8 |
 | R-UNIT-STARRED | 3 |
+| R-UNIT-TIP | 5 |
 | R-UNIT-TITLE | 3 |
 | R-UNIT-TOUCHBAR | 5 |
 
@@ -342,6 +343,11 @@
 | R-UNIT-STARRED-01 | Given no verified ad configuration, then cards are appended in order with no ad and the grid is still registered | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-STARRED-02 | Given a verified configuration, then cards are grouped and a planned ad is placed after the planned card | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-STARRED-03 | Given a later batch, then its cards continue in the current group | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
+| R-UNIT-TIP-01 | Given the closed tooltip, when its button is clicked, then it opens with aria-expanded true; a second click closes it | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
+| R-UNIT-TIP-02 | Given the open tooltip, then a click outside closes it and a click inside it keeps it open | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
+| R-UNIT-TIP-03 | Given the open tooltip, when Escape is pressed, then it closes; other keys do nothing | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
+| R-UNIT-TIP-04 | Given hover suppressed after a click close, then pointer exit or blur re-enables hover, except a pointer exit while keyboard-focused | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
+| R-UNIT-TIP-05 | Given a page without the tooltip, then the script does nothing and throws nothing | Unit/contract (node:test) | `scripts/tests/resume-info-tip.test.js` |
 | R-UNIT-TITLE-01 | Given the tab is hidden, then the title cycles through the away frames; when shown again, the original title returns | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-TITLE-02 | Given a Turkish browser, then the Turkish frames are used; an unsupported language falls back to English | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |
 | R-UNIT-TITLE-03 | Given the page loads already hidden, then the animation starts at once and repeated hides do not stack timers | Unit/contract (node:test) | `scripts/tests/page-helpers.test.js` |

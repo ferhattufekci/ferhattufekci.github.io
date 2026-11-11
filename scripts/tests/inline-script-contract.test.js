@@ -17,10 +17,10 @@ export const KNOWN_INLINE = [
   ['calendly widget', /document\.getElementById\("calendlyContainer"\)/],
   ['projects boot', /window\.showMoreStarred = function/],
   ['blog boot', /window\.setBlogLang = function/],
-  ['contact boot', /atob\("KzkwICg1MDcpIDYwMCA4MSA3OQ=="\)/],
-  ['personality tooltip', /resume-personality-info/]
+  ['contact boot', /atob\("KzkwICg1MDcpIDYwMCA4MSA3OQ=="\)/]
+  // 'personality tooltip' moved to js/resume-info-tip.js (A1).
 ];
-const MAX_INLINE_BLOCKS = 8;
+const MAX_INLINE_BLOCKS = 7;
 const MAX_INLINE_HANDLERS = 5;
 
 export function scripts(source) {

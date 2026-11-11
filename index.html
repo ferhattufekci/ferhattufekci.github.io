@@ -3911,51 +3911,7 @@
     <script src="js/tab-title.js?v=bcb8a01b27c37c6f"></script>
     <script src="js/theme.js?v=1012a69a00ea2713"></script>
 
-    <script>
-      /* CSS covers hover and focus; click toggling and outside/Escape dismissal support touch. */
-      (function () {
-        var btn = document.querySelector(".resume-personality-info");
-        var tip = document.getElementById("personality-info-tip");
-        if (!btn || !tip) return;
-
-        function close() {
-          tip.classList.remove("is-open");
-          btn.setAttribute("aria-expanded", "false");
-          // Suppress hover until pointer exit so closing by click also hides the CSS hover tooltip.
-          btn.classList.add("suppress-hover-tip");
-        }
-
-        function open() {
-          tip.classList.add("is-open");
-          btn.setAttribute("aria-expanded", "true");
-          btn.classList.remove("suppress-hover-tip");
-        }
-
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          if (tip.classList.contains("is-open")) {
-            close();
-          } else {
-            open();
-          }
-        });
-
-        btn.addEventListener("mouseleave", function () {
-          if (!btn.matches(':focus-visible')) btn.classList.remove("suppress-hover-tip");
-        });
-        btn.addEventListener("blur", function () { btn.classList.remove("suppress-hover-tip"); });
-
-        document.addEventListener("click", function (e) {
-          if (e.target === btn || btn.contains(e.target)) return;
-          if (tip.contains(e.target)) return;
-          close();
-        });
-
-        document.addEventListener("keydown", function (e) {
-          if (e.key === "Escape") close();
-        });
-      })();
-    </script>
+    <script src="js/resume-info-tip.js?v=abc8ac6c3c966a26"></script>
     <script src="js/resume-navigation.js?v=c8117a0e030e76e9"></script>
     <script src="js/category-filter-hints.js?v=bab653c06d6a8b50"></script>
   </body>
