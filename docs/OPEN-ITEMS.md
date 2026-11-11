@@ -76,13 +76,6 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ### BR-1 Birleşmiş uzak dalların silinmesi
 - **Öncelik:** P3. **Durum:** silinmedi. **Karar:** yalnızca sahibin ayrı izniyle; silmeden önce birleştirildiği doğrulanır.
 
-### GOV-1 Başarısız testlerin merge'i GitHub düzeyinde engellemesi (zorunlu Quality Gate)
-- **Öncelik:** P2. **Durum:** açık; akış kodu hazır, App kurulumu ve ruleset bekliyor. **Kanıt:** `Protect main` ruleset'i yalnızca `deletion` ve `non_fast_forward` taşır; zorunlu durum kontrolü yok [G]. Kırmızı bir PR'ın merge'ünü şu an yalnızca süreç engeller.
-- **Karar (sahip, 2026-11-11):** App'e Quality Gate bypass'ı verilmez; doğrudan push yok. Akış: zamanlanmış senkronizasyon → `data-sync/<kaynak>-<koşu>` dalı → PR → zorunlu Quality Gate → koşullar sağlanınca auto-merge (`scripts/ci/sync-pr.mjs`, R-CI-01). Önceki "App ile doğrudan push + bypass" önerisi geri çekildi.
-- **Sahip kurulumu (sohbette anahtar paylaşılmaz):** (1) Settings → Developer settings → GitHub Apps → New: webhook kapalı; Repository permissions yalnızca **Contents: Read and write**, **Pull requests: Read and write** (Metadata: Read zorunlu, otomatik); Actions, Workflows, Administration, Checks **No access**; "Only on this account". (2) App'i yalnızca bu depoya kur (Only select repositories). (3) Depo → Settings → Secrets and variables → Actions: secret `SYNC_APP_PRIVATE_KEY` (App'in .pem özel anahtarı), variable `SYNC_APP_CLIENT_ID` (App'in Client ID'si). (4) Settings → General → Pull Requests: **Allow auto-merge** açık. App ruleset bypass listesine **eklenmez**.
-- **Doğrulama sırası:** (a) bu akışın PR'ı merge edildikten sonra `Fetch Medium Articles` elle çalıştırılır; değişiklik varsa açılan PR'da `pull_request` CI'ının kendiliğinden başladığı ve Quality Gate'in PR head SHA'sını doğruladığı kontrol edilir; (b) ruleset'e `Run Quality Checks / Quality Gate` (integration_id 15368, GitHub Actions) zorunlu kontrol ve **Require branches to be up to date** eklenir, yeni bypass eklenmez; (c) kırmızı veya eksik kontrollü bir PR'ın merge edilemediği ve yeşil bir senkronizasyon PR'ının bypass olmadan birleştiği gösterilir. Bunlar tamamlanana kadar GOV-1 açık kalır.
-- **Kalan risk:** auto-merge etkinleştikten sonra yazma yetkili biri senkronizasyon dalına başka dosya push ederse merge yine Quality Gate'ten geçer ama kapsam kontrolü bir sonraki senkronizasyona kadar yeniden çalışmaz. Mevcut yönetici bypass'ı (RepositoryRole 5, always) sahibin kararıyla durur; yönetici merge'leri kuralı atlayabilir.
-
 ## 2. Araştırılıyor / kanıt bekliyor
 
 ### RF R-FILTER-04 ve R-KEYBOARD-08 kök neden
@@ -163,6 +156,13 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ### HYG Depo hijyeni
 - **Öncelik:** P3. **Durum:** uygulanmadı. **Kanıt:** README lisans koşullarını yazıyor ama `LICENSE` dosyası yok; `SECURITY.md` yok; `TEST-STRATEGY.md` kökte, diğer belgeler `docs/` altında [D].
 
+### RC-1 Recovery sınıflandırması altyapı arızalarını "Genuine failure" sayıyor (yeni, 2026-11-11)
+- **Öncelik:** P2. **Durum:** açık; düzeltme ayrı PR'da. **Kanıt [G]:** yayın koşusu 43092358748 attempt 1'de üç job artifact yüklerken `Failed to CreateArtifact: ... Unexpected token '<', "<!DOCTYPE "... is not valid JSON` (GitHub artifact servisi) ile kırıldı; testler geçmişti. `recover-release.yml` koşuları 43099532631 ve 43099567203 bunu `recovery=none (Genuine failure: ...)` diye sınıfladı. Aynı gün attempt 2'de Verify Production, yayından saniyeler sonra `data/github-starred.json: HTTP 503` aldı (iki dakika sonra 6/6 istek 200). Observe modunda zarar yok; `PORTFOLIO_RECOVERY_ACT` açılsaydı ikisi de yeniden denenmezdi.
+- **Kabul:** iki vakanın kayıtlı log biçimleri recovery testlerinde altyapı nedeni olarak sınıflanır; gerçek test hatası yine "Genuine failure" kalır (assertion ve retry eklenmez). D-3 bu düzeltmeden önce açılmaz.
+
+### PERF-3 Üçüncü Chromium shard'ı (öneri)
+- **Öncelik:** P3. **Durum:** öneri, uygulanmadı. **Ölçüm [G]:** kalite koşusunda job kuyruğu 0 s, kurulum < 1 dk; duvar süresi 22-28 dk, runner süresi 68-85 dk. Kritik yol iki Chromium shard'ı (20-26 dk); klavye job'ları 12-17 dk. Üçüncü shard yaklaşık 7 dk duvar süresi kazandırır, runner süresini kurulum kadar artırır. **Engel [K]:** rapor birleştirme ve özet kodunda `/2` sabit; shard sayısı tek yerden okunmadan değiştirilmez. Container geçişinden (D-4) sonra kurulum süresi yeniden ölçülmeli.
+
 ## 3. Uygulandı, doğrulama bekliyor
 
 | ID | İş | Doğrulanması beklenen | Kanıt |
@@ -173,6 +173,8 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 
 ## 4. Tamamlandı ve doğrulandı
 
+- **GOV-1 zorunlu Quality Gate (2026-11-11) [G]:** `Protect main` ruleset'i `Run Quality Checks / Quality Gate` (integration_id 15368, GitHub Actions) zorunlu kontrolünü ve **branches up to date** kuralını taşır; yeni bypass eklenmedi (yalnızca mevcut yönetici rolü, sahibin kararı). Senkronizasyon App'i (`portfolio-data-sync`, yalnızca bu depo; contents + pull requests write) doğrudan push etmez. Doğrulama: (a) sync PR #80'de `pull_request` CI'ı kendiliğinden başladı ve Quality Gate head `e33aca6`'yı doğruladı; (b) ruleset API'de etkin; (c) geride kalan #80 `behind`, kasıtlı kırmızı #81 (draft değilken) `BLOCKED` — yalnızca yönetici bypass'ı merge edebilirdi, kullanılmadı, PR merge edilmeden kapatıldı; yeşil sync PR #85'i App auto-merge ile açtı (22:01 UTC), Quality Gate `8e0ae81`'de geçti, `portfolio-data-sync` 22:27 UTC'de bypass olmadan birleştirdi (`3ad390c`). Kalan risk: yönetici bypass'ı durur; yazma yetkili biri sync dalına dosya eklerse merge yine Quality Gate'ten geçer ama kapsam kontrolü bir sonraki senkronizasyona kadar çalışmaz. Yayınla yarış: auto-merge yayın sürerken `main`'i ilerletirse dispatch `Superseded source` ile reddedilir (yanlış SHA yayınlanmaz); işlem: INCIDENT-RUNBOOK bölüm 2.
+  - **App kurulumu (yeniden kurulum için; anahtar sohbette paylaşılmaz):** (1) Settings → Developer settings → GitHub Apps → New: webhook kapalı; Repository permissions yalnızca **Contents: Read and write**, **Pull requests: Read and write** (Metadata: Read zorunlu, otomatik); Actions, Workflows, Administration, Checks **No access**; "Only on this account". (2) App'i yalnızca bu depoya kur (Only select repositories). (3) Depo → Settings → Secrets and variables → Actions: secret `SYNC_APP_PRIVATE_KEY` (App'in .pem özel anahtarı), variable `SYNC_APP_CLIENT_ID` (App'in Client ID'si). (4) Settings → General → Pull Requests: **Allow auto-merge** açık. App ruleset bypass listesine **eklenmez**. Son adım: ruleset'e zorunlu kontrol eklenir.
 - Production doğrulaması yeşil: `main` ucu için `Portfolio CI/CD` koşusu başarılı (deploy + verify-production; en son gözlenen `51522a7`, koşu `42449002399`).
 - jQuery 3.6.0 yükseltmesi yayında ve üretim doğrulaması yeşil.
 - PR #38 (belgeler) 12/12 yeşil CI ile birleştirildi (squash 9955860). Birleşme sonrası `main` push koşusu 42457503796 **kırmızı** bitti (yalnızca R-FILTER-04, yukarıya bakın; dağıtım atlandı); sonraki main koşusu (9eeb9d3) yeşil ve yayın güncel [G]. Belge PR'ı site dosyalarını değiştirmedi.

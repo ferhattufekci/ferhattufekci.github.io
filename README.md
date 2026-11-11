@@ -129,6 +129,8 @@ Blog and Projects load their content with client-side `fetch()`. Raw HTML fallba
 
 Both sync workflows run `build-static-seo.js` right after fetching, so the fallback content and `llms.txt` stay in step with the data. Re-running it with unchanged data produces no diff.
 
+**How synced data reaches the site:** a sync never pushes to `main`. When the data changed, `scripts/ci/sync-pr.mjs` opens one pull request per source from a `data-sync/<source>-<run>` branch, as the `portfolio-data-sync` GitHub App, and turns on auto-merge. The `main` ruleset merges it only after the required Quality Gate passes on a branch that is up to date with `main`; a red or outdated sync PR stays open. Merging does not publish: the live site changes at the next release (see [docs/CI-CD.md](docs/CI-CD.md)).
+
 <a id="maintenance-guide"></a>
 
 ### Maintenance
@@ -311,6 +313,8 @@ Blog ve Projects içeriklerini istemci tarafında `fetch()` ile yükler. Ham HTM
 | Yapay zekâ botları izin listesi | `robots.txt` | GPTBot, ClaudeBot, PerplexityBot, Google-Extended ve diğerlerini açıkça listeler. |
 
 İki senkronizasyon workflow'u da veriyi çektikten hemen sonra `build-static-seo.js`'i çalıştırır; böylece yedek içerik ve `llms.txt` veriyle uyumlu kalır. Veri değişmediyse yeniden çalıştırmak hiçbir değişiklik üretmez.
+
+**Senkronize veri siteye nasıl ulaşır:** senkronizasyon `main`'e asla doğrudan push etmez. Veri değiştiyse `scripts/ci/sync-pr.mjs`, `portfolio-data-sync` GitHub App'i olarak her kaynak için `data-sync/<kaynak>-<koşu>` dalından bir pull request açar ve auto-merge'ü açar. `main` ruleset'i bu PR'ı yalnızca zorunlu Quality Gate, `main` ile güncel bir dalda geçtikten sonra birleştirir; kırmızı veya geride kalmış bir senkronizasyon PR'ı açık kalır. Merge yayın yapmaz: canlı site bir sonraki yayında değişir (bkz. [docs/CI-CD.tr.md](docs/CI-CD.tr.md)).
 
 <a id="bakim-rehberi"></a>
 
