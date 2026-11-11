@@ -22,7 +22,9 @@ test('R-CI-APT-01: every browser installation with system dependencies is preced
       assert.match(step, /timeout-minutes: 5\n/, `${file}: installation step needs its own deadline`);
     }
   }
-  assert.equal(installs, 3, 'Chromium in browser-tests and verify-production, Firefox/WebKit in keyboard-tests');
+  // browser-tests and keyboard-tests run in the Playwright container image and install nothing
+  // (R-CI-PWC-01); verify-production still installs Chromium through apt.
+  assert.equal(installs, 1, 'Chromium in verify-production');
 });
 test('R-CI-APT-02: the bound is an idle timeout far below the default and far above a healthy download', async () => {
   const script = await readFile(new URL('../ci/bound-apt-network.sh', import.meta.url), 'utf8');

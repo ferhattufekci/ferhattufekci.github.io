@@ -456,6 +456,24 @@ Referanslar: [Playwright sharding](https://playwright.dev/docs/test-sharding),
 
 ## Tarayıcı kurulumunda takılmalar (apt mirror)
 
+**Güncelleme 2026-11-11 (üçüncü şekil, DNS hatası):** runner'lar saatlerce
+`azure.archive.ubuntu.com` adresini çözemedi. Main push koşusu `43033608440` ile
+`43034281844`, `43035186941` ve `43040117023` (dört deneme) pull request koşuları, hiçbir
+tarayıcı testi koşmadan kurulum adımında başarısız oldu; yeniden çalıştırma işe yaramadı.
+Sahibin kararıyla **Browser Tests** ve **Cross-browser Keyboard Tests** artık resmi Playwright
+container imajında çalışır (`mcr.microsoft.com/playwright:v1.65.0-noble`, digest ile sabit).
+İmaj tarayıcıları ve sistem paketlerini içerir; bu job'lar apt ile hiçbir şey indirmez.
+`scripts/ci/check-container-browsers.mjs`, imaj ile kilitli Playwright sürümü uyuşmazsa job'ı
+erken başarısız kılar; `R-CI-PWC-01/02` etiketi, digest'i ve kurulum adımı kalmadığını
+denetler. **Verify Production** hâlâ Chromium'u apt ile kurar (aşağıdaki sınır ve beş
+dakikalık süreyle), çünkü pull request koşusu bu job'ı çalıştıramaz. `@playwright/test`
+yükseltildiğinde imaj etiketi aynı sürüme çekilir ve iki job'daki digest değiştirilir
+(`docker buildx imagetools inspect mcr.microsoft.com/playwright:v<sürüm>-noble` yazdırır);
+etiket eşleşene kadar `R-CI-PWC-01` başarısız olur. Dependabot bu imajı güncellemez.
+Kanıtlanmayan: imaj
+deposunun mirror'dan daha güvenilir olduğu. Aşağıdaki metin apt yolunu anlatır; bu yol artık
+yalnızca Verify Production için geçerlidir.
+
 `npx playwright install --with-deps`, sistem paketlerini her koşuda apt üzerinden indirir
 (Chromium için yaklaşık 21 MB, Firefox ve WebKit için 114 MB). Tamamlanan 130 kurulum adımında
 ortanca süre 14 saniyeydi ve 128'i 108 saniye içinde bitti. Şimdiye kadar görülen yavaş
