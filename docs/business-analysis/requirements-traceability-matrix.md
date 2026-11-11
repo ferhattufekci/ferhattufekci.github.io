@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**235 requirement ids, 277 test titles, 46 areas.**
+**236 requirement ids, 278 test titles, 47 areas.**
 
 | Area | Ids |
 |---|---|
@@ -35,6 +35,7 @@
 | R-EXTERNAL | 1 |
 | R-FILTER | 14 |
 | R-FIRST | 2 |
+| R-FOCUS | 1 |
 | R-GKP | 3 |
 | R-HOVER | 1 |
 | R-HTTP | 7 |
@@ -179,6 +180,7 @@
 | R-FILTER-14 | Given long category labels, when each project filter is selected, then section labels remain entirely within their container | Browser (Playwright) | `tests/browser/categories.spec.mjs` |
 | R-FIRST-01 | independent unit/static gates block browser work while generation has one build owner | Unit/contract (node:test) | `scripts/tests/first-principles.test.js` |
 | R-FIRST-02 | generation reads isolated fixture inputs and preserves the working project | Unit/contract (node:test) | `scripts/tests/first-principles.test.js` |
+| R-FOCUS-10 | FOCUS-AC2 \| Untouched menu navigation still establishes heading focus and the first Tab stop | Browser (Playwright) | `tests/browser/navigation-focus.spec.mjs` |
 | R-GKP-01 | manual fixture input rejects unknown or unsafe configurations | Unit/contract (node:test) | `scripts/tests/manual-preview.test.js` |
 | R-GKP-02 | manual cases have traceable requirements, eleven columns, complete steps and no invented execution | Unit/contract (node:test) | `scripts/tests/manual-documentation.test.js` |
 | R-GKP-03 | all manual/audit document links resolve and RTM risk IDs exist in real automated tests | Unit/contract (node:test) | `scripts/tests/manual-documentation.test.js` |
