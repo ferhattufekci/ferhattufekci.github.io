@@ -114,11 +114,17 @@ toplamak başarısız bir testi asla başarılıya çevirmez. Bash, `tee` üzeri
 - Kurtarma amaçlı bir dispatch'in `release_sha`'sı yoktur; böylece daha yeni bir revizyonu
   yayın yetkisi vermeden doğrulayabilir. Açıkça seçilmiş bir yayının yeniden çalıştırılması
   orijinal SHA'sına bağlı kalır ve yine güncellik kontrolünden geçmelidir.
-- Zamanlanmış/manuel veri yazıcıları iptal etmeyen ortak bir `data-sync` grubunu, main/depo
-  korumalarını ve job kapsamlı contents yazma iznini paylaşır. Gereksiz yenileme/yayın
-  zincirlerini önlemek için push tetikleyicileri kaldırıldı. GITHUB_TOKEN commit'leri push
-  workflow'larını tetiklemez; başarılı bir yazıcının tamamlanması CI'ı `workflow_run` ile
-  tetikler.
+- Zamanlanmış/manuel veri yazıcıları iptal etmeyen ortak bir `data-sync` grubunu ve main/depo
+  korumalarını paylaşır. Job token'ları yalnızca okur. Main'e asla push etmezler:
+  `scripts/ci/sync-pr.mjs`, senkronizasyon GitHub App token'ıyla (yalnızca contents ve pull
+  requests yazma; ruleset bypass, administration veya workflows izni yok) her kaynak için
+  güncel main'den açılan `data-sync/<kaynak>-<koşu>` dalından bir pull request açar. Değişiklik
+  yoksa PR açılmaz. Aynı main üzerinde aynı veri varsa açık PR korunur; aksi hâlde tek bir
+  yeni PR açılır ve eskisi kapatılır, böylece bir kaynağın iki açık senkronizasyon PR'ı olmaz.
+  Kaynağın verisi ve ondan üretilen dosyalar dışında bir dosyaya dokunan üretim senkronizasyonu
+  başarısız kılar. Auto-merge yalnızca App'in kendi kapsam içi PR'ı için ve main, GitHub
+  Actions'tan gelen Quality Gate'i güncel dal koşuluyla zorunlu tuttuğu sürece etkinleşir;
+  merge'ün kendisi yine bu zorunlu kontrolden geçer. Kurulum ve durum: `docs/OPEN-ITEMS.md` GOV-1.
 - Çözümleyici; yazıcının ad/yol çiftini, kaynak depoyu, main dalını, schedule/manual
   olayını ve başarılı sonucu doğrular. `workflow_run.head_sha`, yazıcının sonraki veri
   commit'inden öncesine ait olduğundan o commit'in kimliği olarak kullanılmaz. Main, job
