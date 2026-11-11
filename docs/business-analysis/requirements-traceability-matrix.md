@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**236 requirement ids, 278 test titles, 47 areas.**
+**237 requirement ids, 279 test titles, 48 areas.**
 
 | Area | Ids |
 |---|---|
@@ -14,6 +14,7 @@
 | R-AD | 3 |
 | R-AD-EMPTY | 1 |
 | R-AD-SCROLL | 1 |
+| R-AD-WIDTH | 1 |
 | R-ARROW | 4 |
 | R-ASSET | 1 |
 | R-BLOG-SHARE | 14 |
@@ -71,6 +72,7 @@
 | R-AD-03 | AC-01/02/03 \| ${section}: an iframe plus unfilled leaves no ad shell or own spacing | Browser (Playwright) | `tests/browser/adsense.spec.mjs` |
 | R-AD-EMPTY-01 | A provider-hidden empty iframe never becomes a filled creative or visible empty message | Browser (Playwright) | `tests/browser/adsense.spec.mjs` |
 | R-AD-SCROLL-01 | ${section}: fluid SDK ancestor auto sizing preserves the bounded panel, native scroll input and natural creative height | Browser (Playwright) | `tests/browser/adsense.spec.mjs` |
+| R-AD-WIDTH-01 | Blog: a fixed-width fluid creative stays inside its slot after the viewport narrows, scrolling stays native, Projects is untouched | Browser (Playwright) | `tests/browser/adsense.spec.mjs` |
 | R-ARROW-01 | Touch releases both arrows without sticky color through cycles, theme changes and both motion modes | Browser (Playwright) | `tests/browser/arrow-controls.spec.mjs` |
 | R-ARROW-02 | A real mouse hover ends on leave and keyboard focus and native Enter/Space activation remain visible | Browser (Playwright) | `tests/browser/arrow-controls.spec.mjs` |
 | R-ARROW-03 | Press feedback is transient and releasing a canceled mouse press does not navigate | Browser (Playwright) | `tests/browser/arrow-controls.spec.mjs` |
