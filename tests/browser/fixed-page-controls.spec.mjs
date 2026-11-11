@@ -1,6 +1,6 @@
 import { test, expect, expectSection, navigateToSection } from './fixtures.mjs';
 import { articles, mockCatalog, repo, starred } from './data/catalog.mjs';
-import { withScrollState } from './helpers/focus-diagnostics.mjs';
+import { withScrollState, renderedScrollTop } from './helpers/focus-diagnostics.mjs';
 
 const panel = (page, id) => page.getByRole('region', { name: `${id[0].toUpperCase() + id.slice(1)} content`, exact: true });
 const controls = (page, id) => page.locator(`.panel-page[data-id="${id}"] .page-controls-panel`);
@@ -34,7 +34,7 @@ async function wheel(page, area, touch, minimum = 100) {
     }
     finally { await session.detach(); }
   } else { await page.mouse.move(x, y); await page.mouse.wheel(0, 420); }
-  await withScrollState(page, area, { x, y }, () => expect.poll(() => area.evaluate(el => el.scrollTop)).toBeGreaterThan(minimum));
+  await withScrollState(page, area, { x, y }, () => expect.poll(() => renderedScrollTop(page, area)).toBeGreaterThan(minimum));
   // A touchEnd can leave momentum scrolling in flight. Observe the actual
   // position settling before taking the baseline for exact equality checks.
   await area.evaluate(el => new Promise(resolve => {
