@@ -15,6 +15,7 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 - [Maintenance guide](#maintenance-guide): how content is generated, published and verified.
 - [Test strategy](TEST-STRATEGY.md#test-strategy-en): test layers, BDD scenarios and the deployment quality gate.
 - [CI/CD guide](docs/CI-CD.md): pipeline flow, release gate, reports and failure handling.
+- [Incident and rollback runbook](docs/INCIDENT-RUNBOOK.md): what to do when the live site is broken, how to roll back by revert, emergency unpublish.
 - [Test engineering audit](docs/testing/TEST-AUDIT.md) and [manual acceptance procedure (GKP)](docs/testing/GKP.md) (Turkish): evidence, traceability, repeatable test data and pending acceptance decisions.
 - [Engineering assessment](docs/ENGINEERING-ASSESSMENT.md): what this repository is, what it demonstrably does well, and the open findings with their evidence level.
 - [Architecture decision records](docs/architecture/adr/README.md): why the site stays static, why a release is pinned to one SHA, why recovery is observe-only.
@@ -180,6 +181,7 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 - [Bakım rehberi](#bakim-rehberi): içeriğin nasıl üretildiği, yayınlandığı ve doğrulandığı.
 - [Test stratejisi](TEST-STRATEGY.md#test-strategy-tr): test katmanları, BDD senaryoları ve yayın kalite kapısı.
 - [CI/CD rehberi](docs/CI-CD.tr.md): pipeline akışı, yayın kapısı, raporlar ve hata yönetimi.
+- [Olay ve geri alma rehberi](docs/INCIDENT-RUNBOOK.tr.md): canlı site bozulduğunda yapılacaklar, revert ile geri alma, acil yayından kaldırma.
 - [Test mühendisliği denetimi](docs/testing/TEST-AUDIT.md) ve [manuel kabul prosedürü (GKP)](docs/testing/GKP.md): kanıtlar, izlenebilirlik, tekrarlanabilir test verisi ve bekleyen kabul kararları.
 - [Mühendislik değerlendirmesi](docs/ENGINEERING-ASSESSMENT.tr.md): deponun ne olduğu, kanıtlanabilir güçlü yanları ve kanıt düzeyleriyle açık bulgular.
 - [Mimari karar kayıtları](docs/architecture/adr/README.tr.md): sitenin neden statik kaldığı, yayının neden tek bir SHA'ya sabitlendiği, kurtarmanın neden yalnızca gözlem modunda olduğu.

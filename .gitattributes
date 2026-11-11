@@ -1,0 +1,20 @@
+# Generated files, asset hashes and tests compare exact bytes, so text is
+# always checked out with LF, whatever core.autocrlf says (Windows defaults
+# to CRLF, which broke six unit tests and every asset ?v= hash).
+* text=auto eol=lf
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.otf binary
+
+# Keeps its deliberate mixed line endings byte for byte.
+tests/fixtures/blog-sharing.json -text

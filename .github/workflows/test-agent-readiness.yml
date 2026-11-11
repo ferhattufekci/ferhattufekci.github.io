@@ -68,13 +68,17 @@ jobs:
       - name: Test units and HTTP contracts
         run: |-
           mkdir -p work/qa
-          npm run test:unit | tee work/qa/unit.tap
+          npm run test:unit -- --experimental-test-coverage --test-reporter=tap --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=work/qa/unit.lcov | tee work/qa/unit.tap
+      - name: Enforce unit coverage baseline
+        run: node scripts/ci/coverage-gate.mjs work/qa/unit.lcov
       - name: Publish unit-report
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: unit-report
-          path: work/qa/unit.tap
+          path: |-
+            work/qa/unit.tap
+            work/qa/unit.lcov
           retention-days: 7
           if-no-files-found: error
       - name: Summarize unit results
