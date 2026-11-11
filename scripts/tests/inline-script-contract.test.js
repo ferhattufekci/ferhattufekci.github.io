@@ -17,10 +17,12 @@ export const KNOWN_INLINE = [
   ['calendly widget', /document\.getElementById\("calendlyContainer"\)/],
   ['projects boot', /window\.showMoreStarred = function/],
   ['blog boot', /window\.setBlogLang = function/],
-  ['contact boot', /atob\("KzkwICg1MDcpIDYwMCA4MSA3OQ=="\)/]
-  // 'personality tooltip' moved to js/resume-info-tip.js (A1).
+  ['contact boot', /atob\("KzkwICg1MDcpIDYwMCA4MSA3OQ=="\)/],
+  // Stays inline by the owner's decision of 2026-11-11: T-4 A1 is deferred until the CSP
+  // approach (D-7) is settled (docs/T-4-INLINE-SCRIPTS.md). The baseline stays 8 blocks.
+  ['personality tooltip', /resume-personality-info/]
 ];
-const MAX_INLINE_BLOCKS = 7;
+const MAX_INLINE_BLOCKS = 8;
 const MAX_INLINE_HANDLERS = 5;
 
 export function scripts(source) {

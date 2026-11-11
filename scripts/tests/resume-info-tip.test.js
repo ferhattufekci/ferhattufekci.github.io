@@ -1,6 +1,20 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { browser, load, key } from './helpers/browser-dom.js';
+import { readFileSync } from 'node:fs';
+import vm from 'node:vm';
+import { browser, key } from './helpers/browser-dom.js';
+
+// The tooltip script stays inline in index.html (T-4 A1 deferred until D-7). These tests run
+// that production block itself, read from index.html, so no second copy of it exists.
+const indexPath = new URL('../../index.html', import.meta.url);
+const inline = [...readFileSync(indexPath, 'utf8').matchAll(/<script\b(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)]
+  .map(match => match[1]).filter(source => source.includes('resume-personality-info'));
+const runInline = globals => vm.runInNewContext(inline[0], Object.assign(globals, { globalThis: globals }), { filename: 'index.html (personality tooltip)' });
+
+test('R-UNIT-TIP-00: index.html has exactly one inline personality tooltip block and no tooltip script file', () => {
+  assert.equal(inline.length, 1);
+  assert.doesNotMatch(readFileSync(indexPath, 'utf8'), /<script\b[^>]*\bsrc="[^"]*resume-info-tip/);
+});
 
 const markup = `
   <button class="resume-personality-info" aria-expanded="false" aria-describedby="personality-info-tip">i</button>
@@ -12,7 +26,7 @@ function setup({ focusVisible = false, html = markup } = {}) {
   const { document, window } = dom;
   const button = document.querySelector('.resume-personality-info');
   if (button) button.matches = selector => (selector === ':focus-visible' ? focusVisible : window.Element.prototype.matches.call(button, selector));
-  load('resume-info-tip.js', { document });
+  runInline({ document });
   const tip = document.getElementById('personality-info-tip');
   const click = node => { const event = new window.Event('click', { bubbles: true, cancelable: true }); node.dispatchEvent(event); return event; };
   const state = () => ({ open: tip.classList.contains('is-open'), expanded: button.getAttribute('aria-expanded'), suppressed: button.classList.contains('suppress-hover-tip') });
