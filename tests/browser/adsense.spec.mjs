@@ -295,3 +295,45 @@ test('AC-04/12 | Filled, no-fill and 200% text sizing preserve content at all sp
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
   await info.attach('responsive-ad-geometry', { body: JSON.stringify(metrics, null, 2), contentType: 'application/json' });
 });
+
+// Observed on the real in-article fluid SDK (live site, 2026-11-11): the creative
+// iframe gets a fixed pixel width when it fills (`position:absolute; left:0;
+// width:704px`) and keeps it when the panel later narrows (rotation, viewport
+// change). The ins centers it, so the creative moved right and the panel's
+// overflow-x clipped it. Blog only: Projects' autorelaxed unit keeps the provider
+// sizing standard untouched.
+test('R-AD-WIDTH-01 | Blog: a fixed-width fluid creative stays inside its slot after the viewport narrows, scrolling stays native, Projects is untouched', async ({ page }) => {
+  await page.setViewportSize({ width: 1000, height: 900 });
+  await adFixture(page, { synchronous: 'filled' });
+  await enterAdPage(page, 'blog'); await requested(page, 'blog');
+  const wrapper = slot(page, 'blog'), frame = wrapper.locator('iframe');
+  // Pin the creative to the width it filled at, as the provider does.
+  const filledWidth = await frame.evaluate(el => {
+    const width = Math.round(el.getBoundingClientRect().width);
+    el.style.cssText = `left:0;position:absolute;top:0;border:0;width:${width}px;height:600px`;
+    return width;
+  });
+  expect(filledWidth).toBeGreaterThan(500);
+  await page.setViewportSize({ width: 375, height: 812 });
+  await expect.poll(() => wrapper.evaluate(el => Math.round(el.getBoundingClientRect().width))).toBeLessThan(filledWidth);
+  const fit = await wrapper.evaluate(el => {
+    const box = el.getBoundingClientRect(), creative = el.querySelector('iframe').getBoundingClientRect();
+    const panel = el.closest('.page-content-panel');
+    return { left: creative.left - box.left, right: box.right - creative.right, height: creative.height,
+      horizontalOverflow: panel.scrollWidth - panel.clientWidth };
+  });
+  expect(fit.left).toBeGreaterThanOrEqual(-1);
+  expect(fit.right).toBeGreaterThanOrEqual(-1);
+  expect(fit.height).toBeCloseTo(600, 0);
+  expect(fit.horizontalOverflow).toBeLessThanOrEqual(1);
+  const panel = page.locator('.pt-page[data-id="blog"] .page-content-panel');
+  await panel.press('End');
+  await expect.poll(() => panel.evaluate(el => el.scrollHeight - el.clientHeight - el.scrollTop)).toBeLessThanOrEqual(1);
+  await expect(panel).not.toHaveJSProperty('scrollTop', 0);
+  // Projects keeps the provider-owned sizing standard.
+  expect(await page.evaluate(() => {
+    const probe = document.createElement('iframe');
+    document.querySelector('.ad-slot-projects').appendChild(probe);
+    const value = getComputedStyle(probe).maxWidth; probe.remove(); return value;
+  })).toBe('none');
+});

@@ -41,11 +41,19 @@ const measure = page => page.evaluate(() => {
     barTrack: bar && getComputedStyle(bar).backgroundColor,
     thumbColor: thumb && getComputedStyle(thumb).backgroundColor,
     thumbOutline: thumb && getComputedStyle(thumb).outline,
-    tokens: { thumb: css.getPropertyValue('--color-scrollbar-thumb').trim(), surface: css.getPropertyValue('--color-surface').trim() }
+    tokens: { thumb: css.getPropertyValue('--color-scrollbar-thumb-touch').trim(), surface: css.getPropertyValue('--color-surface').trim() }
   };
 });
 
 const hex = rgb => '#' + rgb.match(/\d+/g).slice(0, 3).map(n => Number(n).toString(16).padStart(2, '0')).join('');
+// WCAG 2.x relative luminance contrast between two #rrggbb colours.
+const contrast = (a, b) => {
+  const luminance = color => [1, 3, 5].map(i => parseInt(color.slice(i, i + 2), 16) / 255)
+    .map(v => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4))
+    .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (light + 0.05) / (dark + 0.05);
+};
 
 test.describe('touch scrollbar', () => {
   // One test per project, never skipped: the CI coverage gate rejects skipped tests.
@@ -65,6 +73,9 @@ test.describe('touch scrollbar', () => {
       // Same design as the desktop bar: 5px, themed thumb, slategrey outline, surface track.
       expect(rest.bar.width, id).toBe(5);
       expect(hex(rest.thumbColor), id).toBe(rest.tokens.thumb.toLowerCase());
+      // On a phone the 5px bar must be noticeable: non-text contrast (WCAG 1.4.11) of the
+      // thumb against its track. The light desktop thumb (#dedede on #ffffff) is 1.35:1.
+      if (testInfo.project.use.colorScheme === 'light') expect(contrast(hex(rest.thumbColor), hex(rest.barTrack)), id).toBeGreaterThanOrEqual(3);
       expect(hex(rest.barTrack), id).toBe(rest.tokens.surface.toLowerCase());
       expect(rest.thumbOutline, id).toBe('rgb(112, 128, 144) solid 1px');
       // Beside the scroll owner: its right edge, its visible height.

@@ -4,8 +4,8 @@
 > [GKP.md](GKP.md). Do not edit by hand; `scripts/tests/traceability.test.js` fails when this file is stale.
 > Each CI build regenerates it with that build's browser results (job summary and `merged-browser-report`).
 
-**240 requirement ids carried by automated tests; 240 (100.0%) also have a manual procedure step.**
-**46 procedure cases; steps: Not Run 185.**
+**282 requirement ids carried by automated tests; 282 (100.0%) also have a manual procedure step.**
+**46 procedure cases; steps: Not Run 188.**
 
 A manual step result is recorded in GKP.md by the person who executes it; an automated pass never marks a manual step Pass.
 
@@ -26,6 +26,7 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | R-AD-03 | adsense.spec.mjs | GKP-030 | Not Run 2 |
 | R-AD-EMPTY-01 | adsense.spec.mjs | GKP-043 | Not Run 1 |
 | R-AD-SCROLL-01 | adsense.spec.mjs | GKP-043 | Not Run 1 |
+| R-AD-WIDTH-01 | adsense.spec.mjs | GKP-043 | Not Run 1 |
 | R-ARROW-01 | arrow-controls.spec.mjs | GKP-035 | Not Run 1 |
 | R-ARROW-02 | arrow-controls.spec.mjs | GKP-035 | Not Run 1 |
 | R-ARROW-03 | arrow-controls.spec.mjs | GKP-035 | Not Run 1 |
@@ -140,6 +141,9 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | R-FILTER-14 | categories.spec.mjs | GKP-037 | Not Run 1 |
 | R-FIRST-01 | first-principles.test.js | GKP-046 | Not Run 1 |
 | R-FIRST-02 | first-principles.test.js | GKP-046 | Not Run 1 |
+| R-FOCUS-09 | navigation-focus.spec.mjs | GKP-039 | Not Run 1 |
+| R-FOCUS-10 | navigation-focus.spec.mjs | GKP-039 | Not Run 1 |
+| R-FOCUS-11 | navigation-focus.spec.mjs | GKP-039 | Not Run 1 |
 | R-GKP-01 | manual-preview.test.js | GKP-046 | Not Run 1 |
 | R-GKP-02 | manual-documentation.test.js | GKP-046 | Not Run 1 |
 | R-GKP-03 | manual-documentation.test.js | GKP-046 | Not Run 1 |
@@ -253,6 +257,44 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | R-TRUST-03 | trust-navigation.test.js | GKP-045 | Not Run 1 |
 | R-TRUST-04 | trust-navigation.spec.mjs | GKP-023 | Not Run 4 |
 | R-TRUST-05 | trust-navigation.spec.mjs | GKP-044 | Not Run 1 |
+| R-UNIT-NOTFOUND-01 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-NOTFOUND-02 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PANELS-01 | content-panels.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PANELS-02 | content-panels.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PANELS-03 | content-panels.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PANELS-04 | content-panels.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PANELS-05 | content-panels.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PANELS-06 | content-panels.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PRELOADER-01 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PRELOADER-02 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-PRELOADER-03 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-01 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-02 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-03 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-04 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-05 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-06 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-07 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-RESNAV-08 | resume-navigation-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-01 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-02 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-03 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-04 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-05 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-06 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-07 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-SHELL-08 | site-shell.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-STARRED-01 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-STARRED-02 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-STARRED-03 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TITLE-01 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TITLE-02 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TITLE-03 | page-helpers.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TOUCHBAR-01 | touch-scrollbar-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TOUCHBAR-02 | touch-scrollbar-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TOUCHBAR-03 | touch-scrollbar-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TOUCHBAR-04 | touch-scrollbar-unit.test.js | GKP-046 | Not Run 1 |
+| R-UNIT-TOUCHBAR-05 | touch-scrollbar-unit.test.js | GKP-046 | Not Run 1 |
 
 ## Procedure case → requirements
 
@@ -296,14 +338,14 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | GKP-036 | Hata görünümü düğmeleri, menü ve tema kontrolleri | R-BUTTON-01, R-BUTTON-02, R-BUTTON-03, R-BUTTON-04, R-ICON-03, R-ICON-04 | Not Run 4 |
 | GKP-037 | Filtre sınır ve hata durumları | R-FILTER-03, R-FILTER-04, R-FILTER-05, R-FILTER-06, R-FILTER-11, R-FILTER-12, R-FILTER-13, R-FILTER-14 | Not Run 8 |
 | GKP-038 | Klavye erişilebilirliği | R-KEYBOARD-01, R-KEYBOARD-02, R-KEYBOARD-03, R-KEYBOARD-04, R-KEYBOARD-05, R-KEYBOARD-06, R-KEYBOARD-07, R-KEYBOARD-08 | Not Run 7 |
-| GKP-039 | Sayfa geçişleri ve hareket tercihleri | R-MOTION-01, R-MOTION-02, R-MOTION-03, R-MOTION-04, R-MOTION-05, R-MOTION-06, R-MOTION-07, R-NAV-07 | Not Run 6 |
+| GKP-039 | Sayfa geçişleri ve hareket tercihleri | R-FOCUS-09, R-FOCUS-10, R-FOCUS-11, R-MOTION-01, R-MOTION-02, R-MOTION-03, R-MOTION-04, R-MOTION-05, R-MOTION-06, R-MOTION-07, R-NAV-07 | Not Run 7 |
 | GKP-040 | Sabit kontrol paneli ve içerik kaydırma | R-PANEL-01, R-PANEL-02, R-PANEL-03, R-PANEL-04, R-PANEL-05, R-PANEL-06, R-PANEL-07 | Not Run 7 |
 | GKP-041 | Resume içerik düzeni ve açılımlar | R-DISCLOSURE-03, R-RESUME-06, R-RESUME-08, R-RESUME-12, R-RESUME-15 | Not Run 5 |
 | GKP-042 | Resume bölüm gezinmesi | R-RESUME-NAV-01, R-RESUME-NAV-02, R-RESUME-NAV-03, R-RESUME-NAV-04, R-RESUME-NAV-05, R-RESUME-NAV-06, R-RESUME-NAV-07 | Not Run 7 |
-| GKP-043 | Scrollbar ve reklam alanının kaydırmaya etkisi | R-AD-EMPTY-01, R-AD-SCROLL-01, R-SCROLLBAR-01, R-SCROLLBAR-02, R-SCROLLBAR-03 | Not Run 4 |
+| GKP-043 | Scrollbar ve reklam alanının kaydırmaya etkisi | R-AD-EMPTY-01, R-AD-SCROLL-01, R-AD-WIDTH-01, R-SCROLLBAR-01, R-SCROLLBAR-02, R-SCROLLBAR-03 | Not Run 5 |
 | GKP-044 | Statik 404 ve güven sayfası gezinmesi | R-SHELL-01, R-SHELL-05, R-TRUST-01, R-TRUST-02, R-TRUST-05 | Not Run 4 |
 | GKP-045 | Makine okunur içerik ve CV bağlantısı | R-CONTENT-01, R-HTTP-07, R-TRUST-03 | Not Run 2 |
-| GKP-046 | Otomasyon sözleşmelerinin kanıt incelemesi | R-A0-01, R-A0-02, R-A0-05, R-A0-05b, R-A11Y-02, R-ASSET-01, R-CI-01, R-CI-APT-01, R-CI-APT-02, R-CI-RECOVER-01, R-CI-RECOVER-02, R-CI-RECOVER-03, R-CI-RECOVER-04, R-CI-RECOVER-05, R-CI-RECOVER-06, R-CI-RECOVER-07, R-CI-RECOVER-08, R-CI-RECOVER-09, R-CI-RECOVER-10, R-CI-RECOVER-11, R-CI-RECOVER-12, R-CI-RECOVER-13, R-CI-RECOVER-14, R-CI-RECOVER-15, R-CI-RECOVER-16, R-CI-RECOVER-17, R-CI-RECOVER-18, R-CI-RECOVER-19, R-CI-RECOVER-20, R-CI-RECOVER-21, R-CI-RECOVER-22, R-CI-RECOVER-C1-00, R-CI-RECOVER-C1-01, R-CI-RECOVER-C1-02, R-CI-RECOVER-C1-03, R-CI-RECOVER-C1-04, R-CI-RECOVER-C1-05, R-CI-RECOVER-C1-06, R-CI-RECOVER-C1-07, R-CI-RECOVER-C1-08, R-CI-RECOVER-C1-09, R-CI-RECOVER-C1-10, R-CI-RECOVER-C1-11, R-CI-RECOVER-C1-12, R-CI-RECOVER-C1-13, R-CONTENT-02, R-COV-01, R-COV-02, R-COV-03, R-COV-04, R-COV-05, R-DATA-COLOR-01, R-DATA-NUM-01, R-DATA-SYNC-01, R-DATA-SYNC-02, R-DATA-SYNC-03, R-DATA-SYNC-04, R-DATA-SYNC-05, R-DATA-URL-01, R-DATA-URL-02, R-DATA-URL-03, R-DATA-URL-04, R-DISCLOSURE-01, R-DISCLOSURE-02, R-DOC-01, R-DOC-02, R-DOC-03, R-DOC-RTM-01, R-DOC-RTM-02, R-DOC-RTM-03, R-DOC-TRACE-01, R-DOC-TRACE-02, R-DOC-TRACE-03, R-DOC-TRACE-04, R-DOC-TRACE-05, R-FIRST-01, R-FIRST-02, R-GKP-01, R-GKP-02, R-GKP-03, R-HTTP-02, R-HTTP-03, R-HTTP-04, R-HTTP-05, R-HTTP-06, R-NAV-03, R-NAV-06, R-PIPE-01, R-PIPE-02, R-PIPE-03, R-PIPE-04, R-PIPE-05, R-PIPE-06, R-PIPE-07, R-PIPE-08, R-PIPE-09, R-PIPE-10, R-PIPE-11, R-PIPE-12, R-PIPE-13, R-RELEASE-01, R-RELEASE-02, R-RELEASE-03, R-RELEASE-04, R-SHELL-02, R-SHELL-03, R-THEME-01 | Not Run 5 |
+| GKP-046 | Otomasyon sözleşmelerinin kanıt incelemesi | R-A0-01, R-A0-02, R-A0-05, R-A0-05b, R-A11Y-02, R-ASSET-01, R-CI-01, R-CI-APT-01, R-CI-APT-02, R-CI-RECOVER-01, R-CI-RECOVER-02, R-CI-RECOVER-03, R-CI-RECOVER-04, R-CI-RECOVER-05, R-CI-RECOVER-06, R-CI-RECOVER-07, R-CI-RECOVER-08, R-CI-RECOVER-09, R-CI-RECOVER-10, R-CI-RECOVER-11, R-CI-RECOVER-12, R-CI-RECOVER-13, R-CI-RECOVER-14, R-CI-RECOVER-15, R-CI-RECOVER-16, R-CI-RECOVER-17, R-CI-RECOVER-18, R-CI-RECOVER-19, R-CI-RECOVER-20, R-CI-RECOVER-21, R-CI-RECOVER-22, R-CI-RECOVER-C1-00, R-CI-RECOVER-C1-01, R-CI-RECOVER-C1-02, R-CI-RECOVER-C1-03, R-CI-RECOVER-C1-04, R-CI-RECOVER-C1-05, R-CI-RECOVER-C1-06, R-CI-RECOVER-C1-07, R-CI-RECOVER-C1-08, R-CI-RECOVER-C1-09, R-CI-RECOVER-C1-10, R-CI-RECOVER-C1-11, R-CI-RECOVER-C1-12, R-CI-RECOVER-C1-13, R-CONTENT-02, R-COV-01, R-COV-02, R-COV-03, R-COV-04, R-COV-05, R-DATA-COLOR-01, R-DATA-NUM-01, R-DATA-SYNC-01, R-DATA-SYNC-02, R-DATA-SYNC-03, R-DATA-SYNC-04, R-DATA-SYNC-05, R-DATA-URL-01, R-DATA-URL-02, R-DATA-URL-03, R-DATA-URL-04, R-DISCLOSURE-01, R-DISCLOSURE-02, R-DOC-01, R-DOC-02, R-DOC-03, R-DOC-RTM-01, R-DOC-RTM-02, R-DOC-RTM-03, R-DOC-TRACE-01, R-DOC-TRACE-02, R-DOC-TRACE-03, R-DOC-TRACE-04, R-DOC-TRACE-05, R-FIRST-01, R-FIRST-02, R-GKP-01, R-GKP-02, R-GKP-03, R-HTTP-02, R-HTTP-03, R-HTTP-04, R-HTTP-05, R-HTTP-06, R-NAV-03, R-NAV-06, R-PIPE-01, R-PIPE-02, R-PIPE-03, R-PIPE-04, R-PIPE-05, R-PIPE-06, R-PIPE-07, R-PIPE-08, R-PIPE-09, R-PIPE-10, R-PIPE-11, R-PIPE-12, R-PIPE-13, R-RELEASE-01, R-RELEASE-02, R-RELEASE-03, R-RELEASE-04, R-SHELL-02, R-SHELL-03, R-THEME-01, R-UNIT-NOTFOUND-01, R-UNIT-NOTFOUND-02, R-UNIT-PANELS-01, R-UNIT-PANELS-02, R-UNIT-PANELS-03, R-UNIT-PANELS-04, R-UNIT-PANELS-05, R-UNIT-PANELS-06, R-UNIT-PRELOADER-01, R-UNIT-PRELOADER-02, R-UNIT-PRELOADER-03, R-UNIT-RESNAV-01, R-UNIT-RESNAV-02, R-UNIT-RESNAV-03, R-UNIT-RESNAV-04, R-UNIT-RESNAV-05, R-UNIT-RESNAV-06, R-UNIT-RESNAV-07, R-UNIT-RESNAV-08, R-UNIT-SHELL-01, R-UNIT-SHELL-02, R-UNIT-SHELL-03, R-UNIT-SHELL-04, R-UNIT-SHELL-05, R-UNIT-SHELL-06, R-UNIT-SHELL-07, R-UNIT-SHELL-08, R-UNIT-STARRED-01, R-UNIT-STARRED-02, R-UNIT-STARRED-03, R-UNIT-TITLE-01, R-UNIT-TITLE-02, R-UNIT-TITLE-03, R-UNIT-TOUCHBAR-01, R-UNIT-TOUCHBAR-02, R-UNIT-TOUCHBAR-03, R-UNIT-TOUCHBAR-04, R-UNIT-TOUCHBAR-05 | Not Run 6 |
 
 ## Consistency
 

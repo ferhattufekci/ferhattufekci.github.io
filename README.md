@@ -12,6 +12,7 @@ Personal portfolio website of **Ferhat Tüfekçi**.
 
 ### Documentation
 
+- [User guide](docs/USER-GUIDE.md): how to use the site: sections, filters, sharing, theme, keyboard, Markdown copies.
 - [Maintenance guide](#maintenance-guide): how content is generated, published and verified.
 - [Test strategy](TEST-STRATEGY.md#test-strategy-en): test layers, BDD scenarios and the deployment quality gate.
 - [CI/CD guide](docs/CI-CD.md): pipeline flow, release gate, reports and failure handling.
@@ -178,6 +179,7 @@ Any commercial use, redistribution, or derivative work requires prior written pe
 
 ### Dokümantasyon
 
+- [Kullanım kılavuzu](docs/USER-GUIDE.tr.md): sitenin kullanımı: bölümler, filtreler, paylaşım, tema, klavye, Markdown kopyaları.
 - [Bakım rehberi](#bakim-rehberi): içeriğin nasıl üretildiği, yayınlandığı ve doğrulandığı.
 - [Test stratejisi](TEST-STRATEGY.md#test-strategy-tr): test katmanları, BDD senaryoları ve yayın kalite kapısı.
 - [CI/CD rehberi](docs/CI-CD.tr.md): pipeline akışı, yayın kapısı, raporlar ve hata yönetimi.
