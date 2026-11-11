@@ -10,6 +10,13 @@
   border: 0;
 }
 .ads-resume-post-advertising ins.adsbygoogle { display: block; width: 100%; }
+/* Blog's in-article fluid unit pins its iframe to the pixel width it filled at
+   (position:absolute; left:0). When the panel later narrows (rotation, viewport
+   change) the creative kept that width, moved right and was clipped by the
+   panel's overflow-x. Keep it within its own slot; height stays provider-owned.
+   Projects' autorelaxed unit is not affected (R-AD-WIDTH-01). */
+.ad-slot-blog ins.adsbygoogle { position: relative; }
+.ad-slot-blog ins.adsbygoogle iframe { max-width: 100%; }
 .ads-resume-post-advertising .ad-label { display: none; }
 .ads-resume-post-advertising[data-ad-state="filled"],
 .ads-resume-post-advertising[data-ad-state="optimized"] {
