@@ -94,7 +94,19 @@ test('R-CI-02: all jobs check out the resolved SHA and deploy the one tested art
     ).with['artifact-ids'],
     '${{ needs.quality-checks.outputs.artifact-id }}'
   );
-  assert.match(pages.concurrency.group, /portfolio-production/);
+  // Only a main dispatch can deploy, so only dispatches take the production lock; main
+  // push/data-sync CI has its own uncancelled group.
+  assert.ok(pages.concurrency.group.includes("github.ref == 'refs/heads/main' && (github.event_name == 'workflow_dispatch' && 'portfolio-production' || 'portfolio-main-ci')"));
+  assert.ok(pages.jobs['deploy-pages'].if.startsWith("github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' &&"));
+  // Evaluate the expressions for each trigger (Actions `&&`/`||` return operands, like JS).
+  const evaluate = (expression, github) => Function('github', 'format', `return ${expression.replace(/^\$\{\{\s*|\s*\}\}$/g, '').replaceAll('==', '===').replaceAll('!=', '!==')}`)(github, (f, ...a) => f.replace(/\{(\d)\}/g, (_, i) => a[i]));
+  const lock = github => [evaluate(pages.concurrency.group, github), evaluate(pages.concurrency['cancel-in-progress'], github)];
+  const main = 'refs/heads/main';
+  assert.deepEqual(lock({ event_name: 'workflow_dispatch', ref: main }), ['portfolio-production', false]);
+  assert.deepEqual(lock({ event_name: 'push', ref: main }), ['portfolio-main-ci', false]);
+  assert.deepEqual(lock({ event_name: 'workflow_run', ref: main }), ['portfolio-main-ci', false]);
+  assert.deepEqual(lock({ event_name: 'pull_request', ref: 'refs/pull/7/merge', event: { pull_request: { number: 7 } } }), ['portfolio-pr-7', true]);
+  assert.deepEqual(lock({ event_name: 'workflow_dispatch', ref: 'refs/heads/topic' }), ['portfolio-ci-refs/heads/topic', true]);
   assert.match(
     pages.concurrency['cancel-in-progress'],
     /github\.ref != 'refs\/heads\/main'/
