@@ -96,8 +96,10 @@ depth. It is not added here because the page still carries large inline `<script
 inline event attributes; any policy strong enough to matter would need `'unsafe-inline'`,
 which makes it theatre, or hashes/nonces for every block, which GitHub Pages cannot serve as
 headers and which would have to go in a `<meta>` tag and would break on every edit. The
-honest sequence is: finish the inline-script extraction (A0 is merged, A1+ is planned in
-`docs/T-4-INLINE-SCRIPTS.md`), then add a CSP that does not need `'unsafe-inline'`. Tracked
+honest sequence is: settle the CSP approach (D-7) first, then extract the inline scripts,
+then add a CSP that does not need `'unsafe-inline'`. A0 is merged; A1 is deferred until D-7
+is settled (owner's decision, 2026-11-11), because extraction prepares for CSP but gives no
+CSP protection on its own and adds a load dependency (`docs/T-4-INLINE-SCRIPTS.md`). Tracked
 in `docs/OPEN-ITEMS.md`.
 
 ### F-3 No dependency or secret scanning in CI

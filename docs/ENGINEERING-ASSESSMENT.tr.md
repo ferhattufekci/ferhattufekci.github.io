@@ -104,9 +104,11 @@ eklenmemesinin nedeni, sayfanın hâlâ büyük satır içi `<script>` blokları
 nitelikleri taşımasıdır. Anlamlı olacak kadar güçlü bir politika ya `'unsafe-inline'`
 gerektirir ki bu onu göstermelik yapar, ya da her blok için hash/nonce gerektirir. GitHub
 Pages bunları header olarak sunamaz; `<meta>` etiketine konmaları gerekir ve her düzenlemede
-bozulurlar. Doğru sıra şudur: satır içi betiklerin ayrılmasını bitirmek (A0 birleştirildi,
-A1+ `docs/T-4-INLINE-SCRIPTS.md` içinde planlandı), ardından `'unsafe-inline'` gerektirmeyen
-bir CSP eklemek. `docs/OPEN-ITEMS.md` içinde takip edilir.
+bozulurlar. Doğru sıra şudur: önce CSP yaklaşımını (D-7) netleştirmek, sonra satır içi
+betikleri ayırmak, ardından `'unsafe-inline'` gerektirmeyen bir CSP eklemek. A0 birleştirildi;
+A1, D-7 netleşene kadar ertelendi (sahibin kararı, 2026-11-11): taşıma CSP geçişine
+hazırlıktır, tek başına CSP koruması sağlamaz ve ek bir yükleme bağımlılığı getirir
+(`docs/T-4-INLINE-SCRIPTS.md`). `docs/OPEN-ITEMS.md` içinde takip edilir.
 
 ### F-3 CI'da bağımlılık veya gizli bilgi taraması yok
 CI'da `npm audit` adımı ve gizli bilgi taraması yoktur [D]. (Düzeltme, 2026-11-11: `.github/dependabot.yml`
