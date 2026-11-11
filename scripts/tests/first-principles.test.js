@@ -107,6 +107,16 @@ test('R-CI-02: all jobs check out the resolved SHA and deploy the one tested art
   assert.deepEqual(lock({ event_name: 'workflow_run', ref: main }), ['portfolio-main-ci', false]);
   assert.deepEqual(lock({ event_name: 'pull_request', ref: 'refs/pull/7/merge', event: { pull_request: { number: 7 } } }), ['portfolio-pr-7', true]);
   assert.deepEqual(lock({ event_name: 'workflow_dispatch', ref: 'refs/heads/topic' }), ['portfolio-ci-refs/heads/topic', true]);
+  // Release evidence outlives the 7-day diagnostic window: a publishing run keeps every
+  // quality artifact for 90 days (the repository maximum), production verification always.
+  const retention = Function('needs', `return ${pages.jobs['quality-checks'].with['evidence-retention-days'].replace(/^\$\{\{\s*|\s*\}\}$/g, '').replaceAll('needs.resolve-source', "needs['resolve-source']").replaceAll('==', '===')}`);
+  assert.equal(retention({ 'resolve-source': { outputs: { publish: 'true' } } }), 90);
+  assert.equal(retention({ 'resolve-source': { outputs: { publish: 'false' } } }), 7);
+  const uploads = Object.values(quality.jobs).flatMap(job => job.steps ?? []).filter(step => step.uses?.startsWith('actions/upload-'));
+  assert.ok(uploads.length >= 8);
+  for (const step of uploads) assert.equal(step.with['retention-days'], '${{ inputs.evidence-retention-days }}', step.name);
+  assert.equal(quality.on.workflow_call.inputs['evidence-retention-days'].default, 7);
+  assert.equal(pages.jobs['verify-production'].steps.find(step => step.uses?.startsWith('actions/upload-artifact@')).with['retention-days'], 90);
   assert.match(
     pages.concurrency['cancel-in-progress'],
     /github\.ref != 'refs\/heads\/main'/
