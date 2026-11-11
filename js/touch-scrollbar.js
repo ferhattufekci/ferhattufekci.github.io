@@ -10,7 +10,7 @@
  *
  * On a coarse pointer (the same media query that dark-theme.css uses to hide
  * the native scrollbar before the first paint) this script draws one element
- * in that design beside the active scroll owner. It does not measure or depend
+ * in that design, with the same colour tokens, beside the active scroll owner. It does not measure or depend
  * on the native scrollbar, so starting it never changes the layout. It is decorative
  * (aria-hidden, pointer-events: none): scrolling stays native, so touch,
  * keyboard and assistive technology behave exactly as before.
@@ -48,8 +48,33 @@
     return null;
   }
 
+  // A page slides in on the first load and on every page switch (css pt-page-move*
+  // animations, about 300 ms). Its box is then somewhere across the screen, and during a
+  // switch two pages are current at once, so a bar measured then was drawn in the middle
+  // of the screen and jumped along with the slide. No bar is drawn while a current page
+  // is still animating; animationend redraws it once the page has settled.
+  function animating(page) {
+    if (typeof page.getAnimations === "function") {
+      return page.getAnimations().some(function (animation) {
+        return animation.playState === "running" || animation.playState === "pending";
+      });
+    }
+    var name = getComputedStyle(page).animationName;
+    return !!name && name !== "none";
+  }
+
+  function pageInMotion() {
+    var pages = document.querySelectorAll(".pt-page-current");
+    for (var i = 0; i < pages.length; i++) if (animating(pages[i])) return true;
+    return false;
+  }
+
   function render() {
     frame = 0;
+    if (pageInMotion()) {
+      bar.hidden = true;
+      return;
+    }
     owner = findOwner();
     // The owner's box moves when the header or viewport changes height; follow it.
     if (watcher && owner !== watched) {
@@ -115,6 +140,7 @@
     window.addEventListener("hashchange", reset);
     // Page switches move .pt-page-current and slide the pages; follow the new owner.
     document.addEventListener("animationend", reset, true);
+    document.addEventListener("animationcancel", reset, true);
     document.addEventListener("transitionend", schedule, true);
     // Blog and Projects fill their panels after load; keep the thumb size current.
     if (window.ResizeObserver) {
