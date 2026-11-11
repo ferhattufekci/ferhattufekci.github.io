@@ -74,6 +74,11 @@ Genel kurallar (sahibin kararları): `PORTFOLIO_RECOVERY_ACT` kapalı; productio
 ### BR-1 Birleşmiş uzak dalların silinmesi
 - **Öncelik:** P3. **Durum:** silinmedi. **Karar:** yalnızca sahibin ayrı izniyle; silmeden önce birleştirildiği doğrulanır.
 
+### GOV-1 Başarısız testlerin merge'i GitHub düzeyinde engellemesi (zorunlu kontrol)
+- **Öncelik:** P2. **Durum:** bilinçli olarak uygulanmadı (2026-11-11, takım lideri kararı). **Kanıt:** `Protect main` ruleset'i yalnızca `deletion` ve `non_fast_forward` kuralı taşır; zorunlu durum kontrolü yoktur; branch protection yoktur (API 404) [G]. Bu yüzden kırmızı bir PR'ın merge'ünü şu an yalnızca süreç (head SHA kilidi, yeşil CI kontrolü) engeller.
+- **Neden ertelendi:** veri senkronizasyonu (`fetch-medium.yml` 6 saatte bir, `fetch-github.yml` haftalık) `GITHUB_TOKEN` ile doğrudan main'e push eder. Ruleset'teki "required status checks" doğrudan push'a da uygulanır; yeni veri commit'inin kontrolü olmadığı için push reddedilir. `GITHUB_TOKEN`'ın bypass listesiyle bu kuraldan muaf tutulabildiği resmi olarak belgelenmemiştir; kullanıcı raporları bypass listesindeki botların durum kontrolü varken yine reddedildiğini söylüyor [W]. Kuralı açmak senkronizasyonu büyük olasılıkla bozar.
+- **Önerilen yol:** (1) senkronizasyon workflow'ları bir GitHub App token'ı ile push etsin (sahip App'i oluşturur ve secret'ı ekler); (2) iki katmanlı ruleset: `Run Quality Checks / Quality Gate` zorunlu (integration_id: GitHub Actions), bypass yalnızca o App; mevcut silme/force-push ruleset'i boş bypass ile kalır; (3) bir senkronizasyon push'u ve kırmızı bir PR ile gerçek doğrulama. **Karar:** sahip (App oluşturma).
+
 ## 2. Araştırılıyor / kanıt bekliyor
 
 ### RF R-FILTER-04 ve R-KEYBOARD-08 kök neden
