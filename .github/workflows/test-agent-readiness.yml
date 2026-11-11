@@ -220,10 +220,23 @@ jobs:
     # specs, production e6fd8f9 vs main, 1.9 min each), so hosted-runner
     # variance is the working explanation [?]. 75 minutes keeps ~1.3x over a
     # full run at the slow rate while the cause stays under observation.
+    # Update 2026-11-11: this job was the run's critical path in 5 of 7 runs
+    # (25-32 min vs 22-26 min for the slowest browser shard). Its reports show
+    # Firefox and WebKit each need about half of the 2-worker time (runs
+    # 42980139249, 42984959373, 42986015789: Firefox 22.4-27.4, WebKit
+    # 24.5-29.6 worker-minutes of 666 tests), so each engine runs in its own
+    # job. Same tests, timeouts and retries: 332 Firefox + 334 WebKit = 666.
     timeout-minutes: 75
     needs: build-site
+    strategy:
+      fail-fast: false
+      matrix:
+        browser:
+          - firefox
+          - webkit
     env:
       PORTFOLIO_TEST_ROOT: .pages-site
+      KEYBOARD_BROWSER: ${{ matrix.browser }}
     steps:
       - name: Check out resolved source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -249,16 +262,17 @@ jobs:
         run: bash scripts/ci/bound-apt-network.sh
       - name: Install keyboard test browsers
         timeout-minutes: 5
-        run: npx playwright install --with-deps firefox webkit
-      - name: Test keyboard behavior in Firefox and WebKit
-        run: npx playwright test --config=playwright.keyboard.config.mjs
+        run: npx playwright install --with-deps "$KEYBOARD_BROWSER"
+      - name: Test keyboard behavior in ${{ matrix.browser }}
+        run: npx playwright test --config=playwright.keyboard.config.mjs --project="$KEYBOARD_BROWSER-*"
       - name: Test WebKit touch arrows
+        if: matrix.browser == 'webkit'
         run: npx playwright test --config=playwright.webkit.config.mjs tests/browser/arrow-controls.spec.mjs
       - name: Publish keyboard browser reports
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
-          name: keyboard-browser-report
+          name: keyboard-browser-report-${{ matrix.browser }}
           path: |-
             work/qa/keyboard-results/
             work/qa/keyboard-results.json
