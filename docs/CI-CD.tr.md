@@ -233,9 +233,9 @@ kimlikleri, sonuçları, yeniden denemeleri, süreyi ve runner kaynaklarını ka
 Birleştirici shard başına tam bir rapor (`CI_SHARD_TOTAL`, matris boyutuna eşit; R-CI-SHARD-01), shard başına bir blob ve beklenen testlerin eksiksiz,
 kesişmeyen birleşimini şart koşar. Eksik, mükerrer, atlanmış, yeniden denenmiş ve başarısız
 testler doğrulamayı kırar. HTML, JUnit ve JSON raporları birleştirilir; başarısız shard'lar
-trace, ekran görüntüsü ve videolarını korur. Raporlar yedi gün saklanır. Önbellek anahtarları
-işletim sistemini, mimariyi, runner neslini, projenin Node sürümünü ve lockfile hash'ini
-içerir; işletim sisteminin tarayıcı bağımlılıkları yine kurulur.
+trace, ekran görüntüsü ve videolarını korur. Raporlar yedi gün saklanır. Tarayıcı job'ları sabitlenmiş
+Playwright container imajında çalışır (R-CI-PWC-01/02); bu yüzden tarayıcı önbelleği ve
+çalışma anında işletim sistemi bağımlılığı kurulumu yoktur.
 
 **Shard sayısı (2026-11-12).** 2026-11-11/12'deki 14 başarılı koşuda (container imajı, tarayıcı job'ı başına 27-44 sn kurulum) iki Chromium shard'ı 18-27 dakika sürdü ve kritik yolu belirledi; klavye job'ları 11-17 dakika, duvar süresi 23-33 dakika, runner süresi 74-85 dakikaydı. Hangi shard'ın yavaş olduğu koşudan koşuya değişti; fark sabit bir bölünme değil, runner değişkenliğidir. Üçüncü shard'ın en yavaş Chromium shard'ını klavye job'larına yaklaştırması (yaklaşık 7 dakika daha kısa duvar süresi), bedelinin ise yaklaşık bir job kurulumu (checkout, `npm ci`, artifact indirme; 2 runner-dakikadan az) olması beklenir. Strict ruleset'te `main`'in gerisine düşen her PR bir tam koşuyu yeniden bekler; duvar süresi artık merge'leri belirler. İki sayıyı değişiklikten sonraki ilk koşulardan doğrulayın; duvar süresi düşmezse veya runner süresi bir job kurulumundan fazla artarsa iki shard'a dönün.
 
