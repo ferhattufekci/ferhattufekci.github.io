@@ -122,7 +122,7 @@ toplamak başarısız bir testi asla başarılıya çevirmez. Bash, `tee` üzeri
   yoksa PR açılmaz. Aynı main üzerinde aynı veri varsa açık PR korunur; aksi hâlde tek bir
   yeni PR açılır ve eskisi kapatılır, böylece bir kaynağın iki açık senkronizasyon PR'ı olmaz.
   Kaynağın verisi ve ondan üretilen dosyalar dışında bir dosyaya dokunan üretim senkronizasyonu
-  başarısız kılar. Auto-merge yalnızca App'in kendi kapsam içi PR'ı için ve main, GitHub
+  başarısız kılar. Auto-merge (squash; her senkronizasyon için tek bir `chore(data): sync …` commit'i; head dalı merge sonrası, yerine yenisi açılan PR'ın dalı kapatılırken silinir) yalnızca App'in kendi kapsam içi PR'ı için ve main, GitHub
   Actions'tan gelen Quality Gate'i güncel dal koşuluyla zorunlu tuttuğu sürece etkinleşir;
   merge'ün kendisi yine bu zorunlu kontrolden geçer. Kurulum ve durum: `docs/OPEN-ITEMS.md` GOV-1.
 - Çözümleyici; yazıcının ad/yol çiftini, kaynak depoyu, main dalını, schedule/manual

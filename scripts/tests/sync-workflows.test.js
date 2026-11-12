@@ -97,3 +97,16 @@ test('R-CI-01: changed paths are read exactly, including the first modified path
     assert.ok(changedPaths(dir).every(path => allowed('github', path)));
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('R-CI-01: auto-merge squashes with a message that names the data, and a superseded sync PR loses its branch', async () => {
+  const { AUTO_MERGE, autoMergeVariables } = await import('../ci/sync-pr.mjs');
+  assert.match(AUTO_MERGE, /mergeMethod: SQUASH/);
+  assert.doesNotMatch(AUTO_MERGE, /mergeMethod: (MERGE|REBASE)/);
+  for (const name of ['$id', '$headline', '$body']) assert.ok(AUTO_MERGE.includes(name), name);
+  const vars = autoMergeVariables('github', { node_id: 'PR_x', number: 85 });
+  assert.deepEqual(vars, { id: 'PR_x', headline: 'chore(data): sync GitHub repositories (#85)', body: vars.body });
+  assert.match(vars.body, /Quality Gate/);
+  assert.doesNotMatch(vars.headline + vars.body, /Co-Authored-By|Generated with/i);
+  const source = await readFile(new URL('../ci/sync-pr.mjs', import.meta.url), 'utf8');
+  assert.ok(source.includes("await api(`/repos/${repo}/git/refs/heads/${old.head.ref}`, { method: 'DELETE' });"), 'superseded sync branch is deleted');
+});

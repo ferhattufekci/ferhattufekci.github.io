@@ -42,19 +42,21 @@ sağlıklı yayınla karşılaştırın: Verify Production adımı geçmiş bir 
 ## 3. Revert ile geri al (normal yol)
 
 1. Sorunu getiren commit'i veya merge'ü bulun: `git log --oneline origin/main`.
-2. Bir dalda revert edip PR açın. Merge commit için ilk ebeveynine göre revert edin:
+2. Bir dalda revert edip PR açın. Pull request'ler squash ile birleştirilir; bir değişiklik tek bir normal commit'tir. Yalnızca eski bir merge commit `-m 1` ister:
    ```bash
    git switch -c revert/<kısa-sha> origin/main
    git revert -m 1 <merge-sha>   # normal bir commit için yalnızca `git revert <sha>`
    git push -u origin revert/<kısa-sha>
    ```
 3. PR'ın Portfolio CI/CD koşusunun geçmesini bekleyin, sonra merge edin.
-4. Actions'ta **Portfolio CI/CD**'yi `release_sha` = `main`'in yeni head'i (merge commit) ile çalıştırın.
+4. Actions'ta **Portfolio CI/CD**'yi `release_sha` = `main`'in yeni head'i ile çalıştırın.
 5. Verify Production geçince `/build-metadata.json`'ın yeni `sourceSha`'yı gösterdiğini kontrol edin.
 
 Doğrulanmış bir geri almaya kadar beklenen süre yaklaşık 30 dakika ve buna PR incelemesi
 eklenir. `main`'i eski bir commit'e force-push etmeyin: geçmişi yeniden yazar, zamanlanmış veri
 commit'leri kaybolur ve yayın kapısı yine yeni bir koşu ister.
+
+Revert yolu `main`'deki commit'ler için geçerlidir. `main`'in ilk commit'inden (`4d60773`) önceki bir içeriğe dönmek gerekirse ilgili dosyalar depo dışı yedekten alınır ve yeni bir PR ile geri getirilir.
 
 ## 4. Acil yayından kaldırma
 

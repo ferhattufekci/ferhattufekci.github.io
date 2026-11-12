@@ -51,6 +51,14 @@ export function autoMergeAllowed({ source, pr, files, bot, repo, rules }) {
   return { ok: reasons.length === 0, reasons };
 }
 
+/** Squash auto-merge: one commit per sync on main, with a message that names the data. */
+export const AUTO_MERGE = 'mutation($id: ID!, $headline: String!, $body: String!) { enablePullRequestAutoMerge(input: { pullRequestId: $id, mergeMethod: SQUASH, commitHeadline: $headline, commitBody: $body }) { clientMutationId } }';
+export const autoMergeVariables = (source, pr) => ({
+  id: pr.node_id,
+  headline: `chore(data): sync ${SOURCES[source].title} (#${pr.number})`,
+  body: `Automated ${source} data sync. Merged by auto-merge after the required Quality Gate passed on a branch up to date with main.`
+});
+
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 
 /** Every tracked change and untracked file in the work tree, as exact paths. NUL-separated
@@ -110,7 +118,10 @@ async function main() {
   for (const old of decision.close ?? []) {
     await api(`/repos/${repo}/issues/${old.number}/comments`, { method: 'POST', body: JSON.stringify({ body: pr ? `Superseded by #${pr.number}.` : 'main already contains this data.' }) });
     await api(`/repos/${repo}/pulls/${old.number}`, { method: 'PATCH', body: JSON.stringify({ state: 'closed' }) });
-    console.log(`closed #${old.number}`);
+    // GitHub deletes head branches only after a merge; a superseded sync PR's branch is removed
+    // here. plan() returns only this source's own PRs from this repository.
+    await api(`/repos/${repo}/git/refs/heads/${old.head.ref}`, { method: 'DELETE' });
+    console.log(`closed #${old.number} and deleted ${old.head.ref}`);
   }
   if (!pr) return;
 
@@ -119,7 +130,7 @@ async function main() {
   const rules = await api(`/repos/${repo}/rules/branches/main`);
   const verdict = autoMergeAllowed({ source, pr, files, bot, repo, rules });
   if (verdict.ok && !pr.auto_merge) {
-    await graphql('mutation($id: ID!) { enablePullRequestAutoMerge(input: { pullRequestId: $id, mergeMethod: MERGE }) { clientMutationId } }', { id: pr.node_id });
+    await graphql(AUTO_MERGE, autoMergeVariables(source, pr));
     console.log(`auto-merge enabled for #${pr.number}`);
   } else if (!verdict.ok) {
     if (pr.auto_merge) await graphql('mutation($id: ID!) { disablePullRequestAutoMerge(input: { pullRequestId: $id }) { clientMutationId } }', { id: pr.node_id });

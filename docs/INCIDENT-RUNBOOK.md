@@ -40,19 +40,21 @@ Actions history (a **Portfolio CI/CD** `workflow_dispatch` run whose Verify Prod
 ## 3. Roll back by revert (normal path)
 
 1. Find the commit or merge that introduced the problem: `git log --oneline origin/main`.
-2. Revert it on a branch and open a PR. For a merge commit, revert against its first parent:
+2. Revert it on a branch and open a PR. Pull requests are squash-merged, so a change is one normal commit; only an older merge commit needs `-m 1`:
    ```bash
    git switch -c revert/<short-sha> origin/main
    git revert -m 1 <merge-sha>   # use plain `git revert <sha>` for a normal commit
    git push -u origin revert/<short-sha>
    ```
 3. Let the PR's Portfolio CI/CD pass, then merge it.
-4. In Actions run **Portfolio CI/CD** with `release_sha` = the new head of `main` (the merge commit).
+4. In Actions run **Portfolio CI/CD** with `release_sha` = the new head of `main`.
 5. When Verify Production passes, check that `/build-metadata.json` shows the new `sourceSha`.
 
 Expected time to a verified rollback: about 30 minutes, plus PR review. Do not force-push `main`
 to an older commit: it rewrites history, the scheduled data commits are lost, and the release
 gate would still require a fresh run.
+
+The revert path covers commits on `main`. To return to content from before the first commit of `main` (`4d60773`), take the files from the off-repository backup and bring them back in a new PR.
 
 ## 4. Emergency unpublish
 
