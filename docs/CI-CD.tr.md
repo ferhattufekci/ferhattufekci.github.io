@@ -485,9 +485,9 @@ container imajında çalışır (`mcr.microsoft.com/playwright:v1.65.0-noble`, d
 İmaj tarayıcıları ve sistem paketlerini içerir; bu job'lar apt ile hiçbir şey indirmez.
 `scripts/ci/check-container-browsers.mjs`, imaj ile kilitli Playwright sürümü uyuşmazsa job'ı
 erken başarısız kılar; `R-CI-PWC-01/02` etiketi, digest'i ve kurulum adımı kalmadığını
-denetler. **Verify Production** (`pages.yml`) 2026-11-12'den beri aynı imajda çalışır; pull
-request koşusu bu job'ı çalıştıramadığı için ilk gerçek koşusu bir sonraki production
-dispatch'idir (o zamana kadar doğrulanmadı). `@playwright/test` yükseltildiğinde imaj etiketi
+denetler. **Verify Production** (`pages.yml`) 2026-11-12'den beri aynı imajda çalışır; ilk
+gerçek koşusu olan production dispatch'i `43149622361` (`ef535c2`) geçti: imaj 29 sn'de
+çekildi ve yayınlanan sitenin duman testi başarılı oldu. `@playwright/test` yükseltildiğinde imaj etiketi
 aynı sürüme çekilir ve üç job'daki digest değiştirilir
 (`docker buildx imagetools inspect mcr.microsoft.com/playwright:v<sürüm>-noble` yazdırır);
 etiket eşleşene kadar `R-CI-PWC-01` başarısız olur. Dependabot bu imajı güncellemez.
