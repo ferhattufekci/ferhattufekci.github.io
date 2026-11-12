@@ -137,6 +137,8 @@ Both sync workflows run `build-static-seo.js` right after fetching, so the fallb
 
 The site is published on GitHub Pages by the **Portfolio CI/CD** workflow (`pages.yml`): one source SHA is built once, tested, deployed and then verified live. A failed quality job blocks deployment.
 
+The footer of every page shows a build label such as `Build 372.1`. The first number is the number of the Portfolio CI/CD run that built, tested and published those files; the second is the attempt of that run (`1` unless the run was re-run). GitHub Actions assigns both, so nothing is maintained by hand. The label links to that run, so any published page can be traced back to the pipeline run and its test reports.
+
 Edit the source, not a generated file, then run `npm run generate`:
 
 | Source | Generates |
@@ -321,6 +323,8 @@ Blog ve Projects içeriklerini istemci tarafında `fetch()` ile yükler. Ham HTM
 ### Bakım
 
 Site, **Portfolio CI/CD** workflow'u (`pages.yml`) ile GitHub Pages'te yayınlanır: tek bir kaynak SHA'sı bir kez build edilir, test edilir, yayınlanır ve ardından canlı ortamda doğrulanır. Kalite job'u başarısızsa yayın yapılmaz.
+
+Her sayfanın alt bilgisinde `Build 372.1` gibi bir build etiketi görünür. İlk sayı, o dosyaları build eden, test eden ve yayınlayan Portfolio CI/CD koşusunun numarasıdır; ikincisi o koşunun deneme numarasıdır (koşu yeniden çalıştırılmadıysa `1`). İkisini de GitHub Actions atar; elle güncellenen bir şey yoktur. Etiket o koşuya bağlantı verir; böylece yayındaki her sayfa, kendisini üreten pipeline koşusuna ve test raporlarına kadar izlenebilir.
 
 Üretilen dosyayı değil kaynağını düzenleyin, ardından `npm run generate` çalıştırın:
 
