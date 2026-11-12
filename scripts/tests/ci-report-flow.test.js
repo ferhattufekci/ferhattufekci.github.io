@@ -14,7 +14,7 @@ test('R-PIPE-13: real Playwright blobs merge successful and failed results while
   const playwright = join(ROOT, 'node_modules/@playwright/test/cli.js');
   const run = (args, env = {}) => spawnSync(process.execPath, args, {
     cwd: root, encoding: 'utf8',
-    env: { ...process.env, CI_SHARD: '', TEST_INVENTORY: '', GITHUB_OUTPUT: join(root, 'outputs.txt'), ...env }
+    env: { ...process.env, CI_SHARD: '', CI_SHARD_TOTAL: '2', TEST_INVENTORY: '', GITHUB_OUTPUT: join(root, 'outputs.txt'), ...env }
   });
   const expectExit = (result, code) => assert.equal(result.status, code, result.stdout + '\n' + result.stderr);
   const json = async path => JSON.parse(await readFile(join(root, path), 'utf8'));

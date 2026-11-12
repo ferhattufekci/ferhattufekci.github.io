@@ -120,7 +120,11 @@ else if (command === 'current') {
       ? 'Missing expected test inventory (check build-site and test-inventory download)'
       : `Invalid expected test inventory: ${error.message}`);
   }
-  for (const index of [1, 2]) {
+  // The merge job cannot see the browser matrix, so the workflow passes its size; a missing or
+  // invalid value fails closed instead of defaulting (R-CI-SHARD-01 ties it to the matrix).
+  const shardTotal = Number(process.env.CI_SHARD_TOTAL);
+  if (!Number.isInteger(shardTotal) || shardTotal < 1) errors.push(`Invalid CI_SHARD_TOTAL: ${JSON.stringify(process.env.CI_SHARD_TOTAL)}`);
+  for (let index = 1; index <= (Number.isInteger(shardTotal) ? shardTotal : 0); index++) {
     const base = `work/qa/shards/browser-report-${index}`;
     try {
       reports.push(JSON.parse(await readFile(`${base}/coverage.json`, 'utf8')));
@@ -142,7 +146,7 @@ else if (command === 'current') {
   let summary;
   if (expected !== undefined) {
     try {
-      summary = validateCoverage(expected, reports);
+      summary = validateCoverage(expected, reports, shardTotal);
     } catch (error) {
       errors.push(`Coverage rejected: ${error.message}`);
     }

@@ -21,10 +21,10 @@ async function withReports(callback) {
     await rm(root, { recursive: true, force: true });
   }
 }
-function coverage(root, needs = {}) {
+function coverage(root, needs = {}, shardEnv = {}) {
   return spawnSync(process.execPath, [join(ROOT, 'scripts/ci/commands.mjs'), 'coverage'], {
     cwd: root,
-    env: { ...process.env, CHECK_RESULTS: JSON.stringify(needs), GITHUB_OUTPUT: join(root, 'outputs.txt') },
+    env: { ...process.env, CHECK_RESULTS: JSON.stringify(needs), GITHUB_OUTPUT: join(root, 'outputs.txt'), CI_SHARD_TOTAL: '2', ...shardEnv },
     encoding: 'utf8'
   });
 }
