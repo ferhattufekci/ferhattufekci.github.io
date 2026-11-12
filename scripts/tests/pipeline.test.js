@@ -217,7 +217,7 @@ test('R-PIPE-06: action pins, matrix coverage, strict gate and protected product
       await readFile('.github/workflows/test-agent-readiness.yml', 'utf8')
     ),
     p = YAML.parse(await readFile('.github/workflows/pages.yml', 'utf8'));
-  assert.deepEqual(q.jobs['browser-tests'].strategy.matrix.shard, [1, 2]);
+  assert.deepEqual(q.jobs['browser-tests'].strategy.matrix.shard, [1, 2, 3]);
   assert.equal(q.jobs['browser-tests'].strategy['fail-fast'], false);
   assert.equal(q.jobs['quality-gate'].if, 'always()');
   assert.deepEqual(q.jobs['quality-gate'].needs, requiredChecks);
@@ -233,4 +233,22 @@ test('R-PIPE-06: action pins, matrix coverage, strict gate and protected product
       .length,
     1
   );
+});
+
+test('R-CI-SHARD-01: the shard count has one source and the merge rejects a missing, extra or unsharded report', async () => {
+  const q = YAML.parse(await readFile('.github/workflows/test-agent-readiness.yml', 'utf8'));
+  const browser = q.jobs['browser-tests'];
+  const matrix = browser.strategy.matrix.shard;
+  assert.deepEqual(matrix, Array.from({ length: matrix.length }, (_, i) => i + 1), 'shards are numbered 1..N');
+  assert.equal(browser.name, 'Browser Tests (${{ matrix.shard }}/${{ strategy.job-total }})');
+  assert.equal(browser.env.CI_SHARD_TOTAL, '${{ strategy.job-total }}');
+  assert.ok(browser.steps.some(step => step.run === 'npm run test:browser -- --shard="$CI_SHARD/$CI_SHARD_TOTAL"'));
+  // The merge job cannot read the other job's matrix; its copy must equal the matrix size.
+  assert.equal(q.jobs['merge-test-reports'].env.CI_SHARD_TOTAL, matrix.length);
+  const report = (index, total, ids) => ({ index, total, status: 'passed', assigned: ids, results: ids.map(id => ({ id, status: 'passed', retry: 0 })) });
+  const three = [report(1, 3, ['a']), report(2, 3, ['b']), report(3, 3, ['c'])];
+  assert.equal(validateCoverage(['a', 'b', 'c'], three, 3).tests, 3);
+  assert.throws(() => validateCoverage(['a', 'b', 'c'], three.slice(0, 2), 3), /Missing shard report/);
+  assert.throws(() => validateCoverage(['a', 'b', 'c'], three, 2));
+  assert.throws(() => validateCoverage(['a', 'b', 'c'], three.map(r => ({ ...r, total: null })), 3), 'an unsharded report has no total');
 });

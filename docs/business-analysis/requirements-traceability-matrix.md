@@ -4,7 +4,7 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**315 requirement ids, 363 test titles, 62 areas.**
+**316 requirement ids, 364 test titles, 63 areas.**
 
 | Area | Ids |
 |---|---|
@@ -26,6 +26,7 @@
 | R-CI-PWC | 2 |
 | R-CI-RECOVER | 24 |
 | R-CI-RECOVER-C1 | 14 |
+| R-CI-SHARD | 1 |
 | R-CONTENT | 3 |
 | R-COV | 5 |
 | R-DATA-COLOR | 1 |
@@ -167,6 +168,7 @@
 | R-CI-RECOVER-C1-11 | the checks pass on the real code and fail on injected defects | Unit/contract (node:test) | `scripts/tests/recovery-act.test.js` |
 | R-CI-RECOVER-C1-12 | resolve (workflow_run) and current read main through the API, never through git | Unit/contract (node:test) | `scripts/tests/recovery-act.test.js` |
 | R-CI-RECOVER-C1-13 | every workflow step that reads main through the API provides GH_TOKEN | Unit/contract (node:test) | `scripts/tests/recovery-act.test.js` |
+| R-CI-SHARD-01 | the shard count has one source and the merge rejects a missing, extra or unsharded report | Unit/contract (node:test) | `scripts/tests/pipeline.test.js` |
 | R-CONTENT-01 | Markdown resolves links, preserves facts and excludes executable scaffolding | Unit/contract (node:test) | `scripts/tests/agent-documents.test.js` |
 | R-CONTENT-02 | authored trust content is escaped before rendering | Unit/contract (node:test) | `scripts/tests/agent-documents.test.js` |
 | R-CONTENT-03 | Given JavaScript disabled, when browsing, then profile and trust content remain readable | Browser (Playwright) | `tests/browser/portfolio.spec.mjs` |

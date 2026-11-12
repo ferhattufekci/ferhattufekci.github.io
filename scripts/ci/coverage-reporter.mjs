@@ -36,7 +36,9 @@ export default class CoverageReporter {
       JSON.stringify(
         {
           index: Number(process.env.CI_SHARD),
-          total: 2,
+          // Playwright's own --shard value; absent means the run was not sharded and the
+          // merge rejects it.
+          total: this.config.shard?.total ?? null,
           status: result.status,
           duration: result.duration,
           workers: this.config.workers,
