@@ -59,7 +59,7 @@ flowchart LR
   S --> C[Static Checks]
   S --> B[Build Site]
   B --> V[Verify Artifact]
-  B --> T[Browser Tests: 2 shards]
+  B --> T[Browser Tests: 3 shards]
   B --> K[Cross-browser Keyboard Tests]
   U --> T
   C --> T
@@ -98,9 +98,11 @@ Quality Gate explicitly requires success from every required job, including repo
 
 ## Browser coverage and performance
 
-Playwright already used `fullyParallel: true` and two workers. These remain. Six Chromium profiles cover three viewports in light/dark themes; they are not six browser engines. Each of two shards runs its assigned subset once on its own Ubuntu runner. Worker contexts/storage and local server ports are isolated; fixtures control third-party services. Retries remain zero, so flaky outcomes cannot silently pass.
+Playwright already used `fullyParallel: true` and two workers. These remain. Six Chromium profiles cover three viewports in light/dark themes; they are not six browser engines. Each of three shards runs its assigned subset once on its own Ubuntu runner. Worker contexts/storage and local server ports are isolated; fixtures control third-party services. Retries remain zero, so flaky outcomes cannot silently pass.
 
-Build records all expected test IDs. Each shard records assigned IDs, outcomes, retries, duration and runner resources beside its blob report. The merger requires exactly two reports, one blob per shard and the complete, disjoint expected-test union. Missing, duplicate, skipped, retried and failed tests fail validation. HTML, JUnit and JSON reports are merged; failed shards retain traces, screenshots and video. Reports are retained seven days. Cache keys include OS, architecture, runner generation, project Node version and lockfile hash; OS browser dependencies are still installed.
+Build records all expected test IDs. Each shard records assigned IDs, outcomes, retries, duration and runner resources beside its blob report. The merger requires exactly one report per shard (`CI_SHARD_TOTAL`, equal to the matrix size; R-CI-SHARD-01), one blob per shard and the complete, disjoint expected-test union. Missing, duplicate, skipped, retried and failed tests fail validation. HTML, JUnit and JSON reports are merged; failed shards retain traces, screenshots and video. Reports are retained seven days. Browser jobs run in the pinned Playwright container image (R-CI-PWC-01/02), so there is no browser cache and no operating-system dependency installation at run time.
+
+**Shard count (2026-11-12).** Over 14 successful runs on 2026-11-11/12 (container image, setup 27-44 s per browser job) the two Chromium shards took 18-27 minutes and set the critical path; the keyboard jobs took 11-17 minutes, wall time was 23-33 minutes and runner time 74-85 minutes. Which shard was slower changed from run to run, so the spread is runner variance, not a fixed split. A third shard is expected to bring the slowest Chromium shard near the keyboard jobs (about 7 minutes less wall time) for about one extra job of setup (checkout, `npm ci`, artifact download, under 2 runner-minutes). Under the strict ruleset every PR that falls behind `main` waits one full run again, so wall time now gates merges. Confirm both numbers from the first runs after the change; revert to two shards if wall time does not fall or runner time grows by more than the setup of one job.
 
 When upstream checks skip the browser jobs, the collector records their results and every missing shard in `browser-coverage-diagnostics`. Coverage still fails. Available blobs are collected independently of coverage validation, so failed or partial runs can still produce diagnostic HTML/JUnit/JSON reports. Merge runs only when a blob exists; merged-report upload runs only when report files exist. No placeholder test reports are created, and the quality gate continues to require every job and both complete, passing shards. `scripts/tests/ci-reports.test.js` covers the report CLI, stale evidence cleanup, invalid reports, upstream diagnostics and workflow conditions.
 
