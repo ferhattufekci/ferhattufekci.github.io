@@ -455,7 +455,7 @@
       {
         "name": "JavaScript",
         "color": "#f1e05a",
-        "percent": 68
+        "percent": 69
       },
       {
         "name": "HTML",
@@ -488,7 +488,7 @@
     "pinned": false,
     "category": "software",
     "lang": "en",
-    "updatedAt": "2026-11-11T19:59:59Z"
+    "updatedAt": "2026-11-12T05:11:59Z"
   },
   {
     "name": "formik",
