@@ -40,8 +40,9 @@
   }
 
   document.addEventListener("pointerover", function (event) {
+    if (event.pointerType === "touch" || !window.matchMedia("(any-hover: hover)").matches) return;
     var host = hostFor(event.target);
-    if (event.pointerType !== "touch" && host && !host.contains(event.relatedTarget)) show(host);
+    if (host && !host.contains(event.relatedTarget)) show(host);
   });
   document.addEventListener("pointerout", function (event) {
     var host = hostFor(event.target);

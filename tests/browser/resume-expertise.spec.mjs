@@ -13,17 +13,27 @@ function separators(page) {
     const title = heading.getBoundingClientRect();
     const lower = panel.getBoundingClientRect();
     return {
-      upper: [title.left, title.left + parseFloat(underline.width), underline.height, underline.backgroundColor],
-      lower: [lower.left, lower.right, getComputedStyle(panel).borderBottomWidth, getComputedStyle(panel).borderBottomColor]
+      upper: [title.left, title.right, title.bottom, underline.width, underline.height, underline.backgroundColor],
+      lower: [lower.left, lower.right, lower.bottom, getComputedStyle(panel).borderBottomWidth, getComputedStyle(panel).borderBottomColor]
     };
   });
 }
 
-test('Resume matches both Blog separator widths and keeps all expertise labels visible', async ({ page }) => {
+test('Blog, Projects, Contact and Resume share divider edges and vertical spacing after reflow', async ({ page }) => {
   await open(page, 'blog');
+  await expect(page.locator('#blog-updated')).not.toBeEmpty();
+  await page.evaluate(() => document.fonts.ready);
+  // ResizeObserver delivers the shared rows after layout, including on the first visit.
+  await expect.poll(() => page.locator('.page-controls-panel').evaluateAll(panels =>
+    new Set(panels.map(panel => panel.getBoundingClientRect().height)).size
+  )).toBe(1);
   const blog = await separators(page);
-  await open(page, 'resume');
-  expect(await separators(page)).toEqual(blog);
+  for (const id of ['projects', 'contact', 'resume']) {
+    await open(page, id);
+    await expect.poll(() => separators(page)).toEqual(blog);
+  }
+  await expect(page.getByRole('button', { name: 'M-Shaped Engineer', exact: true })).toBeVisible();
+  await expect(page.locator('.expertise-term')).toContainText('M-Shaped Engineer');
   const list = page.getByRole('list', { name: 'Areas of expertise' });
   await expect(list.getByRole('listitem')).toHaveText(['Business Analysis', 'Software Engineering', 'Test Engineering']);
   for (const item of await list.getByRole('listitem').all()) await expect(item).toBeInViewport({ ratio: 1 });

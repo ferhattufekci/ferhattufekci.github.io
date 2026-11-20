@@ -14,6 +14,24 @@
   }
   function init(doc, win) {
     if (instances.has(doc)) return instances.get(doc);
+    // Even inactive pages participate in layout. Observe intrinsic row contents,
+    // not their grid tracks, so the shared minimum can shrink again after reflow.
+    function matchRow(selector, property) {
+      if (!win.ResizeObserver) return null;
+      var sizes = new Map();
+      var observer = new win.ResizeObserver(function (entries) {
+        entries.forEach(function (entry) {
+          sizes.set(entry.target, entry.borderBoxSize[0].blockSize);
+        });
+        doc.documentElement.style.setProperty(property, Math.max(...sizes.values()) + 'px');
+      });
+      doc.querySelectorAll(selector).forEach(function (row) {
+        observer.observe(row, { box: 'border-box' });
+      });
+      return observer;
+    }
+    var titleRows = matchRow('.page-controls-panel > .section-title-block', '--panel-title-row-size');
+    var navRows = matchRow('.page-controls-panel .category-filter-scroll', '--panel-nav-row-size');
     function keydown(event) {
       var panel = event.target;
       // Scope keyboard paging to the region itself. A native PageUp animation
@@ -28,6 +46,8 @@
         behavior: win.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     }
     function destroy() {
+      if (titleRows) titleRows.disconnect();
+      if (navRows) navRows.disconnect();
       doc.removeEventListener('keydown', keydown);
       win.removeEventListener('pagehide', pageHide);
       instances.delete(doc);

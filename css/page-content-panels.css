@@ -20,6 +20,12 @@
   overflow: hidden;
 }
 .js .page-controls-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(var(--panel-title-row-size, 0px), max-content)
+                      minmax(var(--panel-nav-row-size, 0px), max-content);
+  align-items: start;
+  row-gap: 12px;
   position: relative;
   z-index: 1;
   min-width: 0;
@@ -28,7 +34,7 @@
   background: var(--color-surface);
 }
 .js .page-controls-panel > .section-title-block {
-  margin: 0 0 12px;
+  margin: 0;
 }
 .js .page-controls-panel .section-description {
   display: flex;
@@ -110,15 +116,16 @@
   .js .pt-page.panel-page {
     --panel-inline-space: 30px;
     --panel-top-space: 16px;
-    --panel-controls-end-space: 12px;
+    --panel-controls-end-space: 6px;
   }
+  .js .page-controls-panel { row-gap: 6px; }
 }
 @media (max-height: 500px) {
   .js .pt-page.panel-page {
     --panel-top-space: 8px;
     --panel-controls-end-space: 8px;
   }
-  .js .page-controls-panel > .section-title-block { margin-bottom: 6px; }
+  .js .page-controls-panel { row-gap: 6px; }
   .js .page-controls-panel .section-title { margin-bottom: 2px; }
   .js .page-controls-panel .section-title::after { margin-top: 0; }
 }
@@ -145,6 +152,6 @@
     transform: none;
   }
   .js .panel-page:not(.pt-page-current) { display: none; }
-  .js .page-controls-panel { position: static; }
+  .js .page-controls-panel { display: block; position: static; }
   .js #resume-content > .resume-ending { min-height: 0; }
 }
