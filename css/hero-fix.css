@@ -4,9 +4,16 @@
   grid-template-rows: max-content 1fr;
 }
 
-/* Balance the desktop crop so the hair and part of the shirt remain visible. */
+/* Give the portrait enough height for the face and shoulders as its column widens.
+   The row can still grow when the adjacent biography needs more space. */
+@media (min-width: 992px) {
+  .about-portrait {
+    aspect-ratio: 8 / 5;
+  }
+}
+
 .section-inner.start-page-full-width .inner-content .fill-block {
-  background-position: center 30%;
+  background-position: center 25%;
 }
 
 /* Scale the stacked portrait with viewport width while retaining the head and chest in the crop. */

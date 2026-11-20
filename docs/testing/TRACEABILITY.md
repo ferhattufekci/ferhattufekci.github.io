@@ -4,7 +4,7 @@
 > [GKP.md](GKP.md). Do not edit by hand; `scripts/tests/traceability.test.js` fails when this file is stale.
 > Each CI build regenerates it with that build's browser results (job summary and `merged-browser-report`).
 
-**317 requirement ids carried by automated tests; 316 (99.7%) also have a manual procedure step.**
+**318 requirement ids carried by automated tests; 316 (99.4%) also have a manual procedure step.**
 **47 procedure cases; steps: Not Run 195.**
 
 A manual step result is recorded in GKP.md by the person who executes it; an automated pass never marks a manual step Pass.
@@ -22,6 +22,7 @@ A manual step result is recorded in GKP.md by the person who executes it; an aut
 | R-A11Y-01 | portfolio.spec.mjs | GKP-025, GKP-028 | Not Run 4 |
 | R-A11Y-02 | accessibility-debt.test.js | GKP-046 | Not Run 1 |
 | R-ABOUT-01 | about-surface.spec.mjs | **none** | — |
+| R-ABOUT-02 | about-portrait.spec.mjs | **none** | — |
 | R-AD-01 | adsense.spec.mjs | GKP-030 | Not Run 1 |
 | R-AD-02 | adsense.test.js | GKP-030 | Not Run 1 |
 | R-AD-03 | adsense.spec.mjs | GKP-030 | Not Run 2 |
