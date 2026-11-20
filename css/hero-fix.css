@@ -1,3 +1,9 @@
+/* Keep the hero at its natural height and extend the details to the page bottom. */
+.pt-page[data-id="about-me"] {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+}
+
 /* Balance the desktop crop so the hair and part of the shirt remain visible. */
 .section-inner.start-page-full-width .inner-content .fill-block {
   background-position: center 30%;

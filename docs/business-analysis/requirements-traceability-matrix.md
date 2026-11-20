@@ -4,13 +4,14 @@
 > `scripts/tests/rtm.test.js` fails when this file is stale. Direction covered here: **requirement id -> verifying test**.
 > Not covered: business objective -> requirement (see `docs/business-analysis/`) and requirement -> source code.
 
-**316 requirement ids, 364 test titles, 63 areas.**
+**317 requirement ids, 365 test titles, 64 areas.**
 
 | Area | Ids |
 |---|---|
 | R-404 | 2 |
 | R-A0 | 4 |
 | R-A11Y | 2 |
+| R-ABOUT | 1 |
 | R-AD | 3 |
 | R-AD-EMPTY | 1 |
 | R-AD-SCROLL | 1 |
@@ -82,6 +83,7 @@
 | R-A0-05b | the ratchet and the order contract detect real regressions (mutation checks) | Unit/contract (node:test) | `scripts/tests/inline-script-contract.test.js` |
 | R-A11Y-01 | Error and trust views introduce no WCAG violations beyond the unchanged shell and Resume CTA | Browser (Playwright) | `tests/browser/portfolio.spec.mjs` |
 | R-A11Y-02 | only the recorded rule, target, severity and measured failure are legacy debt | Unit/contract (node:test) | `scripts/tests/accessibility-debt.test.js` |
+| R-ABOUT-01 | About Me fills the viewport with the Contact surface and scrolls to its last row on phones | Browser (Playwright) | `tests/browser/about-surface.spec.mjs` |
 | R-AD-01 | AC-05/06 \| Width and ancestor eligibility settle before one request, even after repeated lifecycle/resize events | Browser (Playwright) | `tests/browser/adsense.spec.mjs` |
 | R-AD-02 | AC-13/15 \| Declared units retain the per-page request formats and remain excluded from Markdown | Unit/contract (node:test) | `scripts/tests/adsense.test.js` |
 | R-AD-03 | AC-01/02/03 \| ${section}: an iframe plus unfilled leaves no ad shell or own spacing | Browser (Playwright) | `tests/browser/adsense.spec.mjs` |
