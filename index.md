@@ -56,6 +56,12 @@ I strengthen teams by clarifying complexity, improving collaboration, and accele
 
 ## Resume
 
+M\-shaped Engineer **Depth in three fields** I clarify needs, build software and test from both the team’s and the customer’s perspective.
+
+-   Business Analysis
+-   Software Engineering
+-   Test Engineering
+
 ### Summary
 
 The opportunity to solve real-world problems using nothing more than a computer in my room shaped both my education and my career.
