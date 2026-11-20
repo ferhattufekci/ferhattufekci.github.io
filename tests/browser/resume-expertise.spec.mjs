@@ -19,6 +19,20 @@ function separators(page) {
   });
 }
 
+function bylineGapDifference(page) {
+  return page.locator('.pt-page-current .page-controls-panel').evaluate(panel => {
+    const heading = panel.querySelector('.section-title').getBoundingClientRect();
+    const controls = [...panel.querySelector('.section-description').children]
+      .map(control => control.getBoundingClientRect()).filter(box => box.height);
+    const nav = panel.querySelector('.category-filter-bar');
+    const end = nav ? nav.getBoundingClientRect().top
+      : panel.getBoundingClientRect().bottom - parseFloat(getComputedStyle(panel).borderBottomWidth);
+    const before = Math.min(...controls.map(box => box.top)) - heading.bottom;
+    const after = end - Math.max(...controls.map(box => box.bottom));
+    return Math.abs(before - after);
+  });
+}
+
 test('Blog, Projects, Contact and Resume share divider edges and vertical spacing after reflow', async ({ page }) => {
   await open(page, 'blog');
   await expect(page.locator('#blog-updated')).not.toBeEmpty();
@@ -28,9 +42,11 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
     new Set(panels.map(panel => panel.getBoundingClientRect().height)).size
   )).toBe(1);
   const blog = await separators(page);
+  await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   for (const id of ['projects', 'contact', 'resume']) {
     await open(page, id);
     await expect.poll(() => separators(page)).toEqual(blog);
+    await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   }
   await expect(page.getByRole('button', { name: 'M-Shaped Engineer', exact: true })).toBeVisible();
   await expect(page.locator('.expertise-term')).toContainText('M-Shaped Engineer');

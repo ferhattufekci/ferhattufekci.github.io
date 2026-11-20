@@ -30,7 +30,7 @@
       });
       return observer;
     }
-    var titleRows = matchRow('.page-controls-panel > .section-title-block', '--panel-title-row-size');
+    var descriptions = matchRow('.page-controls-panel .section-description', '--panel-description-size');
     var navRows = matchRow('.page-controls-panel .category-filter-scroll', '--panel-nav-row-size');
     function keydown(event) {
       var panel = event.target;
@@ -46,7 +46,7 @@
         behavior: win.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     }
     function destroy() {
-      if (titleRows) titleRows.disconnect();
+      if (descriptions) descriptions.disconnect();
       if (navRows) navRows.disconnect();
       doc.removeEventListener('keydown', keydown);
       win.removeEventListener('pagehide', pageHide);

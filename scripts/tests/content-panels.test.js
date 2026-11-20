@@ -82,7 +82,7 @@ test('R-UNIT-PANELS-06: Given repeated initialisation, then one controller exist
 
 test('shared control rows grow and shrink with their contents and release their observers', () => {
   const { document, win } = browser(['resume', 'blog', 'contact'].map(id =>
-    `<section id="${id}"><div class="page-controls-panel"><div class="section-title-block"></div>` +
+    `<section id="${id}"><div class="page-controls-panel"><div class="section-description"></div>` +
     (id === 'contact' ? '' : '<div class="category-filter-scroll"></div>') + '</div></section>'
   ).join(''));
   const observers = [];
@@ -96,15 +96,15 @@ test('shared control rows grow and shrink with their contents and release their 
     }
   };
   const controller = panels.init(document, win);
-  const [titles, navs] = observers;
-  assert.deepEqual([titles.rows.length, navs.rows.length], [3, 2]);
-  titles.resize([[0, 100.5], [1, 92], [2, 84]]);
+  const [descriptions, navs] = observers;
+  assert.deepEqual([descriptions.rows.length, navs.rows.length], [3, 2]);
+  descriptions.resize([[0, 100.5], [1, 92], [2, 84]]);
   navs.resize([[0, 35], [1, 34]]);
   const style = document.documentElement.style;
-  assert.equal(style.getPropertyValue('--panel-title-row-size'), '100.5px');
-  titles.resize([[0, 82]]);
-  assert.equal(style.getPropertyValue('--panel-title-row-size'), '92px');
+  assert.equal(style.getPropertyValue('--panel-description-size'), '100.5px');
+  descriptions.resize([[0, 82]]);
+  assert.equal(style.getPropertyValue('--panel-description-size'), '92px');
   assert.equal(style.getPropertyValue('--panel-nav-row-size'), '35px');
   controller.destroy();
-  assert.deepEqual([titles.rows.length, navs.rows.length], [0, 0]);
+  assert.deepEqual([descriptions.rows.length, navs.rows.length], [0, 0]);
 });
