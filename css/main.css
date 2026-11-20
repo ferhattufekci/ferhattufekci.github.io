@@ -2489,7 +2489,7 @@ ul.resume-item-tags {
 .sync-badge-tip {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  right: var(--tip-offset, 0px);
   z-index: 20;
   padding: 6px 10px;
   border-radius: 6px;
@@ -2497,7 +2497,8 @@ ul.resume-item-tags {
   border: 1px solid var(--color-border-strong);
   box-shadow: 0 4px 16px var(--color-card-shadow);
   color: var(--color-text-secondary);
-  font-size: 11px;
+  font-size: 13px;
+  line-height: 1.45;
   font-weight: 400;
   font-variant-numeric: tabular-nums;
   /* Avoid shrinking the absolute tooltip to its narrow status chip; bound the intrinsic width to the viewport. */
@@ -2505,6 +2506,7 @@ ul.resume-item-tags {
   max-width: min(240px, calc(100vw - 32px));
   white-space: normal;
   opacity: 0;
+  visibility: hidden;
   transform: translateY(-4px);
   pointer-events: none;
   transition:
@@ -2518,22 +2520,34 @@ ul.resume-item-tags {
   content: "";
   position: absolute;
   bottom: 100%;
-  right: 14px;
+  right: calc(14px - var(--tip-offset, 0px));
   border: 6px solid transparent;
   border-bottom-color: var(--color-border-strong);
 }
 .sync-badge-tip::after {
-  right: 15px;
+  right: calc(15px - var(--tip-offset, 0px));
   border-width: 5px;
   border-bottom-color: var(--color-surface);
 }
 
-.sync-badge:hover .sync-badge-tip,
-.sync-badge:focus-visible .sync-badge-tip,
-.sync-badge.tip-open .sync-badge-tip {
+/* A single visible state lets Escape dismiss a hovered or focused tooltip. */
+.tip-visible { z-index: 21; }
+.tip-visible .sync-badge-tip {
+  visibility: visible;
+  pointer-events: auto;
   opacity: 1;
   transform: none;
 }
+.tip-visible::after {
+  content: "";
+  position: absolute;
+  inset: 100% 0 auto;
+  height: 8px;
+}
+.tip-above .sync-badge-tip { top: auto; bottom: calc(100% + 8px); }
+.tip-above .sync-badge-tip::before,
+.tip-above .sync-badge-tip::after { top: 100%; bottom: auto; transform: rotate(180deg); }
+.tip-visible.tip-above::after { top: auto; bottom: 100%; }
 
 @media (prefers-reduced-motion: reduce) {
   .sync-badge,

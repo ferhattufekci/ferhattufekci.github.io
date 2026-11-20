@@ -153,7 +153,15 @@ test('R-PANEL-04 | Given responsive resizing, short landscape and 200 percent de
         expect(geometry.contentHeight).toBeGreaterThan(44);
         expect(geometry.overflow).toBeLessThanOrEqual(1);
       }).toPass();
-      rowPositions.push((await controls(page, id).locator('.category-filter-bar').boundingBox()).y);
+      const controlRow = controls(page, id);
+      const bar = await controlRow.locator('.category-filter-bar').boundingBox();
+      // The Resume definition uses the existing description row. Only its
+      // intrinsic height beyond the shared minimum may move the navigation.
+      const extra = id === 'resume' ? await controlRow.locator('.resume-expertise').evaluate(strip => {
+        const minimum = parseFloat(getComputedStyle(strip.parentElement).minHeight);
+        return Math.max(0, strip.getBoundingClientRect().height - minimum);
+      }) : 0;
+      rowPositions.push(bar.y - extra);
     }
     expect(Math.max(...rowPositions) - Math.min(...rowPositions)).toBeLessThanOrEqual(1);
   }
