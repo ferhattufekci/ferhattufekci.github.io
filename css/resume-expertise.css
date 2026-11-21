@@ -7,6 +7,8 @@
   --field-gap: 1.2em;
   --label-start: 2.04em;
   --wire-top: 1.55em;
+  --turn-width: .32em;
+  --turn-rise: .2em;
   --wire-color: color-mix(in srgb, var(--color-text-secondary) 55%, var(--color-surface));
   display: grid;
   position: relative;
@@ -59,14 +61,14 @@
 }
 .expertise-analysis::before {
   left: var(--hat-center);
-  right: calc(-1 * var(--field-gap) - var(--hat-center) + var(--mark-size) * .4);
+  right: calc(-1 * var(--field-gap) - var(--hat-center) + var(--mark-size) * .4 + var(--turn-width));
   border: solid var(--wire-color);
   border-width: 1px 0 0 1px;
   border-top-left-radius: .3em;
 }
 .expertise-software::before { left: var(--hat-center); border-left: 1px solid var(--wire-color); }
 .expertise-software::after {
-  left: calc(var(--hat-center) + var(--mark-size) * .4);
+  left: calc(var(--hat-center) + var(--mark-size) * .4 + var(--turn-width));
   right: calc(-1 * var(--field-gap) - var(--hat-center));
   border: solid var(--wire-color);
   border-width: 1px 1px 0 0;
@@ -82,6 +84,28 @@
   top: 0;
   left: calc(var(--hat-center) - var(--mark-size) / 2);
   z-index: 2;
+}
+/* Each outer wire turns toward the corresponding foot of the M. */
+.expertise-anchor::before,
+.expertise-anchor::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--wire-top) - var(--turn-rise));
+  width: var(--turn-width);
+  height: calc(var(--turn-rise) + 1px);
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--wire-color);
+  pointer-events: none;
+}
+.expertise-anchor::before {
+  right: calc(100% - var(--mark-size) * .1);
+  border-right: 1px solid var(--wire-color);
+  border-bottom-right-radius: 100%;
+}
+.expertise-anchor::after {
+  left: calc(var(--mark-size) * .9);
+  border-left: 1px solid var(--wire-color);
+  border-bottom-left-radius: 100%;
 }
 .expertise-term {
   display: inline-flex;
@@ -125,16 +149,31 @@ button.expertise-info-button:focus-visible { outline: 2px solid var(--color-acce
   .resume-expertise { width: min(100%, 30em); grid-template-columns: repeat(3, minmax(0, 1fr)); --field-gap: .7em; }
   .expertise-first-word { white-space: normal; }
 }
-/* The longer title spans the full diagram on phones, with its info button at the right edge. */
-@container (min-width: 18em) and (max-width: 28em) {
-  .expertise-anchor { grid-column: 1 / -1; left: auto; right: 0; }
-  .expertise-analysis::before { right: calc(-1 * var(--field-gap) - var(--hat-center)); }
-  .expertise-software::after { left: var(--hat-center); }
-}
 /* Keep the connected hats legible when field names take a second line. */
 @media screen and (max-width: 991px) {
-  .resume-expertise { --label-start: 1.55em; --wire-top: 1.35em; }
+  .resume-expertise { --label-start: 1.55em; --wire-top: 1.35em; --turn-rise: .1em; }
   .expertise-fields > li { line-height: 1.3; }
+}
+/* Narrow headings break beside the mark. Keeping the mark in column two
+   gives all three wires the same center as the Software Engineering hat. */
+@container (18em < width <= 28em) {
+  .resume-expertise {
+    --wire-top: 2.8em;
+    --label-start: 3.18em;
+    --turn-rise: 1em;
+  }
+  .expertise-role {
+    position: absolute;
+    left: calc(var(--mark-size) + .04em);
+    top: 1.3em;
+    font-weight: 500;
+  }
+  .expertise-anchor::before { border-bottom-right-radius: var(--turn-width); }
+  .expertise-anchor::after { border-bottom-left-radius: var(--turn-width); }
+  .expertise-fields > .expertise-software::before {
+    top: calc(var(--wire-top) - var(--turn-rise) + .2em);
+    height: calc(var(--label-start) - var(--wire-top) + var(--turn-rise));
+  }
 }
 @container (min-width: 18em) and (max-width: 21em) {
   .resume-expertise {
@@ -153,7 +192,8 @@ button.expertise-info-button:focus-visible { outline: 2px solid var(--color-acce
   .expertise-term svg { display: none; }
   .expertise-fields { display: grid; grid-template-columns: 1fr; gap: .2em; }
   .expertise-fields > li { padding: 0; }
-  .expertise-fields > li::before, .expertise-software::after { content: none; }
+  .expertise-fields > li::before, .expertise-software::after,
+  .expertise-anchor::before, .expertise-anchor::after { content: none; }
 }
 /* At high zoom give the stacked labels the unused panel gutters. */
 @container (max-width: 12em) {
