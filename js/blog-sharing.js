@@ -206,7 +206,7 @@
     if (event.key !== 'Escape' || !current || (!current.trigger.contains(event.target) && !current.panel.contains(event.target))) return;
     var trigger = current.trigger;
     close(); event.preventDefault();
-    if (trigger.isConnected && trigger.checkVisibility() && !trigger.closest('[inert]')) trigger.focus({ preventScroll: true });
+    if (trigger.isConnected && trigger.checkVisibility() && !trigger.closest('[inert]')) trigger.focus();
   });
   root.addEventListener('hashchange', close);
   doc.addEventListener('portfolio:page-activate', close);
