@@ -4772,7 +4772,8 @@ i.resume-cta__icon {
   line-height: 1;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.18s ease;
+  /* The incoming page must expose its controls to keyboard focus immediately. */
+  transition: color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
 }
 .blt-flag {
   display: inline-block;

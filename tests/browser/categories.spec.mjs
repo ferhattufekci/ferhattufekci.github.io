@@ -41,6 +41,10 @@ async function expectSelection(page, section, category) {
 
 async function selectLanguage(page, language) {
   await press(page.locator(`#blog-lang-toggle [data-lang-filter="${language}"]`));
+  await expectLanguage(page, language);
+}
+
+async function expectLanguage(page, language) {
   await withFocusState(page, async () => {
     await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveCount(1);
     await expect(page.locator('#blog-lang-toggle [aria-pressed="true"]')).toHaveAttribute('data-lang-filter', language);
@@ -140,9 +144,17 @@ test('R-FILTER-04 | Given a category with no articles in a language, when filter
   await expect(page.locator('#blog-loading')).toBeHidden();
   await navigateToSection(page, 'projects');
   await selectCategory(page, 'projects', 'test');
+  const all = page.locator('#blog-lang-toggle [data-lang-filter="all"]');
+  await expect(all).toBeHidden();
+  // Exercise the first opportunity to focus the filter, before another frame is painted.
+  await all.evaluate(button => {
+    document.addEventListener('portfolio:page-settled', () => button.focus(), { once: true });
+  });
   await navigateToSection(page, 'blog');
+  await expect(all).toBeFocused();
   await expect(page.locator('#blog-empty')).toBeVisible();
-  await selectLanguage(page, 'all');
+  await page.keyboard.press('Space');
+  await expectLanguage(page, 'all');
   await expect(titles(page)).toHaveText(['Only TR']);
   await expect(page.locator('#blog-empty')).toBeHidden();
   await expectSelection(page, 'projects', 'test');
