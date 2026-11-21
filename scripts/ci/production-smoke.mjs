@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, expect } from '@playwright/test';
+import { createPagesServer, listen, close } from '../lib/pages-preview.mjs';
 
-const base = new URL(process.argv[2]);
-const output = 'work/qa/production-smoke';
+const artifact = process.argv[2] === '--artifact' ? createPagesServer('.pages-site') : null;
+const output = artifact ? 'work/qa/artifact-smoke' : 'work/qa/production-smoke';
 await mkdir(output, { recursive: true });
-const browser = await chromium.launch();
+const base = new URL(artifact ? await listen(artifact) : process.argv[2]);
+let browser;
 async function tabTo(page, target) {
   const reverse = await target.evaluate(el =>
     !!(document.activeElement.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING));
@@ -30,6 +32,7 @@ const report = {
   errors: []
 };
 try {
+  browser = await chromium.launch();
   for (const width of [1440, 390])
     for (const colorScheme of ['light', 'dark']) {
       const context = await browser.newContext({
@@ -79,6 +82,8 @@ try {
         const nav = page.getByRole('navigation', {
           name: 'Resume section navigation'
         });
+        await page.keyboard.press('Tab');
+        await expectKeyboardFocus(page.getByRole('button', { name: 'About M-Shaped Engineer', exact: true }));
         await page.keyboard.press('Tab');
         await expectKeyboardFocus(nav.getByRole('button', { name: 'All', exact: true }));
         await page.keyboard.press('Tab');
@@ -236,6 +241,7 @@ try {
   report.failure = error.stack;
   throw error;
 } finally {
-  await browser.close();
+  await browser?.close();
+  if (artifact) await close(artifact);
   await writeFile(`${output}/results.json`, JSON.stringify(report, null, 2));
 }

@@ -153,7 +153,9 @@ test('R-PANEL-04 | Given responsive resizing, short landscape and 200 percent de
         expect(geometry.contentHeight).toBeGreaterThan(44);
         expect(geometry.overflow).toBeLessThanOrEqual(1);
       }).toPass();
-      rowPositions.push((await controls(page, id).locator('.category-filter-bar').boundingBox()).y);
+      const controlRow = controls(page, id);
+      const bar = await controlRow.locator('.category-filter-bar').boundingBox();
+      rowPositions.push(bar.y);
     }
     expect(Math.max(...rowPositions) - Math.min(...rowPositions)).toBeLessThanOrEqual(1);
   }
