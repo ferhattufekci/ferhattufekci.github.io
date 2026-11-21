@@ -48,7 +48,7 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
     await expect.poll(() => separators(page)).toEqual(blog);
     await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   }
-  await expect(page.getByRole('button', { name: 'M-Shaped Engineer', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'About M-Shaped Engineer', exact: true })).toBeVisible();
   await expect(page.locator('.expertise-term')).toContainText('M-Shaped Engineer');
   const list = page.getByRole('list', { name: 'Areas of expertise' });
   await expect(list.getByRole('listitem')).toHaveText(['Business Analysis', 'Software Engineering', 'Test Engineering']);
@@ -59,12 +59,23 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
   expect((await nav.boundingBox()).y).toBeGreaterThanOrEqual(await strip.evaluate(el => el.getBoundingClientRect().bottom));
 });
 
-for (const [id, selector] of [['resume', '.expertise-term'], ['blog', '#blog-updated'], ['projects', '#proj-updated']]) {
+for (const [id, selector] of [['resume', '.expertise-info-button'], ['blog', '#blog-updated'], ['projects', '#proj-updated']]) {
   test(id + ' tooltip visibly dismisses on the second activation and Escape', async ({ page }, info) => {
     await open(page, id);
     const trigger = page.locator(selector);
     await expect(trigger).toHaveRole('button');
     const tip = id === 'resume' ? page.locator('#expertise-definition') : trigger.locator('.sync-badge-tip');
+    if (id === 'resume') {
+      const title = page.locator('.expertise-term');
+      await title.click();
+      await expect(tip).toBeHidden();
+      await expect(trigger).toHaveAccessibleDescription(/Depth in three fields/);
+      const bounds = await trigger.boundingBox();
+      expect(bounds.width).toBeGreaterThanOrEqual(24);
+      expect(bounds.height).toBeGreaterThanOrEqual(24);
+      expect(bounds.x).toBeGreaterThanOrEqual(await title.evaluate(el => el.getBoundingClientRect().right - 1));
+      await expect(trigger).toBeInViewport({ ratio: 1 });
+    }
     if (info.project.use.hasTouch) {
       await trigger.tap();
       await expect(tip).toBeVisible();
