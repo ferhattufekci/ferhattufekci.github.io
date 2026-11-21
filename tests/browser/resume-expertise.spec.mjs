@@ -34,6 +34,8 @@ function bylineGapDifference(page) {
 }
 
 test('Blog, Projects, Contact and Resume share divider edges and vertical spacing after reflow', async ({ page }) => {
+  // A full date matches the live compact badge and keeps its width independent of the test date.
+  await page.route('**/data/meta.json', route => route.fulfill({ json: { lastUpdated: '2020-01-01T00:00:00Z' } }));
   await open(page, 'blog');
   await expect(page.locator('#blog-updated')).not.toBeEmpty();
   await page.evaluate(() => document.fonts.ready);
@@ -41,6 +43,15 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
   await expect.poll(() => page.locator('.page-controls-panel').evaluateAll(panels =>
     new Set(panels.map(panel => panel.getBoundingClientRect().height)).size
   )).toBe(1);
+  const filters = await page.locator('#blog-lang-toggle').boundingBox();
+  const badge = await page.locator('#blog-updated').boundingBox();
+  if (page.viewportSize().width === 320) {
+    expect(filters.y + filters.height).toBeLessThanOrEqual(badge.y);
+    expect(Math.abs((filters.x + filters.width) - (badge.x + badge.width))).toBeLessThanOrEqual(1);
+  } else {
+    expect(Math.abs((filters.y + filters.height / 2) - (badge.y + badge.height / 2))).toBeLessThanOrEqual(1);
+    expect(filters.x + filters.width).toBeLessThanOrEqual(badge.x);
+  }
   const blog = await separators(page);
   await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   for (const id of ['projects', 'contact', 'resume']) {
@@ -65,25 +76,27 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
   expect((await nav.boundingBox()).y).toBeGreaterThanOrEqual(await strip.evaluate(el => el.getBoundingClientRect().bottom));
 });
 
-for (const [id, selector] of [['resume', '.expertise-info-button'], ['blog', '#blog-updated'], ['projects', '#proj-updated']]) {
+for (const [id, label, description] of [
+  ['resume', 'About M-Shaped Computer Engineer', /Depth in three fields/],
+  ['blog', 'Medium sync information', /Medium synced/],
+  ['projects', 'GitHub sync information', /GitHub synced/]
+]) {
   test(id + ' tooltip visibly dismisses on the second activation and Escape', async ({ page }, info) => {
     await open(page, id);
-    const trigger = page.locator(selector);
-    await expect(trigger).toHaveRole('button');
-    const tip = id === 'resume' ? page.locator('#expertise-definition') : trigger.locator('.sync-badge-tip');
-    if (id === 'resume') {
-      const title = page.locator('.expertise-term');
-      await title.click();
-      await expect(tip).toBeHidden();
-      await expect(trigger).toHaveAccessibleDescription(/Depth in three fields/);
-      const referenceIcon = page.locator('.resume-personality-info i');
-      await expect(trigger.locator('i')).toHaveCSS('color', await referenceIcon.evaluate(el => getComputedStyle(el).color));
-      const bounds = await trigger.boundingBox();
-      expect(bounds.width).toBeGreaterThanOrEqual(24);
-      expect(bounds.height).toBeGreaterThanOrEqual(24);
-      expect(bounds.x).toBeGreaterThanOrEqual(await title.evaluate(el => el.getBoundingClientRect().right - 1));
-      await expect(trigger).toBeInViewport({ ratio: 1 });
-    }
+    const section = page.locator('.pt-page-current');
+    const trigger = section.getByRole('button', { name: label, exact: true });
+    const tip = section.locator('[data-tooltip-host] [role="tooltip"]');
+    const title = section.locator(id === 'resume' ? '.expertise-term' : '.sync-badge-time');
+    await title.click();
+    await expect(tip).toBeHidden();
+    await expect(trigger).toHaveAccessibleDescription(description);
+    const referenceIcon = page.locator('.resume-personality-info i');
+    await expect(trigger.locator('.fa-info-circle')).toHaveCSS('color', await referenceIcon.evaluate(el => getComputedStyle(el).color));
+    const bounds = await trigger.boundingBox();
+    expect(bounds.width).toBeGreaterThanOrEqual(24);
+    expect(bounds.height).toBeGreaterThanOrEqual(24);
+    if (id === 'resume') expect(bounds.x).toBeGreaterThanOrEqual(await title.evaluate(el => el.getBoundingClientRect().right - 1));
+    await expect(trigger).toBeInViewport({ ratio: 1 });
     if (info.project.use.hasTouch) {
       await trigger.tap();
       await expect(tip).toBeVisible();

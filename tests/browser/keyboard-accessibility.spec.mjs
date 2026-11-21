@@ -278,9 +278,9 @@ test('R-KEYBOARD-08 | Direct and menu entries start at each page control strip a
     }
     const section = page.locator(`.pt-page[data-id="${id}"]`);
     await expect(section.locator('.section-title')).toBeFocused();
-    const strip = id === 'resume' ? section.locator('.expertise-info-button, [data-resume-target]').all() :
+    const strip = id === 'resume' ? section.locator('.info-tooltip-button, [data-resume-target]').all() :
       id === 'blog' ? section.locator('.blog-lang-toggle button').all() :
-      id === 'projects' ? section.locator('#proj-updated, [data-group="proj_all"]').all() : [];
+      id === 'projects' ? section.locator('#proj-updated button, [data-group="proj_all"]').all() : [];
     for (const target of await strip) {
       await page.keyboard.press('Tab');
       await visibleFocus(target);
