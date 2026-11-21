@@ -281,7 +281,8 @@ test('AC-04/12 | Filled, no-fill and 200% text sizing preserve content at all sp
     await enterAdPage(page, 'projects'); await requested(page, 'projects');
     await respond(page, 'projects', 'filled', 300);
     const frame = slot(page, 'projects').locator('iframe');
-    await expect(frame).toBeVisible(); expect((await frame.boundingBox()).height).toBe(300);
+    await expect(frame).toBeVisible();
+    expect((await frame.boundingBox()).height).toBeCloseTo(300, 3);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
     await respond(page, 'projects', 'unfilled');
     await expect.poll(async () => (await geometry(slot(page, 'projects'))).height).toBe(0);

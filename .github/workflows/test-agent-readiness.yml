@@ -207,6 +207,9 @@ jobs:
         run: node scripts/ci/commands.mjs artifact
       - name: Check container browsers
         run: node scripts/ci/check-container-browsers.mjs chromium
+      - name: Test release smoke against the packaged site
+        if: matrix.shard == 1
+        run: npm run test:production -- --artifact
       - name: Test assigned browser shard
         run: npm run test:browser -- --shard="$CI_SHARD/$CI_SHARD_TOTAL"
       - name: Publish browser-report-${{ matrix.shard }}

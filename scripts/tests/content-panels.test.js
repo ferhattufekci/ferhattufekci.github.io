@@ -79,3 +79,32 @@ test('R-UNIT-PANELS-06: Given repeated initialisation, then one controller exist
   assert.equal(scrolls.length, 2, 'after a real pagehide the listener is gone');
   assert.notEqual(panels.init(document, win), controller, 'a new controller can be created');
 });
+
+test('shared control rows grow and shrink with their contents and release their observers', () => {
+  const { document, win } = browser(['resume', 'blog', 'contact'].map(id =>
+    `<section id="${id}"><div class="page-controls-panel"><div class="section-description"></div>` +
+    (id === 'contact' ? '' : '<div class="category-filter-scroll"></div>') + '</div></section>'
+  ).join(''));
+  const observers = [];
+  win.ResizeObserver = class {
+    rows = [];
+    constructor(update) { this.update = update; observers.push(this); }
+    observe(row) { this.rows.push(row); }
+    disconnect() { this.rows = []; }
+    resize(heights) {
+      this.update(heights.map(([index, blockSize]) => ({ target: this.rows[index], borderBoxSize: [{ blockSize }] })));
+    }
+  };
+  const controller = panels.init(document, win);
+  const [descriptions, navs] = observers;
+  assert.deepEqual([descriptions.rows.length, navs.rows.length], [3, 2]);
+  descriptions.resize([[0, 100.5], [1, 92], [2, 84]]);
+  navs.resize([[0, 35], [1, 34]]);
+  const style = document.documentElement.style;
+  assert.equal(style.getPropertyValue('--panel-description-size'), '100.5px');
+  descriptions.resize([[0, 82]]);
+  assert.equal(style.getPropertyValue('--panel-description-size'), '92px');
+  assert.equal(style.getPropertyValue('--panel-nav-row-size'), '35px');
+  controller.destroy();
+  assert.deepEqual([descriptions.rows.length, navs.rows.length], [0, 0]);
+});

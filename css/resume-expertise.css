@@ -1,5 +1,4 @@
-/* The existing section-description owns the alignment with the Blog controls.
-   Only the diagram participates in this grid. Neither page separator is resized. */
+/* Keep the diagram independent of the shared page controls grid. */
 .resume-byline { container-type: inline-size; }
 .resume-expertise {
   --hat-size: 1.42em;
@@ -110,6 +109,19 @@ button.expertise-term:focus-visible { outline: 2px solid var(--color-accent); ou
   .resume-expertise { width: min(100%, 30em); grid-template-columns: repeat(3, minmax(0, 1fr)); --field-gap: .7em; }
   .expertise-first-word { white-space: normal; }
 }
+/* Keep the connected hats legible when field names take a second line. */
+@media screen and (max-width: 991px) {
+  .resume-expertise { --label-start: 1.55em; --wire-top: 1.35em; }
+  .expertise-fields > li { line-height: 1.3; }
+}
+@container (min-width: 18em) and (max-width: 21em) {
+  .resume-expertise {
+    --field-gap: .22em;
+    --hat-size: 1.08em;
+    grid-template-columns: minmax(0, .94fr) repeat(2, minmax(0, 1.03fr));
+  }
+  .expertise-hat { margin-inline-end: .18em; }
+}
 /* At high zoom let whole labels flow beneath the definition. */
 @container (max-width: 18em) {
   .resume-expertise { display: block; }
@@ -120,4 +132,13 @@ button.expertise-term:focus-visible { outline: 2px solid var(--color-accent); ou
   .expertise-fields { display: grid; grid-template-columns: 1fr; gap: .2em; }
   .expertise-fields > li { padding: 0; }
   .expertise-fields > li::before, .expertise-software::after { content: none; }
+}
+/* At high zoom give the stacked labels the unused panel gutters. */
+@container (max-width: 12em) {
+  .resume-expertise {
+    flex: none;
+    width: calc(100% + 2 * var(--panel-inline-space) - 1em);
+    max-width: none;
+    margin-inline: calc(.5em - var(--panel-inline-space));
+  }
 }
