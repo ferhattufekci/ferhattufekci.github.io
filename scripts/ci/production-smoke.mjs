@@ -83,7 +83,7 @@ try {
           name: 'Resume section navigation'
         });
         await page.keyboard.press('Tab');
-        await expectKeyboardFocus(page.getByRole('button', { name: 'About M-Shaped Engineer', exact: true }));
+        await expectKeyboardFocus(page.getByRole('button', { name: 'About M-Shaped Computer Engineer', exact: true }));
         await page.keyboard.press('Tab');
         await expectKeyboardFocus(nav.getByRole('button', { name: 'All', exact: true }));
         await page.keyboard.press('Tab');

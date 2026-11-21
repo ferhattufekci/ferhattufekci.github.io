@@ -48,11 +48,17 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
     await expect.poll(() => separators(page)).toEqual(blog);
     await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   }
-  await expect(page.getByRole('button', { name: 'About M-Shaped Engineer', exact: true })).toBeVisible();
-  await expect(page.locator('.expertise-term')).toContainText('M-Shaped Engineer');
+  await expect(page.getByRole('button', { name: 'About M-Shaped Computer Engineer', exact: true })).toBeVisible();
+  await expect(page.locator('.expertise-term')).toContainText('M-Shaped Computer Engineer');
   const list = page.getByRole('list', { name: 'Areas of expertise' });
   await expect(list.getByRole('listitem')).toHaveText(['Business Analysis', 'Software Engineering', 'Test Engineering']);
   for (const item of await list.getByRole('listitem').all()) await expect(item).toBeInViewport({ ratio: 1 });
+  const mark = page.locator('.expertise-term svg');
+  if (await mark.isVisible()) {
+    const centerX = box => box.x + box.width / 2;
+    const hat = page.locator('.expertise-software .expertise-hat');
+    expect(Math.abs(centerX(await mark.boundingBox()) - centerX(await hat.boundingBox()))).toBeLessThan(1);
+  }
   const strip = page.locator('.resume-expertise');
   expect(await strip.evaluate(el => el.scrollWidth <= el.clientWidth + 1)).toBe(true);
   const nav = page.getByRole('navigation', { name: 'Resume section navigation' });
@@ -70,6 +76,8 @@ for (const [id, selector] of [['resume', '.expertise-info-button'], ['blog', '#b
       await title.click();
       await expect(tip).toBeHidden();
       await expect(trigger).toHaveAccessibleDescription(/Depth in three fields/);
+      const referenceIcon = page.locator('.resume-personality-info i');
+      await expect(trigger.locator('i')).toHaveCSS('color', await referenceIcon.evaluate(el => getComputedStyle(el).color));
       const bounds = await trigger.boundingBox();
       expect(bounds.width).toBeGreaterThanOrEqual(24);
       expect(bounds.height).toBeGreaterThanOrEqual(24);

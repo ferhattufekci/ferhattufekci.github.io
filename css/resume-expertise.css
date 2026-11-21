@@ -7,6 +7,8 @@
   --field-gap: 1.2em;
   --label-start: 2.04em;
   --wire-top: 1.55em;
+  --turn-width: .32em;
+  --turn-rise: .2em;
   --wire-color: color-mix(in srgb, var(--color-text-secondary) 55%, var(--color-surface));
   display: grid;
   position: relative;
@@ -59,14 +61,14 @@
 }
 .expertise-analysis::before {
   left: var(--hat-center);
-  right: calc(-1 * var(--field-gap) - var(--hat-center) + var(--mark-size) * .4);
+  right: calc(-1 * var(--field-gap) - var(--hat-center) + var(--mark-size) * .4 + var(--turn-width));
   border: solid var(--wire-color);
   border-width: 1px 0 0 1px;
   border-top-left-radius: .3em;
 }
 .expertise-software::before { left: var(--hat-center); border-left: 1px solid var(--wire-color); }
 .expertise-software::after {
-  left: calc(var(--hat-center) + var(--mark-size) * .4);
+  left: calc(var(--hat-center) + var(--mark-size) * .4 + var(--turn-width));
   right: calc(-1 * var(--field-gap) - var(--hat-center));
   border: solid var(--wire-color);
   border-width: 1px 1px 0 0;
@@ -83,6 +85,28 @@
   left: calc(var(--hat-center) - var(--mark-size) / 2);
   z-index: 2;
 }
+/* Each outer wire turns toward the corresponding foot of the M. */
+.expertise-anchor::before,
+.expertise-anchor::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--wire-top) - var(--turn-rise));
+  width: var(--turn-width);
+  height: calc(var(--turn-rise) + 1px);
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--wire-color);
+  pointer-events: none;
+}
+.expertise-anchor::before {
+  right: calc(100% - var(--mark-size) * .1);
+  border-right: 1px solid var(--wire-color);
+  border-bottom-right-radius: 100%;
+}
+.expertise-anchor::after {
+  left: calc(var(--mark-size) * .9);
+  border-left: 1px solid var(--wire-color);
+  border-bottom-left-radius: 100%;
+}
 .expertise-term {
   display: inline-flex;
   align-items: center;
@@ -98,7 +122,7 @@
   overflow: hidden;
   clip-path: inset(50%);
 }
-.expertise-term svg { width: var(--mark-size); height: auto; align-self: flex-end; margin-bottom: .27em; flex: none; }
+.expertise-term svg { width: var(--mark-size); height: auto; align-self: flex-end; margin-bottom: .48em; flex: none; }
 .expertise-info { position: relative; display: inline-flex; }
 button.expertise-info-button,
 button.expertise-info-button:is(:hover, :focus, :active) {
@@ -112,11 +136,10 @@ button.expertise-info-button:is(:hover, :focus, :active) {
   border-radius: 4px;
   box-shadow: none;
   background: transparent;
-  color: var(--color-text-secondary);
+  color: var(--color-accent);
   font-size: 13px;
   cursor: pointer;
 }
-.expertise-info.tip-visible .expertise-info-button { color: var(--color-text-primary); }
 button.expertise-info-button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 .expertise-info .sync-badge-tip::before { right: calc(6px - var(--tip-offset, 0px)); }
 .expertise-info .sync-badge-tip::after { right: calc(7px - var(--tip-offset, 0px)); }
@@ -128,27 +151,49 @@ button.expertise-info-button:focus-visible { outline: 2px solid var(--color-acce
 }
 /* Keep the connected hats legible when field names take a second line. */
 @media screen and (max-width: 991px) {
-  .resume-expertise { --label-start: 1.55em; --wire-top: 1.35em; }
+  .resume-expertise { --label-start: 1.55em; --wire-top: 1.35em; --turn-rise: .1em; }
   .expertise-fields > li { line-height: 1.3; }
+}
+/* Narrow headings break beside the mark. Keeping the mark in column two
+   gives all three wires the same center as the Software Engineering hat. */
+@container (18em < width <= 28em) {
+  .resume-expertise {
+    --wire-top: 2.8em;
+    --label-start: 3.18em;
+    --turn-rise: 1em;
+  }
+  .expertise-role {
+    position: absolute;
+    left: calc(var(--mark-size) + .04em);
+    top: 1.3em;
+    font-weight: 500;
+  }
+  .expertise-anchor::before { border-bottom-right-radius: var(--turn-width); }
+  .expertise-anchor::after { border-bottom-left-radius: var(--turn-width); }
+  .expertise-fields > .expertise-software::before {
+    top: calc(var(--wire-top) - var(--turn-rise) + .2em);
+    height: calc(var(--label-start) - var(--wire-top) + var(--turn-rise));
+  }
 }
 @container (min-width: 18em) and (max-width: 21em) {
   .resume-expertise {
     --field-gap: .22em;
     --hat-size: 1.08em;
-    grid-template-columns: minmax(0, .94fr) repeat(2, minmax(0, 1.03fr));
+    grid-template-columns: minmax(0, .96fr) repeat(2, minmax(0, 1.02fr));
   }
   .expertise-hat { margin-inline-end: .18em; }
 }
 /* At high zoom let whole labels flow beneath the definition. */
 @container (max-width: 18em) {
   .resume-expertise { display: block; }
-  .expertise-anchor { position: relative; display: inline-flex; left: auto; }
+  .expertise-anchor { position: relative; display: inline-flex; max-width: 100%; left: auto; }
   .expertise-term { white-space: normal; }
   .expertise-initial { position: static; inline-size: auto; block-size: auto; overflow: visible; clip-path: none; }
   .expertise-term svg { display: none; }
   .expertise-fields { display: grid; grid-template-columns: 1fr; gap: .2em; }
   .expertise-fields > li { padding: 0; }
-  .expertise-fields > li::before, .expertise-software::after { content: none; }
+  .expertise-fields > li::before, .expertise-software::after,
+  .expertise-anchor::before, .expertise-anchor::after { content: none; }
 }
 /* At high zoom give the stacked labels the unused panel gutters. */
 @container (max-width: 12em) {
