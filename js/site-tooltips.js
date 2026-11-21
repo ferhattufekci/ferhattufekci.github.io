@@ -2,12 +2,11 @@
 (function () {
   "use strict";
 
-  var selector = ".sync-badge, [data-tooltip-host]";
   var activeHost = null;
   var pinned = false;
 
   function hostFor(target) {
-    return target instanceof Element ? target.closest(selector) : null;
+    return target instanceof Element ? target.closest("[data-tooltip-host]") : null;
   }
 
   function close() {
@@ -29,8 +28,7 @@
     var panel = host.closest(".pt-page");
     var top = panel ? Math.max(0, panel.getBoundingClientRect().top) : 0;
     var needed = tip.offsetHeight + 8;
-    host.classList.toggle("tip-above", anchor.top - top >= needed &&
-      (host.hasAttribute("data-tooltip-host") || window.innerHeight - anchor.bottom < needed));
+    host.classList.toggle("tip-above", anchor.top - top >= needed);
 
     var box = tip.getBoundingClientRect();
     var inset = 8;
@@ -72,13 +70,7 @@
     }
   });
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") return close();
-    // The existing timestamp badges are spans. The Resume button activates natively.
-    if (!(event.target instanceof Element) || !event.target.matches('.sync-badge[role="button"]')) return;
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      if (!event.repeat) event.target.click();
-    }
+    if (event.key === "Escape") close();
   });
   window.addEventListener("hashchange", close);
   window.addEventListener("resize", close);
