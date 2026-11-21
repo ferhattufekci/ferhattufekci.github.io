@@ -152,7 +152,7 @@ jobs:
     # The tag must equal the locked @playwright/test version and is pinned by
     # digest; R-CI-PWC-01 checks both. Options follow the Playwright CI guide.
     container:
-      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
+      image: mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579
       options: --user 1001 --init --ipc=host
     # Shards took 17-24 minutes in runs 41988673520, 42021093807, 42028696513
     # and reached the former 25-minute deadline in run 42043003964, which
@@ -224,7 +224,7 @@ jobs:
     name: Cross-browser Keyboard Tests
     runs-on: ubuntu-24.04
     container:
-      image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
+      image: mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579
       options: --user 1001 --init --ipc=host
     # Run 41731506040 passed 530 engine cases in 25.8m, then the 30m job
     # deadline interrupted touch arrows. Later runs took 23-33 minutes and
