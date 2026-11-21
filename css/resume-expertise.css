@@ -74,6 +74,8 @@
 }
 .expertise-fields > .expertise-test::before { content: none; }
 .expertise-anchor {
+  display: flex;
+  align-items: center;
   position: absolute;
   grid-column: 2;
   grid-row: 1;
@@ -81,28 +83,43 @@
   left: calc(var(--hat-center) - var(--mark-size) / 2);
   z-index: 2;
 }
-button.expertise-term,
-button.expertise-term:is(:hover, :active, :focus) {
+.expertise-term {
   display: inline-flex;
   align-items: center;
-  gap: .04em;
   min-height: 24px;
+  gap: .04em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.expertise-initial {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.expertise-term svg { width: var(--mark-size); height: auto; align-self: flex-end; margin-bottom: .27em; flex: none; }
+.expertise-info { position: relative; display: inline-flex; }
+button.expertise-info-button,
+button.expertise-info-button:is(:hover, :focus, :active) {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 24px;
+  min-block-size: 24px;
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: 2px;
-  background: transparent;
-  color: var(--color-text-primary);
-  font: inherit;
-  font-weight: 600;
-  white-space: nowrap;
+  border-radius: 4px;
   box-shadow: none;
-  cursor: help;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
 }
-button.expertise-term:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
-.expertise-initial { display: none; }
-.expertise-term svg { width: var(--mark-size); height: auto; align-self: flex-end; margin-bottom: .27em; flex: none; }
-.expertise-term span { text-decoration: underline dotted var(--color-text-muted); text-underline-offset: .22em; }
+.expertise-info.tip-visible .expertise-info-button { color: var(--color-text-primary); }
+button.expertise-info-button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.expertise-info .sync-badge-tip::before { right: calc(6px - var(--tip-offset, 0px)); }
+.expertise-info .sync-badge-tip::after { right: calc(7px - var(--tip-offset, 0px)); }
 .expertise-anchor .sync-badge-tip { max-width: min(24rem, calc(100vw - 24px)); padding: 4px 10px; line-height: 1.35; }
 .expertise-anchor .sync-badge-tip strong { display: block; color: var(--color-text-primary); margin-bottom: .2em; }
 @container (max-width: 38em) {
@@ -125,9 +142,9 @@ button.expertise-term:focus-visible { outline: 2px solid var(--color-accent); ou
 /* At high zoom let whole labels flow beneath the definition. */
 @container (max-width: 18em) {
   .resume-expertise { display: block; }
-  .expertise-anchor { position: relative; display: inline-block; left: auto; }
-  button.expertise-term, button.expertise-term:is(:hover, :active, :focus) { white-space: normal; text-align: start; }
-  .expertise-initial { display: inline; }
+  .expertise-anchor { position: relative; display: inline-flex; left: auto; }
+  .expertise-term { white-space: normal; }
+  .expertise-initial { position: static; inline-size: auto; block-size: auto; overflow: visible; clip-path: none; }
   .expertise-term svg { display: none; }
   .expertise-fields { display: grid; grid-template-columns: 1fr; gap: .2em; }
   .expertise-fields > li { padding: 0; }
