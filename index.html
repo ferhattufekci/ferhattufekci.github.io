@@ -219,13 +219,13 @@
     <link rel="stylesheet" href="css/animate.css?v=2faed2dab1cae781" type="text/css" />
     <link rel="stylesheet" href="css/animations.css?v=d06db7059ec84420" type="text/css" />
     <link rel="stylesheet" href="css/owl.carousel.css?v=67525619190cda63" type="text/css" />
-    <link rel="stylesheet" href="css/main.css?v=4438b1f7b43bf512" type="text/css" />
+    <link rel="stylesheet" href="css/main.css?v=bb2e59929423e119" type="text/css" />
     <link rel="stylesheet" href="css/hero-fix.css?v=d08f5613048653d9" type="text/css" />
     <link rel="stylesheet" href="css/dark-theme.css?v=8653706e032943ec" type="text/css" />
     <link rel="stylesheet" href="css/blog-cards.css?v=4b4f15dd378c58f7" type="text/css" />
     <link rel="stylesheet" href="css/card-interactions.css?v=51dad1ea111817fd" type="text/css" />
     <link rel="stylesheet" href="css/category-filters.css?v=b403f269118b8fd7" type="text/css" />
-    <link rel="stylesheet" href="css/resume-expertise.css?v=e8db1929c2d84932" type="text/css" />
+    <link rel="stylesheet" href="css/resume-expertise.css?v=658d27f45d77c6ac" type="text/css" />
     <link rel="stylesheet" href="css/page-content-panels.css?v=123be35cc9e180dc" type="text/css" />
     <link rel="stylesheet" href="css/keyboard.css?v=66b71b1c6d57e78c" />
     <link rel="stylesheet" href="css/adsense.css?v=72326135ab4a02e1" />
@@ -319,30 +319,20 @@
         var d = new Date(isoDate);
         if (isNaN(d.getTime())) return;
         var exact = window.fmtDT(isoDate);
-        el.innerHTML =
-          '<i class="lnr lnr-sync sync-badge-icon" aria-hidden="true"></i>' +
-          '<span class="sync-badge-source">' +
-          sourceLabel +
-          "</span>" +
-          '<time class="sync-badge-time" datetime="' +
-          d.toISOString() +
-          '" data-ts="' +
-          d.getTime() +
-          '">' +
-          window.relTime(d) +
-          "</time>" +
-          '<span class="sync-badge-tip" aria-hidden="true">' +
-          sourceLabel +
-          " synced " +
-          exact +
-          "</span>";
-        // Keyboard and touch share the custom tooltip; a native title would duplicate it.
-        el.setAttribute("tabindex", "0");
-        el.setAttribute("role", "button");
-        el.setAttribute(
-          "aria-label",
-          sourceLabel + " data last synced " + exact,
-        );
+        var badge = document.getElementById("sync-badge-template").content.cloneNode(true);
+        var time = badge.querySelector("time");
+        var trigger = badge.querySelector("button");
+        var tip = badge.querySelector('[role="tooltip"]');
+
+        badge.querySelector(".sync-badge-source").textContent = sourceLabel;
+        time.dateTime = d.toISOString();
+        time.dataset.ts = d.getTime();
+        time.textContent = window.relTime(d);
+        tip.id = elId + "-tooltip";
+        tip.textContent = sourceLabel + " synced " + exact;
+        trigger.setAttribute("aria-label", sourceLabel + " sync information");
+        trigger.setAttribute("aria-describedby", tip.id);
+        el.replaceChildren(badge);
         // Wait one frame so the transition is not coalesced with the initial innerHTML paint.
         requestAnimationFrame(function () {
           el.classList.add("is-ready");
@@ -361,6 +351,14 @@
   </head>
 
   <body>
+    <template id="sync-badge-template">
+      <span data-tooltip-host>
+        <button type="button" class="info-tooltip-button"><i class="fas fa-info-circle" aria-hidden="true"></i></button>
+        <span class="sync-badge-tip" role="tooltip"></span>
+      </span>
+      <span class="sync-badge-source"></span>
+      <time class="sync-badge-time"></time>
+    </template>
     <a class="skip-link" href="#main">Skip to content</a>
     <h1 class="sr-only">Ferhat Tüfekçi</h1>
 
@@ -869,8 +867,8 @@
                         <span class="expertise-term">
                           <svg viewBox="0 0 40 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 23V2.3L20 21.4 36 2.3V23M20 21v2"/></svg><span><span class="expertise-initial">M</span>-Shaped<span class="expertise-role"> Computer Engineer</span></span>
                         </span>
-                        <span class="expertise-info" data-tooltip-host>
-                          <button type="button" class="expertise-info-button" aria-label="About M-Shaped Computer Engineer" aria-describedby="expertise-definition">
+                        <span data-tooltip-host>
+                          <button type="button" class="info-tooltip-button" aria-label="About M-Shaped Computer Engineer" aria-describedby="expertise-definition">
                             <i class="fas fa-info-circle" aria-hidden="true"></i>
                           </button>
                           <span role="tooltip" id="expertise-definition" class="sync-badge-tip"><strong>Depth in three fields</strong> I clarify needs, build software and test from both the team’s and the customer’s perspective.</span>
@@ -3928,7 +3926,7 @@
       });
     </script>
     <script src="js/tab-title.js?v=bcb8a01b27c37c6f"></script>
-    <script src="js/site-tooltips.js?v=f8bcbcabda19ae0e" defer></script>
+    <script src="js/site-tooltips.js?v=d55bc272b046fadd" defer></script>
     <script src="js/theme.js?v=1012a69a00ea2713"></script>
 
     <script>

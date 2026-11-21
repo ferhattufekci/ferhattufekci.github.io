@@ -130,9 +130,10 @@ test.describe('A0-06 | sync badge', () => {
     await expect(badge.locator('time.sync-badge-time')).toHaveAttribute('datetime', '2026-11-08T11:00:00.000Z');
     await expect(badge.locator('time.sync-badge-time')).toHaveAttribute('data-ts', String(Date.parse('2026-11-08T11:00:00Z')));
     await expect(badge.locator('.sync-badge-tip')).toHaveText('GitHub synced 08.11.2026 14:00');
-    await expect(badge.locator('.sync-badge-icon')).toHaveAttribute('aria-hidden', 'true');
-    await expect(badge).toHaveAttribute('tabindex', '0');
-    await expect(badge).toHaveAttribute('aria-label', 'GitHub data last synced 08.11.2026 14:00');
+    const trigger = badge.getByRole('button', { name: 'GitHub sync information' });
+    await expect(trigger.locator('.fa-info-circle')).toHaveAttribute('aria-hidden', 'true');
+    await expect(trigger).toHaveAccessibleDescription('GitHub synced 08.11.2026 14:00');
+    await expect(badge).not.toHaveAttribute('tabindex', /.*/);
     await expect(badge).not.toHaveAttribute('title', /.*/);
     await expect(badge).toHaveClass(/\bis-ready\b/);
   });
@@ -156,15 +157,15 @@ test.describe('A0-06 | sync badge', () => {
         window.renderSyncBadge(id, id, '2026-11-08T11:00:00Z');
       }
     });
-    const one = page.locator('#a0-one'), two = page.locator('#a0-two');
-    await one.evaluate(node => node.click());
+    const one = page.locator('#a0-one [data-tooltip-host]'), two = page.locator('#a0-two [data-tooltip-host]');
+    await one.getByRole('button').evaluate(node => node.click());
     await expect(one).toHaveClass(/tip-open/);
-    await two.evaluate(node => node.click());
+    await two.getByRole('button').evaluate(node => node.click());
     await expect(two).toHaveClass(/tip-open/);
     await expect(one).not.toHaveClass(/tip-open/);
-    await two.evaluate(node => node.click());
+    await two.getByRole('button').evaluate(node => node.click());
     await expect(two).not.toHaveClass(/tip-open/);
-    await one.evaluate(node => node.click());
+    await one.getByRole('button').evaluate(node => node.click());
     await expect(one).toHaveClass(/tip-open/);
     await page.keyboard.press('Escape');
     await expect(one).not.toHaveClass(/tip-open/);
