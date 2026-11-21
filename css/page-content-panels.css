@@ -127,6 +127,10 @@
     --panel-controls-end-space: 6px;
   }
 }
+/* Inside the shared header track, keep the compact Blog controls next to their categories. */
+@media (max-width: 21em) {
+  .js [data-id="blog"] .page-controls-panel .section-description { align-self: end; }
+}
 @media (max-height: 500px) {
   .js .pt-page.panel-page {
     --panel-top-space: 8px;

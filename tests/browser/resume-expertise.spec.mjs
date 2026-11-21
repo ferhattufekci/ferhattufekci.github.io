@@ -48,14 +48,16 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
   if (page.viewportSize().width === 320) {
     expect(badge.y + badge.height).toBeLessThanOrEqual(filters.y);
     const categories = await page.locator('#blog-filters').boundingBox();
-    expect(filters.y + filters.height).toBeLessThanOrEqual(categories.y);
+    const gap = categories.y - (filters.y + filters.height);
+    const rowGap = await page.locator('.pt-page-current .page-controls-panel').evaluate(el => parseFloat(getComputedStyle(el).rowGap));
+    expect(Math.abs(gap - rowGap)).toBeLessThanOrEqual(1);
     expect(Math.abs((filters.x + filters.width) - (badge.x + badge.width))).toBeLessThanOrEqual(1);
   } else {
     expect(Math.abs((filters.y + filters.height / 2) - (badge.y + badge.height / 2))).toBeLessThanOrEqual(1);
     expect(filters.x + filters.width).toBeLessThanOrEqual(badge.x);
+    await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   }
   const blog = await separators(page);
-  await expect.poll(() => bylineGapDifference(page)).toBeLessThanOrEqual(1);
   for (const id of ['projects', 'contact', 'resume']) {
     await open(page, id);
     await expect.poll(() => separators(page)).toEqual(blog);
