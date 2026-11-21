@@ -46,7 +46,9 @@ test('Blog, Projects, Contact and Resume share divider edges and vertical spacin
   const filters = await page.locator('#blog-lang-toggle').boundingBox();
   const badge = await page.locator('#blog-updated').boundingBox();
   if (page.viewportSize().width === 320) {
-    expect(filters.y + filters.height).toBeLessThanOrEqual(badge.y);
+    expect(badge.y + badge.height).toBeLessThanOrEqual(filters.y);
+    const categories = await page.locator('#blog-filters').boundingBox();
+    expect(filters.y + filters.height).toBeLessThanOrEqual(categories.y);
     expect(Math.abs((filters.x + filters.width) - (badge.x + badge.width))).toBeLessThanOrEqual(1);
   } else {
     expect(Math.abs((filters.y + filters.height / 2) - (badge.y + badge.height / 2))).toBeLessThanOrEqual(1);

@@ -50,6 +50,8 @@
   gap: 8px;
   min-height: 32px;
 }
+/* Keep language and category filters together when the sync badge needs its own line. */
+.js [data-id="blog"] .page-controls-panel .section-description { flex-wrap: wrap-reverse; }
 .js .page-controls-panel .category-filter-scroll {
   margin-bottom: 0;
 }
